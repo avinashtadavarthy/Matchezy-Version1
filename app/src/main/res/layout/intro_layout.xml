@@ -12,28 +12,20 @@
     android:layout_height="match_parent"
     />
 
-    <com.github.clans.fab.FloatingActionButton
-        android:visibility="gone"
-        android:id="@+id/nextt"
-        fab:fab_colorNormal="#EA4335"
-        fab:fab_colorPressed="#FFFFFF"
-        fab:fab_colorRipple="#EA5251"
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button_intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="8dp"
+        android:layout_alignParentEnd="true"
+        android:visibility="invisible"
         android:layout_marginEnd="8dp"
-        app:fab_size="normal"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_action_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.948"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.986" />
+        android:layout_marginBottom="8dp"
+        fab:show_animation="@anim/fab_roll_from_right"
+        fab:hide_animation="@anim/fab_roll_to_down"
+        fab:button_colorPressed="@color/fab_material_white"
+        fab:shadowResponsiveEffect_enabled="true"
+        />
 
 
 </RelativeLayout>

@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".IntroActivity">
+        <activity android:name=".Registration3">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,7 +18,10 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Login" />
-        <activity android:name=".Registration"></activity>
+        <activity android:name=".Registration" />
+        <activity android:name=".Registration2" />
+        <activity android:name=".IntroActivity"/>
+        <!-- <activity android:name=".Registration3"></activity>-->
     </application>
 
 </manifest>

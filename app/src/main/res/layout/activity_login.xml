@@ -85,7 +85,8 @@
         android:fontFamily="@font/circularstd"
         android:textSize="18sp"
         android:textColor="#EA5251"
-        android:id="@+id/loginbtn"
+        android:clickable="true"
+        android:id="@+id/signupButton"
         android:lineSpacingMultiplier="1.22"
 
         app:layout_constraintBottom_toBottomOf="parent"
