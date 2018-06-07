@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
@@ -9,135 +9,173 @@
     tools:context=".Registration3">
 
 
-
-    <TextView
-        android:id="@+id/textView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="38dp"
-        android:paddingEnd="66dp"
-        android:textColor="#FFF"
-        android:paddingStart="19dp"
-        android:fontFamily="@font/circularstd"
-        android:background="@drawable/curve1"
-        android:text="A few more."
-        android:textSize="24sp" />
-
-   <android.support.constraint.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_marginLeft="13dp"
-       android:layout_marginRight="13dp"
-       android:layout_marginTop="16dp"
-       android:background="@drawable/heightbox"
-       android:layout_height="120dp">
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:fontFamily="@font/circularstd"
-           android:text="height"
-
-           android:textSize="20sp"
-
-           app:layout_constraintBottom_toBottomOf="parent"
-
-           app:layout_constraintEnd_toEndOf="parent"
-
-           app:layout_constraintHorizontal_bias="0.161"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintVertical_bias="0.504" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
 
-       <com.webianks.library.scroll_choice.ScrollChoice
-           android:id="@+id/scroll_choice"
-           android:layout_width="80dp"
-           android:layout_height="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/curve1"
+            android:fontFamily="@font/circularstd"
+            android:paddingEnd="66dp"
+            android:paddingStart="19dp"
+            android:paddingTop="38dp"
+            android:text="A few more."
+            android:textColor="#FFF"
+            android:textSize="24sp" />
 
-           android:layout_marginBottom="8dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="350dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/heightbox">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstd"
+                android:text="How tall are you?"
 
-           android:layout_marginEnd="8dp"
-           android:layout_marginStart="8dp"
-           android:layout_marginTop="8dp"
-           app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintHorizontal_bias="0.498"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent"
-           app:layout_constraintVertical_bias="1.0"
-           app:scroll_atmospheric="true"
-           app:scroll_background_color="#00ffffff"
-           app:scroll_indicator="true"
-           app:scroll_indicator_color="#565656"
-           app:scroll_indicator_size="1dp"
-           app:scroll_item_align="center"
-           app:scroll_item_text_color="#797979"
-           app:scroll_item_text_size="17sp"
-           app:scroll_selected_item_background="#00ffffff"
-           app:scroll_selected_item_text_color="#4A90E2"
-           app:scroll_visible_item_count="3" />
+                android:textSize="20sp"
 
+                app:layout_constraintBottom_toBottomOf="parent"
 
-   </android.support.constraint.ConstraintLayout>
+                app:layout_constraintEnd_toEndOf="parent"
 
-
-    <EditText
-        android:id="@+id/editTextDateofBirth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/circularstd"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/signup_box"
-        android:hint="Tattoos"
-        android:paddingLeft="35dp" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/signup_box"
-        android:hint="Piercings"
-        android:paddingLeft="35dp" />
-
-    <EditText
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/signup_box"
-        android:hint="Eye color"
-        android:paddingLeft="35dp" />
+                app:layout_constraintHorizontal_bias="0.139"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.505" />
 
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="1dp"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/signup_box"
-        android:hint="Build"
+            <com.webianks.library.scroll_choice.ScrollChoice
+                android:id="@+id/scroll_choice"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
 
-        android:paddingLeft="35dp" />
+                android:layout_marginBottom="8dp"
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.838"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:scroll_atmospheric="true"
+                app:scroll_background_color="#00ffffff"
+                app:scroll_indicator="true"
+                app:scroll_indicator_color="#565656"
+                app:scroll_indicator_size="1dp"
+                app:scroll_item_align="center"
+                app:scroll_item_text_color="#797979"
+                app:scroll_item_text_size="17sp"
+                app:scroll_selected_item_background="#00ffffff"
+                app:scroll_selected_item_text_color="#4A90E2"
+                app:scroll_visible_item_count="3" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/editTextDateofBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/signup_box"
+                android:fontFamily="@font/circularstd"
+                android:hint="Tattoos"
+                android:paddingLeft="35dp" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/signup_box"
+                android:fontFamily="@font/circularstd"
+                android:hint="Piercings"
+                android:paddingLeft="35dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/signup_box"
+                android:fontFamily="@font/circularstd"
+                android:hint="Eye color"
+                android:paddingLeft="35dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/signup_box"
+                android:fontFamily="@font/circularstd"
+                android:hint="Physique"
+
+                android:paddingLeft="35dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+
+    </LinearLayout>
+
+
+
+
         <!--    <Button
                 android:layout_width="wrap_content"
                 android:text="Next"
@@ -155,15 +193,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
+
+            android:layout_marginBottom="4dp"
+            android:layout_marginEnd="4dp"
             fab:button_colorPressed="@color/fab_material_white"
             fab:hide_animation="@anim/fab_roll_to_down"
             fab:shadowResponsiveEffect_enabled="true"
             fab:show_animation="@anim/fab_roll_from_right" />
 
-    </RelativeLayout>
 
 
 
-</LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OTP">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/curve1"
+        android:fontFamily="@font/circularstd"
+        android:paddingEnd="66dp"
+        android:paddingStart="19dp"
+        android:paddingTop="38dp"
+        android:text="Verification"
+        android:textColor="#FFF"
+        android:textSize="24sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="224dp"
+        android:gravity="center|center_horizontal"
+        android:text="An OTP has been sent to the number you provided " />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="275dp"
+        android:id="@+id/editText_otp"
+        android:background="@drawable/signup_box"
+        android:fontFamily="@font/circularstd"
+        android:hint="OTP"
+        android:inputType="number"
+        android:paddingLeft="35dp" />
+
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button_next2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        fab:button_colorPressed="@color/fab_material_white"
+        fab:hide_animation="@anim/fab_roll_to_down"
+        fab:shadowResponsiveEffect_enabled="true"
+        fab:show_animation="@anim/fab_roll_from_right" />
+</RelativeLayout>

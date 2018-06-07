@@ -1,20 +1,20 @@
 package com.example.yashwant.matchezy;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.widget.EditText;
 
 import com.scalified.fab.ActionButton;
 
-public class Registration2 extends AppCompatActivity {
+public class OTP extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration2);
+        setContentView(R.layout.activity_otp);
+
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next2);
         // actionButton.hide();
@@ -28,17 +28,8 @@ public class Registration2 extends AppCompatActivity {
         actionButton.setImageResource(R.drawable.ic_action_arrow);
 
 
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(getApplicationContext(),Registration3.class);
-                startActivity(intent);
-
-
-            }
-        });
-
+        EditText otp = (EditText)findViewById(R.id.editText_otp);
+        String Num = otp.getText().toString();
 
     }
 }

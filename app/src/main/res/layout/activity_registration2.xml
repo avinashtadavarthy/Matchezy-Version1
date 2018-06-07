@@ -44,7 +44,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/signup_box"
-        android:hint="Looking for"
+        android:hint="Interested in"
         android:paddingLeft="35dp" />
 
     <EditText

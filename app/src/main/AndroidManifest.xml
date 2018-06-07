@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Registration3">
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/title_activity_home_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +22,14 @@
         <activity android:name=".Login" />
         <activity android:name=".Registration" />
         <activity android:name=".Registration2" />
-        <activity android:name=".IntroActivity"/>
-        <!-- <activity android:name=".Registration3"></activity>-->
+        <activity android:name=".IntroActivity" />
+        <activity android:name=".Registration3" />
+        <!--
+            <activity
+            android:name=".HomeScreen"
+            android:label="@string/title_activity_home_screen"></activity>
+        -->
+       <!-- <activity android:name=".OTP"></activity>-->
     </application>
 
 </manifest>

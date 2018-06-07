@@ -1,9 +1,12 @@
 package com.example.yashwant.matchezy;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.scalified.fab.ActionButton;
 import com.webianks.library.scroll_choice.ScrollChoice;
@@ -74,6 +77,14 @@ public class Registration3 extends AppCompatActivity {
         actionButton.setRippleEffectEnabled(true);
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
+
+
+        scrollChoice.setOnItemSelectedListener(new ScrollChoice.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(ScrollChoice scrollChoice, int position, String name) {
+                Log.d("webi",name);
+            }
+        });
 
     }
 }
