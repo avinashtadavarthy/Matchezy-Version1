@@ -15,6 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/curve1"
+
         android:fontFamily="@font/circularstd"
         android:paddingEnd="66dp"
         android:paddingStart="19dp"
@@ -31,63 +32,68 @@
 
     <ImageView
         android:id="@+id/imageview1"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/imagebox"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+
         android:clickable="true"
         android:focusable="true"
+        android:src="@drawable/add"
+        android:paddingRight="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.296" />
+        app:layout_constraintVertical_bias="0.315" />
 
     <ImageView
         android:id="@+id/imageview2"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/imagebox"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
         android:clickable="true"
         android:focusable="true"
+        android:paddingLeft="5dp"
+        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.927"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.298" />
+        app:layout_constraintVertical_bias="0.313" />
 
     <ImageView
         android:id="@+id/imageview3"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:paddingRight="5dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/imagebox"
         android:clickable="true"
         android:focusable="true"
+        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.039"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.765" />
+        app:layout_constraintVertical_bias="0.752" />
 
     <ImageView
         android:id="@+id/imageview4"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@drawable/imagebox"
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:paddingLeft="5dp"
         android:clickable="true"
         android:focusable="true"
+        android:src="@drawable/add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.927"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.742" />
 
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next2"
