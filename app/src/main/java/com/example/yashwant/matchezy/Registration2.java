@@ -85,6 +85,8 @@ public class Registration2 extends AppCompatActivity {
         actionButton.setImageResource(R.drawable.ic_action_arrow);
 
 
+
+
         editText_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,6 +173,7 @@ public class Registration2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                submitForm();
                 /*Intent intent = new Intent(getApplicationContext(),Registration3.class);
                 startActivity(intent);*/
             }

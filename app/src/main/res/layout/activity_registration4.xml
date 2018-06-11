@@ -41,6 +41,7 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@+id/inputLayoutEdu"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp">
 
@@ -49,19 +50,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:id="@+id/editTextEdu"
                     android:layout_marginBottom="1dp"
-                    android:fontFamily="@font/circularstd"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
+                    android:fontFamily="@font/circularstd"
                     android:hint="Education"
+
                     android:paddingLeft="35dp" />
+
+
 
             </android.support.design.widget.TextInputLayout>
 
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-
+                android:id="@+id/inputLayoutCollege"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
@@ -69,6 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:id="@+id/editTextCollege"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
@@ -85,6 +91,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/inputLayoutWorking"
                 android:layout_marginTop="10dp">
 
                 <EditText
@@ -93,6 +100,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
+                    android:id="@+id/editTextWorking"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Working at"
@@ -104,11 +112,12 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:id="@+id/inputLayoutAnnualIncome"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/editText4"
+                    android:id="@+id/editText_annual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
