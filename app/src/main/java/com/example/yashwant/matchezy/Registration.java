@@ -1,6 +1,7 @@
 package com.example.yashwant.matchezy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.TextInputLayout;
@@ -25,6 +26,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.scalified.fab.ActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -35,6 +37,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
     private EditText inputName, inputEmail, inputPassword,input_Dateofbirth,input_number;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword,inputLayoutNumber,inputLayoutDateofbirth;
+    String facebookdata;
+    public String name, email, gender, imgurl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +61,30 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         input_Dateofbirth=(EditText)findViewById(R.id.editTextDateofBirth);
 
 
-        String name,email,pass,dob,ph;
+        facebookdata = getSPData("facebookdata");
+        if(facebookdata != null) {
+            try {
+                JSONObject response = new JSONObject(facebookdata);
+                name = response.optString("name");
+                email = response.optString("email");
+                gender = response.optString("gender");
+
+                JSONObject picture = response.getJSONObject("picture");
+                JSONObject data = picture.getJSONObject("data");
+                imgurl = data.optString("url");
+
+                storeSPData("facebookimageurl", imgurl);
+
+                inputName.setText(name);
+                inputEmail.setText(email);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-        name=inputName.getText().toString().trim();
-        email=inputEmail.getText().toString().trim();
-        pass=inputPassword.getText().toString().trim();
-        dob=input_Dateofbirth.getText().toString().trim();
-        ph=input_number.getText().toString().trim();
+        }
+
 
 
         inputName.addTextChangedListener(new MyTextWatcher(inputName));
@@ -168,7 +189,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         String date = inputEmail.getText().toString().trim();
 
 
-        AndroidNetworking.post(User.getInstance().BASE_URL+"register")
+        /*AndroidNetworking.post(User.getInstance().BASE_URL+"register")
                 .addBodyParameter("username",inputName.getText().toString().trim())
                 .addBodyParameter("dob",input_Dateofbirth.getText().toString().trim())
                 .addBodyParameter("phone_number",inputPassword.getText().toString().trim())
@@ -188,10 +209,10 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         // handle error
                         error.printStackTrace();
                     }
-                });
-/*
+                });*/
+
           Intent intent = new Intent(getApplicationContext(),Registration2.class);
-                startActivity(intent);*/
+                startActivity(intent);
 
     }
 
@@ -317,6 +338,28 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
             }
         }
+    }
+
+
+
+
+
+    //Shared Preferences
+    private void storeSPData(String key, String data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 
