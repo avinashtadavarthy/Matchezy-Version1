@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yashwant.matchezy">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity
-            android:name=".HomeScreen"
-            android:label="@string/title_activity_home_screen">
+        <activity android:name=".Imageupload">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,16 +20,19 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".Login" />
-        <activity android:name=".Registration" />
+        <!-- <activity android:name=".Registration" /> -->
         <activity android:name=".Registration2" />
         <activity android:name=".IntroActivity" />
         <activity android:name=".Registration3" />
-        <!--
-            <activity
+        <activity
             android:name=".HomeScreen"
-            android:label="@string/title_activity_home_screen"></activity>
-        -->
-       <!-- <activity android:name=".OTP"></activity>-->
+            android:label="@string/title_activity_home_screen" />
+        <!-- <activity android:name=".OTP"></activity> -->
+        <activity android:name=".ForgotPassword" />
+        <activity android:name=".LanguagesPopUp" />
+        <activity android:name=".Registration4" />
+        <activity android:name=".ProfilePage" />
+      <!--  <activity android:name=".Imageupload"></activity>-->
     </application>
 
 </manifest>

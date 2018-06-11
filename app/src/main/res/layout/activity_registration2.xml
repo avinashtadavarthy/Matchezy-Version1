@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     tools:context=".Registration2">
@@ -16,10 +18,17 @@
         android:paddingEnd="66dp"
         android:textColor="#FFF"
         android:paddingStart="19dp"
+        android:elevation="8dp"
         android:fontFamily="@font/circularstd"
         android:background="@drawable/curve1"
         android:text="About you."
         android:textSize="24sp" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp">
 
     <EditText
         android:layout_width="wrap_content"
@@ -27,15 +36,24 @@
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:id="@+id/edit_gender"
         android:layout_marginTop="20dp"
         android:inputType="textPersonName"
         android:fontFamily="@font/circularstd"
         android:background="@drawable/signup_box"
-        android:hint="Sex"
+        android:hint="Gender"
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
     <EditText
-        android:id="@+id/editTextDateofBirth"
+        android:id="@+id/edit_interested"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/circularstd"
@@ -47,8 +65,16 @@
         android:hint="Interested in"
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/edit_relationship"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -60,6 +86,14 @@
         android:hint="Relationship Status "
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
     <EditText
 
         android:layout_width="wrap_content"
@@ -69,37 +103,35 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/circularstd"
         android:layout_marginTop="15dp"
+        android:id="@+id/edit_city"
         android:background="@drawable/signup_box"
         android:hint="Choose your city"
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="1dp"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/signup_box"
-        android:hint="Education"
-
-        android:paddingLeft="35dp" />
+        android:layout_marginTop="15dp">
 
     <EditText
-        android:id="@+id/editText4"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginEnd="8dp"
-        android:inputType="number"
         android:layout_marginStart="8dp"
         android:fontFamily="@font/circularstd"
         android:layout_marginTop="15dp"
+        android:id="@+id/edit_lang"
         android:background="@drawable/signup_box"
-        android:hint="Annual income"
-
+        android:hint="Languages known"
         android:paddingLeft="35dp" />
+
+
+</android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -9,6 +9,7 @@
     tools:context=".Registration">
 
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -23,6 +24,13 @@
         android:textSize="24sp" />
 
 
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/inputLayoutName"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,12 +38,21 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="45dp"
+        android:id="@+id/editText_name"
         android:inputType="textPersonName"
         android:fontFamily="@font/circularstd"
         android:background="@drawable/signup_box"
         android:hint="Name"
         android:paddingLeft="35dp" />
+    </android.support.design.widget.TextInputLayout>
 
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputLayoutdateofbirth"
+        android:layout_marginTop="10dp">
     <EditText
         android:id="@+id/editTextDateofBirth"
         android:layout_width="wrap_content"
@@ -49,12 +66,19 @@
         android:hint="Date of birth"
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/inputLayoutNumber"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/editNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
         android:fontFamily="@font/circularstd"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -64,8 +88,16 @@
         android:hint="Mobile number "
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:id="@+id/inputLayoutEmail"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/editText_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -79,6 +111,14 @@
         android:hint="Email"
         android:paddingLeft="35dp" />
 
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/inputLayoutPassword"
+        android:layout_marginTop="10dp">
 
     <EditText
         android:layout_width="wrap_content"
@@ -90,8 +130,11 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/signup_box"
         android:hint="Password"
+        android:id="@+id/edit_password"
         android:inputType="textPassword"
         android:paddingLeft="35dp" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
