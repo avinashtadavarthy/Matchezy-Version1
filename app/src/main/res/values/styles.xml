@@ -9,13 +9,16 @@
     </style>
 
 
-
     <style name="findYourSoulmate" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:fontFamily">CircularStd-Bold</item>
         <item name="android:textColor">#FF585858</item>
         <item name="android:textSize">16dp</item>
         <item name="android:lineSpacingMultiplier">1.19</item>
     </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>
