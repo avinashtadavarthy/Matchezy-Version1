@@ -100,6 +100,29 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputLayoutreligion"
+                android:layout_marginTop="10dp">
+
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:id="@+id/editText_religion"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/signup_box"
+                    android:fontFamily="@font/circularstd"
+                    android:hint="Religion"
+
+                    android:paddingLeft="35dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:id="@+id/inputLayouttattoos"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
@@ -139,52 +162,6 @@
                     android:paddingLeft="35dp" />
 
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/inputLayouteye"
-                android:layout_marginTop="10dp">
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:id="@+id/editText_eye"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/signup_box"
-                    android:fontFamily="@font/circularstd"
-                    android:hint="Eye color"
-                    android:paddingLeft="35dp" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/inputLayoutbody"
-                android:layout_marginTop="10dp">
-
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="1dp"
-                    android:id="@+id/editText_body"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/signup_box"
-                    android:fontFamily="@font/circularstd"
-                    android:hint="Physique"
-
-                    android:paddingLeft="35dp" />
-
-            </android.support.design.widget.TextInputLayout>
-
-
-
 
 
         </LinearLayout>

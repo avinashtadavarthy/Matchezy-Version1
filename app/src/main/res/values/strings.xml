@@ -109,4 +109,11 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
+
+    <string name="facebook_app_id">195765017916503</string>
+    <string name="fb_login_protocol_scheme">fb195765017916503</string>
+    AD:CE:E6:2A:37:17:8A:68:2A:1B:37:6A:E0:BF:F4:9A:7A:70:F9:11
+    <string name="google_places_api_key">AIzaSyC8K65LmB5kRjdksN_Frib3rm90_z28964</string>
+
 </resources>

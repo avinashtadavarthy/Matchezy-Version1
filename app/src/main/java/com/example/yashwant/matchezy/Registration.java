@@ -1,6 +1,7 @@
 package com.example.yashwant.matchezy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.TextInputLayout;
@@ -25,9 +26,14 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.scalified.fab.ActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Registration extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -146,8 +152,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         }
 
 
-        if(!validateDateOfBirth())
-        {
+        if(!validateDateOfBirth()) {
             return;
         }
 
@@ -164,34 +169,20 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             return;
         }
 
+        String[] dd = input_Dateofbirth.getText().toString().split("/",3);
+        String dobstr = dd[2]+"/"+dd[1]+"/"+dd[0];
 
-        String date = inputEmail.getText().toString().trim();
+        storeSPData("username", inputName.getText().toString().trim());
+        storeSPData("dob", dobstr);
+        storeSPData("phone_number", inputPassword.getText().toString().trim());
+        storeSPData("email", inputEmail.getText().toString().trim());
+        storeSPData("password", input_number.getText().toString().trim());
 
+        Log.e("date", input_Dateofbirth.getText().toString());
+        Log.e("mdate", dobstr);
 
-        AndroidNetworking.post(User.getInstance().BASE_URL+"register")
-                .addBodyParameter("username",inputName.getText().toString().trim())
-                .addBodyParameter("dob",input_Dateofbirth.getText().toString().trim())
-                .addBodyParameter("phone_number",inputPassword.getText().toString().trim())
-                .addBodyParameter("email",input_Dateofbirth.getText().toString().trim())
-                .addBodyParameter("password",input_number.getText().toString().trim())
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        Log.e("check",response.toString());
-                        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        error.printStackTrace();
-                    }
-                });
-/*
-          Intent intent = new Intent(getApplicationContext(),Registration2.class);
-                startActivity(intent);*/
+            Intent intent = new Intent(getApplicationContext(), Registration2.class);
+            startActivity(intent);
 
     }
 
@@ -212,10 +203,11 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         inputLayoutNumber.setError(getString(R.string.err_msg_number));
         requestFocus(input_number);
         return false;
-    }
-
-
-    else {
+    } else if(input_number.getText().toString().length() < 10) {
+        inputLayoutNumber.setError("Number not valid");
+        requestFocus(input_number);
+        return false;
+    } else {
         inputLayoutNumber.setErrorEnabled(false);
     }
         return true;
@@ -252,6 +244,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         if (inputPassword.getText().toString().trim().isEmpty()) {
             inputLayoutPassword.setError(getString(R.string.err_msg_password));
             requestFocus(inputPassword);
+            return false;
+        } else if (inputPassword.getText().toString().trim().length() < 8) {
+            inputLayoutPassword.setError("Password must be above 8 characters");
             return false;
         } else {
             inputLayoutPassword.setErrorEnabled(false);
@@ -317,6 +312,26 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
             }
         }
+    }
+
+
+    //Shared Preferences
+    private void storeSPData(String key, String data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
+
     }
 
 

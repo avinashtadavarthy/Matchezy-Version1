@@ -114,6 +114,28 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputLayoutDesignation"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/editTextDesignation"
+                    android:background="@drawable/signup_box"
+                    android:fontFamily="@font/circularstd"
+                    android:hint="Designation"
+
+                    android:paddingLeft="35dp" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:id="@+id/inputLayoutAnnualIncome"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">

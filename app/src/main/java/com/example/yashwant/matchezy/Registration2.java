@@ -3,6 +3,7 @@ package com.example.yashwant.matchezy;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.TextInputLayout;
@@ -32,6 +33,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.scalified.fab.ActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -95,6 +97,18 @@ public class Registration2 extends AppCompatActivity {
             }
         });
 
+        editText_city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+
+                if(hasFocus) {
+                    city();
+                }
+
+            }
+        });
+
+
 
         editText_lang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,19 +127,6 @@ public class Registration2 extends AppCompatActivity {
 
             }
         });
-
-
-        editText_city.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-
-                if(hasFocus) {
-                    city();
-                }
-
-            }
-        });
-
 
 
 
@@ -175,8 +176,6 @@ public class Registration2 extends AppCompatActivity {
             public void onClick(View view) {
 
                 submitForm();
-                /*Intent intent = new Intent(getApplicationContext(),Registration3.class);
-                startActivity(intent);*/
             }
         });
 
@@ -280,28 +279,28 @@ public class Registration2 extends AppCompatActivity {
     private void relationship()
 
     {
-        final CharSequence[] items = { "single", "single with children", "divorced", "divorced with children", "widowed", "widowed with children"};
+        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
-        if (editText_relationship.getText().toString().equals("single")){
+        if (editText_relationship.getText().toString().equals("Single")){
             position = 0;
-        } else if (editText_relationship.getText().toString().equals("single with children")){
+        } else if (editText_relationship.getText().toString().equals("Single with Children")){
             position = 1;
-        } else if (editText_relationship.getText().toString().equals("divorced")){
+        } else if (editText_relationship.getText().toString().equals("Divorced")){
             position = 2;
         }
 
-        else if (editText_relationship.getText().toString().equals("divorced with children")){
+        else if (editText_relationship.getText().toString().equals("Divorced with Children")){
             position = 3;
         }
 
-        else if (editText_relationship.getText().toString().equals("widowed")){
+        else if (editText_relationship.getText().toString().equals("Widowed")){
             position = 4;
         }
 
-        else if (editText_relationship.getText().toString().equals("widowed with children")){
+        else if (editText_relationship.getText().toString().equals("Widowed with Children")){
             position = 5;
         }
 
@@ -327,7 +326,7 @@ public class Registration2 extends AppCompatActivity {
     private void city()
     {
         try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN).build(Registration2.this);
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(Registration2.this);
             startActivityForResult(intent, 1000);
 
         } catch (GooglePlayServicesRepairableException e) {
@@ -384,16 +383,13 @@ public class Registration2 extends AppCompatActivity {
             return;
         }
 
-
-        if(!validateInterested())
-        {
+        if(!validateInterested()) {
             return;
         }
 
         if(!validateRelationship()) {
             return;
         }
-
 
         if (!validateCity()) {
             return;
@@ -403,31 +399,13 @@ public class Registration2 extends AppCompatActivity {
             return;
         }
 
-/*
-        String date = inputEmail.getText().toString().trim();
 
+        storeSPData("gender", editText_gender.getText().toString().trim());
+        storeSPData("lookingfor", editText_interested.getText().toString().trim());
+        storeSPData("maritalstatus", editText_relationship.getText().toString().trim());
+        storeSPData("city", editText_city.getText().toString().trim());
+        storeSPData("lang", editText_lang.getText().toString().trim());
 
-        AndroidNetworking.post(User.getInstance().BASE_URL+"register")
-                .addBodyParameter("username",inputName.getText().toString().trim())
-                .addBodyParameter("dob",input_Dateofbirth.getText().toString().trim())
-                .addBodyParameter("phone_number",inputPassword.getText().toString().trim())
-                .addBodyParameter("email",input_Dateofbirth.getText().toString().trim())
-                .addBodyParameter("password",input_number.getText().toString().trim())
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        Log.e("check",response.toString());
-                        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        error.printStackTrace();
-                    }
-                });*/
           Intent intent = new Intent(getApplicationContext(),Registration3.class);
                 startActivity(intent);
 
@@ -450,10 +428,7 @@ public class Registration2 extends AppCompatActivity {
             inputLayoutinterested.setError("Enter interested");
             requestFocus(editText_interested);
             return false;
-        }
-
-
-        else {
+        } else {
             inputLayoutinterested.setErrorEnabled(false);
         }
         return true;
@@ -551,4 +526,22 @@ public class Registration2 extends AppCompatActivity {
     }
 
 
+    //Shared Preferences
+    private void storeSPData(String key, String data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
+
+    }
 }
