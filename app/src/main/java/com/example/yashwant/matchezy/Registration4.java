@@ -115,7 +115,7 @@ public class Registration4 extends AppCompatActivity {
 
 
                 });*/
-        Intent intent = new Intent(getApplicationContext(),Imageupload.class);
+        Intent intent = new Intent(getApplicationContext(),Registration_Interests.class);
         startActivity(intent);
 
     }
