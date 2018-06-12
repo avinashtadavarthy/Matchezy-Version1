@@ -39,6 +39,14 @@ public class Imageupload extends AppCompatActivity {
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
 
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),Registration_Interests.class);
+                startActivity(intent);
+            }
+        });
+
         imageView1 =(ImageView)findViewById(R.id.imageview1);
         imageView2 =(ImageView)findViewById(R.id.imageview2);
         imageView3 =(ImageView)findViewById(R.id.imageview3);

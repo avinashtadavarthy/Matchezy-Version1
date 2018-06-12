@@ -11,10 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Registration2"
+        <activity
+            android:name=".Registration2"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".Login" />
         <!-- <activity android:name=".Registration" /> -->
-     <!--   <activity android:name=".Registration2" />-->
+        <!-- <activity android:name=".Registration2" /> -->
         <activity android:name=".IntroActivity" />
         <activity android:name=".Registration3" />
         <activity
@@ -36,10 +36,13 @@
         <activity android:name=".Registration4" />
         <activity android:name=".ProfilePage" />
         <!-- <activity android:name=".Imageupload"></activity> -->
-       <!-- <activity
+        <!--
+            <activity
             android:name=".ScrollingActivity"
             android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>-->
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        -->
+        <activity android:name=".Registration_Interests"></activity>
     </application>
 
 </manifest>
