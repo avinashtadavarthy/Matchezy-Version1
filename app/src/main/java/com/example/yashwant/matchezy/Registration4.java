@@ -417,7 +417,6 @@ public class Registration4 extends AppCompatActivity {
             return false;
         }
 
-
         else {
             inputLayoutWorking.setErrorEnabled(false);
         }
@@ -491,16 +490,20 @@ public class Registration4 extends AppCompatActivity {
 
 
                 case R.id.editTextCollege:
-                    validatework();
+                    validatecollege();
                     break;
 
                 case R.id.editTextWorking:
-                    validateannual();
+                    validatework();
+                    break;
+
+                case R.id.editTextDesignation:
+                    validatedesig();
                     break;
 
 
                 case R.id.editText_annual:
-                    validatecollege();
+                    validateannual();
                     break;
 
             }

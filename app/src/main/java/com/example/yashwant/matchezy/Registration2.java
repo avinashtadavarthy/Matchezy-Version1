@@ -473,7 +473,7 @@ public class Registration2 extends AppCompatActivity {
 
     private boolean validateLang() {
         if (editText_lang.getText().toString().trim().isEmpty()) {
-            inputLayoutgender.setError(getString(R.string.err_msg_password));
+            inputLayoutlang.setError("Enter the langauges known");
             requestFocus(editText_lang);
             return false;
         } else {
