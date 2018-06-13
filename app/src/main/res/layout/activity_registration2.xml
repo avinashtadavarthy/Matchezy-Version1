@@ -43,11 +43,10 @@
                 android:layout_marginTop="30dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:id="@+id/edit_gender"
                     android:layout_marginTop="20dp"
                     android:inputType="textPersonName"
@@ -67,12 +66,11 @@
 
                 <EditText
                     android:id="@+id/edit_interested"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:fontFamily="@font/circularstd"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:hint="Interested in"
@@ -89,12 +87,11 @@
 
                 <EditText
                     android:id="@+id/edit_relationship"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
                     android:fontFamily="@font/circularstd"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:hint="Relationship Status "
@@ -111,11 +108,10 @@
 
                 <EditText
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:fontFamily="@font/circularstd"
                     android:layout_marginTop="15dp"
                     android:id="@+id/edit_city"
@@ -133,12 +129,10 @@
                 android:layout_marginTop="15dp">
 
                 <EditText
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:fontFamily="@font/circularstd"
                     android:layout_marginTop="15dp"
                     android:id="@+id/edit_lang"
@@ -170,6 +164,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/next" />-->
+
         <com.scalified.fab.ActionButton
             android:id="@+id/action_button_next2"
             android:layout_width="wrap_content"

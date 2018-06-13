@@ -48,7 +48,8 @@
         <activity android:name=".OTP"/>
         <!--<activity android:name=".Login"/>-->
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".LanguagesPopUp" />
+        <activity android:name=".LanguagesPopUp"
+            android:theme="@style/AppTheme.CustomTheme"/>
         <!--<activity android:name=".ProfilePage" />-->
 
         <activity
@@ -73,6 +74,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChooseCity"
+            android:theme="@style/AppTheme.CustomTheme"/>
 
 
     </application>

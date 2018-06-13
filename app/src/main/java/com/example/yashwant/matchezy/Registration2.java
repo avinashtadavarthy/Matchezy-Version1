@@ -11,32 +11,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.scalified.fab.ActionButton;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Calendar;
 
 public class Registration2 extends AppCompatActivity {
 
@@ -100,8 +83,6 @@ public class Registration2 extends AppCompatActivity {
         actionButton.setRippleEffectEnabled(true);
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
-
-
 
 
         editText_city.setOnClickListener(new View.OnClickListener() {
@@ -339,15 +320,8 @@ public class Registration2 extends AppCompatActivity {
 
     private void city()
     {
-        try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(Registration2.this);
-            startActivityForResult(intent, 1000);
-
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
+        Intent intnt = new Intent(getApplicationContext(), ChooseCity.class);
+        startActivityForResult(intnt, 12345);
     }
 
     private void lang()
@@ -361,16 +335,12 @@ public class Registration2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1000) {
+        if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
 
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                editText_city.setText(place.getName());
+                String chosencity = data.getStringExtra("chosencity");
+                editText_city.setText(chosencity);
 
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
 

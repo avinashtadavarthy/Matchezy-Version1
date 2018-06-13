@@ -106,9 +106,10 @@
 
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="1dp"
                     android:id="@+id/editText_religion"
                     android:layout_marginTop="15dp"
@@ -129,11 +130,10 @@
 
                 <EditText
                     android:id="@+id/editText_tattoos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
@@ -150,11 +150,10 @@
 
                 <EditText
                     android:id="@+id/editText_piercing"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"

@@ -49,9 +49,10 @@
 
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:id="@+id/editTextEdu"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
@@ -73,9 +74,10 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:id="@+id/editTextCollege"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
@@ -97,9 +99,10 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
                     android:id="@+id/editTextWorking"
@@ -119,9 +122,10 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="15dp"
                     android:id="@+id/editTextDesignation"
@@ -142,12 +146,11 @@
 
                 <EditText
                     android:id="@+id/editText_annual"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:inputType="number"
-                    android:layout_marginStart="8dp"
                     android:fontFamily="@font/circularstd"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
