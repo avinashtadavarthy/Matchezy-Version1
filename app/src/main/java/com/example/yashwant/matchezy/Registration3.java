@@ -97,7 +97,7 @@ public class Registration3 extends AppCompatActivity {
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next3);
         // actionButton.hide();
-        actionButton.setType(ActionButton.Type.BIG);
+        actionButton.setType(ActionButton.Type.DEFAULT);
         //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
