@@ -57,6 +57,8 @@ public class Registration2 extends AppCompatActivity {
         inputLayoutcity= (TextInputLayout)findViewById(R.id.inputlayout_city);
 
 
+
+
         editText_gender = (EditText)findViewById(R.id.edit_gender);
         editText_city=(EditText)findViewById(R.id.edit_city);
         editText_lang=(EditText)findViewById(R.id.edit_lang);

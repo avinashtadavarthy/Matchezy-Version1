@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,122 +23,134 @@
         android:text="Hi there! Please fill the following to get started."
         android:textSize="24sp" />
 
-
-
-    <android.support.design.widget.TextInputLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:id="@+id/inputLayoutName"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="45dp"
-        android:id="@+id/editText_name"
-        android:inputType="textPersonName"
-        android:fontFamily="@font/circularstd"
-        android:background="@drawable/signup_box"
-        android:hint="Name"
-        android:paddingLeft="35dp" />
-    </android.support.design.widget.TextInputLayout>
-
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputLayoutdateofbirth"
-        android:layout_marginTop="10dp">
-    <EditText
-        android:id="@+id/editTextDateofBirth"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/circularstd"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/signup_box"
-        android:hint="Date of birth"
-        android:paddingLeft="35dp" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/inputLayoutNumber"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-    <EditText
-        android:id="@+id/editNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:inputType="number"
-        android:background="@drawable/signup_box"
-        android:hint="Mobile number "
-        android:paddingLeft="35dp" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/inputLayoutEmail"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-
-    <EditText
-        android:id="@+id/editText_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginEnd="8dp"
-
-        android:inputType="textEmailAddress"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/signup_box"
-        android:hint="Email"
-        android:paddingLeft="35dp" />
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/inputLayoutPassword"
-        android:layout_marginTop="10dp">
-
-    <EditText
-        android:layout_width="wrap_content"
-
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="1dp"
-        android:fontFamily="@font/circularstd"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/signup_box"
-        android:hint="Password"
-        android:id="@+id/edit_password"
-        android:inputType="textPassword"
-        android:paddingLeft="35dp" />
-
-    </android.support.design.widget.TextInputLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_below="@+id/textView"
         android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/inputLayoutName"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="45dp"
+                    android:id="@+id/editText_name"
+                    android:inputType="textPersonName"
+                    android:fontFamily="@font/circularstd"
+                    android:background="@drawable/signup_box"
+                    android:hint="Name"
+                    android:paddingLeft="35dp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputLayoutdateofbirth"
+                android:layout_marginTop="10dp">
+                <EditText
+                    android:id="@+id/editTextDateofBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstd"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/signup_box"
+                    android:hint="Date of birth"
+                    android:paddingLeft="35dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/inputLayoutNumber"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/editNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/circularstd"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="20dp"
+                    android:inputType="number"
+                    android:background="@drawable/signup_box"
+                    android:hint="Mobile number "
+                    android:paddingLeft="35dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/inputLayoutEmail"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/editText_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="8dp"
+
+                    android:inputType="textEmailAddress"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/circularstd"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/signup_box"
+                    android:hint="Email"
+                    android:paddingLeft="35dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/inputLayoutPassword"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:fontFamily="@font/circularstd"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/signup_box"
+                    android:hint="Password"
+                    android:id="@+id/edit_password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="35dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
 
 
     <!--    <Button
@@ -166,7 +178,7 @@
 
             fab:show_animation="@anim/fab_roll_from_right" />
 
-    </RelativeLayout>
 
 
-</LinearLayout>
+
+</RelativeLayout>
