@@ -72,7 +72,9 @@ public class Registration2 extends AppCompatActivity {
         String facebookData = getSPData("facebookdata");
         try {
             JSONObject fbJsonObj = new JSONObject(facebookData);
-            editText_gender.setText(fbJsonObj.optString("gender"));
+            String genderFb = fbJsonObj.optString("gender");
+            String capGender = genderFb.substring(0, 1).toUpperCase() + genderFb.substring(1);
+            editText_gender.setText(capGender);
             JSONObject locationDataOnj = fbJsonObj.optJSONObject("location");
             editText_city.setText(locationDataOnj.optString("name"));
         } catch (JSONException e) {

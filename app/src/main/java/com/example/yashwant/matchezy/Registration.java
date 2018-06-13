@@ -43,6 +43,8 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     private EditText inputName, inputEmail, inputPassword, input_Dateofbirth, input_number;
     private TextInputLayout inputLayoutName, inputLayoutEmail, inputLayoutPassword, inputLayoutNumber, inputLayoutDateofbirth;
 
+    boolean isLoggedThroughFb = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,21 +67,28 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
         String name, email, pass, dob, ph;
 
-        String facebookData = getSPData("facebookdata");
-        try {
-            JSONObject fbJsonObj = new JSONObject(facebookData);
-            inputName.setText(fbJsonObj.optString("name"));
-            inputEmail.setText(fbJsonObj.optString("email"));
-            SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
-            String d = fbJsonObj.optString("birthday");
-            Date dt1 = format1.parse(d);
-            DateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
-            String finalDay = format2.format(dt1);
-            input_Dateofbirth.setText(finalDay);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
+
+        if(isLoggedThroughFb) {
+            String facebookData = getSPData("facebookdata");
+            try {
+                JSONObject fbJsonObj = new JSONObject(facebookData);
+                inputName.setText(fbJsonObj.optString("name"));
+                inputEmail.setText(fbJsonObj.optString("email"));
+                SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
+                String d = fbJsonObj.optString("birthday");
+                Date dt1 = format1.parse(d);
+                DateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
+                String finalDay = format2.format(dt1);
+                input_Dateofbirth.setText(finalDay);
+                inputPassword.setText(fbJsonObj.optString("id"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            inputLayoutPassword.setVisibility(View.INVISIBLE);
         }
 
         name = inputName.getText().toString().trim();
@@ -190,7 +199,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
         storeSPData("username", inputName.getText().toString().trim());
         storeSPData("dob", dobstr);
-        storeSPData("phone_number", inputPassword.getText().toString().trim());
+        storeSPData("phone_number", input_number.getText().toString().trim());
         storeSPData("email", inputEmail.getText().toString().trim());
         storeSPData("password", input_number.getText().toString().trim());
 

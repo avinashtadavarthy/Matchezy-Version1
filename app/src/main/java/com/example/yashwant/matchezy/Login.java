@@ -69,7 +69,9 @@ public class Login extends AppCompatActivity {
 
                                         Log.e("fbresponse", response.toString());
 
-                                       storeSPData("facebookdata", response.toString());
+                                        storeSPData("facebookdata", response.toString());
+
+                                        storeSPData("isLoggedInThroughFb", true);
 
                                         Intent intent = new Intent(Login.this, Registration.class);
                                         startActivity(intent);
@@ -107,6 +109,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                storeSPData("isLoggedInThroughFb", false);
 
                 Intent intent = new Intent(Login.this, Registration.class);
                 startActivity(intent);
@@ -150,6 +153,15 @@ public class Login extends AppCompatActivity {
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor mUserEditor = mUserData.edit();
         mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private void storeSPData(String key, boolean data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putBoolean(key, data);
         mUserEditor.commit();
 
     }
