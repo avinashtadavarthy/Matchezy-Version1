@@ -67,6 +67,16 @@ public class Registration2 extends AppCompatActivity {
         editText_relationship.setShowSoftInputOnFocus(false);
         editText_interested.setShowSoftInputOnFocus(false);
 
+        String facebookData = getSPData("facebookdata");
+        try {
+            JSONObject fbJsonObj = new JSONObject(facebookData);
+            editText_gender.setText(fbJsonObj.optString("gender"));
+            JSONObject locationDataOnj = fbJsonObj.optJSONObject("location");
+            editText_city.setText(locationDataOnj.optString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         editText_gender.addTextChangedListener(new Registration2.MyTextWatcher(editText_gender));
         editText_city.addTextChangedListener(new Registration2.MyTextWatcher(editText_city));
         editText_interested.addTextChangedListener(new Registration2.MyTextWatcher(editText_interested));

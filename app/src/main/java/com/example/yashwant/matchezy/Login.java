@@ -1,6 +1,5 @@
 package com.example.yashwant.matchezy;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +22,10 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Login extends AppCompatActivity {
 
@@ -35,15 +34,17 @@ public class Login extends AppCompatActivity {
     //fb login integration
     CallbackManager callbackManager;
     String access;
-    String url = "https://graph.facebook.com/me?fields=id,verified,first_name,last_name,name,gender,email,cover.height(720),picture.height(720),age_range&access_token=";
+    String url = "https://graph.facebook.com/me?fields=id,verified,first_name,friends,last_name,address,location,name,gender,email,birthday,picture.height(720),age_range&access_token=";
     Button facebook;
+    private List<String> permissionNeeds = Arrays.asList("public_profile",
+            "email", "user_friends", "user_birthday", "user_gender", "user_location",
+            "user_friends", "user_photos", "user_likes");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
-
 
         signup = (TextView) findViewById(R.id.signupButton);
 
@@ -102,9 +103,6 @@ public class Login extends AppCompatActivity {
                 }
         );
 
-
-
-
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,13 +123,11 @@ public class Login extends AppCompatActivity {
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();
             LoginManager.getInstance().logInWithReadPermissions(
-                    this,
-                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile"));
+                    this, permissionNeeds);
         } else {
 
             LoginManager.getInstance().logInWithReadPermissions(
-                    this,
-                    Arrays.asList("user_photos", "email", "user_birthday", "public_profile"));
+                    this, permissionNeeds);
 
         }
 
@@ -147,8 +143,6 @@ public class Login extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
     }
-
-
 
     //Shared Preferences
     private void storeSPData(String key, String data) {
@@ -167,5 +161,4 @@ public class Login extends AppCompatActivity {
 
         return data;
     }
-
 }
