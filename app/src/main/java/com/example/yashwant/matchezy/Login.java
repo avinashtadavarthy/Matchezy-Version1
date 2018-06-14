@@ -90,6 +90,8 @@ public class Login extends AppCompatActivity {
                                                         } else if(response.optString("status_code").equals("404")) {
 
                                                             Log.e("fbLogin", "user doesnt exist");
+                                                            storeSPData("facebookdata", response.toString());
+                                                            storeSPData("isLoggedInThroughFb", true);
                                                             Intent intent = new Intent(Login.this, Registration.class);
                                                             startActivity(intent);
 
@@ -102,10 +104,6 @@ public class Login extends AppCompatActivity {
                                                 });
 
                                         Log.e("fbresponse", response.toString());
-                                        storeSPData("facebookdata", response.toString());
-                                        storeSPData("isLoggedInThroughFb", true);
-                                        Intent intent = new Intent(Login.this, Registration.class);
-                                        startActivity(intent);
 
                                     }
                                 },

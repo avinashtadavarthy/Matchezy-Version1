@@ -91,16 +91,18 @@ public class Registration_Imageupload extends AppCompatActivity {
                                 // do anything with response
                                 Log.e("check", response.toString());
 
-                                if(response.optString("message").equals("Registration successful")) {
+                                if(response.optString("status_code").equals("200")) {
 
-                                    Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),
+                                            response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
                                     Intent intent =  new Intent(Registration_Imageupload.this, OTP.class);
                                     startActivity(intent);
 
                                 } else {
 
-                                    Toast.makeText(getApplicationContext(), "User not registered successfully!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(),
+                                            response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
                                 }
                             }
