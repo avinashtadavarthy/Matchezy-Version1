@@ -14,6 +14,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -46,8 +50,9 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        signup = (TextView) findViewById(R.id.signupButton);
+        AndroidNetworking.initialize(this);
 
+        signup = (TextView) findViewById(R.id.signupButton);
         facebook = (Button) findViewById(R.id.facebook);
 
 
@@ -59,7 +64,6 @@ public class Login extends AppCompatActivity {
 
                         access = loginResult.getAccessToken().getToken();
 
-
                         //making the request and getting the data
                         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url + access, null,
                                 new Response.Listener<JSONObject>()
@@ -67,12 +71,39 @@ public class Login extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
 
+                                        String fb_id = response.optString("id");
+                                        storeSPData("fb_id", fb_id);
+
+                                        AndroidNetworking.post(User.getInstance().BASE_URL + "fbLogin")
+                                                .addBodyParameter("fb_id",fb_id)
+                                                .setPriority(Priority.HIGH)
+                                                .build()
+                                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        if(response.optString("status_code").equals("200")) {
+
+                                                            Log.e("fbLogin", "user already exists");
+                                                            Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                            startActivity(intent);
+
+                                                        } else if(response.optString("status_code").equals("404")) {
+
+                                                            Log.e("fbLogin", "user doesnt exist");
+                                                            Intent intent = new Intent(Login.this, Registration.class);
+                                                            startActivity(intent);
+
+                                                        }
+                                                    }
+                                                    @Override
+                                                    public void onError(ANError error) {
+                                                        error.printStackTrace();
+                                                    }
+                                                });
+
                                         Log.e("fbresponse", response.toString());
-
                                         storeSPData("facebookdata", response.toString());
-
                                         storeSPData("isLoggedInThroughFb", true);
-
                                         Intent intent = new Intent(Login.this, Registration.class);
                                         startActivity(intent);
 
@@ -125,13 +156,9 @@ public class Login extends AppCompatActivity {
 
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();
-            LoginManager.getInstance().logInWithReadPermissions(
-                    this, permissionNeeds);
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
         } else {
-
-            LoginManager.getInstance().logInWithReadPermissions(
-                    this, permissionNeeds);
-
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
         }
 
     }

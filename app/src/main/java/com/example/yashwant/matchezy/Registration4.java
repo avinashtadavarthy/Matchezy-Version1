@@ -178,184 +178,96 @@ public class Registration4 extends AppCompatActivity {
     private int choosePositionEdu() {
         int position;
 
-        if(editText_edu.getText().toString().equals("Aeronautical Engineering")) {
-            position = 0;
-        } else if(editText_edu.getText().toString().equals("B.Arch")) {
-            position = 1;
-        } else if(editText_edu.getText().toString().equals("BCA")) {
-            position = 2;
-        } else if(editText_edu.getText().toString().equals("BE")) {
-            position = 3;
-        } else if(editText_edu.getText().toString().equals("B.Plan")) {
-            position = 4;
-        } else if(editText_edu.getText().toString().equals("B.Sc IT/ Computer Science")) {
-            position = 5;
-        } else if(editText_edu.getText().toString().equals("B.Tech.")) {
-            position = 6;
-        } else if(editText_edu.getText().toString().equals("Other Bachelor Degree in Engineering / Computers")) {
-            position = 7;
-        } else if(editText_edu.getText().toString().equals("B.S.(Engineering)")) {
-            position = 8;
-        } else if(editText_edu.getText().toString().equals("M.Arch.")) {
-            position = 9;
-        } else if(editText_edu.getText().toString().equals("MCA")) {
-            position = 10;
-        } else if(editText_edu.getText().toString().equals("ME")) {
-            position = 11;
-        } else if(editText_edu.getText().toString().equals("M.Sc. IT / Computer Science")) {
-            position = 12;
-        } else if(editText_edu.getText().toString().equals("M.S.(Engg.)")) {
-            position = 13;
-        } else if(editText_edu.getText().toString().equals("M.Tech.")) {
-            position = 14;
-        } else if(editText_edu.getText().toString().equals("PGDCA")) {
-            position = 15;
-        } else if(editText_edu.getText().toString().equals("Other Masters Degree in Engineering / Computers")) {
-            position = 16;
-        } else if(editText_edu.getText().toString().equals("Aviation Degree")) {
-            position = 17;
-        } else if(editText_edu.getText().toString().equals("B.A.")) {
-            position = 18;
-        } else if(editText_edu.getText().toString().equals("B.Com.")) {
-            position = 19;
-        } else if(editText_edu.getText().toString().equals("B.Ed.")) {
-            position = 20;
-        } else if(editText_edu.getText().toString().equals("BFA")) {
-            position = 21;
-        } else if(editText_edu.getText().toString().equals("BFT")) {
-            position = 22;
-        } else if(editText_edu.getText().toString().equals("BLIS")) {
-            position = 23;
-        } else if(editText_edu.getText().toString().equals("B.M.M.")) {
-            position = 24;
-        } else if(editText_edu.getText().toString().equals("B.Sc.")) {
-            position = 25;
-        } else if(editText_edu.getText().toString().equals("B.S.W")) {
-            position = 26;
-        } else if(editText_edu.getText().toString().equals("B.Phil.")) {
-            position = 27;
-        } else if(editText_edu.getText().toString().equals("Other Bachelor Degree in Arts / Science / Commerce")) {
-            position = 28;
-        } else if(editText_edu.getText().toString().equals("M.A.")) {
-            position = 29;
-        } else if(editText_edu.getText().toString().equals("MCom")) {
-            position = 30;
-        } else if(editText_edu.getText().toString().equals("M.Ed.")) {
-            position = 31;
-        } else if(editText_edu.getText().toString().equals("MFA")) {
-            position = 32;
-        } else if(editText_edu.getText().toString().equals("MLIS")) {
-            position = 33;
-        } else if(editText_edu.getText().toString().equals("M.Sc.")) {
-            position = 34;
-        } else if(editText_edu.getText().toString().equals("MSW")) {
-            position = 35;
-        } else if(editText_edu.getText().toString().equals("M.Phil.")) {
-            position = 36;
-        } else if(editText_edu.getText().toString().equals("Other Master Degree in Arts / Science / Commerce")) {
-            position = 37;
-        } else if(editText_edu.getText().toString().equals("BBA")) {
-            position = 38;
-        } else if(editText_edu.getText().toString().equals("BFM (Financial Management)")) {
-            position = 39;
-        } else if(editText_edu.getText().toString().equals("BHM (Hotel Management)")) {
-            position = 40;
-        } else if(editText_edu.getText().toString().equals("Other Bachelor Degree in Management")) {
-            position = 41;
-        } else if(editText_edu.getText().toString().equals("MBA")) {
-            position = 42;
-        } else if(editText_edu.getText().toString().equals("MFM (Financial Management)")) {
-            position = 43;
-        } else if(editText_edu.getText().toString().equals("MHM  (Hotel Management)")) {
-            position = 44;
-        } else if(editText_edu.getText().toString().equals("MHRM (Human Resource Management)")) {
-            position = 45;
-        } else if(editText_edu.getText().toString().equals("PGDM")) {
-            position = 46;
-        } else if(editText_edu.getText().toString().equals("Other Master Degree in Management")) {
-            position = 47;
-        } else if(editText_edu.getText().toString().equals("B.A.M.S.")) {
-            position = 48;
-        } else if(editText_edu.getText().toString().equals("BDS")) {
-            position = 49;
-        } else if(editText_edu.getText().toString().equals("BHMS")) {
-            position = 50;
-        } else if(editText_edu.getText().toString().equals("BSMS")) {
-            position = 51;
-        } else if(editText_edu.getText().toString().equals("BPharm")) {
-            position = 52;
-        } else if(editText_edu.getText().toString().equals("BPT")) {
-            position = 53;
-        } else if(editText_edu.getText().toString().equals("BUMS")) {
-            position = 54;
-        } else if(editText_edu.getText().toString().equals("BVSc")) {
-            position = 55;
-        } else if(editText_edu.getText().toString().equals("MBBS")) {
-            position = 56;
-        } else if(editText_edu.getText().toString().equals("B.Sc. Nursing")) {
-            position = 57;
-        } else if(editText_edu.getText().toString().equals("Other Bachelor Degree in Medicine")) {
-            position = 58;
-        } else if(editText_edu.getText().toString().equals("MDS")) {
-            position = 59;
-        } else if(editText_edu.getText().toString().equals("MD / MS (Medical)")) {
-            position = 60;
-        } else if(editText_edu.getText().toString().equals("M.Pharm")) {
-            position = 61;
-        } else if(editText_edu.getText().toString().equals("MPT")) {
-            position = 62;
-        } else if(editText_edu.getText().toString().equals("MVSc")) {
-            position = 63;
-        } else if(editText_edu.getText().toString().equals("Other Master Degree in Medicine")) {
-            position = 64;
-        } else if(editText_edu.getText().toString().equals("BGL")) {
-            position = 65;
-        } else if(editText_edu.getText().toString().equals("B.L.")) {
-            position = 66;
-        } else if(editText_edu.getText().toString().equals("LL.B.")) {
-            position = 67;
-        } else if(editText_edu.getText().toString().equals("Other Bachelor Degree in Legal")) {
-            position = 68;
-        } else if(editText_edu.getText().toString().equals("LL.M.")) {
-            position = 69;
-        } else if(editText_edu.getText().toString().equals("M.L.")) {
-            position = 70;
-        } else if(editText_edu.getText().toString().equals("Other Master Degree in  Legal")) {
-            position = 71;
-        } else if(editText_edu.getText().toString().equals("CA")) {
-            position = 72;
-        } else if(editText_edu.getText().toString().equals("CFA (Chartered Financial Analyst)")) {
-            position = 73;
-        } else if(editText_edu.getText().toString().equals("CS")) {
-            position = 74;
-        } else if(editText_edu.getText().toString().equals("ICWA")) {
-            position = 75;
-        } else if(editText_edu.getText().toString().equals("Other Degree in Finance")) {
-            position = 76;
-        } else if(editText_edu.getText().toString().equals("IAS")) {
-            position = 77;
-        } else if(editText_edu.getText().toString().equals("IES")) {
-            position = 78;
-        } else if(editText_edu.getText().toString().equals("IFS")) {
-            position = 79;
-        } else if(editText_edu.getText().toString().equals("IRS")) {
-            position = 80;
-        } else if(editText_edu.getText().toString().equals("IPS")) {
-            position = 81;
-        } else if(editText_edu.getText().toString().equals("Other Degree in Service")) {
-            position = 82;
-        } else if(editText_edu.getText().toString().equals("Ph.D.")) {
-            position = 83;
-        } else if(editText_edu.getText().toString().equals("Diploma")) {
-            position = 84;
-        } else if(editText_edu.getText().toString().equals("Polytechnic")) {
-            position = 85;
-        } else if(editText_edu.getText().toString().equals("Trade School")) {
-            position = 86;
-        } else if(editText_edu.getText().toString().equals("Others in Diploma" )) {
-            position = 87;
-        } else {
-            position = -1;
+        switch (editText_edu.getText().toString()) {
+            case "Aeronautical Engineering": position = 0; break;
+            case "B.Arch": position = 1; break;
+            case "BCA": position = 2; break;
+            case "BE": position = 3; break;
+            case "B.Plan": position = 4; break;
+            case "B.Sc IT/ Computer Science": position = 5; break;
+            case "B.Tech.": position = 6; break;
+            case "Other Bachelor Degree in Engineering / Computers": position = 7; break;
+            case "B.S.(Engineering)": position = 8; break;
+            case "M.Arch.": position = 9; break;
+            case "MCA": position = 10; break;
+            case "ME": position = 11; break;
+            case "M.Sc. IT / Computer Science": position = 12; break;
+            case "M.S.(Engg.)": position = 13; break;
+            case "M.Tech.": position = 14; break;
+            case "PGDCA": position = 15; break;
+            case "Other Masters Degree in Engineering / Computers": position = 16; break;
+            case "Aviation Degree": position = 17; break;
+            case "B.A.": position = 18; break;
+            case "B.Com.": position = 19; break;
+            case "B.Ed.": position = 20; break;
+            case "BFA": position = 21; break;
+            case "BFT": position = 22; break;
+            case "BLIS": position = 23; break;
+            case "B.M.M.": position = 24; break;
+            case "B.Sc.": position = 25; break;
+            case "B.S.W": position = 26; break;
+            case "B.Phil.": position = 27; break;
+            case "Other Bachelor Degree in Arts / Science / Commerce": position = 28; break;
+            case "M.A.": position = 29; break;
+            case "MCom": position = 30; break;
+            case "M.Ed.": position = 31; break;
+            case "MFA": position = 32; break;
+            case "MLIS": position = 33; break;
+            case "M.Sc.": position = 34; break;
+            case "MSW": position = 35; break;
+            case "M.Phil.": position = 36; break;
+            case "Other Master Degree in Arts / Science / Commerce": position = 37; break;
+            case "BBA": position = 38; break;
+            case "BFM (Financial Management)": position = 39; break;
+            case "BHM (Hotel Management)": position = 40; break;
+            case "Other Bachelor Degree in Management": position = 41; break;
+            case "MBA": position = 42; break;
+            case "MFM (Financial Management)": position = 43; break;
+            case "MHM  (Hotel Management)": position = 44; break;
+            case "MHRM (Human Resource Management)": position = 45; break;
+            case "PGDM": position = 46; break;
+            case "Other Master Degree in Management": position = 47; break;
+            case "B.A.M.S.": position = 48; break;
+            case "BDS": position = 49; break;
+            case "BHMS": position = 50; break;
+            case "BSMS": position = 51; break;
+            case "BPharm": position = 52; break;
+            case "BPT": position = 53; break;
+            case "BUMS": position = 54; break;
+            case "BVSc": position = 55; break;
+            case "MBBS": position = 56; break;
+            case "B.Sc. Nursing": position = 57; break;
+            case "Other Bachelor Degree in Medicine": position = 58; break;
+            case "MDS": position = 59; break;
+            case "MD / MS (Medical)": position = 60; break;
+            case "M.Pharm": position = 61; break;
+            case "MPT": position = 62; break;
+            case "MVSc": position = 63; break;
+            case "Other Master Degree in Medicine": position = 64; break;
+            case "BGL": position = 65; break;
+            case "B.L.": position = 66; break;
+            case "LL.B.": position = 67; break;
+            case "Other Bachelor Degree in Legal": position = 68; break;
+            case "LL.M.": position = 69; break;
+            case "M.L.": position = 70; break;
+            case "Other Master Degree in  Legal": position = 71; break;
+            case "CA": position = 72; break;
+            case "CFA (Chartered Financial Analyst)": position = 73; break;
+            case "CS": position = 74; break;
+            case "ICWA": position = 75; break;
+            case "Other Degree in Finance": position = 76; break;
+            case "IAS": position = 77; break;
+            case "IES": position = 78; break;
+            case "IFS": position = 79; break;
+            case "IRS": position = 80; break;
+            case "IPS": position = 81; break;
+            case "Other Degree in Service": position = 82; break;
+            case "Ph.D.": position = 83; break;
+            case "Diploma": position = 84; break;
+            case "Polytechnic": position = 85; break;
+            case "Trade School": position = 86; break;
+            case "Others in Diploma": position = 87; break;
+            default: position = -1; break;
         }
 
         return position;

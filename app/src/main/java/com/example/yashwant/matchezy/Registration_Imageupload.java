@@ -19,10 +19,9 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.scalified.fab.ActionButton;
-
 import org.json.JSONObject;
 
-public class Imageupload extends AppCompatActivity {
+public class Registration_Imageupload extends AppCompatActivity {
 
     private static final int SELECT_PICTURE = 100;
     private static final String TAG = "Imageupload";
@@ -57,6 +56,8 @@ public class Imageupload extends AppCompatActivity {
                 " - " + getSPData("college") + " - " + getSPData("work") + " - " + getSPData("desig") + " - "
                 + getSPData("annual_income"));
 
+        if(getSPData("fb_id").equals("")) storeSPData("fb_id", "null");
+
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,6 +82,7 @@ public class Imageupload extends AppCompatActivity {
                         .addBodyParameter("work", getSPData("work"))
                         .addBodyParameter("desig", getSPData("desig"))
                         .addBodyParameter("annual_income", getSPData("annual_income"))
+                        .addBodyParameter("fb_id", getSPData("fb_id"))
                         .setPriority(Priority.HIGH)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
@@ -88,7 +90,19 @@ public class Imageupload extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
                                 Log.e("check", response.toString());
-                                Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+
+                                if(response.optString("message").equals("Registration successful")) {
+
+                                    Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+
+                                    Intent intent =  new Intent(Registration_Imageupload.this, OTP.class);
+                                    startActivity(intent);
+
+                                } else {
+
+                                    Toast.makeText(getApplicationContext(), "User not registered successfully!", Toast.LENGTH_SHORT).show();
+
+                                }
                             }
 
                             @Override

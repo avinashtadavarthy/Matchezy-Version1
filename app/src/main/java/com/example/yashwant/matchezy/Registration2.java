@@ -279,37 +279,21 @@ public class Registration2 extends AppCompatActivity {
     private void relationship()
 
     {
-        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children"};
+        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
-        if (editText_relationship.getText().toString().equals("Single")){
-            position = 0;
-        } else if (editText_relationship.getText().toString().equals("Single with Children")){
-            position = 1;
-        } else if (editText_relationship.getText().toString().equals("Divorced")){
-            position = 2;
+        switch (editText_relationship.getText().toString()) {
+            case "Single": position = 0; break;
+            case "Single with Children": position = 1; break;
+            case "Divorced": position = 2; break;
+            case "Divorced with Children": position = 3; break;
+            case "Widowed": position = 4; break;
+            case "Widowed with Children": position = 5; break;
+            default: position = -1; break;
         }
-
-        else if (editText_relationship.getText().toString().equals("Divorced with Children")){
-            position = 3;
-        }
-
-        else if (editText_relationship.getText().toString().equals("Widowed")){
-            position = 4;
-        }
-
-        else if (editText_relationship.getText().toString().equals("Widowed with Children")){
-            position = 5;
-        }
-
-
-        else {
-            position = -1;
-        }
-        alertDialogBuilder
-                .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ListView lw = ((AlertDialog) dialog).getListView();

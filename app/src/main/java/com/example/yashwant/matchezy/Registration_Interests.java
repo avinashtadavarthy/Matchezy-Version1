@@ -32,7 +32,7 @@ public class Registration_Interests extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Imageupload.class);
+                Intent intent = new Intent(getApplicationContext(),Registration_Imageupload.class);
                 startActivity(intent);
 
             }

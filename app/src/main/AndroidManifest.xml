@@ -34,7 +34,7 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Registration4" />
         <activity android:name=".Registration_Interests" />
-        <activity android:name=".Imageupload"/>
+        <activity android:name=".Registration_Imageupload"/>
 
         <activity android:name=".MainActivity" />
 
