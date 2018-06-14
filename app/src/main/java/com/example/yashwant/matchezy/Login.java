@@ -33,7 +33,7 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
 
-    TextView signup;
+    TextView signup, forgotpassword;
 
     //fb login integration
     CallbackManager callbackManager;
@@ -53,12 +53,13 @@ public class Login extends AppCompatActivity {
         AndroidNetworking.initialize(this);
 
         signup = (TextView) findViewById(R.id.signupButton);
+        forgotpassword = (TextView) findViewById(R.id.forgotpassword);
         facebook = (Button) findViewById(R.id.facebook);
 
 
         //facebook signin integration
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback< LoginResult >() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
@@ -81,21 +82,29 @@ public class Login extends AppCompatActivity {
                                                 .getAsJSONObject(new JSONObjectRequestListener() {
                                                     @Override
                                                     public void onResponse(JSONObject response) {
-                                                        if(response.optString("status_code").equals("200")) {
 
-                                                            Log.e("fbLogin", "user already exists");
-                                                            Intent intent = new Intent(Login.this, HomeScreen.class);
-                                                            startActivity(intent);
+                                                        switch (response.optString("status_code")) {
+                                                            case "200": {
 
-                                                        } else if(response.optString("status_code").equals("404")) {
+                                                                Log.e("fbLogin", "user already exists");
+                                                                Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                startActivity(intent);
+                                                                break;
+                                                            }
+                                                            case "404": {
 
-                                                            Log.e("fbLogin", "user doesnt exist");
-                                                            storeSPData("facebookdata", response.toString());
-                                                            storeSPData("isLoggedInThroughFb", true);
-                                                            Intent intent = new Intent(Login.this, Registration.class);
-                                                            startActivity(intent);
-
+                                                                Log.e("fbLogin", "user doesnt exist");
+                                                                storeSPData("facebookdata", response.toString());
+                                                                storeSPData("isLoggedInThroughFb", true);
+                                                                Intent intent = new Intent(Login.this, Registration.class);
+                                                                startActivity(intent);
+                                                                break;
+                                                            }
+                                                            case "400":
+                                                                Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                break;
                                                         }
+
                                                     }
                                                     @Override
                                                     public void onError(ANError error) {
@@ -133,6 +142,17 @@ public class Login extends AppCompatActivity {
                     }
                 }
         );
+
+
+        forgotpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               Intent intent = new Intent(Login.this, ForgotPassword.class);
+               startActivity(intent);
+
+            }
+        });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
