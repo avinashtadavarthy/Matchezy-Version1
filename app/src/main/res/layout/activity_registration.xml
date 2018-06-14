@@ -72,7 +72,8 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Date of birth"
-                    android:paddingLeft="35dp" />
+                    android:paddingLeft="35dp"
+                    android:focusable="false"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -101,7 +102,8 @@
                         android:hint="Code"
                         android:gravity="center"
                         android:inputType="none"
-                        android:maxLength="10" />
+                        android:maxLength="10"
+                        android:focusable="false"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -179,22 +181,6 @@
         </LinearLayout>
     </ScrollView>
 
-
-
-
-
-
-    <!--    <Button
-            android:layout_width="wrap_content"
-            android:text="Next"
-            android:textColor="#fff"
-            android:paddingStart="18dp"
-            android:fontFamily="@font/circularstd"
-            android:textSize="20sp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/next" />-->
            <com.scalified.fab.ActionButton
             android:id="@+id/action_button_next1"
             android:layout_width="wrap_content"

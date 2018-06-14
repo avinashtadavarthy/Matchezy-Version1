@@ -10,8 +10,6 @@
     android:layout_height="match_parent"
     tools:context=".Registration3">
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -39,12 +37,12 @@
                 android:textSize="24sp" />
 
             <android.support.constraint.ConstraintLayout
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/heightbox">
 
                 <TextView
@@ -52,13 +50,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/circularstd"
                     android:text="How tall are you?"
-
                     android:textSize="20sp"
-
                     app:layout_constraintBottom_toBottomOf="parent"
-
                     app:layout_constraintEnd_toEndOf="parent"
-
                     app:layout_constraintHorizontal_bias="0.139"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -69,10 +63,7 @@
                     android:id="@+id/scroll_choice"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
-
                     android:layout_marginBottom="8dp"
-
-
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
@@ -93,7 +84,6 @@
                     app:scroll_selected_item_background="#00ffffff"
                     app:scroll_selected_item_text_color="#4A90E2"
                     app:scroll_visible_item_count="3" />
-
 
             </android.support.constraint.ConstraintLayout>
 
@@ -116,8 +106,9 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Religion"
-
-                    android:paddingLeft="35dp" />
+                    android:paddingLeft="35dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +129,9 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Tattoos"
-                    android:paddingLeft="35dp" />
+                    android:paddingLeft="35dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
             </android.support.design.widget.TextInputLayout>
 
 
@@ -158,30 +151,12 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Piercings"
-                    android:paddingLeft="35dp" />
-
+                    android:paddingLeft="35dp"
+                    android:inputType="none"
+                    android:focusable="false"/>
             </android.support.design.widget.TextInputLayout>
-
-
         </LinearLayout>
-
-
-
     </ScrollView>
-
-
-
-        <!--    <Button
-                android:layout_width="wrap_content"
-                android:text="Next"
-                android:textColor="#fff"
-                android:paddingStart="18dp"
-                android:fontFamily="@font/circularstd"
-                android:textSize="20sp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/next" />-->
         <com.scalified.fab.ActionButton
             android:id="@+id/action_button_next3"
             android:layout_width="wrap_content"
