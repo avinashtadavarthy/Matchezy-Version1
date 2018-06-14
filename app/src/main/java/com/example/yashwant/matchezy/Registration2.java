@@ -28,6 +28,8 @@ public class Registration2 extends AppCompatActivity {
 
     private static final int LANGUAGES_SPOKEN = 25;
 
+    boolean isLoggedThroughFb = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,16 +54,19 @@ public class Registration2 extends AppCompatActivity {
         editText_relationship.setShowSoftInputOnFocus(false);
         editText_interested.setShowSoftInputOnFocus(false);
 
-        String facebookData = getSPData("facebookdata");
-        try {
-            JSONObject fbJsonObj = new JSONObject(facebookData);
-            String genderFb = fbJsonObj.optString("gender");
-            String capGender = genderFb.substring(0, 1).toUpperCase() + genderFb.substring(1);
-            editText_gender.setText(capGender);
-            JSONObject locationDataOnj = fbJsonObj.optJSONObject("location");
-            editText_city.setText(locationDataOnj.optString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
+
+        if(isLoggedThroughFb) {
+            String facebookData = getSPData("facebookdata");
+            try {
+                JSONObject fbJsonObj = new JSONObject(facebookData);
+                String genderFb = fbJsonObj.optString("gender");
+                String capGender = genderFb.substring(0, 1).toUpperCase() + genderFb.substring(1);
+                editText_gender.setText(capGender);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         editText_gender.addTextChangedListener(new Registration2.MyTextWatcher(editText_gender));

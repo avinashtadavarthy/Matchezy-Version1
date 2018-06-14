@@ -135,43 +135,6 @@ public class Registration4 extends AppCompatActivity {
         storeSPData("annual_income", editText_annual.getText().toString().trim());
 
 
-        AndroidNetworking.post(User.getInstance().BASE_URL+"register")
-                .addBodyParameter("username", getSPData("username"))
-                .addBodyParameter("dob", getSPData("dob"))
-                .addBodyParameter("phone_number", getSPData("phone_number"))
-                .addBodyParameter("email", getSPData("email"))
-                .addBodyParameter("password", getSPData("password"))
-                .addBodyParameter("gender", getSPData("gender"))
-                .addBodyParameter("lookingfor", getSPData("lookingfor"))
-                .addBodyParameter("marital_status", getSPData("maritalstatus"))
-                .addBodyParameter("city", getSPData("city"))
-                .addBodyParameter("langs", getSPData("lang"))
-                .addBodyParameter("feet", getSPData("feet"))
-                .addBodyParameter("inches", getSPData("inches"))
-                .addBodyParameter("religion", getSPData("religion"))
-                .addBodyParameter("tattoos", getSPData("tattoos"))
-                .addBodyParameter("piercings", getSPData("piercings"))
-                .addBodyParameter("education", getSPData("education"))
-                .addBodyParameter("college", getSPData("college"))
-                .addBodyParameter("work", getSPData("work"))
-                .addBodyParameter("desig", getSPData("desig"))
-                .addBodyParameter("annual_income", getSPData("annual_income"))
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // do anything with response
-                        Log.e("check",response.toString());
-                        Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        error.printStackTrace();
-                    }
-                });
-
 
         Intent intent = new Intent(getApplicationContext(),Registration_Interests.class);
         startActivity(intent);
