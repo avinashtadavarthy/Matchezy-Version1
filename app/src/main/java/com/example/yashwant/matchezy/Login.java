@@ -25,6 +25,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -50,6 +51,8 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+
         AndroidNetworking.initialize(this);
 
         signup = (TextView) findViewById(R.id.signupButton);
@@ -70,7 +73,7 @@ public class Login extends AppCompatActivity {
                                 new Response.Listener<JSONObject>()
                                 {
                                     @Override
-                                    public void onResponse(JSONObject response) {
+                                    public void onResponse(final JSONObject response) {
 
                                         String fb_id = response.optString("id");
                                         storeSPData("fb_id", fb_id);
@@ -81,9 +84,8 @@ public class Login extends AppCompatActivity {
                                                 .build()
                                                 .getAsJSONObject(new JSONObjectRequestListener() {
                                                     @Override
-                                                    public void onResponse(JSONObject response) {
-
-                                                        switch (response.optString("status_code")) {
+                                                    public void onResponse(JSONObject res) {
+                                                        switch (res.optString("status_code")) {
                                                             case "200": {
 
                                                                 Log.e("fbLogin", "user already exists");
@@ -101,7 +103,7 @@ public class Login extends AppCompatActivity {
                                                                 break;
                                                             }
                                                             case "400":
-                                                                Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                                                 break;
                                                         }
 

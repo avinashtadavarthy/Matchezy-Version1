@@ -102,7 +102,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                                 } else {
 
                                     Toast.makeText(getApplicationContext(),
-                                            response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
+                                            response.optString("message"), Toast.LENGTH_SHORT).show();
 
                                 }
                             }
