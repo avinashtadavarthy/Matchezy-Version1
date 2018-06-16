@@ -69,7 +69,7 @@ public class User {
 
 
     ///url///
-    public String BASE_URL = "http://192.168.29.75:3000/api/";
+    public String BASE_URL = "http://ec2-18-218-131-186.us-east-2.compute.amazonaws.com/api/";
     /////////
 
     protected User(){}

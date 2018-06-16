@@ -18,7 +18,7 @@
 
         <activity android:name=".IntroActivity" />
 
-        <activity android:name=".Registration_Interests">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -30,10 +30,11 @@
             android:name=".Registration2"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".Registration3" />
+        <activity android:name=".Registration3"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Registration4" />
-     <!--   <activity android:name=".Registration_Interests" />-->
-        <activity android:name=".Imageupload"/>
+        <activity android:name=".Registration_Interests" />
+        <activity android:name=".Registration_Imageupload"/>
 
         <activity android:name=".MainActivity" />
 
@@ -48,7 +49,8 @@
         <activity android:name=".OTP"/>
         <!--<activity android:name=".Login"/>-->
         <activity android:name=".ForgotPassword" />
-        <activity android:name=".LanguagesPopUp" />
+        <activity android:name=".LanguagesPopUp"
+            android:theme="@style/AppTheme.CustomTheme"/>
         <!--<activity android:name=".ProfilePage" />-->
 
         <activity
@@ -73,6 +75,8 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChooseCity"
+            android:theme="@style/AppTheme.CustomTheme"/>
 
 
     </application>

@@ -11,32 +11,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.scalified.fab.ActionButton;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Calendar;
 
 public class Registration2 extends AppCompatActivity {
 
@@ -44,6 +27,8 @@ public class Registration2 extends AppCompatActivity {
     private TextInputLayout inputLayoutgender, inputLayoutinterested, inputLayoutrelationship,inputLayoutlang,inputLayoutcity;
 
     private static final int LANGUAGES_SPOKEN = 25;
+
+    boolean isLoggedThroughFb = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +54,19 @@ public class Registration2 extends AppCompatActivity {
         editText_relationship.setShowSoftInputOnFocus(false);
         editText_interested.setShowSoftInputOnFocus(false);
 
-        String facebookData = getSPData("facebookdata");
-        try {
-            JSONObject fbJsonObj = new JSONObject(facebookData);
-            editText_gender.setText(fbJsonObj.optString("gender"));
-            JSONObject locationDataOnj = fbJsonObj.optJSONObject("location");
-            editText_city.setText(locationDataOnj.optString("name"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
+
+        if(isLoggedThroughFb) {
+            String facebookData = getSPData("facebookdata");
+            try {
+                JSONObject fbJsonObj = new JSONObject(facebookData);
+                String genderFb = fbJsonObj.optString("gender");
+                String capGender = genderFb.substring(0, 1).toUpperCase() + genderFb.substring(1);
+                editText_gender.setText(capGender);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         editText_gender.addTextChangedListener(new Registration2.MyTextWatcher(editText_gender));
@@ -98,8 +88,6 @@ public class Registration2 extends AppCompatActivity {
         actionButton.setRippleEffectEnabled(true);
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
-
-
 
 
         editText_city.setOnClickListener(new View.OnClickListener() {
@@ -291,37 +279,21 @@ public class Registration2 extends AppCompatActivity {
     private void relationship()
 
     {
-        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children"};
+        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
-        if (editText_relationship.getText().toString().equals("Single")){
-            position = 0;
-        } else if (editText_relationship.getText().toString().equals("Single with Children")){
-            position = 1;
-        } else if (editText_relationship.getText().toString().equals("Divorced")){
-            position = 2;
+        switch (editText_relationship.getText().toString()) {
+            case "Single": position = 0; break;
+            case "Single with Children": position = 1; break;
+            case "Divorced": position = 2; break;
+            case "Divorced with Children": position = 3; break;
+            case "Widowed": position = 4; break;
+            case "Widowed with Children": position = 5; break;
+            default: position = -1; break;
         }
-
-        else if (editText_relationship.getText().toString().equals("Divorced with Children")){
-            position = 3;
-        }
-
-        else if (editText_relationship.getText().toString().equals("Widowed")){
-            position = 4;
-        }
-
-        else if (editText_relationship.getText().toString().equals("Widowed with Children")){
-            position = 5;
-        }
-
-
-        else {
-            position = -1;
-        }
-        alertDialogBuilder
-                .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ListView lw = ((AlertDialog) dialog).getListView();
@@ -337,15 +309,8 @@ public class Registration2 extends AppCompatActivity {
 
     private void city()
     {
-        try {
-            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY).build(Registration2.this);
-            startActivityForResult(intent, 1000);
-
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
-            e.printStackTrace();
-        }
+        Intent intnt = new Intent(getApplicationContext(), ChooseCity.class);
+        startActivityForResult(intnt, 12345);
     }
 
     private void lang()
@@ -359,16 +324,12 @@ public class Registration2 extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1000) {
+        if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
 
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                editText_city.setText(place.getName());
+                String chosencity = data.getStringExtra("chosencity");
+                editText_city.setText(chosencity);
 
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
             }
         }
 

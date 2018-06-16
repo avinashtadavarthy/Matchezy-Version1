@@ -14,6 +14,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -29,7 +33,7 @@ import java.util.List;
 
 public class Login extends AppCompatActivity {
 
-    TextView signup;
+    TextView signup, forgotpassword;
 
     //fb login integration
     CallbackManager callbackManager;
@@ -46,19 +50,20 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        signup = (TextView) findViewById(R.id.signupButton);
+        AndroidNetworking.initialize(this);
 
+        signup = (TextView) findViewById(R.id.signupButton);
+        forgotpassword = (TextView) findViewById(R.id.forgotpassword);
         facebook = (Button) findViewById(R.id.facebook);
 
 
         //facebook signin integration
         callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback< LoginResult >() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
                         access = loginResult.getAccessToken().getToken();
-
 
                         //making the request and getting the data
                         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url + access, null,
@@ -67,12 +72,47 @@ public class Login extends AppCompatActivity {
                                     @Override
                                     public void onResponse(JSONObject response) {
 
+                                        String fb_id = response.optString("id");
+                                        storeSPData("fb_id", fb_id);
+
+                                        AndroidNetworking.post(User.getInstance().BASE_URL + "fbLogin")
+                                                .addBodyParameter("fb_id",fb_id)
+                                                .setPriority(Priority.HIGH)
+                                                .build()
+                                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+
+                                                        switch (response.optString("status_code")) {
+                                                            case "200": {
+
+                                                                Log.e("fbLogin", "user already exists");
+                                                                Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                startActivity(intent);
+                                                                break;
+                                                            }
+                                                            case "404": {
+
+                                                                Log.e("fbLogin", "user doesnt exist");
+                                                                storeSPData("facebookdata", response.toString());
+                                                                storeSPData("isLoggedInThroughFb", true);
+                                                                Intent intent = new Intent(Login.this, Registration.class);
+                                                                startActivity(intent);
+                                                                break;
+                                                            }
+                                                            case "400":
+                                                                Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                break;
+                                                        }
+
+                                                    }
+                                                    @Override
+                                                    public void onError(ANError error) {
+                                                        error.printStackTrace();
+                                                    }
+                                                });
+
                                         Log.e("fbresponse", response.toString());
-
-                                       storeSPData("facebookdata", response.toString());
-
-                                        Intent intent = new Intent(Login.this, Registration.class);
-                                        startActivity(intent);
 
                                     }
                                 },
@@ -103,10 +143,22 @@ public class Login extends AppCompatActivity {
                 }
         );
 
+
+        forgotpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+               Intent intent = new Intent(Login.this, ForgotPassword.class);
+               startActivity(intent);
+
+            }
+        });
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                storeSPData("isLoggedInThroughFb", false);
 
                 Intent intent = new Intent(Login.this, Registration.class);
                 startActivity(intent);
@@ -122,13 +174,9 @@ public class Login extends AppCompatActivity {
 
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();
-            LoginManager.getInstance().logInWithReadPermissions(
-                    this, permissionNeeds);
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
         } else {
-
-            LoginManager.getInstance().logInWithReadPermissions(
-                    this, permissionNeeds);
-
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
         }
 
     }
@@ -150,6 +198,15 @@ public class Login extends AppCompatActivity {
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor mUserEditor = mUserData.edit();
         mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private void storeSPData(String key, boolean data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putBoolean(key, data);
         mUserEditor.commit();
 
     }
