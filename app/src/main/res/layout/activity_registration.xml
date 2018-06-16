@@ -47,6 +47,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="45dp"
+                    android:paddingRight="8dp"
                     android:id="@+id/editText_name"
                     android:inputType="textPersonName"
                     android:fontFamily="@font/circularstd"
