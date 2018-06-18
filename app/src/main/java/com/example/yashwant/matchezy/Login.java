@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,12 +36,14 @@ import java.util.List;
 public class Login extends AppCompatActivity {
 
     TextView signup, forgotpassword;
+    EditText emailEditText, passwordEditText;
 
     //fb login integration
     CallbackManager callbackManager;
     String access;
     String url = "https://graph.facebook.com/me?fields=id,verified,first_name,friends,last_name,address,location,name,gender,email,birthday,picture.height(720),age_range&access_token=";
     Button facebook;
+    Button loginButton;
     private List<String> permissionNeeds = Arrays.asList("public_profile",
             "email", "user_friends", "user_birthday", "user_gender", "user_location",
             "user_friends", "user_photos", "user_likes");
@@ -58,6 +61,58 @@ public class Login extends AppCompatActivity {
         signup = (TextView) findViewById(R.id.signupButton);
         forgotpassword = (TextView) findViewById(R.id.forgotpassword);
         facebook = (Button) findViewById(R.id.facebook);
+        loginButton = (Button) findViewById(R.id.loginbtn);
+        emailEditText = findViewById(R.id.emailEditText);
+        passwordEditText = findViewById(R.id.passwordEditText);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                if(email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    AndroidNetworking.post(User.getInstance().BASE_URL + "login")
+                            .addBodyParameter("email", email)
+                            .addBodyParameter("password", password)
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+                                    switch (res.optString("status_code")) {
+                                        case "200": {
+
+                                            clearSPData();
+                                            storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
+                                            storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
+                                            Intent intent = new Intent(Login.this, HomeScreen.class);
+                                            startActivity(intent);
+                                            break;
+                                        }
+                                        case "404": {
+
+                                            Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                            break;
+                                        }
+                                        case "400":
+
+                                            Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                            break;
+                                    }
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+                }
+            }
+        });
 
 
         //facebook signin integration
@@ -89,6 +144,9 @@ public class Login extends AppCompatActivity {
                                                             case "200": {
 
                                                                 Log.e("fbLogin", "user already exists");
+                                                                clearSPData();
+                                                                storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
+                                                                storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
                                                                 Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                 startActivity(intent);
                                                                 break;
@@ -219,5 +277,12 @@ public class Login extends AppCompatActivity {
         String data = mUserData.getString(key, "");
 
         return data;
+    }
+
+    private void clearSPData() {
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.clear();
+        mUserEditor.apply();
     }
 }
