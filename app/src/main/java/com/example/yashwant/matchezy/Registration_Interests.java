@@ -317,7 +317,7 @@ public class Registration_Interests extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
+                linearLayout.removeViewAt(linearLayout.indexOfChild(chipView1));
 
             }
         });
