@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.scalified.fab.ActionButton;
 
@@ -57,8 +58,12 @@ public class ProfilePage extends FragmentActivity {
         public Fragment getItem(int pos) {
             switch(pos) {
 
-                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1");
-                case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1");
+                case 0:
+                    Toast.makeText(ProfilePage.this, "zero", Toast.LENGTH_SHORT).show();
+                    return Fragment_profileInterests.newInstance("FirstFragment, Instance 1");
+                case 1:
+                    Toast.makeText(ProfilePage.this, "first", Toast.LENGTH_SHORT).show();
+                    return Fragment_profileInfo.newInstance("SecondFragment, Instance 1");
                 case 2: return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
                 default: return Fragment_profileInterests.newInstance("ThirdFragment, Default");
             }

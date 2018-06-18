@@ -1,41 +1,20 @@
 package com.example.yashwant.matchezy;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.hootsuite.nachos.NachoTextView;
-import com.hootsuite.nachos.chip.Chip;
-import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
-import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
 import com.pchmn.materialchips.ChipView;
-import com.pchmn.materialchips.ChipsInput;
-import com.pchmn.materialchips.model.ChipInterface;
 import com.scalified.fab.ActionButton;
-import com.hootsuite.nachos.ChipConfiguration;
-import com.hootsuite.nachos.NachoTextView;
-import com.hootsuite.nachos.chip.Chip;
-import com.hootsuite.nachos.chip.ChipSpan;
-import com.hootsuite.nachos.chip.ChipSpanChipCreator;
-import com.hootsuite.nachos.terminator.ChipTerminatorHandler;
-import com.hootsuite.nachos.tokenizer.SpanChipTokenizer;
-import com.hootsuite.nachos.validator.ChipifyingNachoValidator;
 
 public class Registration_Interests extends AppCompatActivity {
 
@@ -199,43 +178,8 @@ public class Registration_Interests extends AppCompatActivity {
 
                   /*  Toast.makeText(Registration_Interests.this, interest_edit.getText(), Toast.LENGTH_SHORT).show();*/
 
-                    LinearLayout[] test = {layout1,layout2,layout3,layout4,layout5,layout6,layout7,layout8,layout9,layout10,layout11,layout12,layout13};
-                    i++;
-
-                    LinearLayout test2;
-                    test2=test[j];
-
-                    if(i%3==0)
-                    {
-                        j++;
-                        test2=test[j];
-                        parent.addView(test2);
-
-                    }
-                    /*parent.addView(test2);*/
-
-
-                   /* for (int j=0 ;j<3)
-                    if(i==3)
-                         test = layout2;
-                    if(i==6)
-                        test = layout3;
-                    if(i==9)
-                        test = layout4;
-                    if(i==12)
-                        test = layout5;
-                    if(i==15)
-                        test = layout6;
-                    if(i==18)
-                        test = layout7;*/
-
-
-                   chips[chipNo]=interest_edit.getText().toString();
-
-                    make_bubble(interest_edit.getText().toString(),test2);
+                   runBubble(interest_edit.getText().toString().trim());
                     interest_edit.setText(null);
-                    chipNo++;
-                    return true;
                 }
                 return false;
             }
@@ -373,7 +317,7 @@ public class Registration_Interests extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                linearLayout.removeViewAt(linearLayout.indexOfChild(chipView1));
+
 
             }
         });
@@ -421,18 +365,71 @@ public class Registration_Interests extends AppCompatActivity {
     }
 
 
-    public void make_bubblesuggest(String in,LinearLayout linearLayout)
+    public boolean runBubble(String name)
+    {
+        LinearLayout[] test = {layout1,layout2,layout3,layout4,layout5,layout6,layout7,layout8,layout9,layout10,layout11,layout12,layout13};
+        i++;
+
+        LinearLayout test2;
+        test2=test[j];
+
+        if(i%3==0)
+        {
+            j++;
+            test2=test[j];
+            parent.addView(test2);
+
+        }
+        /*parent.addView(test2);*/
+
+
+                   /* for (int j=0 ;j<3)
+                    if(i==3)
+                         test = layout2;
+                    if(i==6)
+                        test = layout3;
+                    if(i==9)
+                        test = layout4;
+                    if(i==12)
+                        test = layout5;
+                    if(i==15)
+                        test = layout6;
+                    if(i==18)
+                        test = layout7;*/
+
+
+        chips[chipNo]=name;
+
+        make_bubble(name,test2);
+
+        chipNo++;
+        return true;
+    }
+    public void make_bubblesuggest(String in, final LinearLayout linearLayout)
 
     {
 
         //set the properties for button
 
             Uri uri = null;
-            ChipView chipView2 = new ChipView(this);
+            final ChipView chipView2 = new ChipView(this);
             chipView2.setLabel(in);
             /* chipView1.setOnDeleteClicked();*/
             chipView2.setPadding(2, 2, 2, 2);
             linearLayout.addView(chipView2);
+
+
+            chipView2.setOnChipClicked(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    linearLayout.removeViewAt(linearLayout.indexOfChild(chipView2));
+                    runBubble(chipView2.getLabel().toString());
+
+                    Toast.makeText(Registration_Interests.this, chipView2.getLabel().toString(), Toast.LENGTH_SHORT).show();
+
+                }
+            });
 
     }
 
