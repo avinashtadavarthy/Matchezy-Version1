@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "598545536719",
+    "firebase_url": "https://matchezy-6ff9a.firebaseio.com",
+    "project_id": "matchezy-6ff9a",
+    "storage_bucket": "matchezy-6ff9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598545536719:android:235e7b4cfc05cdae",
+        "android_client_info": {
+          "package_name": "com.example.yashwant.matchezy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598545536719-fsf4n4f9l8shaellmja8r0co26hd20j6.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "598545536719-fsf4n4f9l8shaellmja8r0co26hd20j6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBtxuxHwdVus5nE3LAu3Dj1Z8G8dIBVBw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
