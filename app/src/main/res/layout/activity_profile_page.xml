@@ -62,62 +62,69 @@
                 app:layout_constraintVertical_bias="0.571" />
 
 
-            <FrameLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp">
-
-                <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/viewPager"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" />
-
-            </FrameLayout>
 
 
-            <com.scalified.fab.ActionButton
-                android:id="@+id/action_button_dislike"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.666"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.985"
-                fab:button_colorPressed="@color/fab_material_white"
-                fab:hide_animation="@anim/fab_roll_to_down"
-                fab:shadowResponsiveEffect_enabled="true"
-                fab:show_animation="@anim/fab_roll_from_right" />
 
-            <com.scalified.fab.ActionButton
-                android:id="@+id/action_button_like"
-                android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.958"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.985"
-                fab:button_colorPressed="@color/fab_material_white"
-                fab:hide_animation="@anim/fab_roll_to_down"
-                fab:shadowResponsiveEffect_enabled="true"
-                fab:show_animation="@anim/fab_roll_from_right" />
+
 
         </android.support.constraint.ConstraintLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/contrain"
+
+        android:layout_height="wrap_content">
+
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/viewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+    </FrameLayout>
+
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button_dislike"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985"
+        fab:button_colorPressed="@color/fab_material_white"
+        fab:hide_animation="@anim/fab_roll_to_down"
+        fab:shadowResponsiveEffect_enabled="true"
+        fab:show_animation="@anim/fab_roll_from_right" />
+
+    <com.scalified.fab.ActionButton
+        android:id="@+id/action_button_like"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.985"
+        fab:button_colorPressed="@color/fab_material_white"
+        fab:hide_animation="@anim/fab_roll_to_down"
+        fab:shadowResponsiveEffect_enabled="true"
+        fab:show_animation="@anim/fab_roll_from_right" />
         
 
 </RelativeLayout>

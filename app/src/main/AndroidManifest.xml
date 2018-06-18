@@ -19,7 +19,7 @@
 
         <activity android:name=".IntroActivity" />
 
-        <activity android:name=".Login">
+        <activity android:name=".ProfilePage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -34,7 +34,7 @@
         <activity android:name=".Registration3"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Registration4" />
-        <activity android:name=".Registration_Interests" />
+<!--        <activity android:name=".Registration_Interests" />-->
         <activity android:name=".Registration_Imageupload"/>
 
         <activity android:name=".MainActivity" />
