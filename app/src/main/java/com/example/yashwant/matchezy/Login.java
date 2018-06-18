@@ -86,8 +86,10 @@ public class Login extends AppCompatActivity {
                                         case "200": {
 
                                             clearSPData();
+                                            Log.d("ASD", res.toString());
                                             storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                             storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
+                                            FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
                                             Intent intent = new Intent(Login.this, HomeScreen.class);
                                             startActivity(intent);
                                             break;
