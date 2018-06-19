@@ -1,12 +1,21 @@
 package com.example.yashwant.matchezy;
 
+import android.*;
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,8 +27,14 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
+
 import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class Registration_Imageupload extends AppCompatActivity {
 
@@ -28,6 +43,9 @@ public class Registration_Imageupload extends AppCompatActivity {
     public int i = 0;
 
     ImageView imageView1, imageView2, imageView3, imageView4;
+    String[] paths = {"","","",""};
+    String fb_id = "";
+    String [] interestsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +53,11 @@ public class Registration_Imageupload extends AppCompatActivity {
         setContentView(R.layout.activity_imageupload);
 
         AndroidNetworking.initialize(this);
+
+        Intent intent = getIntent();
+        interestsArray = intent.getStringArrayExtra("interestsArray");
+
+        Log.e("qwe", Arrays.toString(interestsArray));
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next2);
         // actionButton.hide();
@@ -47,56 +70,92 @@ public class Registration_Imageupload extends AppCompatActivity {
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
 
-        Log.e("asdf", getSPData("username") + " - " + getSPData("dob") + " - " +
-                getSPData("phone_number") + " - " + getSPData("email") + " - " + getSPData("password")
-                + " - " + getSPData("gender") + " - " + getSPData("lookingfor") + " - " +
-                getSPData("maritalstatus") + " - " + getSPData("city") + " - " + getSPData("lang") +
-                " - " + getSPData("feet") + " - " + getSPData("inches") + " - " + getSPData("religion") +
-                " - " + getSPData("tattoos") + " - " + getSPData("piercings") + " - " + getSPData("education") +
-                " - " + getSPData("college") + " - " + getSPData("work") + " - " + getSPData("desig") + " - "
-                + getSPData("annual_income"));
+        if(!checkPermissionForReadExtertalStorage()) {
+            try {
+                requestPermissionForReadExtertalStorage();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
-        if(getSPData("fb_id").equals("")) storeSPData("fb_id", "null");
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        final boolean isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
+
+        if(isLoggedThroughFb)
+            fb_id = getSPData("fb_id");
 
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidNetworking.post(User.getInstance().BASE_URL + "register")
-                        .addBodyParameter("username", getSPData("username"))
-                        .addBodyParameter("dob", getSPData("dob"))
-                        .addBodyParameter("phone_number", getSPData("phone_number"))
-                        .addBodyParameter("email", getSPData("email"))
-                        .addBodyParameter("password", getSPData("password"))
-                        .addBodyParameter("gender", getSPData("gender"))
-                        .addBodyParameter("looking_for", getSPData("lookingfor"))
-                        .addBodyParameter("marital_status", getSPData("maritalstatus"))
-                        .addBodyParameter("city", getSPData("city"))
-                        .addBodyParameter("langs", getSPData("lang"))
-                        .addBodyParameter("feet", getSPData("feet"))
-                        .addBodyParameter("inches", getSPData("inches"))
-                        .addBodyParameter("religion", getSPData("religion"))
-                        .addBodyParameter("tattoos", getSPData("tattoos"))
-                        .addBodyParameter("piercings", getSPData("piercings"))
-                        .addBodyParameter("education", getSPData("education"))
-                        .addBodyParameter("college", getSPData("college"))
-                        .addBodyParameter("work", getSPData("work"))
-                        .addBodyParameter("desig", getSPData("desig"))
-                        .addBodyParameter("annual_income", getSPData("annual_income"))
-                        .addBodyParameter("fb_id", getSPData("fb_id"))
+                AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
+                        .addMultipartFile("profile_pic", new File(paths[0]))
+                        .addMultipartFile("pictures", new File(paths[1]))
+                        .addMultipartFile("pictures_2", new File(paths[2]))
+                        .addMultipartFile("pictures_3", new File(paths[3]))
+                        .addMultipartParameter("username", getSPData("username"))
+                        .addMultipartParameter("dob", getSPData("dob"))
+                        .addMultipartParameter("phone_number", getSPData("phone_number"))
+                        .addMultipartParameter("email", getSPData("email"))
+                        .addMultipartParameter("password", getSPData("password"))
+                        .addMultipartParameter("gender", getSPData("gender"))
+                        .addMultipartParameter("looking_for", getSPData("lookingfor"))
+                        .addMultipartParameter("marital_status", getSPData("maritalstatus"))
+                        .addMultipartParameter("city", getSPData("city"))
+                        .addMultipartParameter("langs", getSPData("lang"))
+                        .addMultipartParameter("feet", getSPData("feet"))
+                        .addMultipartParameter("inches", getSPData("inches"))
+                        .addMultipartParameter("religion", getSPData("religion"))
+                        .addMultipartParameter("tattoos", getSPData("tattoos"))
+                        .addMultipartParameter("piercings", getSPData("piercings"))
+                        .addMultipartParameter("education", getSPData("education"))
+                        .addMultipartParameter("college", getSPData("college"))
+                        .addMultipartParameter("work", getSPData("work"))
+                        .addMultipartParameter("desig", getSPData("desig"))
+                        .addMultipartParameter("annual_income", getSPData("annual_income"))
+                        .addMultipartParameter("fb_id", fb_id)/*
+                        .addMultipartParameter("interests", interestsArray)*/
                         .setPriority(Priority.HIGH)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(final JSONObject response) {
                                 // do anything with response
                                 Log.e("check", response.toString());
 
-                                if(response.optString("status_code").equals("200")) {
+                                if (response.optString("status_code").equals("200")) {
+
+                                    /*FirebaseMessaging.getInstance().
+                                            subscribeToTopic(response.optJSONObject("message").optString("user_id"));*/
+
+                                    new android.os.Handler().postDelayed(
+                                            new Runnable() {
+                                                public void run() {AndroidNetworking.post(User.getInstance().BASE_URL + "approveUser")
+                                                        .addBodyParameter("user_id", response.optJSONObject("message").optString("user_id"))
+                                                        .setPriority(Priority.HIGH)
+                                                        .build()
+                                                        .getAsJSONObject(new JSONObjectRequestListener() {
+                                                            @Override
+                                                            public void onResponse(JSONObject response) {
+                                                                // do anything with response
+                                                                Log.e("check", response.toString());
+                                                            }
+
+                                                            @Override
+                                                            public void onError(ANError error) {
+                                                                // handle error
+                                                                error.printStackTrace();
+                                                            }
+                                                        });
+                                                }
+                                            },
+                                            3000);
+
+
 
                                     Toast.makeText(getApplicationContext(),
                                             response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
-                                    Intent intent =  new Intent(Registration_Imageupload.this, OTP.class);
+                                    Intent intent = new Intent(Registration_Imageupload.this, OTP.class);
                                     startActivity(intent);
 
                                 } else {
@@ -170,40 +229,34 @@ public class Registration_Imageupload extends AppCompatActivity {
                 // Get the url from data
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
-                    // Get the path from the Uri
-                    String path = getPathFromURI(selectedImageUri);
-                    Log.i(TAG, "Image Path : " + path);
+
+                        Log.i(TAG, "Image Path : " + getPath(Registration_Imageupload.this, selectedImageUri));
+
                     // Set the image in ImageView
 
+                    paths[i - 1] = getPath(Registration_Imageupload.this, selectedImageUri);
 
-                    if (i == 1)
+
+                    if (i == 1) {
                         ((ImageView) findViewById(R.id.imageview1)).setImageURI(selectedImageUri);
+                    }
 
-                    else if (i == 2)
+                    else if (i == 2) {
                         ((ImageView) findViewById(R.id.imageview2)).setImageURI(selectedImageUri);
+                    }
 
-                    else if (i == 3)
+                    else if (i == 3) {
                         ((ImageView) findViewById(R.id.imageview3)).setImageURI(selectedImageUri);
+                    }
 
-                    else if (i == 4)
+                    else if (i == 4) {
                         ((ImageView) findViewById(R.id.imageview4)).setImageURI(selectedImageUri);
+                    }
                 }
             }
         }
     }
 
-    /* Get the real path from the URI */
-    public String getPathFromURI(Uri contentUri) {
-        String res = null;
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            res = cursor.getString(column_index);
-        }
-        cursor.close();
-        return res;
-    }
 
     //Shared Preferences
     private void storeSPData(String key, String data) {
@@ -222,6 +275,157 @@ public class Registration_Imageupload extends AppCompatActivity {
 
         return data;
 
+    }
+
+    public static String getPath(final Context context, final Uri uri) {
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[] {
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param context The context.
+     * @param uri The Uri to query.
+     * @param selection (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    public boolean checkPermissionForReadExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForReadExtertalStorage() throws Exception {
+        try {
+            ActivityCompat.requestPermissions(Registration_Imageupload.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1001);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 
