@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -15,6 +16,9 @@ import android.widget.Toast;
 
 import com.pchmn.materialchips.ChipView;
 import com.scalified.fab.ActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Registration_Interests extends AppCompatActivity {
 
@@ -31,6 +35,7 @@ public class Registration_Interests extends AppCompatActivity {
     int chipNo =0;
 
     String [] chips = new String[50];
+    ArrayList<String> chipsList;
     int a=-1;
     int b=0;
     int i=-1;
@@ -148,6 +153,7 @@ public class Registration_Interests extends AppCompatActivity {
 */
 
         int size = SUGGESTIONS.length;
+        chipsList = new ArrayList<String>();
         for (int c=0;c<size;c++) {
 
 
@@ -210,8 +216,15 @@ public class Registration_Interests extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),Registration_Imageupload.class);
-                startActivity(intent);
+                if(chipsList.size() < 4) {
+                    Toast.makeText(getApplicationContext(), "Select atleast four interests",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), Registration_Imageupload.class)
+                            .putStringArrayListExtra("interestsArray", chipsList);
+                    Log.e("qwe", chipsList.toString());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -298,11 +311,11 @@ public class Registration_Interests extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            Toast.makeText(Registration_Interests.this, chipView1.getLabel().toString(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Registration_Interests.this, chipView1.getLabel().toString(), Toast.LENGTH_SHORT).show();
 
             /*Toast.makeText(this, chipView1.getLabel().toString(), Toast.LENGTH_SHORT).show();*/
             linearLayout.indexOfChild(chipView1);
-            Toast.makeText(Registration_Interests.this, String.valueOf(linearLayout.indexOfChild(chipView1)), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(Registration_Interests.this, String.valueOf(linearLayout.indexOfChild(chipView1)), Toast.LENGTH_SHORT).show();
             /*linearLayout.removeViewAt();*/
 
 
@@ -318,7 +331,7 @@ public class Registration_Interests extends AppCompatActivity {
             public void onClick(View view) {
 
                 linearLayout.removeViewAt(linearLayout.indexOfChild(chipView1));
-
+                chipsList.remove(chipView1.getLabel());
             }
         });
     /*    ChipView chipView2 = new ChipView(this);
@@ -399,6 +412,7 @@ public class Registration_Interests extends AppCompatActivity {
 
 
         chips[chipNo]=name;
+        chipsList.add(name);
 
         make_bubble(name,test2);
 
@@ -426,7 +440,7 @@ public class Registration_Interests extends AppCompatActivity {
                     linearLayout.removeViewAt(linearLayout.indexOfChild(chipView2));
                     runBubble(chipView2.getLabel().toString());
 
-                    Toast.makeText(Registration_Interests.this, chipView2.getLabel().toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Registration_Interests.this, chipView2.getLabel().toString(), Toast.LENGTH_SHORT).show();
 
                 }
             });

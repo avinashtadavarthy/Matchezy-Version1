@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -20,10 +21,7 @@
         <activity android:name=".IntroActivity" />
 
         <activity android:name=".ProfilePage">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity android:name=".Registration" />
@@ -34,8 +32,12 @@
         <activity android:name=".Registration3"
             android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".Registration4" />
-<!--        <activity android:name=".Registration_Interests" />-->
-        <activity android:name=".Registration_Imageupload"/>
+        <activity android:name=".Registration_Interests" >
+
+        </activity>
+        <activity android:name=".Registration_Imageupload">
+
+        </activity>
 
         <activity android:name=".MainActivity" />
 
@@ -48,7 +50,12 @@
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen" />
         <activity android:name=".OTP"/>
-        <!--<activity android:name=".Login"/>-->
+        <activity android:name=".Login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ForgotPassword" />
         <activity android:name=".LanguagesPopUp"
             android:theme="@style/AppTheme.CustomTheme"/>

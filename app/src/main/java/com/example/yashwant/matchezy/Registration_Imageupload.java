@@ -34,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Registration_Imageupload extends AppCompatActivity {
@@ -45,7 +46,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     ImageView imageView1, imageView2, imageView3, imageView4;
     String[] paths = {"","","",""};
     String fb_id = "";
-    String [] interestsArray;
+    ArrayList<String> interestsArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         AndroidNetworking.initialize(this);
 
         Intent intent = getIntent();
-        interestsArray = intent.getStringArrayExtra("interestsArray");
-
-        Log.e("qwe", Arrays.toString(interestsArray));
+        interestsArray = intent.getStringArrayListExtra("interestsArray");
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next2);
         // actionButton.hide();
@@ -81,97 +80,105 @@ public class Registration_Imageupload extends AppCompatActivity {
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         final boolean isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
 
+        Log.e("qwe", interestsArray.toString());
+
         if(isLoggedThroughFb)
             fb_id = getSPData("fb_id");
 
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
-                        .addMultipartFile("profile_pic", new File(paths[0]))
-                        .addMultipartFile("pictures", new File(paths[1]))
-                        .addMultipartFile("pictures_2", new File(paths[2]))
-                        .addMultipartFile("pictures_3", new File(paths[3]))
-                        .addMultipartParameter("username", getSPData("username"))
-                        .addMultipartParameter("dob", getSPData("dob"))
-                        .addMultipartParameter("phone_number", getSPData("phone_number"))
-                        .addMultipartParameter("email", getSPData("email"))
-                        .addMultipartParameter("password", getSPData("password"))
-                        .addMultipartParameter("gender", getSPData("gender"))
-                        .addMultipartParameter("looking_for", getSPData("lookingfor"))
-                        .addMultipartParameter("marital_status", getSPData("maritalstatus"))
-                        .addMultipartParameter("city", getSPData("city"))
-                        .addMultipartParameter("langs", getSPData("lang"))
-                        .addMultipartParameter("feet", getSPData("feet"))
-                        .addMultipartParameter("inches", getSPData("inches"))
-                        .addMultipartParameter("religion", getSPData("religion"))
-                        .addMultipartParameter("tattoos", getSPData("tattoos"))
-                        .addMultipartParameter("piercings", getSPData("piercings"))
-                        .addMultipartParameter("education", getSPData("education"))
-                        .addMultipartParameter("college", getSPData("college"))
-                        .addMultipartParameter("work", getSPData("work"))
-                        .addMultipartParameter("desig", getSPData("desig"))
-                        .addMultipartParameter("annual_income", getSPData("annual_income"))
-                        .addMultipartParameter("fb_id", fb_id)/*
-                        .addMultipartParameter("interests", interestsArray)*/
-                        .setPriority(Priority.HIGH)
-                        .build()
-                        .getAsJSONObject(new JSONObjectRequestListener() {
-                            @Override
-                            public void onResponse(final JSONObject response) {
-                                // do anything with response
-                                Log.e("check", response.toString());
+                if(paths[0].isEmpty() || paths[1].isEmpty() || paths[2].isEmpty() || paths[3].isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Select four images for your profile",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
+                            .addMultipartFile("profile_pic", new File(paths[0]))
+                            .addMultipartFile("pictures", new File(paths[1]))
+                            .addMultipartFile("pictures_2", new File(paths[2]))
+                            .addMultipartFile("pictures_3", new File(paths[3]))
+                            .addMultipartParameter("username", getSPData("username"))
+                            .addMultipartParameter("dob", getSPData("dob"))
+                            .addMultipartParameter("phone_number", getSPData("phone_number"))
+                            .addMultipartParameter("email", getSPData("email"))
+                            .addMultipartParameter("password", getSPData("password"))
+                            .addMultipartParameter("gender", getSPData("gender"))
+                            .addMultipartParameter("looking_for", getSPData("lookingfor"))
+                            .addMultipartParameter("marital_status", getSPData("maritalstatus"))
+                            .addMultipartParameter("city", getSPData("city"))
+                            .addMultipartParameter("langs", getSPData("lang"))
+                            .addMultipartParameter("feet", getSPData("feet"))
+                            .addMultipartParameter("inches", getSPData("inches"))
+                            .addMultipartParameter("religion", getSPData("religion"))
+                            .addMultipartParameter("tattoos", getSPData("tattoos"))
+                            .addMultipartParameter("piercings", getSPData("piercings"))
+                            .addMultipartParameter("education", getSPData("education"))
+                            .addMultipartParameter("college", getSPData("college"))
+                            .addMultipartParameter("work", getSPData("work"))
+                            .addMultipartParameter("desig", getSPData("desig"))
+                            .addMultipartParameter("annual_income", getSPData("annual_income"))
+                            .addMultipartParameter("fb_id", fb_id)
+                            .addMultipartParameter("interests", interestsArray.toString())
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(final JSONObject response) {
+                                    // do anything with response
+                                    Log.e("check", response.toString());
 
-                                if (response.optString("status_code").equals("200")) {
+                                    if (response.optString("status_code").equals("200")) {
 
-                                    /*FirebaseMessaging.getInstance().
-                                            subscribeToTopic(response.optJSONObject("message").optString("user_id"));*/
+                                        FirebaseMessaging.getInstance().
+                                                subscribeToTopic(response.optJSONObject("message").optString("user_id"));
 
-                                    new android.os.Handler().postDelayed(
-                                            new Runnable() {
-                                                public void run() {AndroidNetworking.post(User.getInstance().BASE_URL + "approveUser")
-                                                        .addBodyParameter("user_id", response.optJSONObject("message").optString("user_id"))
-                                                        .setPriority(Priority.HIGH)
-                                                        .build()
-                                                        .getAsJSONObject(new JSONObjectRequestListener() {
-                                                            @Override
-                                                            public void onResponse(JSONObject response) {
-                                                                // do anything with response
-                                                                Log.e("check", response.toString());
-                                                            }
+                                        new android.os.Handler().postDelayed(
+                                                new Runnable() {
+                                                    public void run() {
+                                                        AndroidNetworking.post(User.getInstance().BASE_URL + "approveUser")
+                                                                .addBodyParameter("user_id", response.optJSONObject("message").optString("user_id"))
+                                                                .setPriority(Priority.HIGH)
+                                                                .build()
+                                                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                                                    @Override
+                                                                    public void onResponse(JSONObject response) {
+                                                                        // do anything with response
+                                                                        Log.e("check", response.toString());
+                                                                    }
 
-                                                            @Override
-                                                            public void onError(ANError error) {
-                                                                // handle error
-                                                                error.printStackTrace();
-                                                            }
-                                                        });
-                                                }
-                                            },
-                                            3000);
+                                                                    @Override
+                                                                    public void onError(ANError error) {
+                                                                        // handle error
+                                                                        error.printStackTrace();
+                                                                    }
+                                                                });
+                                                    }
+                                                },
+                                                3000);
 
 
+                                        Toast.makeText(getApplicationContext(),
+                                                response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
-                                    Toast.makeText(getApplicationContext(),
-                                            response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Registration_Imageupload.this, OTP.class);
+                                        startActivity(intent);
 
-                                    Intent intent = new Intent(Registration_Imageupload.this, OTP.class);
-                                    startActivity(intent);
+                                    } else {
 
-                                } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                response.optString("message"), Toast.LENGTH_SHORT).show();
 
-                                    Toast.makeText(getApplicationContext(),
-                                            response.optString("message"), Toast.LENGTH_SHORT).show();
-
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onError(ANError error) {
-                                // handle error
-                                error.printStackTrace();
-                            }
-                        });
+                                @Override
+                                public void onError(ANError error) {
+                                    // handle error
+                                    error.printStackTrace();
+                                }
+                            });
+                }
             }
         });
 
