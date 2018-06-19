@@ -26,6 +26,8 @@ public class Fragment_profileInterests extends Fragment {
        /* TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
         tv.setText(getArguments().getString("msg"));*/
 
+
+
         return v;
     }
 
