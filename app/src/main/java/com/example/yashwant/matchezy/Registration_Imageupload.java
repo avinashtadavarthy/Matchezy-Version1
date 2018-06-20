@@ -11,7 +11,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Debug;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -30,12 +32,24 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.xml.sax.InputSource;
+import org.xml.sax.XMLReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import okhttp3.OkHttpClient;
 
 public class Registration_Imageupload extends AppCompatActivity {
 
@@ -47,13 +61,24 @@ public class Registration_Imageupload extends AppCompatActivity {
     String[] paths = {"","","",""};
     String fb_id = "";
     ArrayList<String> interestsArray;
+    String interestsArrayString;
+    List<File> files = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imageupload);
 
-        AndroidNetworking.initialize(this);
+
+        final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(1200, TimeUnit.SECONDS)
+                .readTimeout(1200, TimeUnit.SECONDS)
+                . writeTimeout(1200, TimeUnit.SECONDS)
+                .build();
+
+        AndroidNetworking.initialize(this, okHttpClient);
+
+
 
         Intent intent = getIntent();
         interestsArray = intent.getStringArrayListExtra("interestsArray");
@@ -81,6 +106,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         final boolean isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
 
         Log.e("qwe", interestsArray.toString());
+        interestsArrayString = interestsArray.toString();
 
         if(isLoggedThroughFb)
             fb_id = getSPData("fb_id");
@@ -88,16 +114,33 @@ public class Registration_Imageupload extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(paths[0].isEmpty() || paths[1].isEmpty() || paths[2].isEmpty() || paths[3].isEmpty()) {
+
+                        Log.e("asdf", getSPData("username") + " - " + getSPData("dob") + " - " +
+                        getSPData("phone_number") + " - " + getSPData("email") + " - " + getSPData("password")
+                        + " - " + getSPData("gender") + " - " + getSPData("lookingfor") + " - " +
+                        getSPData("maritalstatus") + " - " + getSPData("city") + " - " + getSPData("lang") +
+                        " - " + getSPData("feet") + " - " + getSPData("inches") + " - " + getSPData("religion") +
+                        " - " + getSPData("tattoos") + " - " + getSPData("piercings") + " - " + getSPData("education") +
+                        " - " + getSPData("college") + " - " + getSPData("work") + " - " + getSPData("desig") + " - "
+                                        + getSPData("annual_income") + " - " + interestsArrayString + " - " +
+                        new File(paths[0]).getAbsoluteFile() + " - " + new File(paths[1]).exists() + " - " + new File(paths[2]).exists() + " - " +
+                        new File(paths[3]).exists()) ;
+                if((paths[0].isEmpty() || paths[1].isEmpty() || paths[2].isEmpty() || paths[3].isEmpty())) {
                     Toast.makeText(getApplicationContext(), "Select four images for your profile",
                             Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    files.add(new File(paths[0]));
+                    files.add(new File(paths[1]));
+                    files.add(new File(paths[2]));
+                    files.add(new File(paths[3]));
+
                     AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
-                            .addMultipartFile("profile_pic", new File(paths[0]))
-                            .addMultipartFile("pictures", new File(paths[1]))
-                            .addMultipartFile("pictures_2", new File(paths[2]))
-                            .addMultipartFile("pictures_3", new File(paths[3]))
+                            .addMultipartFile("profile_pic", files.get(0))
+                            .addMultipartFile("pictures", files.get(1))
+                            .addMultipartFile("pictures_2", files.get(2))
+                            .addMultipartFile("pictures_3", files.get(3))
                             .addMultipartParameter("username", getSPData("username"))
                             .addMultipartParameter("dob", getSPData("dob"))
                             .addMultipartParameter("phone_number", getSPData("phone_number"))
@@ -119,8 +162,9 @@ public class Registration_Imageupload extends AppCompatActivity {
                             .addMultipartParameter("desig", getSPData("desig"))
                             .addMultipartParameter("annual_income", getSPData("annual_income"))
                             .addMultipartParameter("fb_id", fb_id)
-                            .addMultipartParameter("interests", interestsArray.toString())
+                            .addMultipartParameter("interests", interestsArrayString)
                             .setPriority(Priority.HIGH)
+                            .setOkHttpClient(okHttpClient)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
@@ -434,6 +478,5 @@ public class Registration_Imageupload extends AppCompatActivity {
             throw e;
         }
     }
-
 
 }
