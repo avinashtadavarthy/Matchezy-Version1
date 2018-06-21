@@ -183,8 +183,10 @@ public class Registration_Interests extends AppCompatActivity {
                     // Perform action on key press
 
                   /*  Toast.makeText(Registration_Interests.this, interest_edit.getText(), Toast.LENGTH_SHORT).show();*/
+                    if(interest_edit.getText().toString().isEmpty())
+                        Toast.makeText(Registration_Interests.this, "Please enter a interest", Toast.LENGTH_SHORT).show();
 
-                   runBubble(interest_edit.getText().toString().trim());
+                    else runBubble(interest_edit.getText().toString().trim());
                     interest_edit.setText(null);
                 }
                 return false;
