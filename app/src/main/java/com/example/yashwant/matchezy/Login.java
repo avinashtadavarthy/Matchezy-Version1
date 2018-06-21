@@ -26,7 +26,6 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -54,7 +53,12 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+        //FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+
+        if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
+            Intent i = new Intent(getApplicationContext(),HomeScreen.class);
+            startActivity(i);
+        }
 
         AndroidNetworking.initialize(this);
 
@@ -89,7 +93,7 @@ public class Login extends AppCompatActivity {
                                             Log.d("ASD", res.toString());
                                             storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                             storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
-                                            FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
+                                            //FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
                                             Intent intent = new Intent(Login.this, HomeScreen.class);
                                             startActivity(intent);
                                             break;

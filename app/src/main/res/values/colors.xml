@@ -4,4 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="red">#D32F2F</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="appred">#ea5251</color>
+    <color name="appdarkred">#c74645</color>
+    <color name="appgrey">#505154</color>
 </resources>

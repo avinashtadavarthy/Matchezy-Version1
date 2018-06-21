@@ -1,5 +1,8 @@
 package com.example.yashwant.matchezy;
 
+import com.abdeveloper.library.MultiSelectModel;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -79,6 +82,14 @@ public class User {
             mInstance = new User();
         }
         return mInstance;
+    }
+
+
+    void populateModel(ArrayList<MultiSelectModel> multi, String[] arr) {
+
+        for(int i=0;i<arr.length;i++) {
+            multi.add(i, new MultiSelectModel(i, arr[i]));
+        }
     }
 
 

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoDragView="@id/toplayout"
+    sothree:umanoPanelHeight="300dp">
+
+    <TextView
+        android:id="@+id/blankspace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="16dp" />
+
+    <RelativeLayout
+        android:clickable="true"
+        android:background="@drawable/options"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:focusable="true">
+
+        <RelativeLayout
+            android:id="@+id/toplayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileimg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/guy"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"/>
+
+        <TextView
+            android:id="@+id/profilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avinash Tadavarthy"
+            android:textColor="@color/appgrey"
+            android:textSize="15dp"
+            android:layout_toRightOf="@+id/profileimg" />
+
+        <TextView
+            android:id="@+id/profileemail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="avinash.tadavarthy@gmail.com"
+            android:textColor="@color/appred"
+            android:textSize="12dp"
+            android:layout_toRightOf="@+id/profileimg"
+            android:layout_below="@+id/profilename"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/sep"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#40505154"
+            android:layout_below="@+id/toplayout"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="22dp"/>
+
+        <LinearLayout
+            android:layout_below="@+id/sep"
+            android:layout_marginLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/viewprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/person"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="View Profile"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/changepassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/settings"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Change Password"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/helpandfeedback"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/help"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Help and feedback"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/logout"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Logout"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

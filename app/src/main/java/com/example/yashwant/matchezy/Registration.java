@@ -294,20 +294,49 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             return;
         }
 
-        String[] dd = input_Dateofbirth.getText().toString().split("/", 3);
-        String dobstr = dd[2] + "/" + dd[1] + "/" + dd[0];
 
-        storeSPData("username", inputName.getText().toString().trim());
-        storeSPData("dob", dobstr);
-        storeSPData("phone_number", input_countrycode.getText().toString().trim() + input_number.getText().toString().trim());
-        storeSPData("email", inputEmail.getText().toString().trim());
-        storeSPData("password", inputPassword.getText().toString().trim());
+        AndroidNetworking.post(User.getInstance().BASE_URL + "checkExists")
+                .addBodyParameter("phone_number", input_countrycode.getText().toString().trim() + input_number.getText().toString().trim())
+                .addBodyParameter("email", inputEmail.getText().toString().trim())
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
 
-        Log.e("date", input_Dateofbirth.getText().toString());
-        Log.e("mdate", dobstr);
+                        Log.e("hjv", response.toString());
 
-        Intent intent = new Intent(getApplicationContext(), Registration2.class);
-        startActivity(intent);
+                        switch(response.optString("status_code")) {
+
+                            case "200": {
+                                Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
+
+                                String[] dd = input_Dateofbirth.getText().toString().split("/", 3);
+                                String dobstr = dd[2] + "/" + dd[1] + "/" + dd[0];
+
+                                storeSPData("username", inputName.getText().toString().trim());
+                                storeSPData("dob", dobstr);
+                                storeSPData("phone_number", input_countrycode.getText().toString().trim() + input_number.getText().toString().trim());
+                                storeSPData("email", inputEmail.getText().toString().trim());
+                                storeSPData("password", inputPassword.getText().toString().trim());
+
+                                Log.e("date", input_Dateofbirth.getText().toString());
+                                Log.e("mdate", dobstr);
+
+                                Intent intent = new Intent(getApplicationContext(), Registration2.class);
+                                startActivity(intent);
+                            } break;
+
+                            case "400":
+                                Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
+                                break;
+                        }
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        error.printStackTrace();
+                    }
+                });
 
     }
 

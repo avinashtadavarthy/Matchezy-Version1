@@ -147,6 +147,7 @@
                     android:fontFamily="@font/circularstd"
                     android:hint="Annual income"
                     android:inputType="number"
+                    android:maxLines="1"
                     android:paddingLeft="35dp"
                     android:maxLength="10"/>
 

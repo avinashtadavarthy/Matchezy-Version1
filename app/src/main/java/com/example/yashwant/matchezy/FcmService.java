@@ -1,3 +1,4 @@
+/*
 package com.example.yashwant.matchezy;
 
 import android.app.NotificationChannel;
@@ -19,9 +20,11 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
 
+*/
 /**
  * Created by hari on 16/6/18.
- */
+ *//*
+
 
 public class FcmService extends FirebaseMessagingService {
 
@@ -79,4 +82,4 @@ public class FcmService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(adminChannel);
         }
     }
-}
+}*/

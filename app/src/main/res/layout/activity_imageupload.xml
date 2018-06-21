@@ -21,7 +21,7 @@
         android:paddingTop="38dp"
         android:text="Show us how you look."
         android:textColor="#FFF"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

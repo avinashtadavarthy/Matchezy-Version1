@@ -1,3 +1,45 @@
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoShadowHeight="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="100"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="55"
+            android:src="@drawable/guy"
+            android:scaleType="centerCrop"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:background="@drawable/options"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|top"
+        android:text="The Awesome Sliding Up Panel"
+        android:textSize="16dp" />
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+
+
+
+
+
+
+
+
+<!--
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,9 +49,6 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ProfilePage">
-    
-
-
         
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,7 +76,7 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/circularstd"
                 android:text="Priya, 22   Chennai"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.029"
@@ -123,4 +162,4 @@
         fab:show_animation="@anim/fab_roll_from_right" />
         
 
-</RelativeLayout>
+</RelativeLayout>-->

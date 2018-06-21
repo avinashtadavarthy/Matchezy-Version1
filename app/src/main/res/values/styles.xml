@@ -1,18 +1,72 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">#ffffff</item>
+        <item name="colorPrimaryDark">#ffffff</item>
+        <item name="android:colorAccent">#ea5251</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fontFamily">@font/circularstd</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
 
     <style name="AppTheme.CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowIsFloating">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
     </style>
+
+
+    <style name="MainAppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">#ffffff</item>
+        <item name="android:colorAccent">#ea5251</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fontFamily">@font/circularstd</item>
+    </style>
+
+
+    <style name="RegistrationTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/appdarkred</item>
+        <item name="android:colorAccent">@color/appred</item>
+        <item name="android:fontFamily">@font/circularstd</item>
+    </style>
+
+    <style name="ProfilePageTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimaryDark">#50FFFFFF</item>
+        <item name="android:colorAccent">@color/appred</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fontFamily">@font/circularstd</item>
+
+        <item name="android:actionBarStyle">@style/ThemeActionBar</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <!-- Support library compatibility -->
+        <item name="actionBarStyle">@style/ThemeActionBar</item>
+        <item name="windowActionBarOverlay">true</item>
+    </style>
+
+    <style name="ThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background"> @null </item>
+        <!-- Support library compatibility -->
+        <item name="background">@null</item>
+        <item name="android:displayOptions">showHome|useLogo</item>
+        <item name="displayOptions">showHome|useLogo</item>
+
+    </style>
+
+
+    <style name="Theme.AppCompat.Translucent" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:fontFamily">@font/circularstd</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+
 
 
     <style name="findYourSoulmate" parent="Theme.AppCompat.Light.NoActionBar">
