@@ -103,7 +103,7 @@ public class OTP extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AndroidNetworking.post(url)
-                        .addBodyParameter("phone_number", "+919445053456")
+                        .addBodyParameter("phone_number", getSPData("phone_number"))
                         .setPriority(Priority.MEDIUM)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
@@ -131,7 +131,7 @@ public class OTP extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AndroidNetworking.post(url)
-                        .addBodyParameter("phone_number", "+919445053456")
+                        .addBodyParameter("phone_number", getSPData("phone_number"))
                         .setPriority(Priority.MEDIUM)
                         .build()
                         .getAsJSONObject(new JSONObjectRequestListener() {
