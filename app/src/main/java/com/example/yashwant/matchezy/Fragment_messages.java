@@ -11,19 +11,18 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_messages extends Fragment {
+public class Fragment_messages extends android.support.v4.app.Fragment {
 
-
-    public Fragment_messages() {
-        // Required empty public constructor
-    }
+    View myView;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_messages, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        myView =  inflater.inflate(R.layout.fragment_messages, container, false);
+
+
+
+        return myView;
     }
 
 }
