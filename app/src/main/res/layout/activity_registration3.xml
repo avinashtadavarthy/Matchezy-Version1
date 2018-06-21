@@ -34,7 +34,7 @@
                 android:paddingTop="38dp"
                 android:text="A few more."
                 android:textColor="#FFF"
-                android:textSize="24sp" />
+                android:textSize="24dp" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/circularstd"
                     android:text="How tall are you?"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.139"
@@ -80,7 +80,7 @@
                     app:scroll_indicator_size="1dp"
                     app:scroll_item_align="center"
                     app:scroll_item_text_color="#797979"
-                    app:scroll_item_text_size="17sp"
+                    app:scroll_item_text_size="17dp"
                     app:scroll_selected_item_background="#00ffffff"
                     app:scroll_selected_item_text_color="#4A90E2"
                     app:scroll_visible_item_count="3" />

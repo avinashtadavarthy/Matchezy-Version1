@@ -21,7 +21,7 @@
         android:fontFamily="@font/circularstd"
         android:background="@drawable/curve1"
         android:text="Hi there! Please fill the following to get started."
-        android:textSize="24sp" />
+        android:textSize="24dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -89,7 +89,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/inputlayoutcountrycode"
-                    android:layout_width="0sp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="2">
@@ -111,7 +111,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/inputLayoutNumber"
-                    android:layout_width="0sp"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="8">

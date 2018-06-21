@@ -23,7 +23,7 @@
         android:fontFamily="@font/circularstd"
         android:background="@drawable/curve1"
         android:text="About you."
-        android:textSize="24sp" />
+        android:textSize="24dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -168,7 +168,7 @@
                 android:textColor="#fff"
                 android:paddingStart="18dp"
                 android:fontFamily="@font/circularstd"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
