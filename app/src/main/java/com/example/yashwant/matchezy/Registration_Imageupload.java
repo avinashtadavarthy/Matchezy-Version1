@@ -29,6 +29,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONException;
@@ -173,8 +174,8 @@ public class Registration_Imageupload extends AppCompatActivity {
 
                                     if (response.optString("status_code").equals("200")) {
 
-                                      /*  FirebaseMessaging.getInstance().
-                                                subscribeToTopic(response.optJSONObject("message").optString("user_id"));*/
+                                        FirebaseMessaging.getInstance().
+                                                subscribeToTopic(response.optJSONObject("message").optString("user_id"));
 
                                         new android.os.Handler().postDelayed(
                                                 new Runnable() {
