@@ -47,7 +47,7 @@
             android:label="@string/title_activity_home_screen" />
         <activity android:name=".OTP"
             android:theme="@style/RegistrationTheme" />
-        <activity android:name=".Login">
+        <activity android:name=".Filter">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
