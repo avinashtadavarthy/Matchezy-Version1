@@ -26,6 +26,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
@@ -53,7 +54,7 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
-        //FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+        FirebaseMessaging.getInstance().subscribeToTopic("Hy");
 
         if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
             Intent i = new Intent(getApplicationContext(),HomeScreen.class);
