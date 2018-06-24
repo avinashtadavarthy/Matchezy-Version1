@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,12 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
@@ -40,15 +45,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.name.setText(mData.get(position).getName());
+        holder.name.setText(mData.get(position).getName() + ", ");
         Glide.with(mContext)
                 .load(mData.get(position).getThumbnail())
                 .into(holder.img_book_thumbnail);
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            Date date = format.parse(String.valueOf(mData.get(position).getAge()));
+            holder.name.append(User.getInstance().getAge(date.getYear() + 1900,
+                    date.getMonth(), date.getDay()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        holder.interests.setText( mData.get(position).getInterests().toString()
+                .replace('[',' ').replace(']',' ')
+                .replace('"',' '));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
               /*  Intent intent = new Intent(mContext,MatchedProfiles_Activity.class);
 
                 // passing data to the book activity
@@ -75,6 +93,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView name;
         ImageView img_book_thumbnail;
         CardView cardView ;
+        TextView interests;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -82,7 +101,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = (TextView) itemView.findViewById(R.id.name) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-
+            interests = itemView.findViewById(R.id.interests);
 
         }
     }

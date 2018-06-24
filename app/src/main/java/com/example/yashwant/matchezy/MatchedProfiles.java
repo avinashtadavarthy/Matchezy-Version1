@@ -10,14 +10,14 @@ public class MatchedProfiles {
     private String Category ;
     private String Description ;
     private String Thumbnail ;
-    private int age;
+    private String age;
     private JSONArray interests;
 
     public MatchedProfiles() {
     }
 
     public MatchedProfiles(String name, String thumbnail,
-                           int age, JSONArray interests) {
+                           String age, JSONArray interests) {
         Name = name;
         Thumbnail = thumbnail;
         this.age = age;
@@ -41,7 +41,7 @@ public class MatchedProfiles {
         return Thumbnail;
     }
 
-    public int getAge() {
+    public String getAge() {
         return age;
     }
 
@@ -65,7 +65,7 @@ public class MatchedProfiles {
         Thumbnail = thumbnail;
     }
 
-    public void setAge(int age) {
+    public void setAge(String age) {
         this.age = age;
     }
 

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardview_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="#fff"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:layout_width="match_parent"
-    android:layout_height="240dp"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
     cardview:cardCornerRadius="7dp">
 
     <RelativeLayout
@@ -21,47 +21,52 @@
             android:layout_alignParentTop="true"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
-
             android:elevation="2dp"
             android:src="@drawable/bookmark_home" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/book_img_id"
                 android:layout_width="match_parent"
                 android:layout_height="170dp"
-                android:scaleType="centerCrop"
-                android:background="#2d2d2d"/>
+                android:scaleType="centerCrop" />
 
-
-            <TextView
-                android:id="@+id/name"
-                android:textColor="#2d2d2d"
-                android:textSize="14dp"
-                android:paddingLeft="10dp"
-                android:layout_marginTop="7dp"
-
-                android:fontFamily="@font/circularstd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Name,age"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-                android:layout_height="100dp">
-
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_weight="2"
+                    android:fontFamily="@font/circularstd"
+                    android:paddingLeft="10dp"
+                    android:text="Name"
+                    android:textColor="#2d2d2d"
+                    android:textSize="14dp" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/interests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Interests"
+                android:textColor="#2d2d2d"
+                android:padding="10dp"/>
 
         </LinearLayout>
 
 
     </RelativeLayout>
-
 
 
 </android.support.v7.widget.CardView>
