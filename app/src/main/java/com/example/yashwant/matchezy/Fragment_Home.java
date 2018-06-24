@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,16 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.filter);
 
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent i = new Intent(getContext(), Filter.class);
+                startActivity(i);
+
+            }
+        });
+
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
@@ -97,7 +108,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
 
         myAdapter = new RecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles);
-        myrv.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(),2));
+        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         myrv.setAdapter(myAdapter);
 
         return myView;

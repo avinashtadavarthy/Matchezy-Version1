@@ -2,6 +2,7 @@ package com.example.yashwant.matchezy;
 
 import android.content.Intent;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View;
@@ -20,7 +22,11 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import com.bumptech.glide.Glide;
 import com.scalified.fab.ActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +65,8 @@ public class HomeScreen extends AppCompatActivity {
 
     CircleImageView profileimg;
 
+    JSONObject userData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +74,20 @@ public class HomeScreen extends AppCompatActivity {
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
+        //BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
 
+        Log.e("userdata", getSPData("userdata"));
+
+        try {
+            userData = new JSONObject(getSPData("userdata"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         profileimg = (CircleImageView) findViewById(R.id.profileimg);
+
+        Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(profileimg);
 
         profileimg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +98,15 @@ public class HomeScreen extends AppCompatActivity {
             }
         });
 
+    }
 
 
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 }

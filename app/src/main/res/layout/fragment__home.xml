@@ -3,13 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
     android:layout_height="match_parent"
     tools:context=".Fragment_Home">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -19,10 +17,9 @@
             android:text="Browse by interests"
             android:textSize="17dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="13dp"
             android:fontFamily="@font/circularstd"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,11 +38,12 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:layout_height="2dp" />
+
         <TextView
             android:layout_width="match_parent"
             android:text="Recommended for you"
             android:textSize="17dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="13dp"
             android:fontFamily="@font/circularstd"
             android:layout_height="wrap_content"
             />

@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:text="@string/matchezy"
             android:padding="5dp"
-            android:textSize="18dp"
+            android:textSize="20dp"
             android:textColor="@color/appred"
             android:gravity="center"
             android:layout_centerVertical="true"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.yashwant.matchezy">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +22,8 @@
         <activity android:name=".Registration_Interests"
             android:theme="@style/RegistrationTheme"/>
         <activity android:name=".ProfilePage"
-            android:theme="@style/ProfilePageTheme"/>
+            android:theme="@style/ProfilePageTheme"
+            android:parentActivityName=".HomeScreen"/>
         <activity android:name=".Registration"
             android:theme="@style/RegistrationTheme"/>
         <activity

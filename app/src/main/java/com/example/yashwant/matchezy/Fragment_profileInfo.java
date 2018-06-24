@@ -26,6 +26,8 @@ public class Fragment_profileInfo extends Fragment {
        /* TextView tv = (TextView) v.findViewById(R.id.tvFragFirst);
         tv.setText(getArguments().getString("msg"));*/
 
+       //height, maritalstatus, educationalqual, annual income, languages known, lookingfor, religion, tattoo, piercings, college studied,
+
         return v;
     }
 

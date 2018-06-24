@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoDragView="@id/toplayout"
-    sothree:umanoPanelHeight="300dp">
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="280dp">
 
-    <TextView
-        android:id="@+id/blankspace"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="16dp" />
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/blankspace"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="16dp" />
+
+        <include layout="@layout/include_progress_overlay"/>
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/optionslistlayout"
         android:clickable="true"
         android:background="@drawable/options"
         android:layout_width="match_parent"
@@ -71,19 +82,20 @@
         <LinearLayout
             android:layout_below="@+id/sep"
             android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/viewprofile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/person"
                     android:layout_gravity="center_vertical"/>
 
@@ -98,20 +110,20 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/changepassword"
-                android:layout_width="wrap_content"
+                android:id="@+id/dislikedprofile"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:src="@drawable/settings"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/disliked"
                     android:layout_gravity="center_vertical"/>
 
                 <TextView
-                    android:text="Change Password"
+                    android:text="Disliked Profiles"
                     android:layout_marginLeft="16dp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/appgrey"
@@ -121,6 +133,151 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/blockedprofile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/blockedprofile"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Blocked Profiles"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/privacysettings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/settings"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Privacy Settings"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/termsandconditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/termsandcon"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Terms and Conditions"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/privacypolicy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/privacypol"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Privacy Policy"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/aboutus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/logo"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="About us"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/libraries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/libraries"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:text="Open Source Libraries"
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/appgrey"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"/>
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
                 android:id="@+id/helpandfeedback"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -128,8 +285,8 @@
                 android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/help"
                     android:layout_gravity="center_vertical"/>
 
@@ -151,8 +308,8 @@
                 android:layout_marginTop="20dp">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/logout"
                     android:layout_gravity="center_vertical"/>
 
@@ -168,6 +325,9 @@
 
         </LinearLayout>
 
+
     </RelativeLayout>
+
+
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

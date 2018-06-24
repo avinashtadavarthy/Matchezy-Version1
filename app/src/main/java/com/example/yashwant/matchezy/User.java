@@ -2,8 +2,11 @@ package com.example.yashwant.matchezy;
 
 import com.abdeveloper.library.MultiSelectModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by avinash on 27/12/17.
@@ -44,19 +47,19 @@ public class User {
         String month = "";
         switch(date.substring(5,7))
         {
-            case "01": month = "JAN";break;
-            case "02": month = "FEB";break;
-            case "03": month = "MAR";break;
-            case "04": month = "APR";break;
-            case "05": month = "MAY";break;
-            case "06": month = "JUN";break;
-            case "07": month = "JUL";break;
-            case "08": month = "AUG";break;
-            case "09": month = "SEP";break;
-            case "10": month = "OCT";break;
-            case "11": month = "NOV";break;
-            case "12": month = "DEC";break;
-            default:   month = "HELLO";
+            case "01": month = "JAN"; break;
+            case "02": month = "FEB"; break;
+            case "03": month = "MAR"; break;
+            case "04": month = "APR"; break;
+            case "05": month = "MAY"; break;
+            case "06": month = "JUN"; break;
+            case "07": month = "JUL"; break;
+            case "08": month = "AUG"; break;
+            case "09": month = "SEP"; break;
+            case "10": month = "OCT"; break;
+            case "11": month = "NOV"; break;
+            case "12": month = "DEC"; break;
+            default:   month = "HELLO"; break;
 
         }
 
@@ -94,3 +97,32 @@ public class User {
 
 
 }
+
+
+
+
+
+
+/*
+
+*****sample post request*****
+
+AndroidNetworking.post(User.getInstance().BASE_URL + "")
+                 .addBodyParameter("firstname", "Amit")
+                 .addBodyParameter("lastname", "Shekhar")
+                 .setPriority(Priority.MEDIUM)
+                 .build()
+                 .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                      // do anything with response
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                      // handle error
+                    }
+                });
+
+
+
+        */

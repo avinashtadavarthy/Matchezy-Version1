@@ -34,15 +34,25 @@
     <style name="ProfilePageTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimaryDark">#50FFFFFF</item>
         <item name="android:colorAccent">@color/appred</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="android:fontFamily">@font/circularstd</item>
-
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">#40FFFFFF</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:actionBarStyle">@style/ThemeActionBar</item>
-        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionBarOverlay">false</item>
         <!-- Support library compatibility -->
         <item name="actionBarStyle">@style/ThemeActionBar</item>
-        <item name="windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">false</item>
     </style>
+
+
+    <style name="ChipTextStyle">
+        <item name="android:textSize">14dp</item>
+        <item name="android:textColor">@color/appgrey</item>
+        <item name="android:fontFamily">@font/sourcesansproregular</item>
+    </style>
+
 
     <style name="ThemeActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid">
         <item name="android:background"> @null </item>

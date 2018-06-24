@@ -66,7 +66,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v) {
 
-                //Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(mContext, ProfilePage.class).putExtra("myprofile", "false");
+                mContext.startActivity(i);
+
+               // Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
               /*  Intent intent = new Intent(mContext,MatchedProfiles_Activity.class);
 
                 // passing data to the book activity

@@ -1,34 +1,257 @@
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoShadowHeight="4dp">
+    sothree:umanoShadowHeight="4dp"
+    sothree:umanoOverlay="true">
 
-    <LinearLayout
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="100"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <ImageView
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="100"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/imagePager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="60"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/fakeView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="55"
-            android:src="@drawable/guy"
-            android:scaleType="centerCrop"/>
+            android:layout_centerInParent="true" />
 
-    </LinearLayout>
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="-5dp"
+            android:background="@drawable/gradient"
+            android:layout_below="@+id/fakeView" />
 
-    <TextView
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/maininfo"
         android:background="@drawable/options"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center|top"
-        android:text="The Awesome Sliding Up Panel"
-        android:textSize="16dp" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:id="@+id/contrain"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/profilename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/circularstd"
+                        android:text="Priya"
+                        android:textSize="18dp"
+                        android:textColor="#FF4A4A4A"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/circularstd"
+                        android:text=", "
+                        android:textSize="18dp"
+                        android:textColor="#FF4A4A4A" />
+
+
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/circularstd"
+                        android:text="22"
+                        android:textSize="18dp"
+                        android:textColor="#FF4A4A4A" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="@font/circularstd"
+                    android:text="Chennai"
+                    android:textSize="18dp"
+                    android:textColor="#FF4A4A4A" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/bookmarkbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/bookmark_empty"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="30dp"/>
+
+            <ImageView
+                android:id="@+id/editbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/edit"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="30dp"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/pagerindicator"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/contrain"
+            android:weightSum="3"
+            android:paddingRight="35dp"
+            android:paddingLeft="35dp">
+
+
+            <ImageView
+                android:id="@+id/one"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:background="#60505154"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:id="@+id/two"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:background="#60505154"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+            <ImageView
+                android:id="@+id/three"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="2dp"
+                android:background="#60505154"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pagertextindicator"
+            android:layout_below="@+id/pagerindicator"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/circularstd"
+            android:textColor="#FF4A90E2"
+            android:textSize="13dp" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/pagertextindicator"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/viewPager"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+        </FrameLayout>
+
+        <com.scalified.fab.ActionButton
+            android:id="@+id/action_button_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/action_button_like"
+            android:layout_marginEnd="96dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.666"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.985"
+            fab:button_colorPressed="@color/fab_material_white"
+            fab:hide_animation="@anim/fab_roll_to_down"
+            fab:shadowResponsiveEffect_enabled="true"
+            fab:show_animation="@anim/fab_roll_from_right" />
+
+        <com.scalified.fab.ActionButton
+            android:id="@+id/action_button_like"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.958"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.985"
+            fab:button_colorPressed="@color/fab_material_white"
+            fab:hide_animation="@anim/fab_roll_to_down"
+            fab:shadowResponsiveEffect_enabled="true"
+            fab:show_animation="@anim/fab_roll_from_right" />
+
+
+    </RelativeLayout>
+
+
+
+
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
@@ -39,127 +262,3 @@
 
 
 
-<!--
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    tools:context=".ProfilePage">
-        
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:id="@+id/contrain"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/profileImage"
-                android:layout_width="match_parent"
-                android:layout_height="298dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/profileImage"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/circularstd"
-                android:text="Priya, 22   Chennai"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.029"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.965" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/bookmark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.931"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.918" />
-
-
-
-
-
-
-        </android.support.constraint.ConstraintLayout>
-
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_below="@+id/contrain"
-
-        android:layout_height="wrap_content">
-
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/viewPager"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-
-    </FrameLayout>
-
-    <com.scalified.fab.ActionButton
-        android:id="@+id/action_button_dislike"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/action_button_like"
-        android:layout_marginEnd="96dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.985"
-        fab:button_colorPressed="@color/fab_material_white"
-        fab:hide_animation="@anim/fab_roll_to_down"
-        fab:shadowResponsiveEffect_enabled="true"
-        fab:show_animation="@anim/fab_roll_from_right" />
-
-    <com.scalified.fab.ActionButton
-        android:id="@+id/action_button_like"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.985"
-        fab:button_colorPressed="@color/fab_material_white"
-        fab:hide_animation="@anim/fab_roll_to_down"
-        fab:shadowResponsiveEffect_enabled="true"
-        fab:show_animation="@anim/fab_roll_from_right" />
-        
-
-</RelativeLayout>-->

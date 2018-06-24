@@ -26,7 +26,7 @@ public class MyVerificationReceiver extends BroadcastReceiver {
             case SUCCESS: Log.e("verification state", "SUCCESS");
             Toast.makeText(context, "Registration Success", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(context, Login.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
             break;
             case ERROR: Log.e("verification state", "ERROR");

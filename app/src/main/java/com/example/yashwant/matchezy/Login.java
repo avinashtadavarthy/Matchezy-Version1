@@ -91,12 +91,33 @@ public class Login extends AppCompatActivity {
                                         case "200": {
 
                                             clearSPData();
-                                            Log.d("ASD", res.toString());
                                             storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                             storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
                                             FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
-                                            Intent intent = new Intent(Login.this, HomeScreen.class);
-                                            startActivity(intent);
+
+                                            //to get users data
+                                            AndroidNetworking.post(User.getInstance().BASE_URL + "sampleUserData")
+                                                    .addBodyParameter("user_id", getSPData("user_id"))
+                                                    .setPriority(Priority.HIGH)
+                                                    .build()
+                                                    .getAsJSONObject(new JSONObjectRequestListener() {
+                                                        @Override
+                                                        public void onResponse(JSONObject response) {
+                                                            // do anything with response
+
+                                                            Log.e("userdata", response.toString());
+                                                            storeSPData("userdata", response.optJSONObject("message").toString());
+                                                            Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                            startActivity(intent);
+                                                        }
+                                                        @Override
+                                                        public void onError(ANError error) {
+
+                                                            error.printStackTrace();
+
+                                                        }
+                                                    });
+
                                             break;
                                         }
                                         case "404": {
@@ -292,4 +313,5 @@ public class Login extends AppCompatActivity {
         mUserEditor.clear();
         mUserEditor.apply();
     }
+
 }
