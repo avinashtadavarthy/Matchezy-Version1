@@ -47,12 +47,14 @@
             android:label="@string/title_activity_home_screen" />
         <activity android:name=".OTP"
             android:theme="@style/RegistrationTheme" />
-        <activity android:name=".Filter">
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Filter">
         </activity>
         <activity android:name=".ForgotPassword" />
         <activity

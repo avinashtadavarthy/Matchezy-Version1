@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 
@@ -39,7 +41,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.name.setText(mData.get(position).getName());
-        holder.img_book_thumbnail.setImageResource(mData.get(position).getThumbnail());
+        Glide.with(mContext)
+                .load(mData.get(position).getThumbnail())
+                .into(holder.img_book_thumbnail);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

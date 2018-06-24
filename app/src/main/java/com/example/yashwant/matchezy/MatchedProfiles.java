@@ -1,20 +1,27 @@
 package com.example.yashwant.matchezy;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+
 public class MatchedProfiles {
 
     private String Name;
     private String Category ;
     private String Description ;
-    private int Thumbnail ;
+    private String Thumbnail ;
+    private int age;
+    private JSONArray interests;
 
     public MatchedProfiles() {
     }
 
-    public MatchedProfiles(String name, String category, String description, int thumbnail) {
+    public MatchedProfiles(String name, String thumbnail,
+                           int age, JSONArray interests) {
         Name = name;
-        Category = category;
-        Description = description;
         Thumbnail = thumbnail;
+        this.age = age;
+        this.interests = interests;
     }
 
 
@@ -30,10 +37,17 @@ public class MatchedProfiles {
         return Description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return Thumbnail;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public JSONArray getInterests() {
+        return interests;
+    }
 
     public void setName(String name) {
         Name = name;
@@ -47,7 +61,16 @@ public class MatchedProfiles {
         Description = description;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         Thumbnail = thumbnail;
     }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setInterests(JSONArray array) {
+        this.interests = interests;
+    }
+
 }
