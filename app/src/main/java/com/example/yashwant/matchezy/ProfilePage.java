@@ -1,5 +1,6 @@
 package com.example.yashwant.matchezy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -30,11 +31,17 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.google.gson.JsonArray;
 import com.scalified.fab.ActionButton;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -69,17 +76,11 @@ public class ProfilePage extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
 
-        try {
-            userData = new JSONObject(getSPData("userdata"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        final ViewPager imagePager = (ViewPager) findViewById(R.id.imagePager);
+        final CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+
+        final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_like);
         final ActionButton actionButton2 = (ActionButton) findViewById(R.id.action_button_dislike);
@@ -87,7 +88,127 @@ public class ProfilePage extends AppCompatActivity {
         bookmarkbtn = findViewById(R.id.bookmarkbtn);
         editbtn = findViewById(R.id.editbtn);
 
+        profile_sliding_layout = (SlidingUpPanelLayout) findViewById(R.id.profile_sliding_layout);
+
+        profilename = findViewById(R.id.profilename);
+        city = findViewById(R.id.city);
+
+
+        AndroidNetworking.initialize(this);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
         myprofile = getIntent().getStringExtra("myprofile");
+
+        if(myprofile.equals("true")) {
+
+            try {
+                userData = new JSONObject(getSPData("userdata"));
+                profilename.setText(userData.optString("name") + ", ");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                try {
+                    Date date = format.parse(String.valueOf(userData.optString("dob")));
+                    profilename.append(User.getInstance().getAge(date.getYear() + 1900,
+                            date.getMonth(), date.getDay()));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                city.setText(userData.optString("currentCity"));
+
+
+                //images on top
+                JSONArray picsArray = userData.optJSONArray("pictures");
+
+                String pics = userData.optString("pictures").replace("\\","");
+                //String[] picurls = pics.substring(1, pics.length()-1).split(",", 4);
+                String[] picurls = {"", "", "", ""};
+
+                for(int i = 0;i < picsArray.length(); i++) {
+                    try {
+                        picurls[i] = picsArray.getString(i);
+                        //picurls[i] = picurls[i].replace("https","http");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
+                imagePager.setAdapter(mCustomPagerAdapter);
+                indicator.setViewPager(imagePager);
+                MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
+                        userData.optJSONArray("interests"));
+                pager.setAdapter(pagerAdapter);
+                pager.setCurrentItem(0);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            String user_id = getIntent().getStringExtra("user_id");
+            Log.e("ASd",user_id);
+            AndroidNetworking.post(User.getInstance().BASE_URL + "getUserData")
+                    .addBodyParameter("user_id", getSPData("user_id"))
+                    .addBodyParameter("user_token", getSPData("user_token"))
+                    .addBodyParameter("user_id_2", user_id)
+                    .setPriority(Priority.HIGH)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // do anything with response
+
+                            Log.e("userdata", response.toString());
+                            userData = response.optJSONObject("message");
+                            profilename.setText(userData.optString("name") + ", ");
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                            try {
+                                Date date = format.parse(String.valueOf(userData.optString("dob")));
+                                profilename.append(User.getInstance().getAge(date.getYear() + 1900,
+                                        date.getMonth(), date.getDay()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            city.setText(userData.optString("currentCity"));
+
+
+                            //images on top
+                            JSONArray picsArray = userData.optJSONArray("pictures");
+
+                            String pics = userData.optString("pictures").replace("\\","");
+                            //String[] picurls = pics.substring(1, pics.length()-1).split(",", 4);
+                            String[] picurls = {"", "", "", ""};
+
+                            for(int i = 0;i < picsArray.length(); i++) {
+                                try {
+                                    picurls[i] = picsArray.getString(i);
+                                    //picurls[i] = picurls[i].replace("https","http");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getApplicationContext(), picurls);
+                            imagePager.setAdapter(mCustomPagerAdapter);
+                            indicator.setViewPager(imagePager);
+                            MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
+                                    userData.optJSONArray("interests"));
+                            pager.setAdapter(pagerAdapter);
+                            pager.setCurrentItem(0);
+                        }
+                        @Override
+                        public void onError(ANError error) {
+
+                            error.printStackTrace();
+
+                        }
+                    });
+        }
+
+
+
+
         if(myprofile.equals("true")) {
             bookmarkbtn.setVisibility(View.GONE);
             editbtn.setVisibility(View.VISIBLE);
@@ -116,7 +237,6 @@ public class ProfilePage extends AppCompatActivity {
         });
 
 
-        profile_sliding_layout = (SlidingUpPanelLayout) findViewById(R.id.profile_sliding_layout);
         profile_sliding_layout.setPanelHeight((int)Math.round(height*0.45));
         profile_sliding_layout.setParallaxOffset(150);
 
@@ -147,30 +267,6 @@ public class ProfilePage extends AppCompatActivity {
 
         profile_sliding_layout.addPanelSlideListener(panelSlideListener);
 
-
-        profilename = findViewById(R.id.profilename);
-        age = findViewById(R.id.age);
-        city = findViewById(R.id.city);
-
-        profilename.setText(userData.optString("name"));
-        age.setText(userData.optString(""));
-        city.setText(userData.optString("currentCity"));
-
-
-        //images on top
-        String pics = userData.optString("pictures").replace("\\","");
-        String[] picurls = pics.substring(1, pics.length()-1).split(",", 4);
-
-        for(int i=0;i<picurls.length;i++) {
-            picurls[i] = userData.optString("profileImageURL");
-        }
-
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
-        ViewPager imagePager = (ViewPager) findViewById(R.id.imagePager);
-        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
-        imagePager.setAdapter(mCustomPagerAdapter);
-        indicator.setViewPager(imagePager);
-
         //actionButton.hide();
         actionButton.setType(ActionButton.Type.DEFAULT);
         //actionButton.setSize(65.0f);
@@ -197,10 +293,7 @@ public class ProfilePage extends AppCompatActivity {
         anim.setRepeatCount(1);
         anim.setRepeatMode(Animation.REVERSE);
 
-        final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        pager.setAdapter(pagerAdapter);
-        pager.setCurrentItem(0);
+
         one = findViewById(R.id.one);
         two = findViewById(R.id.two);
         three = findViewById(R.id.three);
@@ -332,18 +425,21 @@ public class ProfilePage extends AppCompatActivity {
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
-        public MyPagerAdapter(FragmentManager fm) {
+        JSONArray interests;
+
+        public MyPagerAdapter(FragmentManager fm, JSONArray interests) {
             super(fm);
+            this.interests = interests;
         }
 
         @Override
         public Fragment getItem(int pos) {
             switch(pos) {
 
-                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1");
+                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests);
                 case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1");
                 case 2: return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
-                default: return Fragment_profileInterests.newInstance("ThirdFragment, Default");
+                default: return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests);
             }
         }
 

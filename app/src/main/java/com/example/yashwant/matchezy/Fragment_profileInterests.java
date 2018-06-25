@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,26 +38,26 @@ public class Fragment_profileInterests extends Fragment {
     };
 
     JSONObject userData;
+    JSONArray interests;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile_interests, container, false);
 
-         try {
-            userData = new JSONObject(getSPData("userdata"));
+        JSONArray interests = null;
+        try {
+            interests = new JSONArray(getArguments().getString("interests"));
+
+            interests_chipgroup = (ChipGroup) v.findViewById(R.id.interests_chipgroup);
+
+            interests_chipgroup.setChipSpacing(2);
+
+            populateChips(interests);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        String intr = userData.optString("interests").substring(1, userData.optString("interests").length()-1).replace("\"","");
-         String[] interests = intr.split(",", findnumber(intr));
-
-        interests_chipgroup = (ChipGroup) v.findViewById(R.id.interests_chipgroup);
-
-        interests_chipgroup.setChipSpacing(2);
-
-        populateChips(interests);
 
 
 
@@ -76,11 +77,11 @@ public class Fragment_profileInterests extends Fragment {
 
     }
 
-    private void populateChips(String[] arr) {
+    private void populateChips(JSONArray arr) throws JSONException {
 
-        for (int i=0;i<arr.length;i++) {
+        for (int i=0;i<arr.length();i++) {
             Chip chip = new Chip(getContext());
-            chip.setChipText(arr[i]);
+            chip.setChipText(arr.getString(i));
             //chip.setCloseIconEnabled(true);
             //chip.setCloseIconResource(R.drawable.fab_add);
             //chip.setChipIconResource(R.drawable.fab_add);
@@ -110,24 +111,16 @@ public class Fragment_profileInterests extends Fragment {
 
     }
 
-    public static Fragment_profileInterests newInstance(String text) {
+    public static Fragment_profileInterests newInstance(String text, JSONArray interests) {
 
         Fragment_profileInterests fragment_profileInterests = new Fragment_profileInterests();
 
-        /* Bundle b = new Bundle();
+         Bundle b = new Bundle();
         b.putString("msg", text);
+        b.putString("interests", interests.toString());
 
-        f.setArguments(b);*/
+        fragment_profileInterests.setArguments(b);
 
         return fragment_profileInterests;
-    }
-
-    private String getSPData(String key) {
-
-        SharedPreferences mUserData = this.getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
-        String data = mUserData.getString(key, "");
-
-        return data;
-
     }
 }

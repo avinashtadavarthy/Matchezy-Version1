@@ -59,6 +59,7 @@ public class Login extends AppCompatActivity {
         if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
             Intent i = new Intent(getApplicationContext(),HomeScreen.class);
             startActivity(i);
+            finish();
         }
 
         AndroidNetworking.initialize(this);
@@ -90,14 +91,18 @@ public class Login extends AppCompatActivity {
                                     switch (res.optString("status_code")) {
                                         case "200": {
 
+                                            Log.e("ASD", res.toString());
+
                                             clearSPData();
                                             storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                             storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
                                             FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
 
                                             //to get users data
-                                            AndroidNetworking.post(User.getInstance().BASE_URL + "sampleUserData")
+                                            AndroidNetworking.post(User.getInstance().BASE_URL + "getUserData")
                                                     .addBodyParameter("user_id", getSPData("user_id"))
+                                                    .addBodyParameter("user_token", getSPData("user_token"))
+                                                    .addBodyParameter("user_id_2", getSPData("user_id"))
                                                     .setPriority(Priority.HIGH)
                                                     .build()
                                                     .getAsJSONObject(new JSONObjectRequestListener() {

@@ -83,7 +83,9 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                                 JSONArray profilesArray = res.getJSONArray("message");
                                 for (int i = 0; i < profilesArray.length(); i++) {
                                     JSONObject object = (JSONObject) profilesArray.get(i);
-                                    lstMatchedProfiles.add(new MatchedProfiles(object.optString("name"),
+                                    lstMatchedProfiles.add(new MatchedProfiles(
+                                            object.optString("_id"),
+                                            object.optString("name"),
                                             object.optString("profileImageURL"),
                                             object.optString("dob"),
                                             object.optJSONArray("interests")));

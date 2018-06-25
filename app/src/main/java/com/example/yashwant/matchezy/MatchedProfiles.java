@@ -12,16 +12,18 @@ public class MatchedProfiles {
     private String Thumbnail ;
     private String age;
     private JSONArray interests;
+    private String user_id;
 
     public MatchedProfiles() {
     }
 
-    public MatchedProfiles(String name, String thumbnail,
+    public MatchedProfiles(String user_id, String name, String thumbnail,
                            String age, JSONArray interests) {
         Name = name;
         Thumbnail = thumbnail;
         this.age = age;
         this.interests = interests;
+        this.user_id = user_id;
     }
 
 
@@ -73,4 +75,11 @@ public class MatchedProfiles {
         this.interests = interests;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 }

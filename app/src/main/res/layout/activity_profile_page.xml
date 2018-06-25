@@ -83,24 +83,6 @@
                         android:textSize="18dp"
                         android:textColor="#FF4A4A4A"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstd"
-                        android:text=", "
-                        android:textSize="18dp"
-                        android:textColor="#FF4A4A4A" />
-
-
-                    <TextView
-                        android:id="@+id/age"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstd"
-                        android:text="22"
-                        android:textSize="18dp"
-                        android:textColor="#FF4A4A4A" />
-
                 </LinearLayout>
 
 
