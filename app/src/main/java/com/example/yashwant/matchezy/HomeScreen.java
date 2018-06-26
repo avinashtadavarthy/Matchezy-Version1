@@ -87,6 +87,8 @@ public class HomeScreen extends AppCompatActivity {
 
         profileimg = (CircleImageView) findViewById(R.id.profileimg);
 
+        Log.e("ASD", userData.toString());
+
         Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(profileimg);
 
         profileimg.setOnClickListener(new View.OnClickListener() {

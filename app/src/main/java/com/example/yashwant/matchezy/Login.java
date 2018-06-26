@@ -110,10 +110,15 @@ public class Login extends AppCompatActivity {
                                                         public void onResponse(JSONObject response) {
                                                             // do anything with response
 
-                                                            Log.e("userdata", response.toString());
-                                                            storeSPData("userdata", response.optJSONObject("message").toString());
-                                                            Intent intent = new Intent(Login.this, HomeScreen.class);
-                                                            startActivity(intent);
+                                                            if(response.optInt("status_code") == 200) {
+                                                                Log.e("userdata", response.toString());
+                                                                storeSPData("userdata", response.optJSONObject("message").toString());
+                                                                Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                startActivity(intent);
+                                                            }
+                                                            else {
+                                                                Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                            }
                                                         }
                                                         @Override
                                                         public void onError(ANError error) {

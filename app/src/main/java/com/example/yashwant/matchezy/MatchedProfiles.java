@@ -13,17 +13,19 @@ public class MatchedProfiles {
     private String age;
     private JSONArray interests;
     private String user_id;
+    private String userData;
 
     public MatchedProfiles() {
     }
 
     public MatchedProfiles(String user_id, String name, String thumbnail,
-                           String age, JSONArray interests) {
+                           String age, JSONArray interests, String userData) {
         Name = name;
         Thumbnail = thumbnail;
         this.age = age;
         this.interests = interests;
         this.user_id = user_id;
+        this.userData = userData;
     }
 
 
@@ -81,5 +83,13 @@ public class MatchedProfiles {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getUserData() {
+        return userData;
+    }
+
+    public void setUserData(String userData) {
+        this.userData = userData;
     }
 }

@@ -2,6 +2,7 @@ package com.example.yashwant.matchezy;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,6 +30,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -69,8 +72,15 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
+        JsonObject o = new JsonObject();
 
-        AndroidNetworking.post(User.getInstance().BASE_URL + "sampleHomescreen")
+            o.addProperty("user_id", getSPData("user_id"));
+            o.addProperty("user_token", getSPData("user_token"));
+            o.addProperty("lookingFor", "Both");/*
+            o.addProperty("interests", "[Tv]");*/
+
+        AndroidNetworking.post(User.getInstance().BASE_URL + "filterProfiles")
+                .addBodyParameter(o)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -78,7 +88,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                     public void onResponse(JSONObject res) {
 
                         if(res.optInt("status_code") == 200) {
-                            Log.d("ASD", res.toString());
+
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
                                 for (int i = 0; i < profilesArray.length(); i++) {
@@ -88,7 +98,9 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                                             object.optString("name"),
                                             object.optString("profileImageURL"),
                                             object.optString("dob"),
-                                            object.optJSONArray("interests")));
+                                            object.optJSONArray("interests"),
+                                            object.toString()));
+                                    Log.d(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests" )));
                                     myAdapter.notifyDataSetChanged();
 
 
@@ -114,6 +126,14 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         myrv.setAdapter(myAdapter);
 
         return myView;
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 }

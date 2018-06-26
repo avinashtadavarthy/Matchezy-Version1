@@ -1,37 +1,26 @@
 package com.example.yashwant.matchezy;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.google.gson.JsonArray;
 import com.scalified.fab.ActionButton;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -59,23 +48,12 @@ public class ProfilePage extends AppCompatActivity {
 
     JSONObject userData;
 
-
-    String[] sampleimgurls = {
-            "https://homepages.cae.wisc.edu/~ece533/images/monarch.png",
-            "https://homepages.cae.wisc.edu/~ece533/images/goldhill.png",
-            "https://homepages.cae.wisc.edu/~ece533/images/watch.png",
-            "https://homepages.cae.wisc.edu/~ece533/images/airplane.png",
-            "https://homepages.cae.wisc.edu/~ece533/images/arctichare.png"
-    };
-    
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         final ViewPager imagePager = (ViewPager) findViewById(R.id.imagePager);
         final CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
@@ -103,111 +81,44 @@ public class ProfilePage extends AppCompatActivity {
         int height = size.y;
         myprofile = getIntent().getStringExtra("myprofile");
 
-        if(myprofile.equals("true")) {
-
-            try {
+        try {
+            if(myprofile.equals("true"))
                 userData = new JSONObject(getSPData("userdata"));
-                profilename.setText(userData.optString("name") + ", ");
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                try {
-                    Date date = format.parse(String.valueOf(userData.optString("dob")));
-                    profilename.append(User.getInstance().getAge(date.getYear() + 1900,
-                            date.getMonth(), date.getDay()));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                city.setText(userData.optString("currentCity"));
+            else userData = new JSONObject(getIntent().getStringExtra("userData"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        profilename.setText(userData.optString("name") + ", ");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            Date date = format.parse(String.valueOf(userData.optString("dob")));
+            profilename.append(User.getInstance().getAge(date.getYear() + 1900,
+                    date.getMonth(), date.getDay()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        city.setText(userData.optString("currentCity"));
 
-                //images on top
-                JSONArray picsArray = userData.optJSONArray("pictures");
+        JSONArray picsArray = userData.optJSONArray("pictures");
 
-                String pics = userData.optString("pictures").replace("\\","");
-                //String[] picurls = pics.substring(1, pics.length()-1).split(",", 4);
-                String[] picurls = {"", "", "", ""};
+        String[] picurls = {"", "", "", ""};
 
-                for(int i = 0;i < picsArray.length(); i++) {
-                    try {
-                        picurls[i] = picsArray.getString(i);
-                        //picurls[i] = picurls[i].replace("https","http");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
-                imagePager.setAdapter(mCustomPagerAdapter);
-                indicator.setViewPager(imagePager);
-                MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
-                        userData.optJSONArray("interests"));
-                pager.setAdapter(pagerAdapter);
-                pager.setCurrentItem(0);
+        for(int i = 0;i < picsArray.length(); i++) {
+            try {
+                picurls[i] = picsArray.getString(i);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        else {
-            String user_id = getIntent().getStringExtra("user_id");
-            Log.e("ASd",user_id);
-            AndroidNetworking.post(User.getInstance().BASE_URL + "getUserData")
-                    .addBodyParameter("user_id", getSPData("user_id"))
-                    .addBodyParameter("user_token", getSPData("user_token"))
-                    .addBodyParameter("user_id_2", user_id)
-                    .setPriority(Priority.HIGH)
-                    .build()
-                    .getAsJSONObject(new JSONObjectRequestListener() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // do anything with response
 
-                            Log.e("userdata", response.toString());
-                            userData = response.optJSONObject("message");
-                            profilename.setText(userData.optString("name") + ", ");
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-                            try {
-                                Date date = format.parse(String.valueOf(userData.optString("dob")));
-                                profilename.append(User.getInstance().getAge(date.getYear() + 1900,
-                                        date.getMonth(), date.getDay()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            city.setText(userData.optString("currentCity"));
-
-
-                            //images on top
-                            JSONArray picsArray = userData.optJSONArray("pictures");
-
-                            String pics = userData.optString("pictures").replace("\\","");
-                            //String[] picurls = pics.substring(1, pics.length()-1).split(",", 4);
-                            String[] picurls = {"", "", "", ""};
-
-                            for(int i = 0;i < picsArray.length(); i++) {
-                                try {
-                                    picurls[i] = picsArray.getString(i);
-                                    //picurls[i] = picurls[i].replace("https","http");
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(getApplicationContext(), picurls);
-                            imagePager.setAdapter(mCustomPagerAdapter);
-                            indicator.setViewPager(imagePager);
-                            MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
-                                    userData.optJSONArray("interests"));
-                            pager.setAdapter(pagerAdapter);
-                            pager.setCurrentItem(0);
-                        }
-                        @Override
-                        public void onError(ANError error) {
-
-                            error.printStackTrace();
-
-                        }
-                    });
-        }
-
-
-
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
+        imagePager.setAdapter(mCustomPagerAdapter);
+        indicator.setViewPager(imagePager);
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
+                userData.optJSONArray("interests"));
+        pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(0);
 
         if(myprofile.equals("true")) {
             bookmarkbtn.setVisibility(View.GONE);
