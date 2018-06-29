@@ -51,7 +51,7 @@ public class Fragment_favorites extends android.support.v4.app.Fragment {
 
 
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new com.einheit.matchezy.FragmentBookmarks(), "Bookmarks");
         adapter.addFragment(new com.einheit.matchezy.FragmentLikes(), "Likes");
         viewPager.setAdapter(adapter);
