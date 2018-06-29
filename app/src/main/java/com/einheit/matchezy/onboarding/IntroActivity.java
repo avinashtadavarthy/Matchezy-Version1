@@ -1,6 +1,5 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.onboarding;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.view.ViewPager;
@@ -8,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.github.clans.fab.FloatingActionButton;
+import com.einheit.matchezy.Login;
+import com.einheit.matchezy.R;
 import com.scalified.fab.ActionButton;
 
 public class IntroActivity extends AppCompatActivity {
@@ -27,10 +26,10 @@ public class IntroActivity extends AppCompatActivity {
         actionButton.hide();
 
         // Set an Adapter on the ViewPager
-        mViewPager.setAdapter(new com.einheit.matchezy.IntroAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new IntroAdapter(getSupportFragmentManager()));
 
         // Set a PageTransformer
-        mViewPager.setPageTransformer(false, new com.einheit.matchezy.IntroPageTransformer());
+        mViewPager.setPageTransformer(false, new IntroPageTransformer());
 
 
 

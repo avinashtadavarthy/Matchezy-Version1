@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.onboarding;
 
 import android.graphics.Color;
 import android.support.v4.app.Fragment;

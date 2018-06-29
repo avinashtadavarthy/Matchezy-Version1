@@ -88,7 +88,7 @@ public class User {
     }
 
 
-    void populateModel(ArrayList<MultiSelectModel> multi, String[] arr) {
+    public void populateModel(ArrayList<MultiSelectModel> multi, String[] arr) {
 
         for(int i=0;i<arr.length;i++) {
             multi.add(i, new MultiSelectModel(i, arr[i]));

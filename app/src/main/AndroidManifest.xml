@@ -18,27 +18,26 @@
         android:roundIcon="@drawable/logo_white"
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme">
-        <activity android:name=".IntroActivity" />
-        <activity android:name=".Registration_Interests"
+        <activity android:name=".onboarding.IntroActivity" />
+        <activity android:name=".registration.Registration_Interests"
             android:theme="@style/RegistrationTheme"/>
         <activity android:name=".ProfilePage"
             android:theme="@style/ProfilePageTheme"
             android:parentActivityName=".HomeScreen"/>
-        <activity android:name=".Registration"
+        <activity android:name=".registration.Registration"
             android:theme="@style/RegistrationTheme"/>
         <activity
-            android:name=".Registration2"
+            android:name=".registration.Registration2"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/RegistrationTheme" />
         <activity
-            android:name=".Registration3"
+            android:name=".registration.Registration3"
             android:theme="@style/RegistrationTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Registration4"
+        <activity android:name=".registration.Registration4"
             android:theme="@style/RegistrationTheme"/>
-        <activity android:name=".Registration_Imageupload"
+        <activity android:name=".registration.Registration_Imageupload"
             android:theme="@style/RegistrationTheme"/>
-        <activity android:name=".MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -47,7 +46,7 @@
         <activity
             android:name=".HomeScreen"
             android:label="@string/title_activity_home_screen" />
-        <activity android:name=".OTP"
+        <activity android:name=".registration.OTP"
             android:theme="@style/RegistrationTheme" />
         <activity android:name=".Login">
             <intent-filter>
@@ -91,7 +90,7 @@
             android:name=".ChooseCity"
             android:theme="@style/AppTheme.CustomTheme" />
 
-        <receiver android:name=".MyVerificationReceiver">
+        <receiver android:name=".registration.MyVerificationReceiver">
             <intent-filter>
                 <action android:name="com.twilio.verification.current_status" />
             </intent-filter>

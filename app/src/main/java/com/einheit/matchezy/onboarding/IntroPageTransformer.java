@@ -1,7 +1,9 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.onboarding;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.einheit.matchezy.R;
 
 public class IntroPageTransformer implements ViewPager.PageTransformer {
 

@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -16,6 +16,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.einheit.matchezy.ChooseCity;
+import com.einheit.matchezy.LanguagesPopUp;
+import com.einheit.matchezy.R;
+import com.einheit.matchezy.User;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONException;

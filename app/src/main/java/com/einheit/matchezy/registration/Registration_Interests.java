@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,11 +14,11 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.einheit.matchezy.R;
 import com.pchmn.materialchips.ChipView;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Registration_Interests extends AppCompatActivity {
 

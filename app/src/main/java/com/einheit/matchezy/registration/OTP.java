@@ -1,8 +1,5 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,19 +9,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.einheit.matchezy.R;
+import com.einheit.matchezy.User;
 import com.scalified.fab.ActionButton;
 import com.twilio.verification.TwilioVerification;
 import com.twilio.verification.external.VerificationStatus;
 import com.twilio.verification.external.Via;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OTP extends AppCompatActivity {

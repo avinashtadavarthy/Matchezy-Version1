@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,17 +16,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.einheit.matchezy.R;
+import com.einheit.matchezy.User;
 import com.scalified.fab.ActionButton;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 

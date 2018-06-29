@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.einheit.matchezy.Login;
 import com.twilio.verification.TwilioVerification;
 import com.twilio.verification.external.VerificationStatus;
 

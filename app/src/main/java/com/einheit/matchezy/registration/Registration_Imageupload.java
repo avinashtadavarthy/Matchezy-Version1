@@ -1,8 +1,6 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
-import android.*;
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Debug;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -29,25 +25,16 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.einheit.matchezy.User;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import okhttp3.OkHttpClient;
 
@@ -67,7 +54,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_imageupload);
+        setContentView(com.einheit.matchezy.R.layout.activity_imageupload);
 
 
         final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
@@ -83,7 +70,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         Intent intent = getIntent();
         interestsArray = intent.getStringArrayListExtra("interestsArray");
 
-        final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next2);
+        final ActionButton actionButton = (ActionButton) findViewById(com.einheit.matchezy.R.id.action_button_next2);
         // actionButton.hide();
         actionButton.setType(ActionButton.Type.BIG);
         //actionButton.setSize(65.0f);
@@ -92,7 +79,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         }
         actionButton.setRippleEffectEnabled(true);
         actionButton.playShowAnimation();
-        actionButton.setImageResource(R.drawable.ic_action_arrow);
+        actionButton.setImageResource(com.einheit.matchezy.R.drawable.ic_action_arrow);
 
         if(!checkPermissionForReadExtertalStorage()) {
             try {
@@ -226,10 +213,10 @@ public class Registration_Imageupload extends AppCompatActivity {
             }
         });
 
-        imageView1 = (ImageView) findViewById(R.id.imageview1);
-        imageView2 = (ImageView) findViewById(R.id.imageview2);
-        imageView3 = (ImageView) findViewById(R.id.imageview3);
-        imageView4 = (ImageView) findViewById(R.id.imageview4);
+        imageView1 = (ImageView) findViewById(com.einheit.matchezy.R.id.imageview1);
+        imageView2 = (ImageView) findViewById(com.einheit.matchezy.R.id.imageview2);
+        imageView3 = (ImageView) findViewById(com.einheit.matchezy.R.id.imageview3);
+        imageView4 = (ImageView) findViewById(com.einheit.matchezy.R.id.imageview4);
 
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -289,19 +276,19 @@ public class Registration_Imageupload extends AppCompatActivity {
 
 
                     if (i == 1) {
-                        ((ImageView) findViewById(R.id.imageview1)).setImageURI(selectedImageUri);
+                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview1)).setImageURI(selectedImageUri);
                     }
 
                     else if (i == 2) {
-                        ((ImageView) findViewById(R.id.imageview2)).setImageURI(selectedImageUri);
+                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview2)).setImageURI(selectedImageUri);
                     }
 
                     else if (i == 3) {
-                        ((ImageView) findViewById(R.id.imageview3)).setImageURI(selectedImageUri);
+                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview3)).setImageURI(selectedImageUri);
                     }
 
                     else if (i == 4) {
-                        ((ImageView) findViewById(R.id.imageview4)).setImageURI(selectedImageUri);
+                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview4)).setImageURI(selectedImageUri);
                     }
                 }
             }

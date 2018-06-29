@@ -1,4 +1,4 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.registration;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.einheit.matchezy.R;
 import com.scalified.fab.ActionButton;
 import com.webianks.library.scroll_choice.ScrollChoice;
 
@@ -207,24 +208,34 @@ public class Registration3 extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
-        if(editText_religion.getText().toString().equals("Hindu")) {
-            position = 0;
-        } else if(editText_religion.getText().toString().equals("Muslim")) {
-            position = 1;
-        } else if(editText_religion.getText().toString().equals("Sikh")) {
-            position = 2;
-        } else if(editText_religion.getText().toString().equals("Christian")) {
-            position = 3;
-        } else if(editText_religion.getText().toString().equals("Jain")) {
-            position = 4;
-        } else if(editText_religion.getText().toString().equals("Parsi")) {
-            position = 5;
-        } else if(editText_religion.getText().toString().equals("Buddhist")) {
-            position = 6;
-        } else if(editText_religion.getText().toString().equals("Inter-Religion")) {
-            position = 7;
-        } else {
-            position = -1;
+        switch (editText_religion.getText().toString()) {
+            case "Hindu":
+                position = 0;
+                break;
+            case "Muslim":
+                position = 1;
+                break;
+            case "Sikh":
+                position = 2;
+                break;
+            case "Christian":
+                position = 3;
+                break;
+            case "Jain":
+                position = 4;
+                break;
+            case "Parsi":
+                position = 5;
+                break;
+            case "Buddhist":
+                position = 6;
+                break;
+            case "Inter-Religion":
+                position = 7;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -250,16 +261,19 @@ public class Registration3 extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
         alertDialogBuilder.setTitle("Tattoos?");
         int position;
-        if (editText_tattoos.getText().toString().equals("Yes")){
-            position = 0;
-        } else if (editText_tattoos.getText().toString().equals("No")){
-            position = 1;
-        } else if (editText_tattoos.getText().toString().equals("Planning to get")){
-            position = 2;
-        }
-
-        else {
-            position = -1;
+        switch (editText_tattoos.getText().toString()) {
+            case "Yes":
+                position = 0;
+                break;
+            case "No":
+                position = 1;
+                break;
+            case "Planning to get":
+                position = 2;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -285,16 +299,19 @@ public class Registration3 extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
         alertDialogBuilder.setTitle("Piercing?");
         int position;
-        if (editText_piercing.getText().toString().equals("Yes")){
-            position = 0;
-        } else if (editText_piercing.getText().toString().equals("No")){
-            position = 1;
-        } else if (editText_piercing.getText().toString().equals("Planning to get")){
-            position = 2;
-        }
-
-        else {
-            position = -1;
+        switch (editText_piercing.getText().toString()) {
+            case "Yes":
+                position = 0;
+                break;
+            case "No":
+                position = 1;
+                break;
+            case "Planning to get":
+                position = 2;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
