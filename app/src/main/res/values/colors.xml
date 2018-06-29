@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ea5251</color>
+    <color name="colorPrimaryDark">#c74645</color>
+    <color name="colorAccent">#505154</color>
     <color name="red">#FFEA5251</color>
 
     <color name="white">#FFFFFF</color>
     <color name="appred">#ea5251</color>
     <color name="appdarkred">#c74645</color>
     <color name="appgrey">#505154</color>
+
+    <color name="receivedChatBubbleBg">#ffffff</color>
+    <color name="receivedChatTextColor">#111111</color>
+    <color name="receivedChatTimeColor">#979797</color>
+
+    <color name="sentChatBubbleBg">#ea5251</color>
+    <color name="sentChatTextColor">#ffffff</color>
+    <color name="sentChatTimeColor">#ffffff</color>
+
+    <color name="dateViewChatBg">#505154</color>
+    <color name="dateViewChatTextColor">#ffffff</color>
 </resources>

@@ -319,7 +319,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                                 storeSPData("email", inputEmail.getText().toString().trim());
                                 storeSPData("password", inputPassword.getText().toString().trim());
 
-                                Log.e("date", input_Dateofbirth.getText().toString());
+                                Log.e("date", input_countrycode.getText().toString().trim() + input_number.getText().toString().trim());
                                 Log.e("mdate", dobstr);
 
                                 Intent intent = new Intent(getApplicationContext(), Registration2.class);

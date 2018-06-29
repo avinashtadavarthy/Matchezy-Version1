@@ -64,6 +64,8 @@ public class Login extends AppCompatActivity {
             finish();
         }
 
+        Log.e("ASD", getSPBoolean("isOtpVerificationCompleted").toString());
+
         if(!getSPBoolean("isOtpVerificationCompleted")) {
             Intent i = new Intent(Login.this ,OTP.class);
             startActivity(i);
@@ -123,6 +125,7 @@ public class Login extends AppCompatActivity {
                                                                 storeSPData("userdata", response.optJSONObject("message").toString());
                                                                 Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                 startActivity(intent);
+                                                                finish();
                                                             }
                                                             else {
                                                                 Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
@@ -211,6 +214,7 @@ public class Login extends AppCompatActivity {
                                                                                     storeSPData("userdata", response.optJSONObject("message").toString());
                                                                                     Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                                     startActivity(intent);
+                                                                                    finish();
                                                                                 }
                                                                                 else {
                                                                                     Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();

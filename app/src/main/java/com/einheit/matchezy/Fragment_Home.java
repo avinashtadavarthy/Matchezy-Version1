@@ -72,6 +72,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
+
         JsonObject o = new JsonObject();
 
             o.addProperty("user_id", getSPData("user_id"));
