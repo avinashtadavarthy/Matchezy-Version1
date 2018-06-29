@@ -62,6 +62,12 @@ public class Login extends AppCompatActivity {
             finish();
         }
 
+        if(!getSPBoolean("isOtpVerificationCompleted")) {
+            Intent i = new Intent(Login.this ,OTP.class);
+            startActivity(i);
+            finish();
+        }
+
         AndroidNetworking.initialize(this);
 
         signup = (TextView) findViewById(R.id.signupButton);
@@ -185,8 +191,36 @@ public class Login extends AppCompatActivity {
                                                                 clearSPData();
                                                                 storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                                                 storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
-                                                                Intent intent = new Intent(Login.this, HomeScreen.class);
-                                                                startActivity(intent);
+
+                                                                //to get users data
+                                                                AndroidNetworking.post(User.getInstance().BASE_URL + "getUserData")
+                                                                        .addBodyParameter("user_id", getSPData("user_id"))
+                                                                        .addBodyParameter("user_token", getSPData("user_token"))
+                                                                        .addBodyParameter("user_id_2", getSPData("user_id"))
+                                                                        .setPriority(Priority.HIGH)
+                                                                        .build()
+                                                                        .getAsJSONObject(new JSONObjectRequestListener() {
+                                                                            @Override
+                                                                            public void onResponse(JSONObject response) {
+                                                                                // do anything with response
+
+                                                                                if(response.optInt("status_code") == 200) {
+                                                                                    Log.e("userdata", response.toString());
+                                                                                    storeSPData("userdata", response.optJSONObject("message").toString());
+                                                                                    Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                                    startActivity(intent);
+                                                                                }
+                                                                                else {
+                                                                                    Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                                }
+                                                                            }
+                                                                            @Override
+                                                                            public void onError(ANError error) {
+
+                                                                                error.printStackTrace();
+
+                                                                            }
+                                                                        });
                                                                 break;
                                                             }
                                                             case "404": {
@@ -322,6 +356,15 @@ public class Login extends AppCompatActivity {
         SharedPreferences.Editor mUserEditor = mUserData.edit();
         mUserEditor.clear();
         mUserEditor.apply();
+    }
+
+    private Boolean getSPBoolean(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        Boolean data = mUserData.getBoolean(key, true);
+
+        return data;
+
     }
 
 }
