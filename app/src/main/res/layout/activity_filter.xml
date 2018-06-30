@@ -21,7 +21,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/heightbox"
+            android:background="@drawable/signup_box"
             android:hint="Search for interests"
             android:paddingLeft="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -37,7 +37,7 @@
             android:layout_marginTop="8dp"
             android:text="CLEAR ALL"
             android:textColor="#FF4A90E2"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.916"
@@ -123,7 +123,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
-
                     android:layout_height="wrap_content">
 
                     <TextView
