@@ -1,5 +1,6 @@
 package com.einheit.matchezy;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +21,12 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.scalified.fab.ActionButton;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -43,6 +49,8 @@ public class ProfilePage extends AppCompatActivity {
     TextView pagertextindicator;
     boolean ct = false;
     String myprofile;
+    ActionButton disLikeFab;
+    ActionButton likeFab;
 
     TextView profilename, age, city;
 
@@ -55,13 +63,15 @@ public class ProfilePage extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        AndroidNetworking.initialize(this);
+
         final ViewPager imagePager = (ViewPager) findViewById(R.id.imagePager);
         final CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
 
         final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
 
-        final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_like);
-        final ActionButton actionButton2 = (ActionButton) findViewById(R.id.action_button_dislike);
+        likeFab = (ActionButton) findViewById(R.id.action_button_like);
+        disLikeFab = (ActionButton) findViewById(R.id.action_button_dislike);
 
         bookmarkbtn = findViewById(R.id.bookmarkbtn);
         editbtn = findViewById(R.id.editbtn);
@@ -70,7 +80,6 @@ public class ProfilePage extends AppCompatActivity {
 
         profilename = findViewById(R.id.profilename);
         city = findViewById(R.id.city);
-
 
         AndroidNetworking.initialize(this);
 
@@ -123,13 +132,13 @@ public class ProfilePage extends AppCompatActivity {
         if(myprofile.equals("true")) {
             bookmarkbtn.setVisibility(View.GONE);
             editbtn.setVisibility(View.VISIBLE);
-            actionButton.setVisibility(View.GONE);
-            actionButton2.setVisibility(View.GONE);
+            likeFab.setVisibility(View.GONE);
+            disLikeFab.setVisibility(View.GONE);
         } else {
             editbtn.setVisibility(View.GONE);
             bookmarkbtn.setVisibility(View.VISIBLE);
-            actionButton.setVisibility(View.VISIBLE);
-            actionButton2.setVisibility(View.VISIBLE);
+            likeFab.setVisibility(View.VISIBLE);
+            disLikeFab.setVisibility(View.VISIBLE);
         }
 
         bookmarkbtn.setOnClickListener(new View.OnClickListener() {
@@ -179,25 +188,60 @@ public class ProfilePage extends AppCompatActivity {
         profile_sliding_layout.addPanelSlideListener(panelSlideListener);
 
         //actionButton.hide();
-        actionButton.setType(ActionButton.Type.DEFAULT);
+        likeFab.setType(ActionButton.Type.DEFAULT);
         //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            actionButton.setButtonColor(Color.parseColor("#EA5251"));
+            likeFab.setButtonColor(Color.parseColor("#EA5251"));
         }
-        actionButton.setRippleEffectEnabled(true);
-        actionButton.playShowAnimation();
-        actionButton.setImageResource(R.drawable.ic_action_like);
+        likeFab.setRippleEffectEnabled(true);
+        likeFab.playShowAnimation();
+        likeFab.setImageResource(R.drawable.ic_action_like);
 
 
         // actionButton.hide();
-        actionButton2.setType(ActionButton.Type.DEFAULT);
+        disLikeFab.setType(ActionButton.Type.DEFAULT);
         //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            actionButton2.setButtonColor(Color.parseColor("#FF4A4A4A"));
+            disLikeFab.setButtonColor(Color.parseColor("#FF4A4A4A"));
         }
-        actionButton2.setRippleEffectEnabled(true);
-        actionButton2.playShowAnimation();
-        actionButton2.setImageResource(R.drawable.ic_action_dislike);
+        disLikeFab.setRippleEffectEnabled(true);
+        disLikeFab.playShowAnimation();
+        disLikeFab.setImageResource(R.drawable.ic_action_dislike);
+
+        likeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AndroidNetworking.post(User.getInstance().BASE_URL + "likeUser")
+                        .addBodyParameter("user_id", getSPData("user_id"))
+                        .addBodyParameter("user_token", getSPData("user_token"))
+                        .addBodyParameter("user_id_2", userData.optString("user_id"))
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // do anything with response
+
+                                if(response.optInt("status_code") == 200) {
+                                    Log.e("userdata", response.toString());
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onError(ANError error) {
+
+                                error.printStackTrace();
+
+                            }
+                        });
+            }
+        });
 
         final Animation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(200);

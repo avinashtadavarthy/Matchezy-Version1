@@ -26,13 +26,14 @@
             android:name=".registration.Registration_Interests"
             android:theme="@style/RegistrationTheme" />
         <activity
+            android:name=".HomeScreen"/>
+        <activity
             android:name=".ProfilePage"
             android:parentActivityName=".HomeScreen"
             android:theme="@style/ProfilePageTheme" />
         <activity
             android:name=".registration.Registration"
             android:theme="@style/RegistrationTheme" />
->>>>>>> Migrate sms verification from twilio to firebase
         <activity
             android:name=".registration.Registration2"
             android:label="@string/title_activity_scrolling"
