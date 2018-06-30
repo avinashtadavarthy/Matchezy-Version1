@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
@@ -41,6 +42,10 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
    View myView;
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
+    RecyclerView horizontal_recycler_view;
+    HorizontalRecyclerAdapter horizontalAdapter;
+    List<Data> data;
+
     RecyclerView myrv;
     com.einheit.matchezy.RecyclerViewAdapter myAdapter;
 
@@ -49,9 +54,17 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment__home, container, false);
 
+        horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
+        data = filldata();
+        horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext());
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
+        horizontal_recycler_view.setAdapter(horizontalAdapter);
+
+
         final ActionButton actionButton = (ActionButton) myView.findViewById(R.id.action_button_filter);
         actionButton.setType(ActionButton.Type.DEFAULT);
-        actionButton.setSize(65.0f);
+        //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
         }
@@ -128,6 +141,35 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
         return myView;
     }
+
+
+    public List<Data> filldata() {
+
+        List<Data> data = new ArrayList<>();
+
+        data.add(new Data( R.drawable.photography, "Photography"));
+        data.add(new Data( R.drawable.pets, "Pets"));
+        data.add(new Data( R.drawable.books, "Books"));
+        data.add(new Data( R.drawable.travel, "Travel"));
+        data.add(new Data( R.drawable.philosophy, "Philosophy"));
+        data.add(new Data( R.drawable.history, "History"));
+
+
+        return data;
+    }
+
+
+    public class Data {
+        public int imageId;
+        public String txt;
+
+        Data(int imageId, String text) {
+
+            this.imageId = imageId;
+            this.txt=text;
+        }
+    }
+
 
     private String getSPData(String key) {
 

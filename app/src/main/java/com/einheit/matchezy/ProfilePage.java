@@ -77,6 +77,8 @@ public class ProfilePage extends AppCompatActivity {
         editbtn = findViewById(R.id.editbtn);
 
         profile_sliding_layout = (SlidingUpPanelLayout) findViewById(R.id.profile_sliding_layout);
+        profile_sliding_layout.setScrollableView(pager);
+
 
         profilename = findViewById(R.id.profilename);
         city = findViewById(R.id.city);
@@ -124,8 +126,7 @@ public class ProfilePage extends AppCompatActivity {
         CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
         imagePager.setAdapter(mCustomPagerAdapter);
         indicator.setViewPager(imagePager);
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(),
-                userData.optJSONArray("interests"));
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), userData, userData.optJSONArray("interests"));
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
 
@@ -253,6 +254,7 @@ public class ProfilePage extends AppCompatActivity {
         two = findViewById(R.id.two);
         three = findViewById(R.id.three);
         pagertextindicator = findViewById(R.id.pagertextindicator);
+
         final ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -381,9 +383,11 @@ public class ProfilePage extends AppCompatActivity {
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         JSONArray interests;
+        JSONObject userdata;
 
-        public MyPagerAdapter(FragmentManager fm, JSONArray interests) {
+        public MyPagerAdapter(FragmentManager fm, JSONObject userdata, JSONArray interests) {
             super(fm);
+            this.userdata = userdata;
             this.interests = interests;
         }
 
@@ -392,7 +396,7 @@ public class ProfilePage extends AppCompatActivity {
             switch(pos) {
 
                 case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests);
-                case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1");
+                case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1",userdata);
                 case 2: return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
                 default: return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests);
             }

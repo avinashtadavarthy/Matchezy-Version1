@@ -33,11 +33,6 @@ public class Fragment_profileInterests extends Fragment {
 
     ChipGroup interests_chipgroup;
 
-    String[] arr = {
-            "This", "is", "a", "chip", "that", "we", "can", "enter", "and", "it", "will", "evenly", "space", "itself", "out"
-    };
-
-    JSONObject userData;
     JSONArray interests;
 
 
@@ -47,13 +42,12 @@ public class Fragment_profileInterests extends Fragment {
 
         JSONArray interests = null;
         try {
+
             interests = new JSONArray(getArguments().getString("interests"));
-
             interests_chipgroup = (ChipGroup) v.findViewById(R.id.interests_chipgroup);
-
             interests_chipgroup.setChipSpacing(2);
-
             populateChips(interests);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,4 +117,5 @@ public class Fragment_profileInterests extends Fragment {
 
         return fragment_profileInterests;
     }
+
 }

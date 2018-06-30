@@ -21,14 +21,14 @@
             android:fontFamily="@font/circularstd"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/horizontal_recycler_view"
             android:layout_width="match_parent"
-            android:layout_marginTop="9dp"
-            android:orientation="horizontal"
-            android:layout_height="45dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            />
 
-
-        </LinearLayout>
 
         <ImageView
             android:layout_width="match_parent"

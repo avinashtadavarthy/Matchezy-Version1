@@ -114,5 +114,9 @@
     <string name="google_places_api_key">AIzaSyC8K65LmB5kRjdksN_Frib3rm90_z28964</string>
     <string name="matchezy">Matchezy</string>
     <string name="title_messages">Messages</string>
+    <string name="biotext">
+        Why read motivational sayings? For motivation! You might need a bit, if you can use last year’s list of goals this year because it’s as good as new. All of us can benefit from inspirational thoughts. \n\n
+        “Be more concerned with your character than with your reputation. Your character is what you really are while your reputation is merely what others think you are.” \n – Dale Carnegie  \n\n
+    </string>
 
 </resources>

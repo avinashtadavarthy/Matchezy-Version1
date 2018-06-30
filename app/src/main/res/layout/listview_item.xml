@@ -5,27 +5,26 @@
 
     <TextView
         android:id="@+id/attr"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
+        android:textColor="#FF49AFA8"
+        android:fontFamily="@font/sourcesansproregular"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_margin="5dp"
         android:layout_height="wrap_content"
         android:text="attribute name" />
 
     <TextView
         android:id="@+id/value"
         android:layout_width="match_parent"
-        android:layout_margin="5dp"
-        android:padding="10dp"
-        android:background="#40505154"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:background="#FFF7F7F7"
         android:layout_height="wrap_content"
-        android:text="value of attribute" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#60171818"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp" />
+        android:fontFamily="@font/sourcesansproregular"
+        android:gravity="center_vertical"
+        android:text="value of attribute"
+        android:layout_marginBottom="12dp" />
 
 </LinearLayout>
