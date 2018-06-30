@@ -1,6 +1,7 @@
 package com.einheit.matchezy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.einheit.matchezy.Chat.Chat;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,6 +64,9 @@ public class MatchedProfileHorizontalAdapter extends RecyclerView.Adapter<Matche
             public void onClick(View v) {
                 /*String list = horizontalList.get(position).txt.toString();
                 Toast.makeText(context, list, Toast.LENGTH_SHORT).show();*/
+                Intent intent = new Intent(context, Chat.class);
+                intent.putExtra("userdata", horizontalList.get(position).getUserData());
+                context.startActivity(intent);
             }
 
         });
