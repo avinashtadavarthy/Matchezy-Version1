@@ -9,17 +9,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Collections;
 import java.util.List;
 
-public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRecyclerAdapter.MyViewHolder> {
+public class MatchedProfileHorizontalAdapter extends RecyclerView.Adapter<MatchedProfileHorizontalAdapter.MyViewHolder> {
 
 
-    List<ImageAndTextData> horizontalList = Collections.emptyList();
+    List<MatchedProfiles> horizontalList = Collections.emptyList();
     Context context;
 
 
-    public HorizontalRecyclerAdapter(List<ImageAndTextData> horizontalList, Context context) {
+    public MatchedProfileHorizontalAdapter(List<MatchedProfiles> horizontalList, Context context) {
         this.horizontalList = horizontalList;
         this.context = context;
     }
@@ -40,7 +42,7 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.homescreen_top_menu, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chatscreen_top_menu, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -48,15 +50,18 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.imageView.setImageResource(horizontalList.get(position).imageId);
-        holder.txtview.setText(horizontalList.get(position).txt);
+        Glide.with(context)
+                .load(horizontalList.get(position).getThumbnail())
+                .into(holder.imageView);
+
+        holder.txtview.setText(horizontalList.get(position).getName());
 
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
 
             public void onClick(View v) {
-                String list = horizontalList.get(position).txt.toString();
-                Toast.makeText(context, list, Toast.LENGTH_SHORT).show();
+                /*String list = horizontalList.get(position).txt.toString();
+                Toast.makeText(context, list, Toast.LENGTH_SHORT).show();*/
             }
 
         });

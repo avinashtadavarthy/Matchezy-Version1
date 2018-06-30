@@ -40,11 +40,11 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class Fragment_Home extends android.support.v4.app.Fragment {
 
-   View myView;
+    View myView;
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
     RecyclerView horizontal_recycler_view;
     HorizontalRecyclerAdapter horizontalAdapter;
-    List<Data> data;
+    List<ImageAndTextData> data;
 
     RecyclerView myrv;
     com.einheit.matchezy.RecyclerViewAdapter myAdapter;
@@ -143,33 +143,20 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     }
 
 
-    public List<Data> filldata() {
+    public List<ImageAndTextData> filldata() {
 
-        List<Data> data = new ArrayList<>();
+        List<ImageAndTextData> data = new ArrayList<>();
 
-        data.add(new Data( R.drawable.photography, "Photography"));
-        data.add(new Data( R.drawable.pets, "Pets"));
-        data.add(new Data( R.drawable.books, "Books"));
-        data.add(new Data( R.drawable.travel, "Travel"));
-        data.add(new Data( R.drawable.philosophy, "Philosophy"));
-        data.add(new Data( R.drawable.history, "History"));
+        data.add(new ImageAndTextData( R.drawable.photography, "Photography"));
+        data.add(new ImageAndTextData( R.drawable.pets, "Pets"));
+        data.add(new ImageAndTextData( R.drawable.books, "Books"));
+        data.add(new ImageAndTextData( R.drawable.travel, "Travel"));
+        data.add(new ImageAndTextData( R.drawable.philosophy, "Philosophy"));
+        data.add(new ImageAndTextData( R.drawable.history, "History"));
 
 
         return data;
     }
-
-
-    public class Data {
-        public int imageId;
-        public String txt;
-
-        Data(int imageId, String text) {
-
-            this.imageId = imageId;
-            this.txt=text;
-        }
-    }
-
 
     private String getSPData(String key) {
 
