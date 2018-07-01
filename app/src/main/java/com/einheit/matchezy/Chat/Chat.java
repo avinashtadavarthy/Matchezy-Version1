@@ -12,6 +12,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -55,12 +56,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Chat extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 2001;
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
     private DatabaseReference mFirebaseDatabaseReference;
-    Button sendButton;
+    ImageView sendButton;
     private EditText mMessageEditText;
     private RecyclerView mMessageRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
@@ -68,6 +71,11 @@ public class Chat extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private Uri outputFileUri;
     JSONObject userData = null;
+
+    ImageView backbtn;
+    TextView chat_head_name;
+    CircleImageView chat_head_image;
+
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
@@ -126,7 +134,7 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        sendButton = (Button) findViewById(R.id.sendButton);
+        sendButton = (ImageView) findViewById(R.id.sendButton);
         mMessageEditText = (EditText) findViewById(R.id.messageEditText);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
         mAddMessageImageView = findViewById(R.id.addMessageImageView);
@@ -141,7 +149,21 @@ public class Chat extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        getSupportActionBar().setTitle(userData.optString("name"));
+        backbtn = findViewById(R.id.backbtn);
+        chat_head_name = findViewById(R.id.chat_head_name);
+        chat_head_image = findViewById(R.id.chat_head_image);
+
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        chat_head_name.setText(userData.optString("name"));
+
+        Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(chat_head_image);
+
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id")).limitToFirst(10).getRef();

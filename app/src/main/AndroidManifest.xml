@@ -111,7 +111,8 @@
             android:name=".ProfileOptions"
             android:theme="@style/Theme.AppCompat.Translucent"/>
         <activity android:name=".Chat.Chat"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:theme="@style/RegistrationTheme"
+            android:parentActivityName=".Chat.Chat">
 
         </activity>
     </application>
