@@ -15,11 +15,11 @@ import java.util.List;
 public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRecyclerAdapter.MyViewHolder> {
 
 
-    List<ImageAndTextData> horizontalList = Collections.emptyList();
+    List<Fragment_Home.Data> horizontalList = Collections.emptyList();
     Context context;
 
 
-    public HorizontalRecyclerAdapter(List<ImageAndTextData> horizontalList, Context context) {
+    public HorizontalRecyclerAdapter(List<Fragment_Home.Data> horizontalList, Context context) {
         this.horizontalList = horizontalList;
         this.context = context;
     }

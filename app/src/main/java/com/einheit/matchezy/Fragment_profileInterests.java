@@ -58,6 +58,7 @@ public class Fragment_profileInterests extends Fragment {
         return v;
     }
 
+
     private int findnumber(String intr) {
 
         int n=0;
@@ -70,6 +71,7 @@ public class Fragment_profileInterests extends Fragment {
         return n+1;
 
     }
+
 
     private void populateChips(JSONArray arr) throws JSONException {
 
@@ -109,7 +111,7 @@ public class Fragment_profileInterests extends Fragment {
 
         Fragment_profileInterests fragment_profileInterests = new Fragment_profileInterests();
 
-         Bundle b = new Bundle();
+        Bundle b = new Bundle();
         b.putString("msg", text);
         b.putString("interests", interests.toString());
 

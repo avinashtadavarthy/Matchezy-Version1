@@ -45,7 +45,8 @@
             android:textSize="17dp"
             android:layout_marginLeft="13dp"
             android:fontFamily="@font/circularstd"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
 
 

@@ -44,7 +44,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
     RecyclerView horizontal_recycler_view;
     HorizontalRecyclerAdapter horizontalAdapter;
-    List<ImageAndTextData> data;
+    List<Data> data;
 
     RecyclerView myrv;
     com.einheit.matchezy.RecyclerViewAdapter myAdapter;
@@ -88,9 +88,9 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
         JsonObject o = new JsonObject();
 
-            o.addProperty("user_id", getSPData("user_id"));
-            o.addProperty("user_token", getSPData("user_token"));
-            o.addProperty("lookingFor", "Both");/*
+        o.addProperty("user_id", getSPData("user_id"));
+        o.addProperty("user_token", getSPData("user_token"));
+        o.addProperty("lookingFor", "Both");/*
             o.addProperty("interests", "[Tv]");*/
 
         AndroidNetworking.post(com.einheit.matchezy.User.getInstance().BASE_URL + "filterProfiles")
@@ -124,7 +124,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                             }
                         }
                         else
-                        Toast.makeText(Fragment_Home.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Fragment_Home.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -143,20 +143,33 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     }
 
 
-    public List<ImageAndTextData> filldata() {
+    public List<Data> filldata() {
 
-        List<ImageAndTextData> data = new ArrayList<>();
+        List<Data> data = new ArrayList<>();
 
-        data.add(new ImageAndTextData( R.drawable.photography, "Photography"));
-        data.add(new ImageAndTextData( R.drawable.pets, "Pets"));
-        data.add(new ImageAndTextData( R.drawable.books, "Books"));
-        data.add(new ImageAndTextData( R.drawable.travel, "Travel"));
-        data.add(new ImageAndTextData( R.drawable.philosophy, "Philosophy"));
-        data.add(new ImageAndTextData( R.drawable.history, "History"));
+        data.add(new Data( R.drawable.photography, "Photography"));
+        data.add(new Data( R.drawable.pets, "Pets"));
+        data.add(new Data( R.drawable.books, "Books"));
+        data.add(new Data( R.drawable.travel, "Travel"));
+        data.add(new Data( R.drawable.philosophy, "Philosophy"));
+        data.add(new Data( R.drawable.history, "History"));
 
 
         return data;
     }
+
+
+    public class Data {
+        public int imageId;
+        public String txt;
+
+        Data(int imageId, String text) {
+
+            this.imageId = imageId;
+            this.txt=text;
+        }
+    }
+
 
     private String getSPData(String key) {
 

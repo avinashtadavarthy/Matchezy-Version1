@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:layout_height="210dp"
+    android:background="@drawable/heightbox"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/displaytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/circularstd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="20dp"
+        android:text="Select minimum height"/>
+
+
+    <com.webianks.library.scroll_choice.ScrollChoice
+        android:layout_centerInParent="true"
+        android:id="@+id/scroll_choice"
+        android:layout_width="80dp"
+        android:layout_height="120dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:scroll_atmospheric="true"
+        app:scroll_background_color="#00ffffff"
+        app:scroll_indicator="true"
+        app:scroll_indicator_color="#565656"
+        app:scroll_indicator_size="1dp"
+        app:scroll_item_align="center"
+        app:scroll_item_text_color="#797979"
+        app:scroll_item_text_size="17dp"
+        app:scroll_selected_item_background="#00ffffff"
+        app:scroll_selected_item_text_color="#4A90E2"
+        app:scroll_visible_item_count="3" />
+
+    <Button
+        android:id="@+id/choose"
+        android:text="OK"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/scroll_choice"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_bg" />
+
+
+</RelativeLayout>
