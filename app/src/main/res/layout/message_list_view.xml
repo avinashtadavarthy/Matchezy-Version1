@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="84dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileimg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/guy"
+        android:layout_margin="12dp"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@+id/profileimg"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/profilename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Avinash"
+            android:fontFamily="@font/sourcesansproregular"
+            android:textColor="@color/appgrey"/>
+
+        <TextView
+            android:id="@+id/lastmessage"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Hey! What's up?"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:fontFamily="@font/sourcesansproregular"
+            android:textColor="@color/appgrey"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3:00pm"
+        android:fontFamily="@font/sourcesansproregular"
+        android:textStyle="bold"
+        android:layout_alignParentEnd="true"
+        android:textColor="#9b9b9b"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#1F000000"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="78dp"
+        android:layout_marginRight="16dp"/>
+
+
+</RelativeLayout>

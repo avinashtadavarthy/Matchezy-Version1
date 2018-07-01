@@ -35,14 +35,16 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
 
     View myView;
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
-    RecyclerView horizontal_recycler_view;
+    RecyclerView horizontal_recycler_view, conversations_recycler;
     MatchedProfileHorizontalAdapter horizontalAdapter;
+    MessagesListRecyclerAdapter conversationsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment_messages, container, false);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
+        conversations_recycler = myView.findViewById(R.id.conversations_recycler);
 
         lstMatchedProfiles = new ArrayList<>();
 
@@ -99,6 +101,20 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         horizontal_recycler_view.setAdapter(horizontalAdapter);
+
+
+        JSONArray samplejsondata;
+            try {
+                samplejsondata = new JSONArray("[{\"name\": \"Avinash\",\"profileImageURL\": \"https://pbs.twimg.com/profile_images/803217914337828864/99oo37KN_400x400.jpg\",\"lastMessage\": \"sunt aut facere repellat provident occaecati excepturi optio reprehenderit\",\"timeStamp\": \"1:05pm\",\"read\": true},{\"name\": \"Aiden\",\"profileImageURL\": \"https://www.healthline.com/hlcmsresource/images/topic_centers/parkinsons-disease/400x400_7-Famous-Faces-Parkinsons-Disease-1_Michael_J_Fox.jpg\",\"lastMessage\": \"qui est esse\",\"timeStamp\": \"2:15pm\",\"read\": true},{\"name\": \"Hari\",\"profileImageURL\": \"https://pbs.twimg.com/profile_images/803217914337828864/99oo37KN_400x400.jpg\",\"lastMessage\": \"ea molestias quasi exercitationem repellat qui ipsa sit aut\",\"timeStamp\": \"3:25pm\",\"read\": false},{\"name\": \"Logesh\",\"profileImageURL\": \"https://pbs.twimg.com/profile_images/803217914337828864/99oo37KN_400x400.jpg\",\"lastMessage\": \"eum et est occaecati\",\"timeStamp\": \"4:35pm\",\"read\": true},{\"name\": \"Avinash\",\"profileImageURL\": \"https://www.healthline.com/hlcmsresource/images/topic_centers/parkinsons-disease/400x400_7-Famous-Faces-Parkinsons-Disease-1_Michael_J_Fox.jpg\",\"lastMessage\": \"nesciunt quas odio\",\"timeStamp\": \"5:45pm\",\"read\": false},{\"name\": \"Aiden\",\"profileImageURL\": \"https://pbs.twimg.com/profile_images/803217914337828864/99oo37KN_400x400.jpg\",\"lastMessage\": \"dolorem eum magni eos aperiam quia\",\"timeStamp\": \"6:15pm\",\"read\": false},{\"name\": \"Hari\",\"profileImageURL\": \"https://www.healthline.com/hlcmsresource/images/topic_centers/parkinsons-disease/400x400_7-Famous-Faces-Parkinsons-Disease-1_Michael_J_Fox.jpg\",\"lastMessage\": \"magnam facilis autem\",\"timeStamp\": \"7:05pm\",\"read\": false}]");
+                conversationsAdapter = new MessagesListRecyclerAdapter(samplejsondata, getContext());
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                conversations_recycler.setLayoutManager(mLayoutManager);
+                conversations_recycler.setAdapter(conversationsAdapter);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
 
         return myView;
