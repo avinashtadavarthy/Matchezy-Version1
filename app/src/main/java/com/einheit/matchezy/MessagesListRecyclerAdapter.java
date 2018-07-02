@@ -9,24 +9,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.einheit.matchezy.Chat.ChatListItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesListRecyclerAdapter.ViewHolder> {
 
     private Context mContext;
-    private JSONArray mDataset;
+    List<ChatListItem> chatList = Collections.emptyList();
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+
         public TextView profilename, lastmessage, timestamp;
         public CircleImageView profileimg;
+
         public ViewHolder(View v) {
             super(v);
             profilename = v.findViewById(R.id.profilename);
@@ -36,13 +40,12 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public MessagesListRecyclerAdapter(JSONArray myDataset, Context context) {
-        mDataset = myDataset;
+
+    public MessagesListRecyclerAdapter(List<ChatListItem> chatList, Context context) {
+        this.chatList = chatList;
         mContext = context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public MessagesListRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_view, parent, false);
@@ -50,33 +53,26 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
         return new ViewHolder(itemView);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
 
-        try {
-
-            if (mDataset.getJSONObject(position).optString("read").equals("true")) {
-                holder.profilename.setTypeface(null, Typeface.BOLD);
-                holder.lastmessage.setTypeface(null, Typeface.BOLD);
-            }
-
-            holder.profilename.setText(mDataset.getJSONObject(position).optString("name"));
-            holder.lastmessage.setText(mDataset.getJSONObject(position).optString("lastMessage"));
-            holder.timestamp.setText(mDataset.getJSONObject(position).optString("timeStamp"));
-            Glide.with(mContext).load(mDataset.getJSONObject(position).optString("profileImageURL")).into(holder.profileimg);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (!chatList.get(position).isRead()) {
+            holder.profilename.setTypeface(null, Typeface.BOLD);
+            holder.lastmessage.setTypeface(null, Typeface.BOLD);
         }
+
+        holder.profilename.setText(chatList.get(position).getName());
+        holder.lastmessage.setText(chatList.get(position).getLastMessage());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        Date date = new Date(chatList.get(position).getMessageTime());
+        final String time = dateFormat.format(date);
+        holder.timestamp.setText(time);
+        Glide.with(mContext).load(chatList.get(position).getProfilePic()).into(holder.profileimg);
 
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.length();
+        return chatList.size();
     }
 }

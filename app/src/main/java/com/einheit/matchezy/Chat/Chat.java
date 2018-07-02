@@ -71,6 +71,7 @@ public class Chat extends AppCompatActivity {
     private ProgressBar mProgressBar;
     private Uri outputFileUri;
     JSONObject userData = null;
+    JSONObject currentUserData = null;
 
     ImageView backbtn;
     TextView chat_head_name;
@@ -145,6 +146,7 @@ public class Chat extends AppCompatActivity {
 
         try {
             userData = new JSONObject(getIntent().getStringExtra("userdata"));
+            currentUserData = new JSONObject(getSPData("userdata"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -370,10 +372,15 @@ public class Chat extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Message friendlyMessage = new Message(getSPData("user_id"), userData.optString("user_id"),
-                        mMessageEditText.getText().toString().trim(), null);
-                mFirebaseDatabaseReference.child(userData.optString("matched_id")).push().setValue(friendlyMessage);
-                mMessageEditText.setText("");
+                if(!mMessageEditText.getText().toString().trim().isEmpty()
+                        || !(mMessageEditText.getText().toString().trim().length() == 0)) {
+                    Message friendlyMessage = new Message(getSPData("user_id"), userData.optString("user_id"),
+                            mMessageEditText.getText().toString().trim(), null, currentUserData.optString("name"),
+                            userData.optString("name"));
+                    mFirebaseDatabaseReference.child(userData.optString("matched_id")).push().setValue(friendlyMessage);
+                    mFirebaseDatabaseReference.child("notifications").push().setValue(friendlyMessage);
+                    mMessageEditText.setText("");
+                }
             }
         });
 
@@ -435,7 +442,7 @@ public class Chat extends AppCompatActivity {
 
             if (outputFileUri != null) {
                 Message tempMessage = new Message(getSPData("user_id"), userData.optString("user_id"), null,
-                        "qwe");
+                        "qwe", currentUserData.optString("name"), userData.optString("name"));
                 mFirebaseDatabaseReference.child(userData.optString("matched_id")).push()
                         .setValue(tempMessage, new DatabaseReference.CompletionListener() {
                             @Override
@@ -479,9 +486,11 @@ public class Chat extends AppCompatActivity {
                                     Uri downloadUrl = uri;
                                     Message friendlyMessage =
                                             new Message(getSPData("user_id"), userData.optString("user_id"), null,
-                                                    downloadUrl.toString());
+                                                    downloadUrl.toString(), currentUserData.optString("name"),
+                                                    userData.optString("name"));
                                     mFirebaseDatabaseReference.child(userData.optString("matched_id")).child(key)
                                             .setValue(friendlyMessage);
+                                    mFirebaseDatabaseReference.child("notifications").push().setValue(friendlyMessage);
                                 }
                             });
 

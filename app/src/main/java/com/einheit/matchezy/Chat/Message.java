@@ -11,16 +11,21 @@ public class Message {
     private String name;
     private String imageUrl;
     private long messageTime;
+    private String fromName;
+    private String toName;
 
     public Message() {
     }
 
-    public Message(String from, String to, String text, String imageUrl) {
+    public Message(String from, String to, String text, String imageUrl,
+                   String fromName, String toName) {
         this.from = from;
         this.to = to;
         this.text = text;
         this.imageUrl = imageUrl;
         messageTime = new Date().getTime();
+        this.fromName = fromName;
+        this.toName = toName;
     }
 
     public String getId() {
@@ -77,5 +82,21 @@ public class Message {
 
     public void setTo(String to) {
         this.to = to;
+    }
+
+    public String getFromName() {
+        return fromName;
+    }
+
+    public String getToName() {
+        return toName;
+    }
+
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
+    }
+
+    public void setToName(String toName) {
+        this.toName = toName;
     }
 }
