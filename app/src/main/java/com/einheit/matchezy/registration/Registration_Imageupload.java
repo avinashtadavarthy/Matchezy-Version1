@@ -25,7 +25,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.einheit.matchezy.User;
+import com.einheit.matchezy.Utility;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
 
@@ -123,7 +123,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                     files.add(new File(paths[2]));
                     files.add(new File(paths[3]));
 
-                    AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
+                    AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
                             .addMultipartFile("profile_pic", files.get(0))
                             .addMultipartFile("pictures", files.get(1))
                             .addMultipartFile("pictures_2", files.get(2))
@@ -167,7 +167,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                                         new android.os.Handler().postDelayed(
                                                 new Runnable() {
                                                     public void run() {
-                                                        AndroidNetworking.post(User.getInstance().BASE_URL + "approveUser")
+                                                        AndroidNetworking.post(Utility.getInstance().BASE_URL + "approveUser")
                                                                 .addBodyParameter("user_id", response.optJSONObject("message").optString("user_id"))
                                                                 .setPriority(Priority.HIGH)
                                                                 .build()

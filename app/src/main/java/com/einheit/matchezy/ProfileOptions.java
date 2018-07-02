@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +17,8 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
-import com.wang.avi.AVLoadingIndicatorView;
+import com.einheit.matchezy.login.Login;
+import com.einheit.matchezy.profilescreen.ProfilePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +103,7 @@ public class ProfileOptions extends AppCompatActivity {
 
                 progressOverlay.setVisibility(View.VISIBLE);
 
-                AndroidNetworking.post(User.getInstance().BASE_URL + "logout")
+                AndroidNetworking.post(Utility.getInstance().BASE_URL + "logout")
                         .addBodyParameter("user_id", getSPData("user_id"))
                         .setPriority(Priority.MEDIUM)
                         .build()

@@ -13,22 +13,20 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".messagestab.FirebaseApp"
         android:allowBackup="true"
         android:icon="@drawable/logo_white"
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo_white"
         android:supportsRtl="true"
-        android:theme="@style/MainAppTheme"
-        android:name=".FirebaseApp">
-
+        android:theme="@style/MainAppTheme">
         <activity android:name=".onboarding.IntroActivity" />
         <activity
             android:name=".registration.Registration_Interests"
             android:theme="@style/RegistrationTheme" />
+        <activity android:name=".HomeScreen" />
         <activity
-            android:name=".HomeScreen"/>
-        <activity
-            android:name=".ProfilePage"
+            android:name=".profilescreen.ProfilePage"
             android:parentActivityName=".HomeScreen"
             android:theme="@style/ProfilePageTheme" />
         <activity
@@ -55,24 +53,19 @@
 
         <activity
             android:name=".registration.OTP"
-            android:theme="@style/RegistrationTheme" >
-        </activity>
-        <activity android:name=".Login">
+            android:theme="@style/RegistrationTheme"></activity>
+        <activity android:name=".login.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Filter"></activity>
-        <activity android:name=".ForgotPassword" />
+        <activity android:name=".hometab.Filter" />
+        <activity android:name=".login.ForgotPassword" />
         <activity
-            android:name=".LanguagesPopUp"
+            android:name=".registration.LanguagesPopUp"
             android:theme="@style/AppTheme.CustomTheme" />
-        <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -95,11 +88,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ChooseCity"
+            android:name=".registration.ChooseCity"
             android:theme="@style/AppTheme.CustomTheme" />
 
         <service
-            android:name=".FcmService"
+            android:name=".messagestab.FcmService"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -109,12 +102,12 @@
 
         <activity
             android:name=".ProfileOptions"
-            android:theme="@style/Theme.AppCompat.Translucent"/>
-        <activity android:name=".Chat.Chat"
-            android:theme="@style/RegistrationTheme"
-            android:parentActivityName=".Chat.Chat">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".messagestab.Chat"
+            android:parentActivityName=".messagestab.Chat"
+            android:theme="@style/RegistrationTheme"></activity>
+        <activity android:name=".profilescreen.EditProfile"></activity>
     </application>
 
 </manifest>

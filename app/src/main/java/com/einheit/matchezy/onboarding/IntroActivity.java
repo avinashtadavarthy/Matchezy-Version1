@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.einheit.matchezy.Login;
+import com.einheit.matchezy.login.Login;
 import com.einheit.matchezy.R;
 import com.scalified.fab.ActionButton;
 

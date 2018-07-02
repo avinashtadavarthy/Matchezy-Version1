@@ -1,39 +1,25 @@
 package com.einheit.matchezy;
 
 import android.content.Intent;
-import android.app.FragmentManager;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import com.bumptech.glide.Glide;
-import com.einheit.matchezy.Fragment_Home;
-import com.einheit.matchezy.Fragment_favorites;
-import com.einheit.matchezy.Fragment_messages;
-import com.einheit.matchezy.Fragment_notifications;
-import com.scalified.fab.ActionButton;
+import com.einheit.matchezy.bookmarkstab.Fragment_favorites;
+import com.einheit.matchezy.hometab.Fragment_Home;
+import com.einheit.matchezy.messagestab.Fragment_messages;
+import com.einheit.matchezy.notificationstab.Fragment_notifications;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeScreen extends AppCompatActivity {
 

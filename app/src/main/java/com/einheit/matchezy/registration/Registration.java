@@ -25,7 +25,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.R;
-import com.einheit.matchezy.User;
+import com.einheit.matchezy.Utility;
 import com.scalified.fab.ActionButton;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -65,7 +65,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         inputEmail = (EditText) findViewById(R.id.editText_email);
         inputPassword = (EditText) findViewById(R.id.edit_password);
         input_number = (EditText) findViewById(R.id.editNumber);
-        input_Dateofbirth = (EditText) findViewById(R.id.editTextDateofBirth);/* AndroidNetworking.post(User.getInstance().BASE_URL + "fbLogin")
+        input_Dateofbirth = (EditText) findViewById(R.id.editTextDateofBirth);/* AndroidNetworking.post(Utility.getInstance().BASE_URL + "fbLogin")
                 .addBodyParameter("fb_id", )
                 .setPriority(Priority.HIGH)
                 .build()
@@ -294,7 +294,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         }
 
 
-        AndroidNetworking.post(User.getInstance().BASE_URL + "checkExists")
+        AndroidNetworking.post(Utility.getInstance().BASE_URL + "checkExists")
                 .addBodyParameter("phone_number", input_countrycode.getText().toString().trim() + input_number.getText().toString().trim())
                 .addBodyParameter("email", inputEmail.getText().toString().trim())
                 .setPriority(Priority.HIGH)

@@ -17,10 +17,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.einheit.matchezy.ChooseCity;
-import com.einheit.matchezy.LanguagesPopUp;
 import com.einheit.matchezy.R;
-import com.einheit.matchezy.User;
+import com.einheit.matchezy.Utility;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONException;
@@ -320,8 +318,8 @@ public class Registration2 extends AppCompatActivity {
 
     private void lang()
     {
-        Intent i = new Intent(getApplicationContext(), LanguagesPopUp.class).putExtra("languagesspoken", User.getInstance().languagesspokendirty);
-        startActivityForResult(i, LANGUAGES_SPOKEN);
+        Intent i = new Intent(getApplicationContext(), LanguagesPopUp.class).putExtra("languagesspoken", Utility.getInstance().languagesspokendirty);
+        startActivityForResult(i, 1010);
     }
 
 
@@ -338,7 +336,7 @@ public class Registration2 extends AppCompatActivity {
             }
         }
 
-        if(requestCode == LANGUAGES_SPOKEN) {
+        if(requestCode == 1010) {
             if(resultCode == Activity.RESULT_OK) {
 
                 editText_lang.setText("Languages Spoken");

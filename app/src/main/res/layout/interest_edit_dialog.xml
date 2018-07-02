@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:layout_height="match_parent"
+    android:layout_marginTop="20dp"
+    android:layout_marginBottom="20dp"
+    android:background="@drawable/heightbox"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/enter_interests"
+            android:layout_width="match_parent"
+            android:layout_height="53dp"
+            android:layout_margin="16dp"
+            android:textSize="14dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            android:background="@drawable/signup_box"
+            android:hint="Search for interests"
+            android:fontFamily="@font/sourcesansproregular"
+            android:paddingLeft="25dp" />
+
+        <android.support.design.chip.ChipGroup
+            android:id="@+id/selectedinterests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/below_shadow"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="start"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/circularstd"
+            android:text="Suggested"
+            android:textSize="12dp"
+            android:textColor="#FF9B9B9B" />
+
+        <android.support.design.chip.ChipGroup
+            android:id="@+id/suggestedinterests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/choose"
+        android:text="OK"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/scroll_choice"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_bg" />
+
+
+</RelativeLayout>

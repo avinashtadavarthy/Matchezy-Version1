@@ -14,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,6 +156,7 @@
                     android:focusable="false"/>
             </android.support.design.widget.TextInputLayout>
         </LinearLayout>
+
     </ScrollView>
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next3"
