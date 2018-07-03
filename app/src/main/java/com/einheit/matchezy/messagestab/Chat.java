@@ -69,6 +69,7 @@ public class Chat extends AppCompatActivity {
     private Uri outputFileUri;
     JSONObject userData = null;
     JSONObject currentUserData = null;
+    String uploadedTime = null;
 
     ImageView backbtn;
     TextView chat_head_name;
@@ -99,6 +100,9 @@ public class Chat extends AppCompatActivity {
 
         TextView dateView;
 
+        ImageView statusImageViewText;
+        ImageView statusImageViewImage;
+
         public MessageViewHolder(View v) {
             super(v);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
@@ -123,6 +127,9 @@ public class Chat extends AppCompatActivity {
             timeTextViewForImageReceived = itemView.findViewById(R.id.timeTextViewForImageReceived);
 
             dateView = itemView.findViewById(R.id.dateView);
+
+            statusImageViewText = itemView.findViewById(R.id.statusImageViewText);
+            statusImageViewImage = itemView.findViewById(R.id.statusImageViewImage);
 
         }
     }
@@ -165,7 +172,8 @@ public class Chat extends AppCompatActivity {
 
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id")).limitToFirst(10).getRef();
+        DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id"))
+                .orderByChild("uploadedTime").getRef();
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
@@ -204,6 +212,13 @@ public class Chat extends AppCompatActivity {
                 Date date = new Date(friendlyMessage.getMessageTime());
                 final String time = dateFormat.format(date);
 
+                uploadedTime = null;
+
+                if(friendlyMessage.getUploadedTime() != -1) {
+                    Date uploadedDate = new Date(friendlyMessage.getUploadedTime());
+                    uploadedTime = dateFormat.format(uploadedDate);
+                }
+
                 if(position > 0) {
                     if (DateFormat.getDateInstance().format(date).equals(DateFormat.getDateInstance().
                             format(new Date(mFirebaseAdapter.getItem(position - 1).getMessageTime())))) {
@@ -226,6 +241,10 @@ public class Chat extends AppCompatActivity {
                         viewHolder.textLayoutSent.setVisibility(TextView.VISIBLE);
                         viewHolder.imageLayoutSent.setVisibility(ImageView.GONE);
 
+                        if(friendlyMessage.getUploadedTime() != -1) {
+                            viewHolder.statusImageViewText.setImageResource(R.drawable.chat_tick_ic);
+                        } else viewHolder.statusImageViewText.setImageResource(R.drawable.chat_loading_ic);
+
                         viewHolder.timeTextViewForText.setText(time);
 
                     } else {
@@ -235,7 +254,11 @@ public class Chat extends AppCompatActivity {
                         viewHolder.textLayoutReceived.setVisibility(TextView.VISIBLE);
                         viewHolder.imageLayoutReceived.setVisibility(ImageView.GONE);
 
-                        viewHolder.timeTextViewForTextReceived.setText(time);
+                        if(friendlyMessage.getUploadedTime() != -1) {
+                            viewHolder.timeTextViewForTextReceived.setText(uploadedTime);
+                        } else {
+                            viewHolder.timeTextViewForTextReceived.setText(time);
+                        }
 
                     }
 
@@ -259,7 +282,11 @@ public class Chat extends AppCompatActivity {
                                                         .apply(finalRequestOptions)
                                                         .into(viewHolder.messageImageView);
 
-                                                viewHolder.timeTextViewForText.setText(time);
+                                                if(friendlyMessage.getUploadedTime() != -1) {
+                                                    viewHolder.statusImageViewText.setImageResource(R.drawable.chat_tick_ic);
+                                                } else viewHolder.statusImageViewText.setImageResource(R.drawable.chat_loading_ic);
+
+                                                viewHolder.timeTextViewForImage.setText(time);
 
                                             } else {
                                                 viewHolder.receivedMessageLayout.setVisibility(View.VISIBLE);
@@ -269,7 +296,11 @@ public class Chat extends AppCompatActivity {
                                                         .apply(finalRequestOptions)
                                                         .into(viewHolder.messageImageViewReceived);
 
-                                                viewHolder.timeTextViewForTextReceived.setText(time);
+                                                if(friendlyMessage.getUploadedTime() != -1) {
+                                                    viewHolder.timeTextViewForImageReceived.setText(uploadedTime);
+                                                } else {
+                                                    viewHolder.timeTextViewForImageReceived.setText(time);
+                                                }
 
                                             }
                                         } else {
@@ -287,6 +318,10 @@ public class Chat extends AppCompatActivity {
                                     .apply(finalRequestOptions)
                                     .into(viewHolder.messageImageView);
 
+                            if(friendlyMessage.getUploadedTime() != -1) {
+                                viewHolder.statusImageViewText.setImageResource(R.drawable.chat_tick_ic);
+                            } else viewHolder.statusImageViewText.setImageResource(R.drawable.chat_loading_ic);
+
                             viewHolder.timeTextViewForImage.setText(time);
 
                         } else {
@@ -297,7 +332,11 @@ public class Chat extends AppCompatActivity {
                                     .apply(finalRequestOptions)
                                     .into(viewHolder.messageImageViewReceived);
 
-                            viewHolder.timeTextViewForImageReceived.setText(time);
+                            if(friendlyMessage.getUploadedTime() != -1) {
+                                viewHolder.timeTextViewForImageReceived.setText(uploadedTime);
+                            } else {
+                                viewHolder.timeTextViewForImageReceived.setText(time);
+                            }
 
                         }
                     }
@@ -374,7 +413,17 @@ public class Chat extends AppCompatActivity {
                     Message friendlyMessage = new Message(getSPData("user_id"), userData.optString("user_id"),
                             mMessageEditText.getText().toString().trim(), null, currentUserData.optString("name"),
                             userData.optString("name"));
-                    mFirebaseDatabaseReference.child(userData.optString("matched_id")).push().setValue(friendlyMessage);
+                    mFirebaseDatabaseReference.child(userData.optString("matched_id")).
+                            push().setValue(friendlyMessage, new DatabaseReference.CompletionListener() {
+                        public void onComplete(DatabaseError error, DatabaseReference ref) {
+                            if (error == null) {
+                                ref.child("uploadedTime").setValue(new Date().getTime());
+                            }
+                            else {
+                                Toast.makeText(getApplicationContext(), "Unable to send the message", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
                     mFirebaseDatabaseReference.child("notifications").push().setValue(friendlyMessage);
                     mMessageEditText.setText("");
                 }
@@ -455,8 +504,7 @@ public class Chat extends AppCompatActivity {
 
                                     putImageInStorage(storageReference, outputFileUri, key);
                                 } else {
-                                    Log.e("ASD", "Unable to write message to database.",
-                                            databaseError.toException());
+                                    Toast.makeText(getApplicationContext(), "Unable to send the message", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -485,6 +533,7 @@ public class Chat extends AppCompatActivity {
                                             new Message(getSPData("user_id"), userData.optString("user_id"), null,
                                                     downloadUrl.toString(), currentUserData.optString("name"),
                                                     userData.optString("name"));
+                                    friendlyMessage.setUploadedTime(new Date().getTime());
                                     mFirebaseDatabaseReference.child(userData.optString("matched_id")).child(key)
                                             .setValue(friendlyMessage);
                                     mFirebaseDatabaseReference.child("notifications").push().setValue(friendlyMessage);

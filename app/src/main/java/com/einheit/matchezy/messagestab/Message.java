@@ -11,6 +11,7 @@ public class Message {
     private String name;
     private String imageUrl;
     private long messageTime;
+    private long uploadedTime;
     private String fromName;
     private String toName;
 
@@ -24,6 +25,7 @@ public class Message {
         this.text = text;
         this.imageUrl = imageUrl;
         messageTime = new Date().getTime();
+        uploadedTime = -1;
         this.fromName = fromName;
         this.toName = toName;
     }
@@ -98,5 +100,13 @@ public class Message {
 
     public void setToName(String toName) {
         this.toName = toName;
+    }
+
+    public long getUploadedTime() {
+        return uploadedTime;
+    }
+
+    public void setUploadedTime(long uploadedTime) {
+        this.uploadedTime = uploadedTime;
     }
 }
