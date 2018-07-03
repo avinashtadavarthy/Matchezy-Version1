@@ -9,9 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.bookmarkstab.Fragment_favorites;
 import com.einheit.matchezy.hometab.Fragment_Home;
