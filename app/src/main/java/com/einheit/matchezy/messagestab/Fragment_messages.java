@@ -37,6 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -111,7 +113,6 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                                     if (chatList.get(i).getName().equals(object.optString("name"))) {
                                                         chatList.get(i).setLastMessage(issue.getValue(Message.class).getText());
                                                         chatList.get(i).setMessageTime(issue.getValue(Message.class).getMessageTime());
-                                                        conversationsAdapter.notifyDataSetChanged();
                                                         isFound = true;
                                                     }
                                                 }
@@ -122,8 +123,17 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                                         issue.getValue(Message.class).getText(),
                                                         issue.getValue(Message.class).getMessageTime(),
                                                         false));
-                                                    conversationsAdapter.notifyDataSetChanged();
                                                 }
+                                                Collections.sort(chatList, new Comparator<ChatListItem>()
+                                                {
+                                                    @Override
+                                                    public int compare(ChatListItem lhs, ChatListItem rhs) {
+
+                                                        return Long.compare(rhs.getMessageTime(), lhs.getMessageTime());
+                                                    }
+                                                });
+
+                                                conversationsAdapter.notifyDataSetChanged();
                                             }
                                         }
 
