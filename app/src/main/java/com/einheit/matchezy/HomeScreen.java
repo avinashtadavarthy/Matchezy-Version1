@@ -65,6 +65,15 @@ public class HomeScreen extends AppCompatActivity {
         //BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
 
+        if(getIntent().hasExtra("notify")) {
+            String selectedId = getIntent().getStringExtra("notify");
+            if (selectedId.equals("chat"))
+                navigation.setSelectedItemId(R.id.navigation_messages);
+            else if (selectedId.equals("like")) {
+                navigation.setSelectedItemId(R.id.navigation_bookmarks);
+            }
+        }
+
         Log.e("userdata", getSPData("userdata"));
 
         try {

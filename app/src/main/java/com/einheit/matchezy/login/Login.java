@@ -64,6 +64,9 @@ public class Login extends AppCompatActivity {
 
         if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
             Intent i = new Intent(getApplicationContext(),HomeScreen.class);
+
+            if(getIntent().hasExtra("notify"))
+                i.putExtra("notify", getIntent().getStringExtra("notify"));
             startActivity(i);
             finish();
         }

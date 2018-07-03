@@ -1,5 +1,6 @@
 package com.einheit.matchezy.messagestab;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -35,11 +36,21 @@ public class FcmService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            throughChannels();
+            throughChannels(remoteMessage);
         }
+
         int notificationId = new Random().nextInt(1001);
 
         Intent intent = new Intent(this, Login.class);
+
+        intent.setAction(Long.toString(System.currentTimeMillis()));
+
+        if(remoteMessage.getData().get("intent").equals("chatPage")) {
+            intent.putExtra("notify", "chat");
+        } else if (remoteMessage.getData().get("intent").equals("chat")) {
+            intent.putExtra("notify", "like");
+        }
+
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -52,6 +63,7 @@ public class FcmService extends FirebaseMessagingService {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("message")))
                 .setLights(Color.RED, 3000, 3000)
                 .setAutoCancel(true)
+                .setGroup(remoteMessage.getData().get("title"))
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
@@ -60,7 +72,7 @@ public class FcmService extends FirebaseMessagingService {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private void throughChannels(){
+    private void throughChannels(RemoteMessage remoteMessage){
         CharSequence adminChannelName = "matchezy";
         String adminChannelDescription = "matchezy channel";
 
@@ -77,6 +89,7 @@ public class FcmService extends FirebaseMessagingService {
         adminChannel.setLightColor(Color.RED);
         adminChannel.enableVibration(true);
         adminChannel.setSound(defaultSoundUri, attributes);
+        adminChannel.setGroup(remoteMessage.getData().get("title"));
         if (notificationManager != null) {
             notificationManager.createNotificationChannel(adminChannel);
         }
