@@ -30,10 +30,12 @@ public class HomeScreen extends AppCompatActivity {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
+            String filterObjectString = null;
+
             switch (item.getItemId()) {
 
                 case R.id.navigation_home:
-                    fragmentManager.beginTransaction().replace(R.id.home_container, new Fragment_Home()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.home_container, Fragment_Home.newInstance()).commit();
                     break;
                 case R.id.navigation_bookmarks:
                     fragmentManager.beginTransaction().replace(R.id.home_container, new Fragment_favorites()).commit();

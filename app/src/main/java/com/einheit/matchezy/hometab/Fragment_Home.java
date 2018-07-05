@@ -23,6 +23,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONArray;
@@ -48,7 +49,18 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
     RecyclerView myrv;
     RecyclerViewAdapter myAdapter;
+    JsonObject filterObject;
 
+    public Fragment_Home() {
+        // Required empty public constructor
+    }
+
+    public static Fragment_Home newInstance() {
+
+        Fragment_Home fragment_home = new Fragment_Home();
+
+        return fragment_home;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,22 +98,25 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
         lstMatchedProfiles = new ArrayList<>();
 
-        JsonObject o = new JsonObject();
+        filterObject = null;
 
-        o.addProperty("user_id", getSPData("user_id"));
-        o.addProperty("user_token", getSPData("user_token"));
-        o.addProperty("lookingFor", "Both");/*
-            o.addProperty("interests", "[Tv]");*/
+        filterObject = new JsonObject();
+
+        JsonParser parser = new JsonParser();
+        filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+
+        filterObject.addProperty("user_id", getSPData("user_id"));
+        filterObject.addProperty("user_token", getSPData("user_token"));
 
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "filterProfiles")
-                .addBodyParameter(o)
-                .setPriority(Priority.HIGH)
+                .addBodyParameter(filterObject).setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject res) {
 
                         if(res.optInt("status_code") == 200) {
+                            Log.e("ASD", res.toString());
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");

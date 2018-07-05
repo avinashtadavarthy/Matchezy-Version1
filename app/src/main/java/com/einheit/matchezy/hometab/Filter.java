@@ -1,6 +1,8 @@
 package com.einheit.matchezy.hometab;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -22,11 +24,15 @@ import android.widget.Toast;
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
 import com.appyvet.materialrangebar.RangeBar;
+import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Filter extends AppCompatActivity {
 
@@ -47,6 +53,12 @@ public class Filter extends AppCompatActivity {
 
     EditText filter_relationship, filter_education, filter_annual, filter_religion, filter_tattoos , filter_piercings;
 
+    List<String> interestsArary = new ArrayList<>();
+
+    ActionButton actionButton;
+
+    JsonObject filterObject = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +71,27 @@ public class Filter extends AppCompatActivity {
         filter_tattoos = findViewById(R.id.filter_tattoos);
         filter_piercings = findViewById(R.id.filter_piercings);
 
+        selectedinterests = findViewById(R.id.selectedinterests);
+        suggestedinterests = findViewById(R.id.suggestedinterests);
+        clearinterests = findViewById(R.id.clearinterests);
+
+        selectedinterests = findViewById(R.id.selectedinterests);
+        suggestedinterests = findViewById(R.id.suggestedinterests);
+        clearinterests = findViewById(R.id.clearinterests);
+
+        enter_interests = findViewById(R.id.enter_interests);
+
         downarrow = findViewById(R.id.downarrow);
+
+        rangebar_age = (RangeBar) findViewById(R.id.rangebar_age);
+
+        height_start=(TextView)findViewById(R.id.height_start);
+        height_end=(TextView)findViewById(R.id.height_end);
+
+        age_start=(TextView)findViewById(R.id.age_start);
+        age_end=(TextView)findViewById(R.id.age_end);
+
+        actionButton = findViewById(R.id.action_filters_confirm);
 
         downarrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +100,6 @@ public class Filter extends AppCompatActivity {
             }
         });
 
-        final ActionButton actionButton = (ActionButton) findViewById(R.id.action_filters_confirm);
         actionButton.setType(ActionButton.Type.DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
@@ -80,13 +111,109 @@ public class Filter extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                filterObject = new JsonObject();
+
+                String[] heightMin = height_start.getText().toString().replace("\"","").split("\'");
+                String[] heightMax = height_end.getText().toString().replace("\"","").split("\'");
+
+                filterObject.addProperty("feetMin",heightMin[0]);
+
+                if(heightMin.length == 1) {
+                    filterObject.addProperty("inchesMin", 0);
+                } else filterObject.addProperty("inchesMin", heightMin[1]);
+
+                filterObject.addProperty("feetMax",heightMax[0]);
+                if(heightMax.length == 1) {
+                    filterObject.addProperty("inchesMax", 0);
+                } else filterObject.addProperty("inchesMax", heightMax[1]);
+
+                if(interestsArary.size() > 0)
+                    filterObject.addProperty("interests", interestsArary.toString());
+
+                if(!filter_relationship.getText().toString().isEmpty() && filter_relationship.getText().toString().length() > 0)
+                    filterObject.addProperty("maritalStatus", filter_relationship.getText().toString());
+
+                if(!filter_tattoos.getText().toString().isEmpty() && filter_tattoos.getText().toString().length() > 0)
+                    filterObject.addProperty("tattoo", filter_tattoos.getText().toString());
+
+                if(!filter_piercings.getText().toString().isEmpty() && filter_piercings.getText().toString().length() > 0)
+                    filterObject.addProperty("piercings", filter_piercings.getText().toString());
+
+                if(!age_start.getText().toString().isEmpty() && age_start.getText().toString().length() > 0)
+                    filterObject.addProperty("ageMin", age_start.getText().toString());
+
+                if(!age_end.getText().toString().isEmpty() && age_end.getText().toString().length() > 0)
+                    filterObject.addProperty("ageMax", age_end.getText().toString());
+
+                if(!filter_education.getText().toString().isEmpty() && filter_education.getText().toString().length() > 0)
+                    filterObject.addProperty("education", filter_education.getText().toString());
+
+                if(!filter_religion.getText().toString().isEmpty() && filter_religion.getText().toString().length() > 0)
+                    filterObject.addProperty("religions", filter_religion.getText().toString());
+
+                Log.e("ASD", filterObject.toString());
+                storeSPData("filterObject",filterObject.toString());
+
+                Intent intent = new Intent(Filter.this, HomeScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 finish();
             }
         });
 
-        selectedinterests = findViewById(R.id.selectedinterests);
-        suggestedinterests = findViewById(R.id.suggestedinterests);
-        clearinterests = findViewById(R.id.clearinterests);
+        filterObject = new JsonObject();
+
+        JsonParser parser = new JsonParser();
+        filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+
+        if(filterObject.has("interests")) {
+
+            String[] interestsStringArray = filterObject.get("interests").getAsString()
+                    .replace("[", "")
+                    .replace("]", "").split(", ");
+
+            for (String anInterestsStringArray : interestsStringArray) {
+                populateSelectedChips(anInterestsStringArray);
+            }
+
+        }
+
+        if(filterObject.has("feetMin") && filterObject.has("inchesMin")) {
+            height_start.setText(filterObject.get("feetMin").getAsString() + "\'" + filterObject.get("inchesMin").getAsString() + "\"");
+        }
+
+        if(filterObject.has("feetMax") && filterObject.has("inchesMax")) {
+            height_end.setText(filterObject.get("feetMax").getAsString() + "\'" + filterObject.get("inchesMax").getAsString() + "\"");
+        }
+
+        if(filterObject.has("ageMin")) {
+            age_start.setText(String.valueOf(filterObject.get("ageMin").getAsInt()));
+        }
+
+        if(filterObject.has("ageMax")) {
+            age_end.setText(String.valueOf(filterObject.get("ageMax").getAsInt()));
+        }
+
+        if(filterObject.has("maritalStatus")) {
+            filter_relationship.setText(String.valueOf(filterObject.get("maritalStatus").getAsString()));
+        }
+
+        if(filterObject.has("tattoo")) {
+            filter_tattoos.setText(filterObject.get("tattoo").getAsString());
+        }
+
+        if(filterObject.has("piercings")) {
+            filter_piercings.setText(filterObject.get("piercings").getAsString());
+        }
+
+        if(filterObject.has("religions")) {
+            filter_religion.setText(filterObject.get("religions").getAsString());
+        }
+
+        if(filterObject.has("education")) {
+            filter_education.setText(filterObject.get("education").getAsString());
+        }
 
         clearinterests.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +228,7 @@ public class Filter extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 selectedinterests.removeAllViews();
+                                interestsArary.clear();
                             }
                         });
 
@@ -120,7 +248,6 @@ public class Filter extends AppCompatActivity {
 
         populateSuggestedChips(suggested);
 
-        enter_interests = findViewById(R.id.enter_interests);
         enter_interests.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -138,14 +265,6 @@ public class Filter extends AppCompatActivity {
                 return false;
             }
         });
-
-        rangebar_age = (RangeBar) findViewById(R.id.rangebar_age);
-
-        height_start=(TextView)findViewById(R.id.height_start);
-        height_end=(TextView)findViewById(R.id.height_end);
-
-        age_start=(TextView)findViewById(R.id.age_start);
-        age_end=(TextView)findViewById(R.id.age_end);
 
         height_start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -463,14 +582,36 @@ public class Filter extends AppCompatActivity {
         //chip.setElevation(15);
 
         selectedinterests.addView(chip);
+        interestsArary.add(text);
 
         chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 selectedinterests.removeView(view);
+                if(view instanceof Chip) {
+                    Chip temp = (Chip) view;
+                    interestsArary.remove(temp.getChipText().toString());
+                }
             }
         });
 
+    }
+
+    private void storeSPData(String key, String data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 }
