@@ -164,8 +164,10 @@ public class Filter extends AppCompatActivity {
 
         filterObject = new JsonObject();
 
-        JsonParser parser = new JsonParser();
-        filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+        if(getSPData("filterObject").length() > 0 && !getSPData("filterObject").isEmpty()) {
+            JsonParser parser = new JsonParser();
+            filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+        }
 
         if(filterObject.has("interests")) {
 

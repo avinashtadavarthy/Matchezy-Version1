@@ -102,8 +102,10 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
         filterObject = new JsonObject();
 
-        JsonParser parser = new JsonParser();
-        filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+        if(getSPData("filterObject").length() > 0 && !getSPData("filterObject").isEmpty()) {
+            JsonParser parser = new JsonParser();
+            filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
+        }
 
         filterObject.addProperty("user_id", getSPData("user_id"));
         filterObject.addProperty("user_token", getSPData("user_token"));
