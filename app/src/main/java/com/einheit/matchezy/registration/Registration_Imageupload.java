@@ -134,7 +134,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                     dialog.setCancelable(false);
                     dialog.show();
 
-                    AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
+                    AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
                             .addMultipartFile("profile_pic", files.get(0))
                             .addMultipartFile("pictures", files.get(1))
                             .addMultipartFile("pictures_2", files.get(2))

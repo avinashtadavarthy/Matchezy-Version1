@@ -13,7 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
+import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.login.Login;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +31,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.scalified.fab.ActionButton;
+
+import org.json.JSONObject;
 
 import java.util.concurrent.TimeUnit;
 
@@ -60,20 +68,14 @@ public class OTP extends AppCompatActivity {
         retrybtn.setEnabled(false);
         callbtn.setVisibility(View.GONE);
 
-        storeSPData("isOtpVerificationCompleted", false);
+        //storeSPData("isOtpVerificationCompleted", false);
 
         final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
             @Override
             public void onVerificationCompleted(PhoneAuthCredential credential) {
                 Log.e(TAG, "onVerificationCompleted:" + credential);
-                storeSPData("isOtpVerificationCompleted", true);
-                storeSPData("isOngoingVerification", false);
-
-                Toast.makeText(OTP.this, "Registration Success", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(OTP.this, Login.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(i);
+                onSuccess();
             }
 
             @Override
@@ -96,14 +98,15 @@ public class OTP extends AppCompatActivity {
             public void onCodeSent(String verificationId,
                                    PhoneAuthProvider.ForceResendingToken token) {
                 Log.e(TAG, "code sent - " + verificationId);
+                Toast.makeText(OTP.this,"OTP code sent", Toast.LENGTH_SHORT).show();
                 OTP.this.verificationId = verificationId;
             }
         };
 
-        if(!getSPBoolean("isOngoingVerification")) {
-            PhoneAuthProvider.getInstance().verifyPhoneNumber(getSPData("phone_number"), 120,
-                    TimeUnit.SECONDS, OTP.this, mCallbacks);
-        }
+        //if(!getSPBoolean("isOngoingVerification")) {
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(getSPData("phone_number"), 120,
+                TimeUnit.SECONDS, OTP.this, mCallbacks);
+        //}
         storeSPData("isOtpVerified", false);
         storeSPData("isOngoingVerification", true);
 
@@ -131,13 +134,10 @@ public class OTP extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            storeSPData("isOtpVerificationCompleted", true);
-                                            storeSPData("isOngoingVerification", false);
+
                                             Log.d(TAG, "signInWithCredential:success");
-                                            Toast.makeText(OTP.this, "Registration Success", Toast.LENGTH_SHORT).show();
-                                            Intent i = new Intent(OTP.this, Login.class);
-                                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(i);
+
+                                            onSuccess();
 
                                         } else {
 
@@ -197,6 +197,39 @@ public class OTP extends AppCompatActivity {
         Boolean data = mUserData.getBoolean(key, false);
 
         return data;
+
+    }
+
+    void onSuccess() {
+
+        AndroidNetworking.post(Utility.getInstance().BASE_URL + "verifyPhoneNumber")
+                .addBodyParameter("user_id", getSPData("user_id"))
+                .setPriority(Priority.HIGH)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // do anything with response
+                        Log.e("check", response.toString());
+                        storeSPData("isOtpVerificationCompleted", true);
+                        storeSPData("isOngoingVerification", false);
+
+                        Toast.makeText(OTP.this, "Registration Success", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(OTP.this, Login.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(i);
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        // handle error
+                        error.printStackTrace();
+                        Toast.makeText(OTP.this, "Try again", Toast.LENGTH_SHORT).show();
+                        storeSPData("isOtpVerificationCompleted", false);
+                        storeSPData("isOtpVerified", false);
+                        storeSPData("isOngoingVerification", false);
+                    }
+                });
 
     }
 

@@ -65,6 +65,7 @@
         fab:show_animation="@anim/fab_roll_from_right" />
 
     <LinearLayout
+        android:id="@+id/retryLayout"
         android:layout_below="@+id/editText_otp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
@@ -86,5 +87,13 @@
             android:text="call" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please wait for a while"
+        android:layout_below="@+id/retryLayout"
+        android:textAlignment="center"
+        android:paddingTop="16dp"/>
 
 </RelativeLayout>
