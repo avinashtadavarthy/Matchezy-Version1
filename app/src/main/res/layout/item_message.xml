@@ -61,7 +61,7 @@
                     android:layout_weight="1"
                     android:gravity="right">
 
-                    <com.einheit.matchezy.CustomLayout
+                    <com.einheit.matchezy.messagestab.CustomLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -113,7 +113,7 @@
                         </LinearLayout>
 
 
-                    </com.einheit.matchezy.CustomLayout>
+                    </com.einheit.matchezy.messagestab.CustomLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -197,7 +197,7 @@
                     android:layout_weight="1"
                     android:gravity="left">
 
-                    <com.einheit.matchezy.CustomLayout
+                    <com.einheit.matchezy.messagestab.CustomLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -231,7 +231,7 @@
                             android:text="5:30 PM"
                             android:textColor="@color/receivedChatTimeColor" />
 
-                    </com.einheit.matchezy.CustomLayout>
+                    </com.einheit.matchezy.messagestab.CustomLayout>
                 </LinearLayout>
             </LinearLayout>
 
