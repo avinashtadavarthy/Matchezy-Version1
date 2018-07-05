@@ -5,129 +5,143 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/dateView"
-            style="@style/ChipTextStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/curved_bg_bubble"
-            android:padding="4dp"
-            android:text="23 JUN 2018"
-            android:textColor="@color/dateViewChatTextColor"
-            android:visibility="gone"/>
+    <TextView
+        android:id="@+id/dateView"
+        style="@style/ChipTextStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/curved_bg_bubble"
+        android:padding="4dp"
+        android:text="23 JUN 2018"
+        android:textColor="@color/dateViewChatTextColor"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/unreadMessagesCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/curved_bg_bubble"
+        android:padding="4dp"
+        android:text="4 unread messages"
+        android:textAlignment="center"
+        android:textColor="@color/dateViewChatTextColor"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/sentTextLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:elevation="2dp"
+            android:paddingLeft="60dp"
+            android:paddingRight="15dp"
+            android:paddingVertical="4dp">
 
-            <RelativeLayout
-                android:id="@+id/sentTextLayout"
+            <LinearLayout
+                android:id="@+id/textLayoutSent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:elevation="2dp"
-                android:paddingLeft="60dp"
-                android:paddingRight="15dp"
-                android:paddingVertical="4dp">
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/textLayoutSent"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+                    <com.einheit.matchezy.CustomLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="right">
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="right|bottom"
+                        android:layout_toRightOf="@+id/imageView"
+                        android:background="@drawable/sent_message_bubble"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal"
+                        app:viewPartMain="@+id/messageTextView"
+                        app:viewPartSlave="@+id/timeStampAndStatusLayout">
 
-                        <com.einheit.matchezy.messagestab.CustomLayout
+
+                        <TextView
+                            android:id="@+id/messageTextView"
+                            style="@style/ChipTextStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
                             android:layout_gravity="right|bottom"
-                            android:layout_toRightOf="@+id/imageView"
-                            android:background="@drawable/sent_message_bubble"
-                            android:gravity="left|center_vertical"
-                            android:orientation="horizontal"
-                            app:viewPartMain="@+id/messageTextView"
-                            app:viewPartSlave="@+id/timeStampAndStatusLayout">
+                            android:gravity="left|top"
+                            android:padding="8dp"
+                            android:text="Senghx xh cvh "
+                            android:textColor="@color/sentChatTextColor" />
+
+                        <LinearLayout
+                            android:id="@+id/timeStampAndStatusLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="right"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/messageTextView"
+                                android:id="@+id/timeTextViewForText"
                                 style="@style/ChipTextStyle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="right|bottom"
-                                android:gravity="left|top"
-                                android:padding="8dp"
-                                android:text="Senghx xh cvh "
-                                android:textColor="@color/sentChatTextColor" />
+                                android:minWidth="60dp"
+                                android:padding="4dp"
+                                android:text="5:30 PM"
+                                android:textColor="@color/sentChatTimeColor" />
 
-                            <LinearLayout
-                                android:id="@+id/timeStampAndStatusLayout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_marginLeft="5dp"
-                                android:gravity="right">
-
-                                <TextView
-                                    android:id="@+id/timeTextViewForText"
-                                    style="@style/ChipTextStyle"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:minWidth="60dp"
-                                    android:padding="4dp"
-                                    android:text="5:30 PM"
-                                    android:textColor="@color/sentChatTimeColor" />
-
-                                <ImageView
-                                    android:id="@+id/statusImageViewText"
-                                    android:layout_width="10dp"
-                                    android:layout_height="10dp"
-                                    android:layout_marginRight="8dp"
-                                    android:src="@drawable/chat_loading_ic"
-                                    android:layout_gravity="center_vertical"/>
-                            </LinearLayout>
+                            <ImageView
+                                android:id="@+id/statusImageViewText"
+                                android:layout_width="10dp"
+                                android:layout_height="10dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="8dp"
+                                android:src="@drawable/chat_loading_ic" />
+                        </LinearLayout>
 
 
-                        </com.einheit.matchezy.messagestab.CustomLayout>
-                    </LinearLayout>
+                    </com.einheit.matchezy.CustomLayout>
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/imageLayoutSent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/sent_image_bubble"
+                android:gravity="left|top"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/messageImageView"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter" />
 
                 <LinearLayout
-                    android:id="@+id/imageLayoutSent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_gravity="right|bottom"
-                    android:background="@drawable/sent_image_bubble"
-                    android:gravity="left|top"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/messageImageView"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:adjustViewBounds="true"
-                        android:padding="5dp"
-                        android:scaleType="fitCenter" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginLeft="5dp"
-                        android:gravity="right"
-                        android:layout_gravity="right">
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/timeTextViewForImage"
@@ -140,124 +154,124 @@
                         android:minWidth="60dp"
                         android:padding="4dp"
                         android:text="5:30 PM"
-                        android:textColor="@color/sentChatTimeColor"/>
+                        android:textColor="@color/sentChatTimeColor" />
 
                     <ImageView
                         android:id="@+id/statusImageViewImage"
                         android:layout_width="10dp"
                         android:layout_height="10dp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginRight="8dp"
-                        android:src="@drawable/chat_loading_ic"
-                        android:layout_gravity="center_vertical"/>
+                        android:src="@drawable/chat_loading_ic" />
                 </LinearLayout>
 
-                </LinearLayout>
+            </LinearLayout>
 
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:id="@+id/receivedTextLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:elevation="2dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="60dp"
-                android:paddingVertical="4dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:id="@+id/textLayoutReceived"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="left">
-
-                        <com.einheit.matchezy.messagestab.CustomLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_gravity="left|bottom"
-                            android:background="@drawable/received_message_bubble"
-                            android:gravity="right|center_vertical"
-                            android:orientation="horizontal"
-                            app:viewPartMain="@+id/messageTextViewReceived"
-                            app:viewPartSlave="@+id/timeTextViewForTextReceived">
-
-                            <TextView
-                                android:id="@+id/messageTextViewReceived"
-                                style="@style/ChipTextStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left|bottom"
-                                android:gravity="left|top"
-                                android:padding="8dp"
-                                android:text="Senghx xh cvh "
-                                android:textColor="@color/receivedChatTextColor"/>
-
-                            <TextView
-                                android:id="@+id/timeTextViewForTextReceived"
-                                style="@style/ChipTextStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="5dp"
-                                android:gravity="right"
-                                android:minWidth="60dp"
-                                android:padding="4dp"
-                                android:text="5:30 PM"
-                                android:textColor="@color/receivedChatTimeColor"/>
-
-                        </com.einheit.matchezy.messagestab.CustomLayout>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/imageLayoutReceived"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="right|bottom"
-                    android:background="@drawable/received_image_bubble"
-                    android:gravity="left|top"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/messageImageViewReceived"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
-                        android:adjustViewBounds="true"
-                        android:padding="5dp"
-                        android:scaleType="fitCenter" />
-
-                    <TextView
-                        android:id="@+id/timeTextViewForImageReceived"
-                        style="@style/ChipTextStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="right"
-                        android:minWidth="60dp"
-                        android:padding="4dp"
-                        android:text="5:30 PM"
-                        android:textColor="@color/receivedChatTimeColor"/>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/receivedTextLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:elevation="2dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="60dp"
+            android:paddingVertical="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/textLayoutReceived"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="left">
+
+                    <com.einheit.matchezy.CustomLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="left|bottom"
+                        android:background="@drawable/received_message_bubble"
+                        android:gravity="right|center_vertical"
+                        android:orientation="horizontal"
+                        app:viewPartMain="@+id/messageTextViewReceived"
+                        app:viewPartSlave="@+id/timeTextViewForTextReceived">
+
+                        <TextView
+                            android:id="@+id/messageTextViewReceived"
+                            style="@style/ChipTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left|bottom"
+                            android:gravity="left|top"
+                            android:padding="8dp"
+                            android:text="Senghx xh cvh "
+                            android:textColor="@color/receivedChatTextColor" />
+
+                        <TextView
+                            android:id="@+id/timeTextViewForTextReceived"
+                            style="@style/ChipTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="right"
+                            android:minWidth="60dp"
+                            android:padding="4dp"
+                            android:text="5:30 PM"
+                            android:textColor="@color/receivedChatTimeColor" />
+
+                    </com.einheit.matchezy.CustomLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/imageLayoutReceived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="right|bottom"
+                android:background="@drawable/received_image_bubble"
+                android:gravity="left|top"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/messageImageViewReceived"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/timeTextViewForImageReceived"
+                    style="@style/ChipTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right"
+                    android:minWidth="60dp"
+                    android:padding="4dp"
+                    android:text="5:30 PM"
+                    android:textColor="@color/receivedChatTimeColor" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
 </LinearLayout>

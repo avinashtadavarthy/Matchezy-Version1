@@ -1,6 +1,7 @@
 package com.einheit.matchezy.registration;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     ArrayList<String> interestsArray;
     String interestsArrayString;
     List<File> files = new ArrayList<>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,9 @@ public class Registration_Imageupload extends AppCompatActivity {
                 .build();
 
         AndroidNetworking.initialize(this, okHttpClient);
+
+
+        dialog = new ProgressDialog(Registration_Imageupload.this);
 
 
 
@@ -112,6 +117,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                                         + getSPData("annual_income") + " - " + interestsArrayString + " - " +
                         new File(paths[0]).getAbsoluteFile() + " - " + new File(paths[1]).exists() + " - " + new File(paths[2]).exists() + " - " +
                         new File(paths[3]).exists()) ;
+                        
                 if((paths[0].isEmpty() || paths[1].isEmpty() || paths[2].isEmpty() || paths[3].isEmpty())) {
                     Toast.makeText(getApplicationContext(), "Select four images for your profile",
                             Toast.LENGTH_SHORT).show();
@@ -123,7 +129,12 @@ public class Registration_Imageupload extends AppCompatActivity {
                     files.add(new File(paths[2]));
                     files.add(new File(paths[3]));
 
-                    AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
+
+                    dialog.setMessage("Loading, please wait.");
+                    dialog.setCancelable(false);
+                    dialog.show();
+
+                    AndroidNetworking.upload(User.getInstance().BASE_URL + "register")
                             .addMultipartFile("profile_pic", files.get(0))
                             .addMultipartFile("pictures", files.get(1))
                             .addMultipartFile("pictures_2", files.get(2))
@@ -159,10 +170,16 @@ public class Registration_Imageupload extends AppCompatActivity {
                                     // do anything with response
                                     Log.e("check", response.toString());
 
+                                    if (dialog.isShowing()) {
+                                        dialog.dismiss();
+                                    }
+
                                     if (response.optString("status_code").equals("200")) {
 
                                         FirebaseMessaging.getInstance().
                                                 subscribeToTopic(response.optJSONObject("message").optString("user_id"));
+
+                                        storeSPData("user_id", response.optJSONObject("message").optString("user_id"));
 
                                         new android.os.Handler().postDelayed(
                                                 new Runnable() {
@@ -193,6 +210,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                                                 response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(Registration_Imageupload.this, OTP.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
 
                                     } else {
@@ -207,6 +225,10 @@ public class Registration_Imageupload extends AppCompatActivity {
                                 public void onError(ANError error) {
                                     // handle error
                                     error.printStackTrace();
+
+                                    if (dialog.isShowing()) {
+                                        dialog.dismiss();
+                                    }
                                 }
                             });
                 }
