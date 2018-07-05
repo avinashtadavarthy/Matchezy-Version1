@@ -45,10 +45,12 @@ public class FcmService extends FirebaseMessagingService {
 
         intent.setAction(Long.toString(System.currentTimeMillis()));
 
-        if(remoteMessage.getData().get("intent").equals("chatPage")) {
-            intent.putExtra("notify", "chat");
-        } else if (remoteMessage.getData().get("intent").equals("chat")) {
-            intent.putExtra("notify", "like");
+        if(remoteMessage.getData().containsKey("intent")) {
+            if (remoteMessage.getData().get("intent").equals("chatPage")) {
+                intent.putExtra("notify", "chat");
+            } else if (remoteMessage.getData().get("intent").equals("chat")) {
+                intent.putExtra("notify", "like");
+            }
         }
 
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
@@ -89,7 +91,7 @@ public class FcmService extends FirebaseMessagingService {
         adminChannel.setLightColor(Color.RED);
         adminChannel.enableVibration(true);
         adminChannel.setSound(defaultSoundUri, attributes);
-        adminChannel.setGroup(remoteMessage.getData().get("title"));
+        //adminChannel.setGroup(remoteMessage.getData().get("title"));
         if (notificationManager != null) {
             notificationManager.createNotificationChannel(adminChannel);
         }

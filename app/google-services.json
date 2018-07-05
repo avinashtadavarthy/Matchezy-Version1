@@ -23,47 +23,19 @@
           }
         },
         {
-          "client_id": "598545536719-fsf4n4f9l8shaellmja8r0co26hd20j6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDBtxuxHwdVus5nE3LAu3Dj1Z8G8dIBVBw"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "598545536719-fsf4n4f9l8shaellmja8r0co26hd20j6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:598545536719:android:235e7b4cfc05cdae",
-        "android_client_info": {
-          "package_name": "com.example.yashwant.matchezy"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "598545536719-vp9ehrrd7pefu2lpc3j0mhp1nkm270el.apps.googleusercontent.com",
+          "client_id": "598545536719-t1ic6o39pi6mkcvadkbc2fsbaic2j7ek.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.yashwant.matchezy",
-            "certificate_hash": "03d046a15d6474486e65a308166cd73b29cc0751"
+            "package_name": "com.einheit.matchezy",
+            "certificate_hash": "283a60f368b8ea2abd3156e2be4eb8cd23327277"
+          }
+        },
+        {
+          "client_id": "598545536719-j6pg8h33kdntusnmg2mhqij902l6b55d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.einheit.matchezy",
+            "certificate_hash": "d40b525a46b7b0a7d132f29413eb58a601278e94"
           }
         },
         {
