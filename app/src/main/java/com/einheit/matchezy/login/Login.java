@@ -199,10 +199,11 @@ public class Login extends AppCompatActivity {
                                                         switch (res.optString("status_code")) {
                                                             case "200": {
 
-                                                                Log.e("fbLogin", "user already exists");
+                                                                Log.e("fbLogin", res.toString());
                                                                 clearSPData();
                                                                 storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                                                 storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
+                                                                FirebaseMessaging.getInstance().subscribeToTopic(res.optJSONObject("message").optString("user_id"));
 
                                                                 //to get users data
                                                                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")

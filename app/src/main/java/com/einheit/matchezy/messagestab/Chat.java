@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -103,6 +104,8 @@ public class Chat extends AppCompatActivity {
         ImageView statusImageViewText;
         ImageView statusImageViewImage;
 
+        TextView unreadMessagesCounter;
+
         public MessageViewHolder(View v) {
             super(v);
             messageTextView = (TextView) itemView.findViewById(R.id.messageTextView);
@@ -130,6 +133,8 @@ public class Chat extends AppCompatActivity {
 
             statusImageViewText = itemView.findViewById(R.id.statusImageViewText);
             statusImageViewImage = itemView.findViewById(R.id.statusImageViewImage);
+
+            unreadMessagesCounter = itemView.findViewById(R.id.unreadMessagesCounter);
 
         }
     }
@@ -174,6 +179,9 @@ public class Chat extends AppCompatActivity {
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id"))
                 .orderByChild("uploadedTime").getRef();
+
+        Query query = mFirebaseDatabaseReference.child(userData.optString("matched_id"))
+                .orderByChild("uploadedTime");
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(16));
@@ -373,11 +381,20 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
+                Log.e("CHAT", String.valueOf(positionStart));
+
                 int friendlyMessageCount = mFirebaseAdapter.getItemCount();
                 int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
                 if (lastVisiblePosition == -1 ||
                         (positionStart >= (friendlyMessageCount - 1) && lastVisiblePosition == (positionStart - 1))) {
+
                     mMessageRecyclerView.scrollToPosition(positionStart);
+                    /*RecyclerView.ViewHolder holder = mMessageRecyclerView.findViewHolderForAdapterPosition(lastVisiblePosition);
+                    if(holder != null) {
+                        TextView counter = holder.itemView.findViewById(R.id.unreadMessagesCounter);
+                        counter.setVisibility(View.VISIBLE);
+                        counter.setText(String.format("%d unread messages", itemCount));
+                    }*/
                 }
             }
         });
