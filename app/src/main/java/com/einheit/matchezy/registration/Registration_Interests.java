@@ -81,7 +81,14 @@ public class Registration_Interests extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //newinterests - arraylist, has the list of selected interested.
+                if(newinterests.size() < 4) {
+                    Toast.makeText(getApplicationContext(), "Select atleast four interests",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(Registration_Interests.this, Registration_Imageupload.class)
+                            .putStringArrayListExtra("interestsArray", newinterests);
+                    startActivity(intent);
+                }
             }
         });
     }
