@@ -98,7 +98,7 @@ public class FragmentLikes extends Fragment {
                 });
 
 
-        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles);
+        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
         myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         myrv.setAdapter(myAdapter);
 
