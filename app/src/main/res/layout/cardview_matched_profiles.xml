@@ -8,7 +8,8 @@
     android:background="#fff"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    cardview:cardCornerRadius="7dp">
+    cardview:cardCornerRadius="7dp"
+    cardview:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -94,11 +95,19 @@
                     android:textSize="14dp" />
             </LinearLayout>
 
-           <android.support.design.chip.ChipGroup
-               android:layout_margin="7dp"
-               android:id="@+id/chipgp_interests"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"/>
+           <HorizontalScrollView
+               android:scrollbars="none"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <android.support.design.chip.ChipGroup
+                   android:layout_margin="7dp"
+                   android:paddingRight="10dp"
+                   android:id="@+id/chipgp_interests"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"/>
+
+           </HorizontalScrollView>
 
         </LinearLayout>
 

@@ -70,6 +70,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             e.printStackTrace();
         }
 
+        holder.chipgroup_interests.setSingleLine(true);
+
         try {
             JSONArray data = new JSONArray(mData.get(position).getInterests().toString());
             ArrayList<String> arr = new ArrayList<>();
@@ -78,15 +80,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 arr.add(data.getString(i));
             }
 
-            for(int i = 0; i<4; i++) {
+            for(int i = 0; i<arr.size(); i++) {
 
                 Chip chip = new Chip(c);
                 chip.setChipText(arr.get(i).toUpperCase());
                 chip.setChipBackgroundColorResource(R.color.appdarkred);
                 chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                chip.setTextStartPadding(-2);
-                chip.setTextEndPadding(-6);
-                chip.setChipCornerRadius(5);
+                chip.setTextStartPadding(1);
+                chip.setTextEndPadding(0);
+                chip.setChipMinHeight(0);
+                chip.setChipCornerRadius(20);
 
                 holder.chipgroup_interests.addView(chip);
             }
