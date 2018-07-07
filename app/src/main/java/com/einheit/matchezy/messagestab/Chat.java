@@ -1,14 +1,22 @@
 package com.einheit.matchezy.messagestab;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +38,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.profilescreen.ProfilePage;
@@ -52,6 +63,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URI;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -70,6 +85,7 @@ public class Chat extends AppCompatActivity {
     private ImageView mAddMessageImageView;
     private ProgressBar mProgressBar;
     private Uri outputFileUri;
+    private File outputFile;
     JSONObject userData = null;
     JSONObject currentUserData = null;
     String uploadedTime = null;
@@ -78,6 +94,10 @@ public class Chat extends AppCompatActivity {
     TextView chat_head_name;
     CircleImageView chat_head_image;
 
+    BottomSheetDialog mBottomSheetDialog;
+
+    LinearLayout fromCamera;
+    LinearLayout fromGallery;
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
@@ -154,6 +174,13 @@ public class Chat extends AppCompatActivity {
         mMessageRecyclerView = (RecyclerView) findViewById(R.id.messageRecyclerView);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setStackFromEnd(true);
+
+        mBottomSheetDialog = new BottomSheetDialog(Chat.this);
+        View sheetView = getLayoutInflater().inflate(R.layout.dialog_image_chooser, null);
+        mBottomSheetDialog.setContentView(sheetView);
+
+        fromCamera = sheetView.findViewById(R.id.bottom_sheet_camera);
+        fromGallery = sheetView.findViewById(R.id.bottom_sheet_gallery);
 
         try {
             userData = new JSONObject(getIntent().getStringExtra("userdata"));
@@ -283,6 +310,11 @@ public class Chat extends AppCompatActivity {
 
                     }
 
+                } else if (friendlyMessage.getImageUrl().equals("qwe")) {
+
+                    viewHolder.sentMessageLayout.setVisibility(View.GONE);
+                    viewHolder.receivedMessageLayout.setVisibility(View.GONE);
+
                 } else if (friendlyMessage.getImageUrl() != null && !friendlyMessage.getImageUrl().equals("qwe")) {
 
                     String imageUrl = friendlyMessage.getImageUrl();
@@ -380,6 +412,15 @@ public class Chat extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
+
+                    viewHolder.messageImageViewReceived.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Chat.this, ChatImage.class);
+                            intent.putExtra("imageUrl", friendlyMessage.getImageUrl());
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 viewHolder.sentMessageLayout.setOnClickListener(new View.OnClickListener() {
@@ -470,23 +511,30 @@ public class Chat extends AppCompatActivity {
         mAddMessageImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final BottomSheetDialog mBottomSheetDialog = new BottomSheetDialog(Chat.this);
-                View sheetView = getLayoutInflater().inflate(R.layout.dialog_image_chooser, null);
-                mBottomSheetDialog.setContentView(sheetView);
-                mBottomSheetDialog.show();
 
-                LinearLayout fromCamera = (LinearLayout) sheetView.findViewById(R.id.bottom_sheet_camera);
-                LinearLayout fromGallery = (LinearLayout) sheetView.findViewById(R.id.bottom_sheet_gallery);
+                if(!checkPermissionForWriteExtertalStorage()) {
+                    try {
+                        requestPermissionForWriteExtertalStorage();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 fromCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         mBottomSheetDialog.dismiss();
-                        File file = new File(getApplicationContext().getExternalCacheDir(),
+                        outputFile = new File(getApplicationContext().getExternalCacheDir(),
                                 String.valueOf(System.currentTimeMillis()) + ".jpg");
-                        outputFileUri = Uri.fromFile(file);
+                        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) {
+                            outputFileUri = Uri.fromFile(outputFile);
+                        } else
+                            outputFileUri = FileProvider.getUriForFile(getApplicationContext(),
+                                    getApplicationContext().getPackageName() + ".my.package.name.provider", outputFile);
                         captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                        captureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        captureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         startActivityForResult(captureIntent, 1001);
                     }
                 });
@@ -501,6 +549,11 @@ public class Chat extends AppCompatActivity {
                         startActivityForResult(Intent.createChooser(galleryIntent, "Select Picture"), 1002);
                     }
                 });
+
+                if(checkPermissionForWriteExtertalStorage()) {
+
+                    mBottomSheetDialog.show();
+                }
             }
         });
     }
@@ -509,22 +562,70 @@ public class Chat extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Bitmap bm = null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+
         if (resultCode == RESULT_OK) {
             if (requestCode == 1002) {
 
                 if (data != null) {
                     outputFileUri = data.getData();
-                    Log.e("ASd", outputFileUri.toString());
+                    try {
+                        bm = MediaStore.Images.Media.getBitmap(Chat.this.getContentResolver(), outputFileUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Log.e("ASd", bm.toString());
                 }
 
             }
             if (requestCode == 1001) {
-                Log.e("ASd", outputFileUri.getLastPathSegment());
-
+                Log.e("ASd", outputFile.getAbsolutePath());
+                try {
+                    bm = MediaStore.Images.Media.getBitmap(Chat.this.getContentResolver(), outputFileUri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             if (outputFileUri != null) {
-                Message tempMessage = new Message(getSPData("user_id"), userData.optString("user_id"), null,
+                FileOutputStream fileOutputStream = null;
+
+                String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
+                final File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                        + "/MatchEzy/");
+                boolean success = true;
+                if (!storageDir.exists()) {
+                    success = storageDir.mkdirs();
+                }
+
+                try {
+                    fileOutputStream = new FileOutputStream(storageDir + imageFileName);
+
+                    bm.compress(Bitmap.CompressFormat.JPEG, 75, fileOutputStream);
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.flush();
+                            fileOutputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                final File compressedFile = new File(storageDir + imageFileName);
+                final Uri compressedFileUri = Uri.fromFile(compressedFile);
+                bm.recycle();
+
+
+
+            Message tempMessage = new Message(getSPData("user_id"), userData.optString("user_id"), null,
                         "qwe", currentUserData.optString("name"), userData.optString("name"));
                 mFirebaseDatabaseReference.child(userData.optString("matched_id")).push()
                         .setValue(tempMessage, new DatabaseReference.CompletionListener() {
@@ -539,7 +640,7 @@ public class Chat extends AppCompatActivity {
                                                     .child(key)
                                                     .child(outputFileUri.getLastPathSegment());
 
-                                    putImageInStorage(storageReference, outputFileUri, key);
+                                    putImageInStorage(storageReference, compressedFileUri, key);
                                 } else {
                                     Toast.makeText(getApplicationContext(), "Unable to send the message", Toast.LENGTH_SHORT).show();
                                 }
@@ -632,5 +733,41 @@ public class Chat extends AppCompatActivity {
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
+    }
+
+    public boolean checkPermissionForWriteExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+    public void requestPermissionForWriteExtertalStorage() throws Exception {
+        try {
+            ActivityCompat.requestPermissions(Chat.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    1001);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1001: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mBottomSheetDialog.show();
+
+                } else {
+
+                    Toast.makeText(Chat.this, "This action requires this permission", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
     }
 }
