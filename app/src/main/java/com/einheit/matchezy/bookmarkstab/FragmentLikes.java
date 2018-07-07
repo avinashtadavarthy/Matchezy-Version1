@@ -38,7 +38,7 @@ public class FragmentLikes extends Fragment {
     List<MatchedProfiles> lstMatchedProfiles ;
 
     RecyclerView myrv;
-    RecyclerViewAdapter myAdapter;
+    LikedRecyclerViewAdapter myAdapter;
 
 
     @Override
@@ -98,7 +98,7 @@ public class FragmentLikes extends Fragment {
                 });
 
 
-        myAdapter = new RecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
+        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles);
         myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         myrv.setAdapter(myAdapter);
 

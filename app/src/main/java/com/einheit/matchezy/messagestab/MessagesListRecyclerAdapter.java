@@ -1,18 +1,18 @@
-package com.einheit.matchezy;
+package com.einheit.matchezy.messagestab;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.einheit.matchezy.Chat.ChatListItem;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -30,6 +30,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
         public TextView profilename, lastmessage, timestamp;
         public CircleImageView profileimg;
+        RelativeLayout listItemLayout;
 
         public ViewHolder(View v) {
             super(v);
@@ -37,6 +38,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
             lastmessage = v.findViewById(R.id.lastmessage);
             timestamp = v.findViewById(R.id.timestamp);
             profileimg = v.findViewById(R.id.profileimg);
+            listItemLayout = v.findViewById(R.id.listItemConversation);
         }
     }
 
@@ -54,7 +56,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         if (!chatList.get(position).isRead()) {
             holder.profilename.setTypeface(null, Typeface.BOLD);
@@ -68,6 +70,17 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
         final String time = dateFormat.format(date);
         holder.timestamp.setText(time);
         Glide.with(mContext).load(chatList.get(position).getProfilePic()).into(holder.profileimg);
+
+        holder.listItemLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, Chat.class);
+                intent.putExtra("userdata", chatList.get(position).getUserData());
+                mContext.startActivity(intent);
+            }
+
+        });
 
     }
 

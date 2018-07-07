@@ -193,12 +193,18 @@
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal">
+
+
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_dislike"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:layout_toLeftOf="@+id/action_button_like"
-        android:layout_alignParentBottom="true"
         fab:button_colorPressed="@color/fab_material_white"
         fab:hide_animation="@anim/fab_roll_to_down"
         fab:shadowResponsiveEffect_enabled="true"
@@ -208,12 +214,11 @@
         android:id="@+id/action_button_like"
         android:layout_width="wrap_content"
         android:layout_height="16dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         fab:button_colorPressed="@color/fab_material_white"
         fab:hide_animation="@anim/fab_roll_to_down"
         fab:shadowResponsiveEffect_enabled="true"
         fab:show_animation="@anim/fab_roll_from_right" />
+    </LinearLayout>
 
 </RelativeLayout>
 

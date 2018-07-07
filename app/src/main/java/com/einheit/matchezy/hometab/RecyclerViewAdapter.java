@@ -154,7 +154,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v) {
 
                 Intent i = new Intent(mContext, ProfilePage.class)
-                        .putExtra("myprofile", "false")
+                        .putExtra("fromStatusCode", Utility.FROM_HOMESCREEN)
                         .putExtra("user_id", mData.get(position).getUser_id())
                         .putExtra("userData", mData.get(position).getUserData());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -26,6 +26,12 @@ public class Utility {
 
     private static Utility mInstance= null;
 
+    public static final int FROM_PROFILE_PAGE = 1;
+    public static final int FROM_HOMESCREEN = 2;
+    public static final int FROM_BOOKMARKED = 3;
+    public static final int FROM_LIKED = 4;
+    public static final int FROM_MATCHED = 5;
+
     //variables or functions
     public static String
             languagesspoken = "", languagesspokendirty = "";/**/

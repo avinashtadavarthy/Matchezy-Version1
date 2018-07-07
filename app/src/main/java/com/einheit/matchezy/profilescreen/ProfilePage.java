@@ -59,6 +59,8 @@ public class ProfilePage extends AppCompatActivity {
 
     JSONObject userData;
 
+    int fromStatusCode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,9 +104,10 @@ public class ProfilePage extends AppCompatActivity {
         int width = size.x;
         int height = size.y;
         myprofile = getIntent().getStringExtra("myprofile");
+        fromStatusCode = getIntent().getIntExtra("fromStatusCode", 1);
 
         try {
-            if(myprofile.equals("true"))
+            if(fromStatusCode == Utility.FROM_PROFILE_PAGE)
                 userData = new JSONObject(getSPData("userdata"));
             else userData = new JSONObject(getIntent().getStringExtra("userData"));
         } catch (JSONException e) {
@@ -141,16 +144,16 @@ public class ProfilePage extends AppCompatActivity {
         pager.setAdapter(pagerAdapter);
         pager.setCurrentItem(0);
 
-        if(myprofile.equals("true")) {
-            bookmarkbtn.setVisibility(View.GONE);
-            editbtn.setVisibility(View.VISIBLE);
-            likeFab.setVisibility(View.GONE);
-            disLikeFab.setVisibility(View.GONE);
-        } else {
-            editbtn.setVisibility(View.GONE);
-            bookmarkbtn.setVisibility(View.VISIBLE);
-            likeFab.setVisibility(View.VISIBLE);
-            disLikeFab.setVisibility(View.VISIBLE);
+        if(fromStatusCode == Utility.FROM_PROFILE_PAGE) {
+            myProfile();
+        } else if(fromStatusCode == Utility.FROM_HOMESCREEN){
+            fromHomeScreen();
+        } else if (fromStatusCode == Utility.FROM_BOOKMARKED) {
+            fromBookmarkedProfiles();
+        } else if (fromStatusCode == Utility.FROM_LIKED) {
+            fromLikedProfiles();
+        } else if (fromStatusCode == Utility.FROM_MATCHED) {
+            fromMatchedProfiles();
         }
 
         bookmarkbtn.setOnClickListener(new View.OnClickListener() {
@@ -432,7 +435,7 @@ public class ProfilePage extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(myprofile.equals("false")) {
+        if(fromStatusCode != Utility.FROM_PROFILE_PAGE) {
             MenuInflater mi = getMenuInflater();
             mi.inflate(R.menu.profile_options, menu);
         }
@@ -458,6 +461,41 @@ public class ProfilePage extends AppCompatActivity {
 
         return data;
 
+    }
+
+    void fromMatchedProfiles() {
+        bookmarkbtn.setVisibility(View.GONE);
+        likeFab.setVisibility(View.GONE);
+        editbtn.setVisibility(View.GONE);
+        disLikeFab.setVisibility(View.VISIBLE);
+    }
+
+    void myProfile() {
+        bookmarkbtn.setVisibility(View.GONE);
+        editbtn.setVisibility(View.VISIBLE);
+        likeFab.setVisibility(View.GONE);
+        disLikeFab.setVisibility(View.GONE);
+    }
+
+    void fromHomeScreen() {
+        editbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.VISIBLE);
+        likeFab.setVisibility(View.VISIBLE);
+        disLikeFab.setVisibility(View.VISIBLE);
+    }
+
+    void fromLikedProfiles() {
+        editbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.GONE);
+        likeFab.setVisibility(View.GONE);
+        disLikeFab.setVisibility(View.VISIBLE);
+    }
+
+    void fromBookmarkedProfiles() {
+        editbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.GONE);
+        likeFab.setVisibility(View.VISIBLE);
+        disLikeFab.setVisibility(View.VISIBLE);
     }
 
 }
