@@ -18,18 +18,13 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.einheit.matchezy.Chat.ChatListItem;
-import com.einheit.matchezy.MessagesListRecyclerAdapter;
 import com.einheit.matchezy.R;
-import com.einheit.matchezy.messagestab.MatchedProfileHorizontalAdapter;
-import com.einheit.matchezy.messagestab.Message;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -90,7 +85,7 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
-                                for (int i = 0; i < profilesArray.length(); i++) {
+                                for (int i = profilesArray.length() - 1; i >= 0; i--) {
                                     final JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(
                                             object.optString("_id"),
@@ -108,21 +103,41 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                             if (dataSnapshot.exists()) {
 
                                                 DataSnapshot issue = dataSnapshot;
+
+                                                String text;
+                                                if(issue.getValue(Message.class).getText() == null) {
+                                                    text = "Photo";
+                                                } else text = issue.getValue(Message.class).getText();
+
+                                                Boolean readStatus = false;
+                                                /*JSONObject currentUserData = null;
+                                                try {
+                                                    currentUserData = new JSONObject(getSPData("userdata"));
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                if (issue.getValue(Message.class).getFromName()
+                                                        .equals(currentUserData.optString("name"))) {
+                                                    readStatus = true;
+                                                }*/
                                                 boolean isFound = false;
                                                 for (int i = 0; i < chatList.size(); i++) {
                                                     if (chatList.get(i).getName().equals(object.optString("name"))) {
-                                                        chatList.get(i).setLastMessage(issue.getValue(Message.class).getText());
+                                                        chatList.get(i).setLastMessage(text);
                                                         chatList.get(i).setMessageTime(issue.getValue(Message.class).getMessageTime());
+                                                        chatList.get(i).setRead(readStatus);
                                                         isFound = true;
                                                     }
                                                 }
                                                 if(!isFound) {
+
                                                     chatList.add(new ChatListItem(
                                                         object.optString("name"),
                                                         object.optString("profileImageURL"),
-                                                        issue.getValue(Message.class).getText(),
+                                                        text,
                                                         issue.getValue(Message.class).getMessageTime(),
-                                                        false));
+                                                        readStatus,
+                                                        object.toString()));
                                                 }
                                                 Collections.sort(chatList, new Comparator<ChatListItem>()
                                                 {
