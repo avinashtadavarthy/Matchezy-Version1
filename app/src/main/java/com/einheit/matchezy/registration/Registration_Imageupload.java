@@ -34,6 +34,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.messagestab.Chat;
 import com.einheit.matchezy.messagestab.ChatImage;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.scalified.fab.ActionButton;
@@ -41,6 +42,9 @@ import com.scalified.fab.ActionButton;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -58,7 +62,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     String fb_id = "";
     ArrayList<String> interestsArray;
     String interestsArrayString;
-    List<File> files = new ArrayList<>();
+    List<File> files;
     private ProgressDialog dialog;
 
     @Override
@@ -78,7 +82,7 @@ public class Registration_Imageupload extends AppCompatActivity {
 
         dialog = new ProgressDialog(Registration_Imageupload.this);
 
-
+        files = new ArrayList<>();
 
         Intent intent = getIntent();
         interestsArray = intent.getStringArrayListExtra("interestsArray");
@@ -94,13 +98,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         actionButton.playShowAnimation();
         actionButton.setImageResource(com.einheit.matchezy.R.drawable.ic_action_arrow);
 
-        if(!checkPermissionForReadExtertalStorage()) {
-            try {
-                requestPermissionForReadExtertalStorage();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        checkPermissions();
 
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         final boolean isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
@@ -132,10 +130,10 @@ public class Registration_Imageupload extends AppCompatActivity {
                 }
                 else {
 
-                    files.add(new File(paths[0]));
+                    /*files.add(new File(paths[0]));
                     files.add(new File(paths[1]));
                     files.add(new File(paths[2]));
-                    files.add(new File(paths[3]));
+                    files.add(new File(paths[3]));*/
 
 
                     dialog.setMessage("Loading, please wait.");
@@ -251,32 +249,40 @@ public class Registration_Imageupload extends AppCompatActivity {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 1;
-                openImageChooser();
+                if(checkPermissions()) {
+                    i = 1;
+                    openImageChooser();
+                }
             }
         });
 
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 2;
-                openImageChooser();
+                if(checkPermissions()) {
+                    i = 2;
+                    openImageChooser();
+                }
             }
         });
 
         imageView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 3;
-                openImageChooser();
+                if (checkPermissions()) {
+                    i = 3;
+                    openImageChooser();
+                }
             }
         });
 
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 4;
-                openImageChooser();
+                if(checkPermissions()) {
+                    i = 4;
+                    openImageChooser();
+                }
             }
         });
 
@@ -302,8 +308,48 @@ public class Registration_Imageupload extends AppCompatActivity {
 
                     // Set the image in ImageView
 
+                    Bitmap bm = null;
+
                     paths[i - 1] = getPath(Registration_Imageupload.this, selectedImageUri);
 
+                    try {
+                        bm = MediaStore.Images.Media.getBitmap(Registration_Imageupload.this.getContentResolver(), selectedImageUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    FileOutputStream fileOutputStream = null;
+
+                    String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
+                    final File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                            + "/MatchEzy/");
+                    boolean success = true;
+                    if (!storageDir.exists()) {
+                        success = storageDir.mkdirs();
+                    }
+
+                    try {
+                        fileOutputStream = new FileOutputStream(storageDir + imageFileName);
+
+                        bm.compress(Bitmap.CompressFormat.JPEG, 75, fileOutputStream);
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } finally {
+                        if (fileOutputStream != null) {
+                            try {
+                                fileOutputStream.flush();
+                                fileOutputStream.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                    files.add(i - 1, new File(storageDir + imageFileName));
+                    bm.recycle();
+
+                    Log.e("ASD", String.valueOf(files.get(i - 1).length()/1024));
 
                     if (i == 1) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview1)).setImageURI(selectedImageUri);
@@ -486,9 +532,19 @@ public class Registration_Imageupload extends AppCompatActivity {
         return false;
     }
 
+    public boolean checkPermissionForWriteExtertalStorage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int result = getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            return result == PackageManager.PERMISSION_GRANTED;
+        }
+        return false;
+    }
+
+
     public void requestPermissionForReadExtertalStorage() throws Exception {
         try {
-            ActivityCompat.requestPermissions(Registration_Imageupload.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(Registration_Imageupload.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     1001);
         } catch (Exception e) {
             e.printStackTrace();
@@ -505,12 +561,22 @@ public class Registration_Imageupload extends AppCompatActivity {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else {
-
                     Toast.makeText(Registration_Imageupload.this, "Accessing gallery requires this permission", Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
         }
+    }
+
+    boolean checkPermissions() {
+        if(!checkPermissionForReadExtertalStorage() && !checkPermissionForWriteExtertalStorage()) {
+            try {
+                requestPermissionForReadExtertalStorage();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        } else return true;
     }
 
 }
