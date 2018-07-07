@@ -368,12 +368,23 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
 
     private boolean validateDateOfBirth() {
+
         if (input_Dateofbirth.getText().toString().trim().isEmpty()) {
             inputLayoutDateofbirth.setError(getString(R.string.err_msg_dateofbirth));
             requestFocus(input_Dateofbirth);
             return false;
         } else {
-            inputLayoutDateofbirth.setErrorEnabled(false);
+
+            String[] dobarr = input_Dateofbirth.getText().toString().split("/",3);
+            String age = Utility.getInstance().getAge(Integer.parseInt(dobarr[2]), Integer.parseInt(dobarr[1]), Integer.parseInt(dobarr[0]));
+
+            if (Integer.parseInt(age) < 21) {
+                inputLayoutDateofbirth.setError("User must be above 21 years or older!");
+                return false;
+            } else {
+                inputLayoutDateofbirth.setErrorEnabled(false);
+            }
+
         }
 
         return true;

@@ -61,6 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .load(mData.get(position).getThumbnail())
                 .into(holder.img_book_thumbnail);
 
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
             Date date = format.parse(String.valueOf(mData.get(position).getAge()));
@@ -99,6 +100,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             e.printStackTrace();
         }
 
+
+        holder.bookmarkbtn.setTag("empty");
+
+        holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (holder.bookmarkbtn.getTag().equals("empty")) {
+                    holder.bookmarkbtn.setTag("full");
+                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                } else {
+                    holder.bookmarkbtn.setTag("empty");
+                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                }
+
+            }
+        });
+
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +146,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         TextView name;
         ImageView img_book_thumbnail;
+        ImageView bookmarkbtn;
         CardView cardView ;
         ChipGroup chipgroup_interests;
 
@@ -134,6 +155,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             name = (TextView) itemView.findViewById(R.id.name) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
+            bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
             chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
 
