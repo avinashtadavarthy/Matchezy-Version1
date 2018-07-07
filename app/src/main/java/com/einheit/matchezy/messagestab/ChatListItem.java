@@ -1,4 +1,4 @@
-package com.einheit.matchezy.Chat;
+package com.einheit.matchezy.messagestab;
 
 public class ChatListItem {
 
@@ -7,18 +7,20 @@ public class ChatListItem {
     private String lastMessage;
     private long messageTime;
     private boolean read;
+    private String userData;
 
     public ChatListItem() {
 
     }
 
     public ChatListItem(String name, String profilePic, String lastMessage,
-                        long messageTime, boolean read) {
+                        long messageTime, boolean read, String userData) {
         this.name = name;
         this.profilePic = profilePic;
         this.lastMessage = lastMessage;
         this.messageTime = messageTime;
         this.read = read;
+        this.userData = userData;
     }
 
     public String getName() {
@@ -59,5 +61,13 @@ public class ChatListItem {
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    public void setUserData(String userData) {
+        this.userData = userData;
+    }
+
+    public String getUserData() {
+        return userData;
     }
 }

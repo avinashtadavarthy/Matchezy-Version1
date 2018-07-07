@@ -108,6 +108,8 @@
             android:parentActivityName=".messagestab.Chat"
             android:theme="@style/RegistrationTheme"></activity>
         <activity android:screenOrientation="portrait"  android:name=".profilescreen.EditProfile"></activity>
+        <activity android:name=".messagestab.ChatImage"
+            android:theme="@style/ProfilePageTheme"/>
     </application>
 
 </manifest>

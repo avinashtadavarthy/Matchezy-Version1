@@ -31,6 +31,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.profilescreen.ProfilePage;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
@@ -175,6 +177,17 @@ public class Chat extends AppCompatActivity {
 
         Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(chat_head_image);
 
+        chat_head_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Chat.this, ProfilePage.class)
+                        .putExtra("fromStatusCode", Utility.FROM_MATCHED)
+                        .putExtra("user_id", userData.optString("user_id"))
+                        .putExtra("userData", userData.toString());
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        });
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id"))
@@ -270,7 +283,7 @@ public class Chat extends AppCompatActivity {
 
                     }
 
-                } else if (friendlyMessage.getImageUrl() != null) {
+                } else if (friendlyMessage.getImageUrl() != null && !friendlyMessage.getImageUrl().equals("qwe")) {
 
                     String imageUrl = friendlyMessage.getImageUrl();
                     if (imageUrl.startsWith("gs://")) {
@@ -291,8 +304,8 @@ public class Chat extends AppCompatActivity {
                                                         .into(viewHolder.messageImageView);
 
                                                 if(friendlyMessage.getUploadedTime() != -1) {
-                                                    viewHolder.statusImageViewText.setImageResource(R.drawable.chat_tick_ic);
-                                                } else viewHolder.statusImageViewText.setImageResource(R.drawable.chat_loading_ic);
+                                                    viewHolder.statusImageViewImage.setImageResource(R.drawable.chat_tick_ic);
+                                                } else viewHolder.statusImageViewImage.setImageResource(R.drawable.chat_loading_ic);
 
                                                 viewHolder.timeTextViewForImage.setText(time);
 
@@ -327,8 +340,8 @@ public class Chat extends AppCompatActivity {
                                     .into(viewHolder.messageImageView);
 
                             if(friendlyMessage.getUploadedTime() != -1) {
-                                viewHolder.statusImageViewText.setImageResource(R.drawable.chat_tick_ic);
-                            } else viewHolder.statusImageViewText.setImageResource(R.drawable.chat_loading_ic);
+                                viewHolder.statusImageViewImage.setImageResource(R.drawable.chat_tick_ic);
+                            } else viewHolder.statusImageViewImage.setImageResource(R.drawable.chat_loading_ic);
 
                             viewHolder.timeTextViewForImage.setText(time);
 
@@ -359,6 +372,14 @@ public class Chat extends AppCompatActivity {
                         viewHolder.imageLayoutReceived.setVisibility(ImageView.VISIBLE);
                         viewHolder.textLayoutReceived.setVisibility(TextView.GONE);
                     }
+                    viewHolder.messageImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(Chat.this, ChatImage.class);
+                            intent.putExtra("imageUrl", friendlyMessage.getImageUrl());
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 viewHolder.sentMessageLayout.setOnClickListener(new View.OnClickListener() {
@@ -381,7 +402,6 @@ public class Chat extends AppCompatActivity {
             @Override
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
-                Log.e("CHAT", String.valueOf(positionStart));
 
                 int friendlyMessageCount = mFirebaseAdapter.getItemCount();
                 int lastVisiblePosition = mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
@@ -552,7 +572,16 @@ public class Chat extends AppCompatActivity {
                                                     userData.optString("name"));
                                     friendlyMessage.setUploadedTime(new Date().getTime());
                                     mFirebaseDatabaseReference.child(userData.optString("matched_id")).child(key)
-                                            .setValue(friendlyMessage);
+                                            .setValue(friendlyMessage, new DatabaseReference.CompletionListener() {
+                                        public void onComplete(DatabaseError error, DatabaseReference ref) {
+                                            if (error == null) {
+                                                ref.child("uploadedTime").setValue(new Date().getTime());
+                                            }
+                                            else {
+                                                Toast.makeText(getApplicationContext(), "Unable to send the message", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                     mFirebaseDatabaseReference.child("notifications").push().setValue(friendlyMessage);
                                 }
                             });
