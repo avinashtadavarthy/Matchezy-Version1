@@ -9,6 +9,7 @@
     <color name="appred">#ea5251</color>
     <color name="appdarkred">#c74645</color>
     <color name="appgrey">#505154</color>
+    <color name="fadedappred">#f1EA5251</color>
 
     <color name="receivedChatBubbleBg">#ffffff</color>
     <color name="receivedChatTextColor">#111111</color>

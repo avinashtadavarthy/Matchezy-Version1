@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -20,82 +20,89 @@
         android:paddingStart="19dp"
         android:paddingTop="38dp"
         android:text="Show us how you look."
-        android:textColor="#FFF"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textColor="#ffffff"
+        android:textSize="24dp" />
 
-    <ImageView
-        android:id="@+id/imageview1"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingRight="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.072"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.315" />
+    <LinearLayout
+        android:gravity="center"
+        android:layout_below="@id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="10"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
-    <ImageView
-        android:id="@+id/imageview2"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingLeft="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        <LinearLayout
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:weightSum="10"
+            android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/imageview3"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingRight="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.039"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.752" />
+            <com.einheit.matchezy.SquareImageView
+                android:id="@+id/imageview1"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add" />
 
-    <ImageView
-        android:id="@+id/imageview4"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:paddingLeft="5dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/add"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.742" />
+            <com.einheit.matchezy.SquareImageView
+                android:id="@+id/imageview2"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/line2"
+            android:layout_below="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:weightSum="10"
+            android:orientation="horizontal">
+
+            <com.einheit.matchezy.SquareImageView
+                android:id="@+id/imageview3"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add" />
+
+            <com.einheit.matchezy.SquareImageView
+                android:id="@+id/imageview4"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:layout_margin="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
 
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next2"
@@ -105,15 +112,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.99"
         fab:button_colorPressed="@color/fab_material_white"
         fab:hide_animation="@anim/fab_roll_to_down"
         fab:shadowResponsiveEffect_enabled="true"
         fab:show_animation="@anim/fab_roll_from_right" />
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

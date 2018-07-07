@@ -95,7 +95,7 @@ public class FragmentBookmarks extends Fragment {
                 });
 
 
-        myAdapter = new RecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles);
+        myAdapter = new RecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
         myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         myrv.setAdapter(myAdapter);
 

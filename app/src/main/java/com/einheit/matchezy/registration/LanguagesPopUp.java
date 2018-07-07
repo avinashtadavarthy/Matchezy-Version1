@@ -21,7 +21,7 @@ public class LanguagesPopUp extends AppCompatActivity {
 
     int lang[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-    String languageslist[] = {"Assamese", "Bengali", "Bhojpuri", "Bodo", "Chhattisgarhi", "English", "Gujarati", "Haryanvi", "Hindi", "Kannada", "Konkani", "Maithali", "Malayalam", "Marathi", "Odia", "Punjabi", "Rajasthani", "Sindhi", "Tamil", "Telugu", "Tulu", "Urdu"};
+    String[]  languageslist = {"Assamese", "Bengali", "Bhojpuri", "Bodo", "Chhattisgarhi", "English", "Gujarati", "Haryanvi", "Hindi", "Kannada", "Konkani", "Maithali", "Malayalam", "Marathi", "Odia", "Punjabi", "Rajasthani", "Sindhi", "Tamil", "Telugu", "Tulu", "Urdu"};
 
     Button langbutton;
 

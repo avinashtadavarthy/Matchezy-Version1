@@ -11,6 +11,7 @@ import android.support.design.chip.ChipGroup;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,16 +24,22 @@ import android.widget.Toast;
 
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
+import com.appyvet.materialrangebar.IRangeBarFormatter;
 import com.appyvet.materialrangebar.RangeBar;
 import com.einheit.matchezy.HomeScreen;
+import com.einheit.matchezy.NumberTextWatcher;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.registration.ChooseCity;
+import com.einheit.matchezy.registration.LanguagesPopUp;
+import com.einheit.matchezy.registration.Registration2;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class Filter extends AppCompatActivity {
 
@@ -47,11 +54,11 @@ public class Filter extends AppCompatActivity {
 
     ChipGroup selectedinterests, suggestedinterests;
 
-    RangeBar rangebar_age;
+    RangeBar rangebar_age, rangebar_height;
 
     TextView height_start,height_end,age_start,age_end;
 
-    EditText filter_relationship, filter_education, filter_annual, filter_religion, filter_tattoos , filter_piercings;
+    EditText filter_lookingfor, filter_cities, filter_languages, filter_relationship, filter_education, filter_college, filter_work, filter_min_annual, filter_max_annual, filter_religion, filter_tattoos , filter_piercings;
 
     List<String> interestsArary = new ArrayList<>();
 
@@ -64,9 +71,15 @@ public class Filter extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        filter_lookingfor = findViewById(R.id.filter_lookingfor);
+        filter_cities = findViewById(R.id.filter_cities);
+        filter_languages = findViewById(R.id.filter_languages);
         filter_relationship = findViewById(R.id.filter_relationship);
         filter_education = findViewById(R.id.filter_education);
-        filter_annual = findViewById(R.id.filter_annual);
+        filter_college = findViewById(R.id.filter_college);
+        filter_work = findViewById(R.id.filter_work);
+        filter_min_annual = findViewById(R.id.filter_min_annual);
+        filter_max_annual = findViewById(R.id.filter_max_annual);
         filter_religion = findViewById(R.id.filter_religion);
         filter_tattoos = findViewById(R.id.filter_tattoos);
         filter_piercings = findViewById(R.id.filter_piercings);
@@ -83,13 +96,14 @@ public class Filter extends AppCompatActivity {
 
         downarrow = findViewById(R.id.downarrow);
 
-        rangebar_age = (RangeBar) findViewById(R.id.rangebar_age);
+        rangebar_age = findViewById(R.id.rangebar_age);
+        rangebar_height = findViewById(R.id.rangebar_height);
 
-        height_start=(TextView)findViewById(R.id.height_start);
-        height_end=(TextView)findViewById(R.id.height_end);
+        height_start= findViewById(R.id.height_start);
+        height_end= findViewById(R.id.height_end);
 
-        age_start=(TextView)findViewById(R.id.age_start);
-        age_end=(TextView)findViewById(R.id.age_end);
+        age_start= findViewById(R.id.age_start);
+        age_end= findViewById(R.id.age_end);
 
         actionButton = findViewById(R.id.action_filters_confirm);
 
@@ -222,7 +236,7 @@ public class Filter extends AppCompatActivity {
             public void onClick(View view) {
 
                 AlertDialog.Builder builder1 = new AlertDialog.Builder(Filter.this);
-                builder1.setMessage("Clear all selected interests?");
+                builder1.setMessage("Clear all selected filters?");
                 builder1.setCancelable(true);
 
                 builder1.setPositiveButton(
@@ -231,6 +245,22 @@ public class Filter extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 selectedinterests.removeAllViews();
                                 interestsArary.clear();
+
+                                rangebar_age.setRangePinsByValue(21,50);
+                                rangebar_height.setRangePinsByValue(120,213);
+
+                                height_start.setText("4'0\"");
+                                height_end.setText("7'0\"");
+
+                                filter_cities.setText("");
+                                filter_languages.setText("");
+                                filter_relationship.setText("");
+                                filter_education.setText("");
+                                filter_min_annual.setText("");
+                                filter_max_annual.setText("");
+                                filter_religion.setText("");
+                                filter_tattoos.setText("");
+                                filter_piercings.setText("");
                             }
                         });
 
@@ -247,6 +277,12 @@ public class Filter extends AppCompatActivity {
 
             }
         });
+
+
+
+        filter_max_annual.addTextChangedListener(new NumberTextWatcher(filter_max_annual));
+        filter_min_annual.addTextChangedListener(new NumberTextWatcher(filter_min_annual));
+
 
         populateSuggestedChips(suggested);
 
@@ -268,49 +304,55 @@ public class Filter extends AppCompatActivity {
             }
         });
 
-        height_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CustomDialogClass cdd = new CustomDialogClass(Filter.this, "Select Minimum Height", "new");
-                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                cdd.show();
-                cdd.setDialogResult(new CustomDialogClass.OnMyDialogResult(){
-                    public void finish(String result) {
-                        height_start.setText(result);
-                        height_end.setText(result);
-                    }
-                });
-
-            }
-        });
-
-        height_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                CustomDialogClass cdd = new CustomDialogClass(Filter.this, "Select Maximum Height", height_start.getText().toString());
-                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                cdd.show();
-                cdd.setDialogResult(new CustomDialogClass.OnMyDialogResult(){
-                    public void finish(String result) {
-                        height_end.setText(result);
-                    }
-                });
-            }
-        });
-
 
         rangebar_age.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
 
-                age_start.setText(String.valueOf(leftPinIndex+20));
-                age_end.setText(String.valueOf(rightPinIndex+20));
+                age_start.setText(String.valueOf(leftPinIndex+21));
+                age_end.setText(String.valueOf(rightPinIndex+21));
             }
 
         });
 
+        rangebar_height.setOnRangeBarChangeListener(new RangeBar.OnRangeBarChangeListener() {
+            @Override
+            public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
+
+                height_start.setText(centimeterToFeet(leftPinValue));
+                height_end.setText(centimeterToFeet(rightPinValue));
+
+            }
+
+        });
+
+        rangebar_height.setFormatter(new IRangeBarFormatter() {
+            @Override
+            public String format(String value) {
+                return centimeterToFeet(value);
+            }
+        });
+
+        filter_lookingfor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lookingfor();
+            }
+        });
+
+        filter_cities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cities();
+            }
+        });
+
+        filter_languages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                languages();
+            }
+        });
 
         filter_relationship.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,6 +365,20 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 education();
+            }
+        });
+
+        filter_college.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                college();
+            }
+        });
+
+        filter_work.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                work();
             }
         });
 
@@ -537,6 +593,203 @@ public class Filter extends AppCompatActivity {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+
+    private void cities()
+    {
+
+        ArrayList<MultiSelectModel> edu = new ArrayList<>();
+        Utility.getInstance().populateModel(edu, Utility.getInstance().cities);
+
+        MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
+                .title("Select Preferred Cities") //setting title for dialog
+                .titleSize(25)
+                .positiveText("Done")
+                .negativeText("Cancel")
+                .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .multiSelectList(edu) // the multi select model list with ids and name
+                .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
+                    @Override
+                    public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
+                        //will return list of selected IDS
+                        /*for (int i = 0; i < selectedIds.size(); i++) {
+                            Toast.makeText(Registration4.this, "Selected Ids : " + selectedIds.get(i) + "\n" +
+                                    "Selected Names : " + selectedNames.get(i) + "\n" +
+                                    "DataString : " + dataString, Toast.LENGTH_SHORT).show();
+                        }*/
+
+                        filter_cities.setText(dataString);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("multidialog","Dialog cancelled");
+                    }
+
+                });
+
+        multiSelectDialog.show(getSupportFragmentManager(), "multiSelectDialog");
+
+    }
+
+    private void languages()
+    {
+        ArrayList<MultiSelectModel> edu = new ArrayList<>();
+        Utility.getInstance().populateModel(edu, Utility.getInstance().languageslist);
+
+        MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
+                .title("Select Preferred Languages") //setting title for dialog
+                .titleSize(25)
+                .positiveText("Done")
+                .negativeText("Cancel")
+                .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .multiSelectList(edu) // the multi select model list with ids and name
+                .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
+                    @Override
+                    public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
+                        //will return list of selected IDS
+                        /*for (int i = 0; i < selectedIds.size(); i++) {
+                            Toast.makeText(Registration4.this, "Selected Ids : " + selectedIds.get(i) + "\n" +
+                                    "Selected Names : " + selectedNames.get(i) + "\n" +
+                                    "DataString : " + dataString, Toast.LENGTH_SHORT).show();
+                        }*/
+
+                        filter_languages.setText(dataString);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("multidialog","Dialog cancelled");
+                    }
+
+                });
+
+        multiSelectDialog.show(getSupportFragmentManager(), "multiSelectDialog");
+    }
+
+
+    private void lookingfor() {
+        final CharSequence[] items = { "Male", "Female", "Both" };
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Filter.this);
+        alertDialogBuilder.setTitle("Interested in");
+        int position;
+        if (filter_lookingfor.getText().toString().equals("Male")){
+            position = 0;
+        } else if (filter_lookingfor.getText().toString().equals("Female")){
+            position = 1;
+        } else if (filter_lookingfor.getText().toString().equals("Both")){
+            position = 2;
+        }
+        else {
+            position = -1;
+        }
+        alertDialogBuilder
+                .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ListView lw = ((AlertDialog) dialog).getListView();
+                        Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                        String selectedgend = checkedItem.toString();
+                        filter_lookingfor.setText(selectedgend);
+                        dialog.dismiss();
+                    }
+
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void work() {
+
+        ArrayList<MultiSelectModel> edu = new ArrayList<>();
+        Utility.getInstance().populateModel(edu, Utility.getInstance().company_items);
+
+        MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
+                .title("Select Company") //setting title for dialog
+                .titleSize(25)
+                .positiveText("Done")
+                .negativeText("Cancel")
+                .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .multiSelectList(edu) // the multi select model list with ids and name
+                .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
+                    @Override
+                    public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
+                        //will return list of selected IDS
+                        /*for (int i = 0; i < selectedIds.size(); i++) {
+                            Toast.makeText(Registration4.this, "Selected Ids : " + selectedIds.get(i) + "\n" +
+                                    "Selected Names : " + selectedNames.get(i) + "\n" +
+                                    "DataString : " + dataString, Toast.LENGTH_SHORT).show();
+                        }*/
+
+                        filter_work.setText(dataString);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("multidialog","Dialog cancelled");
+                    }
+
+                });
+
+        multiSelectDialog.show(getSupportFragmentManager(), "multiSelectDialog");
+
+    }
+
+    private void college() {
+
+        ArrayList<MultiSelectModel> edu = new ArrayList<>();
+        Utility.getInstance().populateModel(edu, Utility.getInstance().college_items);
+
+        MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
+                .title("Select College") //setting title for dialog
+                .titleSize(25)
+                .positiveText("Done")
+                .negativeText("Cancel")
+                .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .multiSelectList(edu) // the multi select model list with ids and name
+                .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
+                    @Override
+                    public void onSelected(ArrayList<Integer> selectedIds, ArrayList<String> selectedNames, String dataString) {
+                        //will return list of selected IDS
+                        /*for (int i = 0; i < selectedIds.size(); i++) {
+                            Toast.makeText(Registration4.this, "Selected Ids : " + selectedIds.get(i) + "\n" +
+                                    "Selected Names : " + selectedNames.get(i) + "\n" +
+                                    "DataString : " + dataString, Toast.LENGTH_SHORT).show();
+                        }*/
+
+                        filter_college.setText(dataString);
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("multidialog","Dialog cancelled");
+                    }
+
+                });
+
+        multiSelectDialog.show(getSupportFragmentManager(), "multiSelectDialog");
+    }
+
+
+
+
+    public static String centimeterToFeet(String centemeter) {
+        int feetPart = 0;
+        int inchesPart = 0;
+        if(!TextUtils.isEmpty(centemeter)) {
+            double dCentimeter = Double.valueOf(centemeter);
+            feetPart = (int) Math.floor((dCentimeter / 2.54) / 12);
+            System.out.println((dCentimeter / 2.54) - (feetPart * 12));
+            inchesPart = (int) Math.ceil((dCentimeter / 2.54) - (feetPart * 12));
+        }
+
+        if(inchesPart == 12) {
+            inchesPart = 0;
+            feetPart = feetPart+1;
+        }
+        return String.format("%d'%d\"", feetPart, inchesPart);
     }
 
 

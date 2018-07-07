@@ -1,5 +1,18 @@
 package com.einheit.matchezy;
 
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.DrawableMarginSpan;
+import android.text.style.ImageSpan;
+import android.text.style.TextAppearanceSpan;
+import android.widget.TextView;
+
 import com.abdeveloper.library.MultiSelectModel;
 
 import java.util.ArrayList;
@@ -85,12 +98,40 @@ public class Utility {
     }
 
 
+    /* public void highlightTextPart(Context c, TextView textView, int index, String regularExpression) {
+        String fullText = textView.getText().toString();
+        int startPos = 0;
+        int endPos = fullText.length();
+        String[] textParts = fullText.split(regularExpression);
+        if (index < 0 || index > textParts.length - 1) {
+            return;
+        }
+        if (textParts.length > 1) {
+            startPos = fullText.indexOf(textParts[index]);
+            endPos = fullText.indexOf(regularExpression, startPos);
+            if (endPos == -1) {
+                endPos = fullText.length();
+            }
+        }
+        Spannable spannable = new SpannableString(fullText);
+        ColorStateList whiteColor = new ColorStateList(new int[][] { new int[] {}}, new int[] { Color.WHITE });
+        TextAppearanceSpan textAppearanceSpan = new TextAppearanceSpan(null, Typeface.BOLD, -1, whiteColor, null);
+        BackgroundColorSpan backgroundColorSpan = new BackgroundColorSpan(Color.RED);
+        spannable.setSpan(textAppearanceSpan, startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannable.setSpan(backgroundColorSpan, startPos, endPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        textView.setText(spannable);
+    }*/
+
+
     public void populateModel(ArrayList<MultiSelectModel> multi, String[] arr) {
 
         for(int i=0;i<arr.length;i++) {
             multi.add(i, new MultiSelectModel(i, arr[i]));
         }
     }
+
+    public String[] languageslist = {"Assamese", "Bengali", "Bhojpuri", "Bodo", "Chhattisgarhi", "English", "Gujarati", "Haryanvi", "Hindi", "Kannada", "Konkani",
+            "Maithali", "Malayalam", "Marathi", "Odia", "Punjabi", "Rajasthani", "Sindhi", "Tamil", "Telugu", "Tulu", "Urdu"};
 
     public String[] cities = {
             "Abu", "Adoni", "Agartala", "Agra", "Ahmadabad", "Ahmadnagar", "Aizawl", "Ajmer", "Akola", "Alappuzha", "Aligarh", "Alipore", "AlipurDuar",

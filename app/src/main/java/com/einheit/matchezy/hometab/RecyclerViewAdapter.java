@@ -1,7 +1,10 @@
 package com.einheit.matchezy.hometab;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.chip.Chip;
+import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,26 +14,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.profilescreen.ProfilePage;
+import com.einheit.matchezy.registration.Registration_Interests;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
+    private Activity c;
     private Context mContext ;
     private List<MatchedProfiles> mData ;
 
 
-    public RecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData) {
+    public RecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
         this.mContext = mContext;
         this.mData = mData;
+        this.c = activity;
     }
 
     @Override
@@ -43,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         holder.name.setText(mData.get(position).getName() + ", ");
         Glide.with(mContext)
@@ -59,9 +70,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             e.printStackTrace();
         }
 
-        holder.interests.setText( mData.get(position).getInterests().toString()
-                .replace('[',' ').replace(']',' ')
-                .replace('"',' '));
+        try {
+            JSONArray data = new JSONArray(mData.get(position).getInterests().toString());
+            ArrayList<String> arr = new ArrayList<>();
+
+            for(int i = 0; i<data.length(); i++) {
+                arr.add(data.getString(i));
+            }
+
+            for(int i = 0; i<4; i++) {
+
+                Chip chip = new Chip(c);
+                chip.setChipText(arr.get(i).toUpperCase());
+                chip.setChipBackgroundColorResource(R.color.appdarkred);
+                chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
+                chip.setTextStartPadding(-2);
+                chip.setTextEndPadding(-6);
+                chip.setChipCornerRadius(5);
+
+                holder.chipgroup_interests.addView(chip);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,16 +106,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .putExtra("userData", mData.get(position).getUserData());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(i);
-
-               // Toast.makeText(mContext, String.valueOf(position), Toast.LENGTH_SHORT).show();
-              /*  Intent intent = new Intent(mContext,MatchedProfiles_Activity.class);
-
-                // passing data to the book activity
-                intent.putExtra("Title",mData.get(position).getTitle());
-                intent.putExtra("Description",mData.get(position).getDescription());
-                intent.putExtra("Thumbnail",mData.get(position).getThumbnail());
-                // start the activity
-                mContext.startActivity(intent);*/
 
             }
         });
@@ -100,7 +124,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView name;
         ImageView img_book_thumbnail;
         CardView cardView ;
-        TextView interests;
+        ChipGroup chipgroup_interests;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -108,10 +132,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = (TextView) itemView.findViewById(R.id.name) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-            interests = itemView.findViewById(R.id.interests);
+            chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
 
         }
     }
-
 
 }

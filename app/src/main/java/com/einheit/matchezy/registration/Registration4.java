@@ -20,6 +20,7 @@ import android.widget.ListView;
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
 import com.androidnetworking.AndroidNetworking;
+import com.einheit.matchezy.NumberTextWatcher;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.scalified.fab.ActionButton;
@@ -64,13 +65,15 @@ public class Registration4 extends AppCompatActivity {
         //add validation for designation and change up stuff, then make a user on server, fb error handling
 
 
+        editText_annual.addTextChangedListener(new NumberTextWatcher(editText_annual));
+
+
         editText_edu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 education();
             }
         });
-
 
         editText_edu.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
