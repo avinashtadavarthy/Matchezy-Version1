@@ -345,7 +345,13 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             requestFocus(inputName);
             return false;
         } else {
-            inputLayoutName.setErrorEnabled(false);
+
+            if (inputName.getText().toString().contains("@")) {
+                inputLayoutName.setError("Not a valid name");
+                return false;
+            } else {
+                inputLayoutName.setErrorEnabled(false);
+            }
         }
 
         return true;
@@ -370,16 +376,18 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
     private boolean validateDateOfBirth() {
 
         if (input_Dateofbirth.getText().toString().trim().isEmpty()) {
+
             inputLayoutDateofbirth.setError(getString(R.string.err_msg_dateofbirth));
             requestFocus(input_Dateofbirth);
             return false;
+
         } else {
 
             String[] dobarr = input_Dateofbirth.getText().toString().split("/",3);
             String age = Utility.getInstance().getAge(Integer.parseInt(dobarr[2]), Integer.parseInt(dobarr[1]), Integer.parseInt(dobarr[0]));
 
             if (Integer.parseInt(age) < 21) {
-                inputLayoutDateofbirth.setError("User must be above 21 years or older!");
+                inputLayoutDateofbirth.setError("Get back after you're 21, please?");
                 return false;
             } else {
                 inputLayoutDateofbirth.setErrorEnabled(false);
@@ -463,10 +471,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                     validatePassword();
                     break;
 
-
-                    /*case R.id.editTextDateofBirth:
+                case R.id.editTextDateofBirth:
                     validateDateOfBirth();
-                    break;*/
+                    break;
 
 
             }

@@ -24,6 +24,7 @@ import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.RawData;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.hometab.CustomDialogClass;
 import com.einheit.matchezy.hometab.Filter;
@@ -477,39 +478,27 @@ public class EditProfile extends AppCompatActivity {
     private void religion()
 
     {
-        final CharSequence[] items = {"Hindu", "Muslim", "Sikh", "Christian", "Jain", "Parsi", "Buddhist", "Inter-Religion"};
+        final CharSequence[] items = {"Atheist", "Agnostic", "Spiritual", "Buddhist", "Christian", "Hindu", "Muslim", "Jewish", "Parsi",
+                "Sikh", "Jain", "Inter-Religion", "Other"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
         switch (editText_religion.getText().toString()) {
-            case "Hindu":
-                position = 0;
-                break;
-            case "Muslim":
-                position = 1;
-                break;
-            case "Sikh":
-                position = 2;
-                break;
-            case "Christian":
-                position = 3;
-                break;
-            case "Jain":
-                position = 4;
-                break;
-            case "Parsi":
-                position = 5;
-                break;
-            case "Buddhist":
-                position = 6;
-                break;
-            case "Inter-Religion":
-                position = 7;
-                break;
-            default:
-                position = -1;
-                break;
+            case "Atheist": position=0; break;
+            case "Agnostic": position=1; break;
+            case "Spiritual": position=2; break;
+            case "Buddhist": position=3; break;
+            case "Christian": position=4; break;
+            case "Hindu": position=5; break;
+            case "Muslim": position=6; break;
+            case "Jewish": position=7; break;
+            case "Parsi": position=8; break;
+            case "Sikh": position=9; break;
+            case "Jain": position=10; break;
+            case "Inter-Religion": position=11; break;
+            case "Other": position=12; break;
+            default: position = -1; break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -605,7 +594,7 @@ public class EditProfile extends AppCompatActivity {
     private void education() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().education_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().education_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Education") //setting title for dialog
@@ -642,7 +631,7 @@ public class EditProfile extends AppCompatActivity {
     private void company() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().company_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().company_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Company") //setting title for dialog
@@ -678,7 +667,7 @@ public class EditProfile extends AppCompatActivity {
     private void college() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().college_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().college_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select College") //setting title for dialog

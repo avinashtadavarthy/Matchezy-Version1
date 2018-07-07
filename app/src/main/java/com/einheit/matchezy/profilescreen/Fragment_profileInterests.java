@@ -13,6 +13,7 @@ import com.einheit.matchezy.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -28,47 +29,71 @@ public class Fragment_profileInterests extends Fragment {
 
     ChipGroup interests_chipgroup;
 
-    JSONArray interests;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile_interests, container, false);
 
-        JSONArray interests = null;
+        JSONObject userData = null;
         try {
+            userData = new JSONObject(getArguments().getString("userdata"));
 
-            interests = new JSONArray(getArguments().getString("interests"));
+            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
+            JSONArray otherInterests = userData.getJSONArray("otherInterests");
+
+
             interests_chipgroup = (ChipGroup) v.findViewById(R.id.interests_chipgroup);
             interests_chipgroup.setChipSpacing(2);
-            populateChips(interests);
+
+            if (matchingInterests.length() != 0)
+            populateMatchedChips(matchingInterests);
+
+            if(otherInterests.length() != 0)
+            populateUnmatchedChips(otherInterests);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-
-
         return v;
     }
+    
 
+    private void populateMatchedChips(JSONArray arr) throws JSONException {
 
-    private int findnumber(String intr) {
+        for (int i=0;i<arr.length();i++) {
+            Chip chip = new Chip(getContext());
+            chip.setChipText(arr.getString(i));
+            //chip.setCloseIconEnabled(true);
+            //chip.setCloseIconResource(R.drawable.fab_add);
+            //chip.setChipIconResource(R.drawable.fab_add);
+            chip.setChipBackgroundColorResource(R.color.appred);
+            chip.setTextAppearanceResource(R.style.CommonChipTextStyle);
+            //chip.setElevation(15);
 
-        int n=0;
+            interests_chipgroup.addView(chip);
 
-        for(int i=0;i<intr.length();i++) {
-            if(intr.charAt(i) == ',')
-                n++;
+          /*  chip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    interests_chipgroup.removeView(view);
+                    Toast.makeText(getContext(), "baba!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    interests_chipgroup.removeView(view);
+                    Toast.makeText(getContext(), "Removed!", Toast.LENGTH_SHORT).show();
+                }
+            });*/
+
         }
-
-        return n+1;
 
     }
 
-
-    private void populateChips(JSONArray arr) throws JSONException {
+    private void populateUnmatchedChips(JSONArray arr) throws JSONException {
 
         for (int i=0;i<arr.length();i++) {
             Chip chip = new Chip(getContext());
@@ -102,13 +127,14 @@ public class Fragment_profileInterests extends Fragment {
 
     }
 
-    public static Fragment_profileInterests newInstance(String text, JSONArray interests) {
+    public static Fragment_profileInterests newInstance(String text, JSONArray interests, String userData) {
 
         Fragment_profileInterests fragment_profileInterests = new Fragment_profileInterests();
 
         Bundle b = new Bundle();
         b.putString("msg", text);
         b.putString("interests", interests.toString());
+        b.putString("userdata", userData);
 
         fragment_profileInterests.setArguments(b);
 

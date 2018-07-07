@@ -22,6 +22,7 @@ import com.abdeveloper.library.MultiSelectModel;
 import com.androidnetworking.AndroidNetworking;
 import com.einheit.matchezy.NumberTextWatcher;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.RawData;
 import com.einheit.matchezy.Utility;
 import com.scalified.fab.ActionButton;
 
@@ -206,7 +207,7 @@ public class Registration4 extends AppCompatActivity {
     private void education() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().education_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().education_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Education") //setting title for dialog
@@ -243,7 +244,7 @@ public class Registration4 extends AppCompatActivity {
     private void company() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().company_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().company_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Company") //setting title for dialog
@@ -279,7 +280,7 @@ public class Registration4 extends AppCompatActivity {
     private void college() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().college_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().college_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select College") //setting title for dialog

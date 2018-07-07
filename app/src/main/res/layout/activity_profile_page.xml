@@ -49,8 +49,6 @@
 
     </RelativeLayout>
 
-
-
     <RelativeLayout
         android:id="@+id/maininfo"
         android:background="@drawable/options"

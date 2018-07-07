@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.einheit.matchezy.registration.Registration_Interests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,7 +58,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.name.setText(mData.get(position).getName() + ", ");
+        String name;
+        if(mData.get(position).getName().contains(" ")) {
+            name = mData.get(position).getName().split(" ")[0];
+        } else {
+            name = mData.get(position).getName().split("@")[0];
+        }
+
+        holder.name.setText(name + ", ");
         Glide.with(mContext)
                 .load(mData.get(position).getThumbnail())
                 .into(holder.img_book_thumbnail);
@@ -74,25 +83,46 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.chipgroup_interests.setSingleLine(true);
 
         try {
-            JSONArray data = new JSONArray(mData.get(position).getInterests().toString());
-            ArrayList<String> arr = new ArrayList<>();
+            JSONObject userData = new JSONObject(mData.get(position).getUserData());
+            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
+            JSONArray otherInterests = userData.getJSONArray("otherInterests");
 
-            for(int i = 0; i<data.length(); i++) {
-                arr.add(data.getString(i));
+            if (userData.optString("noOfMatchingInterests").equals("0")) {
+                holder.matchinglayout.setVisibility(View.GONE);
+            } else {
+                holder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
             }
 
-            for(int i = 0; i<arr.size(); i++) {
 
-                Chip chip = new Chip(c);
-                chip.setChipText(arr.get(i).toUpperCase());
-                chip.setChipBackgroundColorResource(R.color.appdarkred);
-                chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                chip.setTextStartPadding(1);
-                chip.setTextEndPadding(0);
-                chip.setChipMinHeight(0);
-                chip.setChipCornerRadius(20);
+            if(matchingInterests.length() != 0) {
+                for(int i = 0; i<matchingInterests.length(); i++) {
 
-                holder.chipgroup_interests.addView(chip);
+                    Chip chip = new Chip(c);
+                    chip.setChipText(matchingInterests.getString(i).toUpperCase());
+                    chip.setChipBackgroundColorResource(R.color.appdarkred);
+                    chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
+                    chip.setTextStartPadding(1);
+                    chip.setTextEndPadding(0);
+                    chip.setChipMinHeight(0);
+                    chip.setChipCornerRadius(20);
+
+                    holder.chipgroup_interests.addView(chip);
+                }
+            }
+
+            if (otherInterests.length() != 0) {
+                for(int i = 0; i<otherInterests.length(); i++) {
+
+                    Chip chip = new Chip(c);
+                    chip.setChipText(otherInterests.getString(i).toUpperCase());
+                    chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
+                    chip.setTextStartPadding(1);
+                    chip.setTextEndPadding(0);
+                    chip.setChipMinHeight(0);
+                    chip.setChipCornerRadius(20);
+
+                    holder.chipgroup_interests.addView(chip);
+                }
             }
 
 
@@ -149,6 +179,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         ImageView bookmarkbtn;
         CardView cardView ;
         ChipGroup chipgroup_interests;
+        LinearLayout matchinglayout;
+        TextView matchingnumber;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -158,6 +190,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
             chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
+            matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
+            matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
 
         }
     }

@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
@@ -29,17 +28,14 @@ import com.appyvet.materialrangebar.RangeBar;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.NumberTextWatcher;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.RawData;
 import com.einheit.matchezy.Utility;
-import com.einheit.matchezy.registration.ChooseCity;
-import com.einheit.matchezy.registration.LanguagesPopUp;
-import com.einheit.matchezy.registration.Registration2;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Filter extends AppCompatActivity {
 
@@ -407,39 +403,29 @@ public class Filter extends AppCompatActivity {
     }
 
     private void religion() {
-        final CharSequence[] items = {"Hindu", "Muslim", "Sikh", "Christian", "Jain", "Parsi", "Buddhist", "Inter-Religion"};
+
+        final CharSequence[] items = {"Doesn't matter", "Atheist", "Agnostic", "Spiritual", "Buddhist", "Christian", "Hindu", "Muslim", "Jewish", "Parsi",
+                "Sikh", "Jain", "Inter-Religion", "Other"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Filter.this);
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
         switch (filter_religion.getText().toString()) {
-            case "Hindu":
-                position = 0;
-                break;
-            case "Muslim":
-                position = 1;
-                break;
-            case "Sikh":
-                position = 2;
-                break;
-            case "Christian":
-                position = 3;
-                break;
-            case "Jain":
-                position = 4;
-                break;
-            case "Parsi":
-                position = 5;
-                break;
-            case "Buddhist":
-                position = 6;
-                break;
-            case "Inter-Religion":
-                position = 7;
-                break;
-            default:
-                position = -1;
-                break;
+            case "Doesn't matter": position=0; break;
+            case "Atheist": position=1; break;
+            case "Agnostic": position=2; break;
+            case "Spiritual": position=3; break;
+            case "Buddhist": position=4; break;
+            case "Christian": position=5; break;
+            case "Hindu": position=6; break;
+            case "Muslim": position=7; break;
+            case "Jewish": position=8; break;
+            case "Parsi": position=9; break;
+            case "Sikh": position=10; break;
+            case "Jain": position=11; break;
+            case "Inter-Religion": position=12; break;
+            case "Other": position=13; break;
+            default: position = -1; break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -458,24 +444,17 @@ public class Filter extends AppCompatActivity {
 
 
     private void tattoos() {
-        final CharSequence[] items = { "Yes","No","Planning to get"};
+        final CharSequence[] items = {"Doesn't matter", "Yes", "No", "Planning to get" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Filter.this);
         alertDialogBuilder.setTitle("Tattoos?");
         int position;
         switch (filter_tattoos.getText().toString()) {
-            case "Yes":
-                position = 0;
-                break;
-            case "No":
-                position = 1;
-                break;
-            case "Planning to get":
-                position = 2;
-                break;
-            default:
-                position = -1;
-                break;
+            case "Doesn't matter": position = 0; break;
+            case "Yes": position = 1; break;
+            case "No": position = 2; break;
+            case "Planning to get": position = 3; break;
+            default: position = -1; break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -494,24 +473,18 @@ public class Filter extends AppCompatActivity {
 
 
     private void piercing() {
-        final CharSequence[] items = { "Yes","No","Planning to get"};
+
+        final CharSequence[] items = {"Doesn't matter", "Yes", "No", "Planning to get" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Filter.this);
         alertDialogBuilder.setTitle("Piercing?");
         int position;
         switch (filter_piercings.getText().toString()) {
-            case "Yes":
-                position = 0;
-                break;
-            case "No":
-                position = 1;
-                break;
-            case "Planning to get":
-                position = 2;
-                break;
-            default:
-                position = -1;
-                break;
+            case "Doesn't matter": position = 0; break;
+            case "Yes": position = 1; break;
+            case "No": position = 2; break;
+            case "Planning to get": position = 3; break;
+            default: position = -1; break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -532,7 +505,7 @@ public class Filter extends AppCompatActivity {
     private void education() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().education_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().filtereducation_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Education") //setting title for dialog
@@ -600,7 +573,7 @@ public class Filter extends AppCompatActivity {
     {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().cities);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().filtercities);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Preferred Cities") //setting title for dialog
@@ -636,7 +609,7 @@ public class Filter extends AppCompatActivity {
     private void languages()
     {
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().languageslist);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().filterlanguageslist);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Preferred Languages") //setting title for dialog
@@ -704,7 +677,7 @@ public class Filter extends AppCompatActivity {
     private void work() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().company_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().filtercompany_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select Company") //setting title for dialog
@@ -740,7 +713,7 @@ public class Filter extends AppCompatActivity {
     private void college() {
 
         ArrayList<MultiSelectModel> edu = new ArrayList<>();
-        Utility.getInstance().populateModel(edu, Utility.getInstance().college_items);
+        Utility.getInstance().populateModel(edu, RawData.getInstance().filtercollege_items);
 
         MultiSelectDialog multiSelectDialog = new MultiSelectDialog()
                 .title("Select College") //setting title for dialog

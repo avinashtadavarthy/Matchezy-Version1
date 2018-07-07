@@ -203,39 +203,27 @@ public class Registration3 extends AppCompatActivity {
     private void religion()
 
     {
-        final CharSequence[] items = {"Hindu", "Muslim", "Sikh", "Christian", "Jain", "Parsi", "Buddhist", "Inter-Religion"};
+        final CharSequence[] items = {"Atheist", "Agnostic", "Spiritual", "Buddhist", "Christian", "Hindu", "Muslim", "Jewish", "Parsi",
+                "Sikh", "Jain", "Inter-Religion", "Other"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
         switch (editText_religion.getText().toString()) {
-            case "Hindu":
-                position = 0;
-                break;
-            case "Muslim":
-                position = 1;
-                break;
-            case "Sikh":
-                position = 2;
-                break;
-            case "Christian":
-                position = 3;
-                break;
-            case "Jain":
-                position = 4;
-                break;
-            case "Parsi":
-                position = 5;
-                break;
-            case "Buddhist":
-                position = 6;
-                break;
-            case "Inter-Religion":
-                position = 7;
-                break;
-            default:
-                position = -1;
-                break;
+            case "Atheist": position=0; break;
+            case "Agnostic": position=1; break;
+            case "Spiritual": position=2; break;
+            case "Buddhist": position=3; break;
+            case "Christian": position=4; break;
+            case "Hindu": position=5; break;
+            case "Muslim": position=6; break;
+            case "Jewish": position=7; break;
+            case "Parsi": position=8; break;
+            case "Sikh": position=9; break;
+            case "Jain": position=10; break;
+            case "Inter-Religion": position=11; break;
+            case "Other": position=12; break;
+            default: position = -1; break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {

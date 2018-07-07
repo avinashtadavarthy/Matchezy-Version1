@@ -8,7 +8,6 @@
     sothree:umanoOverlay="true"
     sothree:umanoPanelHeight="280dp">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -23,8 +22,6 @@
         <include layout="@layout/include_progress_overlay"/>
 
     </RelativeLayout>
-
-
 
     <RelativeLayout
         android:id="@+id/optionslistlayout"
@@ -77,18 +74,20 @@
             android:background="#40505154"
             android:layout_below="@+id/toplayout"
             android:layout_marginTop="22dp"
-            android:layout_marginBottom="22dp"/>
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_below="@+id/sep"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/viewprofile"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -110,11 +109,14 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/dislikedprofile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -133,11 +135,15 @@
             </LinearLayout>
 
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/blockedprofile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -156,11 +162,15 @@
             </LinearLayout>
 
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/privacysettings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -178,14 +188,16 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/termsandconditions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -204,11 +216,15 @@
             </LinearLayout>
 
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/privacypolicy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -226,13 +242,16 @@
 
             </LinearLayout>
 
-
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/aboutus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -250,13 +269,16 @@
 
             </LinearLayout>
 
-
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/libraries"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -274,15 +296,16 @@
 
             </LinearLayout>
 
-
-
-
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/helpandfeedback"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -301,11 +324,15 @@
             </LinearLayout>
 
             <LinearLayout
+                 android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/logout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:background="?attr/selectableItemBackground">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -327,7 +354,5 @@
 
 
     </RelativeLayout>
-
-
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

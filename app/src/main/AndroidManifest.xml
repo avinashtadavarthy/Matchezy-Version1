@@ -20,30 +20,30 @@
         android:roundIcon="@drawable/logo_white"
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme">
-        <activity android:name=".onboarding.IntroActivity" />
-        <activity
+        <activity android:screenOrientation="portrait"  android:name=".onboarding.IntroActivity" />
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration_Interests"
             android:theme="@style/RegistrationTheme" />
-        <activity android:name=".HomeScreen" />
-        <activity
+        <activity android:screenOrientation="portrait"  android:name=".HomeScreen" />
+        <activity android:screenOrientation="portrait"
             android:name=".profilescreen.ProfilePage"
             android:parentActivityName=".HomeScreen"
             android:theme="@style/ProfilePageTheme" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration"
             android:theme="@style/RegistrationTheme" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration2"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/RegistrationTheme" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration3"
             android:theme="@style/RegistrationTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration4"
             android:theme="@style/RegistrationTheme" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.Registration_Imageupload"
             android:theme="@style/RegistrationTheme" />
 
@@ -51,19 +51,19 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_places_api_key" />
 
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.OTP"
-            android:theme="@style/RegistrationTheme"></activity>
-        <activity android:name=".login.Login">
+            android:theme="@style/RegistrationTheme"/>
+        <activity android:screenOrientation="portrait"  android:name=".login.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".hometab.Filter" />
-        <activity android:name=".login.ForgotPassword" />
-        <activity
+        <activity android:screenOrientation="portrait"  android:name=".hometab.Filter" />
+        <activity android:screenOrientation="portrait"  android:name=".login.ForgotPassword" />
+        <activity android:screenOrientation="portrait"
             android:name=".registration.LanguagesPopUp"
             android:theme="@style/AppTheme.CustomTheme" />
 
@@ -87,7 +87,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".registration.ChooseCity"
             android:theme="@style/AppTheme.CustomTheme" />
 
@@ -100,14 +100,14 @@
             </intent-filter>
         </service>
 
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".ProfileOptions"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity
+        <activity android:screenOrientation="portrait"
             android:name=".messagestab.Chat"
             android:parentActivityName=".messagestab.Chat"
             android:theme="@style/RegistrationTheme"></activity>
-        <activity android:name=".profilescreen.EditProfile"></activity>
+        <activity android:screenOrientation="portrait"  android:name=".profilescreen.EditProfile"></activity>
     </application>
 
 </manifest>

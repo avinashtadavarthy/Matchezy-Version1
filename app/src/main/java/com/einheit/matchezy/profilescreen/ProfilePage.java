@@ -406,10 +406,10 @@ public class ProfilePage extends AppCompatActivity {
         public Fragment getItem(int pos) {
             switch(pos) {
 
-                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests);
+                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests, userdata.toString());
                 case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1",userdata);
                 case 2: return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
-                default: return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests);
+                default: return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests, userdata.toString());
             }
         }
 

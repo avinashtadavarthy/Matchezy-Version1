@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.RawData;
 import com.einheit.matchezy.Utility;
 
 public class ChooseCity extends AppCompatActivity {
@@ -43,7 +44,7 @@ public class ChooseCity extends AppCompatActivity {
         filterText = (EditText)findViewById(R.id.editText);
         itemList = (ListView)findViewById(R.id.listView);
 
-        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, Utility.getInstance().cities);
+        listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, RawData.getInstance().cities);
 
         itemList.setAdapter(listAdapter);
 

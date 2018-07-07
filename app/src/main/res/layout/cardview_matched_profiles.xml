@@ -34,6 +34,7 @@
                 android:scaleType="centerCrop" />
 
             <LinearLayout
+                android:id="@+id/matchinglayout"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="19dp"
@@ -51,6 +52,7 @@
                     android:paddingLeft="2dp"/>
 
                 <TextView
+                    android:id="@+id/matchingnumber"
                     android:layout_width="wrap_content"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
