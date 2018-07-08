@@ -84,7 +84,7 @@ public class FragmentBookmarks extends Fragment {
                             }
                         }
                         else
-                            Toast.makeText(FragmentBookmarks.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
 

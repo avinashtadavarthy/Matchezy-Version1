@@ -38,17 +38,20 @@ public class Fragment_profileInterests extends Fragment {
         try {
             userData = new JSONObject(getArguments().getString("userdata"));
 
-            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
-            JSONArray otherInterests = userData.getJSONArray("otherInterests");
-
+            JSONArray matchingInterests = null;
+            JSONArray otherInterests = null;
+            if(userData.has("matchingInterests")) {
+                matchingInterests = userData.optJSONArray("matchingInterests");
+                otherInterests = userData.optJSONArray("otherInterests");
+            } else otherInterests = userData.optJSONArray("interests");
 
             interests_chipgroup = (ChipGroup) v.findViewById(R.id.interests_chipgroup);
             interests_chipgroup.setChipSpacing(2);
 
-            if (matchingInterests.length() != 0)
+            if (matchingInterests != null)
             populateMatchedChips(matchingInterests);
 
-            if(otherInterests.length() != 0)
+            if(otherInterests != null)
             populateUnmatchedChips(otherInterests);
 
         } catch (JSONException e) {

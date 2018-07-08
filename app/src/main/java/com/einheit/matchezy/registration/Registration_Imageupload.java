@@ -164,7 +164,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                             .addMultipartParameter("college", getSPData("college"))
                             .addMultipartParameter("work", getSPData("work"))
                             .addMultipartParameter("desig", getSPData("desig"))
-                            .addMultipartParameter("annual_income", getSPData("annual_income"))
+                            .addMultipartParameter("annual_income", getSPData("annual_income").replace(",",""))
                             .addMultipartParameter("fb_id", fb_id)
                             .addMultipartParameter("interests", interestsArrayString)
                             .setPriority(Priority.HIGH)

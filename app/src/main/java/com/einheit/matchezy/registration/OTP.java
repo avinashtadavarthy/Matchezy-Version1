@@ -68,7 +68,7 @@ public class OTP extends AppCompatActivity {
         retrybtn.setEnabled(false);
         callbtn.setVisibility(View.GONE);
 
-        //storeSPData("isOtpVerificationCompleted", false);
+        storeSPData("isOtpVerificationCompleted", false);
 
         final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 

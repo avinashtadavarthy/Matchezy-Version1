@@ -195,7 +195,7 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                 e.printStackTrace();
                             }
                         } else
-                            Toast.makeText(Fragment_messages.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
 

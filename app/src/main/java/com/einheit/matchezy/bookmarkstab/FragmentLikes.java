@@ -87,7 +87,7 @@ public class FragmentLikes extends Fragment {
                             }
                         }
                         else
-                            Toast.makeText(FragmentLikes.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
 
