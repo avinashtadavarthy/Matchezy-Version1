@@ -113,7 +113,7 @@ public class Registration_Imageupload extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                        Log.e("asdf", getSPData("username") + " - " + getSPData("dob") + " - " +
+                        /*Log.e("asdf", getSPData("username") + " - " + getSPData("dob") + " - " +
                         getSPData("phone_number") + " - " + getSPData("email") + " - " + getSPData("password")
                         + " - " + getSPData("gender") + " - " + getSPData("lookingfor") + " - " +
                         getSPData("maritalstatus") + " - " + getSPData("city") + " - " + getSPData("lang") +
@@ -122,9 +122,10 @@ public class Registration_Imageupload extends AppCompatActivity {
                         " - " + getSPData("college") + " - " + getSPData("work") + " - " + getSPData("desig") + " - "
                                         + getSPData("annual_income") + " - " + interestsArrayString + " - " +
                         new File(paths[0]).getAbsoluteFile() + " - " + new File(paths[1]).exists() + " - " + new File(paths[2]).exists() + " - " +
-                        new File(paths[3]).exists()) ;
-                        
-                if((paths[0].isEmpty() || paths[1].isEmpty() || paths[2].isEmpty() || paths[3].isEmpty())) {
+                        new File(paths[3]).exists()) ;*/
+
+                if(files.size() != 4) {
+
                     Toast.makeText(getApplicationContext(), "Select four images for your profile",
                             Toast.LENGTH_SHORT).show();
                 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,9 +20,13 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.login.Login;
 import com.einheit.matchezy.profilescreen.ProfilePage;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -97,6 +102,8 @@ public class ProfileOptions extends AppCompatActivity {
             }
         });
 
+        Log.e("ASd",getSPData("user_id"));
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +122,20 @@ public class ProfileOptions extends AppCompatActivity {
                                     case "200": progressOverlay.setVisibility(View.GONE);
                                         Toast.makeText(ProfileOptions.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                         clearSPData();
+
+                                        //FirebaseMessaging.getInstance().unsubscribeFromTopic(getSPData("user_id"));
+
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    FirebaseInstanceId.getInstance().deleteInstanceId();
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }).start();
+
                                         Intent i = new Intent(getApplicationContext(),Login.class);
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(i);

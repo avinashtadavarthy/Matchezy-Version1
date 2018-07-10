@@ -76,7 +76,7 @@ public class HomeScreen extends AppCompatActivity {
             }
         }
 
-        Log.e("userdata", getSPData("userdata"));
+        //Log.e("userdata", getSPData("userdata"));
 
         try {
             userData = new JSONObject(getSPData("userdata"));
@@ -86,7 +86,7 @@ public class HomeScreen extends AppCompatActivity {
 
         profileimg = (CircleImageView) findViewById(R.id.profileimg);
 
-        Log.e("ASD", userData.toString());
+        //Log.e("ASD", userData.toString());
 
         Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(profileimg);
 

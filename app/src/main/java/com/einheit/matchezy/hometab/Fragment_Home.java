@@ -137,7 +137,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                     public void onResponse(JSONObject res) {
 
                         if(res.optInt("status_code") == 200) {
-                            Log.e("ASD", res.toString());
+                            //Log.e("ASD", res.toString());
 
                             progressOverlay.setVisibility(View.GONE);
 
@@ -163,7 +163,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
                         }
                         else
-                            Toast.makeText(Fragment_Home.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
 

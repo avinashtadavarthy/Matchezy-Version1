@@ -137,7 +137,7 @@ public class Login extends AppCompatActivity {
                                                             // do anything with response
 
                                                             if(response.optInt("status_code") == 200) {
-                                                                Log.e("userdata", response.toString());
+                                                                //Log.e("userdata", response.toString());
                                                                 storeSPData("userdata", response.optJSONObject("message").toString());
                                                                 Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                 startActivity(intent);
@@ -214,7 +214,7 @@ public class Login extends AppCompatActivity {
                                                         switch (res.optString("status_code")) {
                                                             case "200": {
 
-                                                                Log.e("fbLogin", res.toString());
+                                                                //Log.e("fbLogin", res.toString());
                                                                 clearSPData();
                                                                 storeSPData("user_id", res.optJSONObject("message").optString("user_id"));
                                                                 storeSPData("user_token", res.optJSONObject("message").optString("user_token"));
@@ -235,7 +235,7 @@ public class Login extends AppCompatActivity {
                                                                                 progressOverlay.setVisibility(View.GONE);
 
                                                                                 if(response.optInt("status_code") == 200) {
-                                                                                    Log.e("userdata", response.toString());
+                                                                                    //Log.e("userdata", response.toString());
                                                                                     storeSPData("userdata", response.optJSONObject("message").toString());
                                                                                     Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                                     startActivity(intent);
@@ -280,7 +280,7 @@ public class Login extends AppCompatActivity {
                                                     }
                                                 });
 
-                                        Log.e("fbresponse", response.toString());
+                                        //Log.e("fbresponse", response.toString());
 
                                     }
                                 },
