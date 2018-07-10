@@ -45,6 +45,8 @@ public class Filter extends AppCompatActivity {
             "Pets", "Gaming", "Cooking","Foodie","Pet Lover","Movies","Cricket","Football","Tv","Cat Lover","Pets","Tech","Gaming","Wine tasting"
     };
 
+    private final String DOESNTMATTER = "Doesn't matter";
+
     EditText enter_interests;
     TextView clearinterests;
 
@@ -122,48 +124,7 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                filterObject = new JsonObject();
-
-                String[] heightMin = height_start.getText().toString().replace("\"","").split("\'");
-                String[] heightMax = height_end.getText().toString().replace("\"","").split("\'");
-
-                filterObject.addProperty("feetMin",heightMin[0]);
-
-                if(heightMin.length == 1) {
-                    filterObject.addProperty("inchesMin", 0);
-                } else filterObject.addProperty("inchesMin", heightMin[1]);
-
-                filterObject.addProperty("feetMax",heightMax[0]);
-                if(heightMax.length == 1) {
-                    filterObject.addProperty("inchesMax", 0);
-                } else filterObject.addProperty("inchesMax", heightMax[1]);
-
-                if(interestsArary.size() > 0)
-                    filterObject.addProperty("interests", interestsArary.toString());
-
-                if(!filter_relationship.getText().toString().isEmpty() && filter_relationship.getText().toString().length() > 0)
-                    filterObject.addProperty("maritalStatus", filter_relationship.getText().toString());
-
-                if(!filter_tattoos.getText().toString().isEmpty() && filter_tattoos.getText().toString().length() > 0)
-                    filterObject.addProperty("tattoo", filter_tattoos.getText().toString());
-
-                if(!filter_piercings.getText().toString().isEmpty() && filter_piercings.getText().toString().length() > 0)
-                    filterObject.addProperty("piercings", filter_piercings.getText().toString());
-
-                if(!age_start.getText().toString().isEmpty() && age_start.getText().toString().length() > 0)
-                    filterObject.addProperty("ageMin", age_start.getText().toString());
-
-                if(!age_end.getText().toString().isEmpty() && age_end.getText().toString().length() > 0)
-                    filterObject.addProperty("ageMax", age_end.getText().toString());
-
-                if(!filter_education.getText().toString().isEmpty() && filter_education.getText().toString().length() > 0)
-                    filterObject.addProperty("education", filter_education.getText().toString());
-
-                if(!filter_religion.getText().toString().isEmpty() && filter_religion.getText().toString().length() > 0)
-                    filterObject.addProperty("religions", filter_religion.getText().toString());
-
-                Log.e("ASD", filterObject.toString());
-                storeSPData("filterObject",filterObject.toString());
+                saveDataAsObject();
 
                 Intent intent = new Intent(Filter.this, HomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -191,24 +152,30 @@ public class Filter extends AppCompatActivity {
 
         }
 
-        if(filterObject.has("feetMin") && filterObject.has("inchesMin")) {
+        if(filterObject.has("feetMin") && filterObject.has("inchesMin") &&
+                filterObject.has("feetMax") && filterObject.has("inchesMax")) {
             height_start.setText(filterObject.get("feetMin").getAsString() + "\'" + filterObject.get("inchesMin").getAsString() + "\"");
-        }
-
-        if(filterObject.has("feetMax") && filterObject.has("inchesMax")) {
             height_end.setText(filterObject.get("feetMax").getAsString() + "\'" + filterObject.get("inchesMax").getAsString() + "\"");
+            rangebar_height.setRangePinsByValue((float) Math.floor((filterObject.get("feetMin").getAsInt() * 12
+                    + filterObject.get("inchesMin").getAsInt()) * 2.54), (float) Math.floor((filterObject.get("feetMax").getAsInt() * 12
+                    + filterObject.get("inchesMax").getAsInt()) * 2.54));
+        } else {
+            height_start.setText("4'0\"");
+            height_end.setText("7'0\"");
         }
 
-        if(filterObject.has("ageMin")) {
+        if(filterObject.has("ageMin") && filterObject.has("ageMax")) {
             age_start.setText(String.valueOf(filterObject.get("ageMin").getAsInt()));
-        }
-
-        if(filterObject.has("ageMax")) {
             age_end.setText(String.valueOf(filterObject.get("ageMax").getAsInt()));
+            rangebar_age.setRangePinsByValue(filterObject.get("ageMin").getAsInt(), filterObject.get("ageMax").getAsInt());
         }
 
         if(filterObject.has("maritalStatus")) {
             filter_relationship.setText(String.valueOf(filterObject.get("maritalStatus").getAsString()));
+        }
+
+        if(filterObject.has("lookingFor")) {
+            filter_lookingfor.setText(String.valueOf(filterObject.get("lookingFor").getAsString()));
         }
 
         if(filterObject.has("tattoo")) {
@@ -225,6 +192,30 @@ public class Filter extends AppCompatActivity {
 
         if(filterObject.has("education")) {
             filter_education.setText(filterObject.get("education").getAsString());
+        }
+
+        if(filterObject.has("colleges")) {
+            filter_college.setText(filterObject.get("colleges").getAsString());
+        }
+
+        if(filterObject.has("work")) {
+            filter_work.setText(filterObject.get("work").getAsString());
+        }
+
+        if(filterObject.has("preferredCities")) {
+            filter_cities.setText(filterObject.get("preferredCities").getAsString());
+        }
+
+        if(filterObject.has("langs")) {
+            filter_languages.setText(filterObject.get("langs").getAsString());
+        }
+
+        if(filterObject.has("annualIncomeMin")) {
+            filter_min_annual.setText(filterObject.get("annualIncomeMin").getAsString());
+        }
+
+        if(filterObject.has("annualIncomeMax")) {
+            filter_max_annual.setText(filterObject.get("annualIncomeMax").getAsString());
         }
 
         clearinterests.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +248,11 @@ public class Filter extends AppCompatActivity {
                                 filter_religion.setText("");
                                 filter_tattoos.setText("");
                                 filter_piercings.setText("");
+                                filter_lookingfor.setText("");
+                                filter_college.setText("");
+                                filter_work.setText("");
+
+                                saveDataAsObject();
                             }
                         });
 
@@ -540,18 +536,19 @@ public class Filter extends AppCompatActivity {
 
 
     public void relationship() {
-        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
+        final CharSequence[] items = { "Doesn't matter", "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Filter.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
         switch (filter_relationship.getText().toString()) {
-            case "Single": position = 0; break;
-            case "Single with Children": position = 1; break;
-            case "Divorced": position = 2; break;
-            case "Divorced with Children": position = 3; break;
-            case "Widowed": position = 4; break;
-            case "Widowed with Children": position = 5; break;
+            case "Doesn't matter": position = 0; break;
+            case "Single": position = 1; break;
+            case "Single with Children": position = 2; break;
+            case "Divorced": position = 3; break;
+            case "Divorced with Children": position = 4; break;
+            case "Widowed": position = 5; break;
+            case "Widowed with Children": position = 6; break;
             default: position = -1; break;
         }
         alertDialogBuilder.setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -822,6 +819,84 @@ public class Filter extends AppCompatActivity {
                 }
             }
         });
+
+    }
+
+    void saveDataAsObject() {
+        filterObject = new JsonObject();
+
+        String[] heightMin = height_start.getText().toString().replace("\"","").split("\'");
+        String[] heightMax = height_end.getText().toString().replace("\"","").split("\'");
+
+        filterObject.addProperty("feetMin",heightMin[0]);
+
+        if(heightMin.length == 1) {
+            filterObject.addProperty("inchesMin", 0);
+        } else filterObject.addProperty("inchesMin", heightMin[1]);
+
+        filterObject.addProperty("feetMax",heightMax[0]);
+        if(heightMax.length == 1) {
+            filterObject.addProperty("inchesMax", 0);
+        } else filterObject.addProperty("inchesMax", heightMax[1]);
+
+        if(interestsArary.size() > 0)
+            filterObject.addProperty("interests", interestsArary.toString());
+
+        if(!filter_relationship.getText().toString().isEmpty() && filter_relationship.getText().toString().length() > 0) {
+            if(!filter_relationship.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("maritalStatus", filter_relationship.getText().toString());
+        }
+
+        if(!filter_lookingfor.getText().toString().isEmpty() && filter_lookingfor.getText().toString().length() > 0)
+            filterObject.addProperty("lookingFor", filter_lookingfor.getText().toString());
+
+        if(!filter_tattoos.getText().toString().isEmpty() && filter_tattoos.getText().toString().length() > 0)
+            if(!filter_tattoos.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("tattoo", filter_tattoos.getText().toString());
+
+        if(!filter_piercings.getText().toString().isEmpty() && filter_piercings.getText().toString().length() > 0)
+            if(!filter_piercings.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("piercings", filter_piercings.getText().toString());
+
+        if(!age_start.getText().toString().isEmpty() && age_start.getText().toString().length() > 0)
+            filterObject.addProperty("ageMin", age_start.getText().toString());
+
+        if(!age_end.getText().toString().isEmpty() && age_end.getText().toString().length() > 0)
+            filterObject.addProperty("ageMax", age_end.getText().toString());
+
+        if(!filter_education.getText().toString().isEmpty() && filter_education.getText().toString().length() > 0)
+            if(!filter_education.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("education", filter_education.getText().toString().trim());
+
+        if(!filter_religion.getText().toString().isEmpty() && filter_religion.getText().toString().length() > 0)
+            if(!filter_religion.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("religions", filter_religion.getText().toString().trim());
+
+        if(!filter_college.getText().toString().isEmpty() && filter_college.getText().toString().length() > 0)
+            if(!filter_college.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("colleges", filter_college.getText().toString().trim());
+
+        if(!filter_work.getText().toString().isEmpty() && filter_work.getText().toString().length() > 0)
+            if(!filter_work.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("work", filter_work.getText().toString().trim());
+
+        if(!filter_cities.getText().toString().isEmpty() && filter_cities.getText().toString().length() > 0)
+            if(!filter_cities.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("preferredCities", filter_cities.getText().toString().trim());
+
+        if(!filter_languages.getText().toString().isEmpty() && filter_languages.getText().toString().length() > 0) {
+            if (!filter_languages.getText().toString().trim().equals(DOESNTMATTER))
+                filterObject.addProperty("langs", filter_languages.getText().toString().trim());
+        }
+
+        if(!filter_min_annual.getText().toString().isEmpty() && filter_min_annual.getText().toString().length() > 0)
+            filterObject.addProperty("annualIncomeMin", filter_min_annual.getText().toString().replace(",", ""));
+
+        if(!filter_max_annual.getText().toString().isEmpty() && filter_max_annual.getText().toString().length() > 0)
+            filterObject.addProperty("annualIncomeMax", filter_max_annual.getText().toString().replace(",",""));
+
+        Log.e("ASD", filterObject.toString());
+        storeSPData("filterObject",filterObject.toString());
 
     }
 
