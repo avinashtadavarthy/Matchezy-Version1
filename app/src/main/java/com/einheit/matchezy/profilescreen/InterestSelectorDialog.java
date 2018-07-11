@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -84,6 +85,7 @@ public class InterestSelectorDialog extends Dialog {
 
                 if( mDialogResult != null ) {
 
+                    if(newinterests == null) newinterests = new ArrayList<>();
                     mDialogResult.finish(newinterests);
 
                 }
@@ -171,7 +173,9 @@ public class InterestSelectorDialog extends Dialog {
         //chip.setElevation(15);
 
         selectedinterests.addView(chip);
-        newinterests.add(text);
+        if(newinterests != null)
+            newinterests.add(text);
+        else newinterests = new ArrayList<>();
 
         chip.setOnCloseIconClickListener(new View.OnClickListener() {
             @Override

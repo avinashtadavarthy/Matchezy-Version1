@@ -22,6 +22,10 @@ import android.widget.Toast;
 
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.RawData;
@@ -33,6 +37,7 @@ import com.einheit.matchezy.registration.LanguagesPopUp;
 import com.einheit.matchezy.registration.Registration2;
 import com.einheit.matchezy.registration.Registration3;
 import com.einheit.matchezy.registration.Registration4;
+import com.google.gson.JsonObject;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.scalified.fab.ActionButton;
 import com.webianks.library.scroll_choice.ScrollChoice;
@@ -69,6 +74,8 @@ public class EditProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        AndroidNetworking.initialize(this);
 
         backbtn = findViewById(R.id.backbtn);
         name = findViewById(R.id.name);
@@ -246,6 +253,7 @@ public class EditProfile extends AppCompatActivity {
                 isd.setDialogResult(new InterestSelectorDialog.OnMyDialogResult() {
                     public void finish(ArrayList<String> result) {
                         chipgroup_interests.removeAllViews();
+                        interestsarr = result;
                         populateSuggestedChips(result);
                     }
                 });
@@ -285,8 +293,98 @@ public class EditProfile extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                Toast.makeText(EditProfile.this, "Have to send fields to server and edit!!", Toast.LENGTH_SHORT).show();
+                JsonObject object = new JsonObject();
+                object.addProperty("user_id", getSPData("user_id"));
+                object.addProperty("user_token", getSPData("user_token"));
+
+                if(edit_gender.getText().toString().trim().isEmpty() || edit_gender.getText().toString().length() == 0 ||
+                        edit_relationship.getText().toString().trim().isEmpty() || edit_relationship.getText().toString().length() == 0 ||
+                        edit_interested.getText().toString().trim().isEmpty() || edit_interested.getText().toString().length() == 0 ||
+                        edit_city.getText().toString().trim().isEmpty() || edit_city.getText().toString().length() == 0 ||
+                        edit_lang.getText().toString().trim().isEmpty() || edit_lang.getText().toString().length() == 0 ||
+                        editText_religion.getText().toString().trim().isEmpty() || editText_religion.getText().toString().length() == 0 ||
+                        editText_tattoos.getText().toString().trim().isEmpty() || editText_tattoos.getText().toString().length() == 0 ||
+                        editText_piercing.getText().toString().trim().isEmpty() || editText_piercing.getText().toString().length() == 0 ||
+                        editTextEdu.getText().toString().trim().isEmpty() || editTextEdu.getText().toString().length() == 0 ||
+                        editTextCollege.getText().toString().trim().isEmpty() || editTextCollege.getText().toString().length() == 0 ||
+                        editTextWorking.getText().toString().trim().isEmpty() || editTextWorking.getText().toString().length() == 0 ||
+                        editTextDesignation.getText().toString().trim().isEmpty() || editTextDesignation.getText().toString().length() == 0 ||
+                        editText_annual.getText().toString().trim().isEmpty() || editText_annual.getText().toString().length() == 0 ||
+                        interestsarr.size() == 0) {
+                    Toast.makeText(EditProfile.this, "Please fill all the fields properly", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    if (!edit_gender.getText().toString().trim().isEmpty() && edit_gender.getText().toString().length() > 0)
+                        object.addProperty("gender", edit_gender.getText().toString().trim());
+
+                    if (!edit_relationship.getText().toString().trim().isEmpty() && edit_relationship.getText().toString().length() > 0)
+                        object.addProperty("maritalStatus", edit_relationship.getText().toString().trim());
+
+                    if (!edit_interested.getText().toString().trim().isEmpty() && edit_interested.getText().toString().length() > 0)
+                        object.addProperty("lookingFor", edit_interested.getText().toString().trim());
+
+                    if (!edit_city.getText().toString().trim().isEmpty() && edit_city.getText().toString().length() > 0)
+                        object.addProperty("city", edit_city.getText().toString().trim());
+
+                    if (!edit_lang.getText().toString().trim().isEmpty() && edit_lang.getText().toString().length() > 0)
+                        object.addProperty("langs", edit_lang.getText().toString().trim());
+
+                    if (!editText_religion.getText().toString().trim().isEmpty() && editText_religion.getText().toString().length() > 0)
+                        object.addProperty("religion", editText_religion.getText().toString().trim());
+
+                    if (!editText_tattoos.getText().toString().trim().isEmpty() && editText_tattoos.getText().toString().length() > 0)
+                        object.addProperty("tattoos", editText_tattoos.getText().toString().trim());
+
+                    if (!editText_piercing.getText().toString().trim().isEmpty() && editText_piercing.getText().toString().length() > 0)
+                        object.addProperty("piercings", editText_piercing.getText().toString().trim());
+
+                    if (!editTextEdu.getText().toString().trim().isEmpty() && editTextEdu.getText().toString().length() > 0)
+                        object.addProperty("education", editTextEdu.getText().toString().trim());
+
+                    if (!editTextCollege.getText().toString().trim().isEmpty() && editTextCollege.getText().toString().length() > 0)
+                        object.addProperty("college", editTextCollege.getText().toString().trim());
+
+                    if (!editTextWorking.getText().toString().trim().isEmpty() && editTextWorking.getText().toString().length() > 0)
+                        object.addProperty("work", editTextWorking.getText().toString().trim());
+
+                    if (!editTextDesignation.getText().toString().trim().isEmpty() && editTextDesignation.getText().toString().length() > 0)
+                        object.addProperty("desig", editTextDesignation.getText().toString().trim());
+
+                    if (!editText_annual.getText().toString().trim().isEmpty() && editText_annual.getText().toString().length() > 0)
+                        object.addProperty("annualIncome", editText_annual.getText().toString().trim());
+
+                    if (interestsarr.size() > 0)
+                        object.addProperty("interests", interestsarr.toString());
+
+                    Log.e("ASd", object.toString());
+
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
+                            .addBodyParameter(object)
+                            .setPriority(Priority.MEDIUM)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    Log.e("ASD", res.toString());
+
+                                    if (res.optInt("status_code") == 200) {
+
+                                        finish();
+                                        Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    } else
+                                        Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+                }
+
             }
         });
 
