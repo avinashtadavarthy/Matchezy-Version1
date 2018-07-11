@@ -76,6 +76,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Chat extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 2001;
+
+    private static boolean isChatOpen = false;
+
     private FirebaseRecyclerAdapter<Message, MessageViewHolder> mFirebaseAdapter;
     private DatabaseReference mFirebaseDatabaseReference;
     ImageView sendButton;
@@ -215,6 +218,8 @@ public class Chat extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        isChatOpen = true;
 
         mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference messagesRef = mFirebaseDatabaseReference.child(userData.optString("matched_id"))
@@ -698,18 +703,21 @@ public class Chat extends AppCompatActivity {
     @Override
     public void onPause() {
         mFirebaseAdapter.stopListening();
+        isChatOpen = false;
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        isChatOpen = true;
         mFirebaseAdapter.startListening();
     }
 
     @Override
     protected void onDestroy() {
         mFirebaseAdapter.stopListening();
+        isChatOpen = false;
         super.onDestroy();
     }
 
@@ -770,4 +778,18 @@ public class Chat extends AppCompatActivity {
             }
         }
     }
+
+    public static boolean isIsChatOpen() {
+        return isChatOpen;
+    }
+
+    @Override
+    protected void onStop() {
+        isChatOpen = false;
+        super.onStop();
+    }
+
+
 }
+
+

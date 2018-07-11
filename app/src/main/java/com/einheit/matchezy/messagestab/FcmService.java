@@ -32,44 +32,48 @@ public class FcmService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            throughChannels(remoteMessage);
-        }
+        if(!Chat.isIsChatOpen()) {
+            notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        int notificationId = new Random().nextInt(1001);
-
-        Intent intent = new Intent(this, Login.class);
-
-        intent.setAction(Long.toString(System.currentTimeMillis()));
-
-        if(remoteMessage.getData().containsKey("intent")) {
-            if (remoteMessage.getData().get("intent").equals("chatPage")) {
-                intent.putExtra("notify", "chat");
-            } else if (remoteMessage.getData().get("intent").equals("chat")) {
-                intent.putExtra("notify", "like");
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                throughChannels(remoteMessage);
             }
+
+            int notificationId = new Random().nextInt(1001);
+
+            Intent intent = new Intent(this, Login.class);
+
+            intent.setAction(Long.toString(System.currentTimeMillis()));
+
+            if (remoteMessage.getData().containsKey("intent")) {
+                if (remoteMessage.getData().get("intent").equals("chatPage")) {
+                    intent.putExtra("notify", "chat");
+                } else if (remoteMessage.getData().get("intent").equals("chat")) {
+                    intent.putExtra("notify", "like");
+                }
+            }
+
+            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+                    PendingIntent.FLAG_ONE_SHOT);
+
+            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "matchezy_1001")
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentTitle(remoteMessage.getData().get("title"))
+                    .setContentText(remoteMessage.getData().get("message"))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("message")))
+                    .setLights(Color.RED, 3000, 3000)
+                    .setAutoCancel(true)
+                    .setGroup(remoteMessage.getData().get("title"))
+                    .setSound(defaultSoundUri)
+                    .setContentIntent(pendingIntent);
+
+            notificationManager.notify(notificationId, notificationBuilder.build());
+
         }
-
-        final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "matchezy_1001")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(remoteMessage.getData().get("title"))
-                .setContentText(remoteMessage.getData().get("message"))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("message")))
-                .setLights(Color.RED, 3000, 3000)
-                .setAutoCancel(true)
-                .setGroup(remoteMessage.getData().get("title"))
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        notificationManager.notify(notificationId, notificationBuilder.build());
 
     }
 
