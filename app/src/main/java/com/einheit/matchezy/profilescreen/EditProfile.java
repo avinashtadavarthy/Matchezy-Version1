@@ -356,7 +356,15 @@ public class EditProfile extends AppCompatActivity {
                     if (interestsarr.size() > 0)
                         object.addProperty("interests", interestsarr.toString());
 
-                    Log.e("ASd", object.toString());
+                    if(!scroll_choice.getCurrentSelection().isEmpty()) {
+                        String[] height = scroll_choice.getCurrentSelection().trim().split("'");
+                        object.addProperty("feet", height[0]);
+                        if(height.length == 1)
+                            object.addProperty("inches", "0");
+                        else object.addProperty("inches", height[1]);
+                    }
+
+                    Log.e("ASd", object.toString());)
 
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
                             .addBodyParameter(object)
