@@ -18,6 +18,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.hometab.Fragment_Home;
 import com.einheit.matchezy.hometab.RecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
@@ -38,6 +39,17 @@ public class FragmentBookmarks extends Fragment {
 
     RecyclerView myrv;
     BookmarksRecyclerViewAdapter myAdapter;
+
+    public FragmentBookmarks() {
+        // Required empty public constructor
+    }
+
+    public static FragmentBookmarks newInstance() {
+
+        FragmentBookmarks fragmentBookmarks = new FragmentBookmarks();
+
+        return fragmentBookmarks;
+    }
 
 
     @Override

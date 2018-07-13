@@ -38,7 +38,7 @@ public class HomeScreen extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.home_container, Fragment_Home.newInstance()).commit();
                     break;
                 case R.id.navigation_bookmarks:
-                    fragmentManager.beginTransaction().replace(R.id.home_container, new Fragment_favorites()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.home_container, Fragment_favorites.newInstance()).commit();
                     break;
                 case R.id.navigation_messages:
                     fragmentManager.beginTransaction().replace(R.id.home_container, new Fragment_messages()).commit();

@@ -3,17 +3,24 @@ package com.einheit.matchezy.hometab;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MatchedProfiles;
@@ -32,12 +39,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Activity c;
     private Context mContext ;
-    private List<MatchedProfiles> mData ;
+    private List<MatchedProfiles> mData;
+    JSONObject userData;
 
 
     public RecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
@@ -83,7 +93,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.chipgroup_interests.setSingleLine(true);
 
         try {
-            JSONObject userData = new JSONObject(mData.get(position).getUserData());
+            userData = new JSONObject(mData.get(position).getUserData());
             JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
             JSONArray otherInterests = userData.getJSONArray("otherInterests");
 
@@ -135,19 +145,72 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             e.printStackTrace();
         }
 
-
         holder.bookmarkbtn.setTag("empty");
 
         holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                try {
+                    userData = new JSONObject(mData.get(position).getUserData());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 if (holder.bookmarkbtn.getTag().equals("empty")) {
-                    holder.bookmarkbtn.setTag("full");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        holder.bookmarkbtn.setTag("full");
+                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
                 } else {
-                    holder.bookmarkbtn.setTag("empty");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        holder.bookmarkbtn.setTag("empty");
+                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
                 }
 
             }
@@ -161,7 +224,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent i = new Intent(mContext, ProfilePage.class)
                         .putExtra("fromStatusCode", Utility.FROM_HOMESCREEN)
                         .putExtra("user_id", mData.get(position).getUser_id())
-                        .putExtra("userData", mData.get(position).getUserData());
+                        .putExtra("userData", mData.get(position).getUserData())
+                        .putExtra("tag", holder.bookmarkbtn.getTag().toString());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(i);
 
@@ -199,6 +263,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
 
         }
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = c.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 }

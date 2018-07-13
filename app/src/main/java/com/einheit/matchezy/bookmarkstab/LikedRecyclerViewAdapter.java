@@ -49,7 +49,7 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_matched_profiles,parent,false);
+        view = mInflater.inflate(R.layout.cardview_likes,parent,false);
         return new LikedRecyclerViewAdapter.MyViewHolder(view);
     }
 
@@ -78,7 +78,7 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
             e.printStackTrace();
         }
 
-        holder.chipgroup_interests.setSingleLine(true);
+        /*holder.chipgroup_interests.setSingleLine(true);
 
         try {
             JSONObject userData = new JSONObject(mData.get(position).getUserData());
@@ -126,10 +126,10 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
 
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
-        holder.bookmarkbtn.setTag("empty");
+        /*holder.bookmarkbtn.setTag("empty");
 
         holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,7 +144,7 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
                 }
 
             }
-        });
+        });*/
 
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -174,22 +174,22 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
 
         TextView name;
         ImageView img_book_thumbnail;
-        ImageView bookmarkbtn;
+        //ImageView bookmarkbtn;
         CardView cardView ;
-        ChipGroup chipgroup_interests;
-        LinearLayout matchinglayout;
-        TextView matchingnumber;
+        //ChipGroup chipgroup_interests;
+        //LinearLayout matchinglayout;
+        //TextView matchingnumber;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
-            bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
+            //bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-            chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
+            /*chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
             matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
-            matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
+            matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);*/
 
         }
     }

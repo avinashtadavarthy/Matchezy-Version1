@@ -115,6 +115,16 @@ public class ProfilePage extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        if(getIntent().hasExtra("tag")) {
+            if (getIntent().getStringExtra("tag").equals("full")) {
+                ct = true;
+                bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+            } else {
+                ct = false;
+                bookmarkbtn.setImageResource(R.drawable.bookmark_empty);
+            }
+        }
+
         profilename.setText(userData.optString("name") + ", ");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         try {
@@ -162,11 +172,61 @@ public class ProfilePage extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(!ct) {
-                    bookmarkbtn.setImageResource(R.drawable.bookmark_full);
-                    ct = true;
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                                        ct = true;
+                                        Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+
                 } else {
-                    bookmarkbtn.setImageResource(R.drawable.bookmark_empty);
-                    ct = false;
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        bookmarkbtn.setImageResource(R.drawable.bookmark_empty);
+                                        ct = false;
+                                        Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+
                 }
 
             }
@@ -494,7 +554,7 @@ public class ProfilePage extends AppCompatActivity {
 
     void fromBookmarkedProfiles() {
         editbtn.setVisibility(View.GONE);
-        bookmarkbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.VISIBLE);
         likeFab.setVisibility(View.VISIBLE);
         disLikeFab.setVisibility(View.VISIBLE);
     }

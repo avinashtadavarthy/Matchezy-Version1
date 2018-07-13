@@ -3,6 +3,7 @@ package com.einheit.matchezy.bookmarkstab;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
@@ -13,7 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
@@ -30,12 +36,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<BookmarksRecyclerViewAdapter.MyViewHolder> {
 
     private Activity c;
     private Context mContext ;
-    private List<MatchedProfiles> mData ;
+    private List<MatchedProfiles> mData;
+    JSONObject userData;
 
 
     public BookmarksRecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
@@ -49,7 +58,7 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<Bookmarks
 
         View view ;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_matched_profiles,parent,false);
+        view = mInflater.inflate(R.layout.cardview_bookmarks,parent,false);
         return new MyViewHolder(view);
     }
 
@@ -78,69 +87,73 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<Bookmarks
             e.printStackTrace();
         }
 
-        holder.chipgroup_interests.setSingleLine(true);
 
-        try {
-            JSONObject userData = new JSONObject(mData.get(position).getUserData());
-            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
-            JSONArray otherInterests = userData.getJSONArray("otherInterests");
-
-            if (userData.optString("noOfMatchingInterests").equals("0")) {
-                holder.matchinglayout.setVisibility(View.GONE);
-            } else {
-                holder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
-            }
-
-
-            if(matchingInterests.length() != 0) {
-                for(int i = 0; i<matchingInterests.length(); i++) {
-
-                    Chip chip = new Chip(c);
-                    chip.setChipText(matchingInterests.getString(i).toUpperCase());
-                    chip.setChipBackgroundColorResource(R.color.appdarkred);
-                    chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
-
-                    holder.chipgroup_interests.addView(chip);
-                }
-            }
-
-            if (otherInterests.length() != 0) {
-                for(int i = 0; i<otherInterests.length(); i++) {
-
-                    Chip chip = new Chip(c);
-                    chip.setChipText(otherInterests.getString(i).toUpperCase());
-                    chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
-
-                    holder.chipgroup_interests.addView(chip);
-                }
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        holder.bookmarkbtn.setTag("empty");
+        holder.bookmarkbtn.setTag("full");
 
         holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                try {
+                    userData = new JSONObject(mData.get(position).getUserData());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 if (holder.bookmarkbtn.getTag().equals("empty")) {
-                    holder.bookmarkbtn.setTag("full");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        holder.bookmarkbtn.setTag("full");
+                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
                 } else {
-                    holder.bookmarkbtn.setTag("empty");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
+                            .addBodyParameter("user_id", getSPData("user_id"))
+                            .addBodyParameter("user_token", getSPData("user_token"))
+                            .addBodyParameter("user_id_2", userData.optString("user_id"))
+                            .setPriority(Priority.HIGH)
+                            .build()
+                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                @Override
+                                public void onResponse(JSONObject res) {
+
+                                    if(res.optInt("status_code") == 200) {
+                                        holder.bookmarkbtn.setTag("empty");
+                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else
+                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                }
+
+                                @Override
+                                public void onError(ANError error) {
+                                    error.printStackTrace();
+                                }
+                            });
                 }
 
             }
@@ -154,7 +167,8 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<Bookmarks
                 Intent i = new Intent(mContext, ProfilePage.class)
                         .putExtra("fromStatusCode", Utility.FROM_BOOKMARKED)
                         .putExtra("user_id", mData.get(position).getUser_id())
-                        .putExtra("userData", mData.get(position).getUserData());
+                        .putExtra("userData", mData.get(position).getUserData())
+                        .putExtra("tag", holder.bookmarkbtn.getTag().toString());
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(i);
 
@@ -175,23 +189,31 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<Bookmarks
         TextView name;
         ImageView img_book_thumbnail;
         ImageView bookmarkbtn;
-        CardView cardView ;
-        ChipGroup chipgroup_interests;
-        LinearLayout matchinglayout;
-        TextView matchingnumber;
+        CardView cardView;
+        //ChipGroup chipgroup_interests;
+        //LinearLayout matchinglayout;
+        //TextView matchingnumber;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            name = (TextView) itemView.findViewById(R.id.name) ;
+            name = (TextView) itemView.findViewById(R.id.name);
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
             bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-            chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
-            matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
-            matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
+            //chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
+            //matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
+            //matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
 
         }
+    }
+
+    private String getSPData(String key) {
+
+        SharedPreferences mUserData = c.getSharedPreferences("UserData", MODE_PRIVATE);
+        String data = mUserData.getString(key, "");
+
+        return data;
     }
 
 }

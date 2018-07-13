@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.hometab.Fragment_Home;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,17 @@ public class Fragment_favorites extends android.support.v4.app.Fragment {
     private ViewPager viewPager;
 
     View myView;
+
+    public Fragment_favorites() {
+        // Required empty public constructor
+    }
+
+    public static Fragment_favorites newInstance() {
+
+        Fragment_favorites fragment = new Fragment_favorites();
+
+        return fragment;
+    }
 
 
     @Override
@@ -52,7 +64,7 @@ public class Fragment_favorites extends android.support.v4.app.Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
-        adapter.addFragment(new FragmentBookmarks(), "Bookmarks");
+        adapter.addFragment(FragmentBookmarks.newInstance(), "Bookmarks");
         adapter.addFragment(new FragmentLikes(), "Likes");
         viewPager.setAdapter(adapter);
     }

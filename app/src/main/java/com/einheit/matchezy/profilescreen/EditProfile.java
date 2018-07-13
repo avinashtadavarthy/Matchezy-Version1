@@ -27,11 +27,13 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.RawData;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.hometab.CustomDialogClass;
 import com.einheit.matchezy.hometab.Filter;
+import com.einheit.matchezy.login.Login;
 import com.einheit.matchezy.registration.ChooseCity;
 import com.einheit.matchezy.registration.LanguagesPopUp;
 import com.einheit.matchezy.registration.Registration2;
@@ -361,14 +363,14 @@ public class EditProfile extends AppCompatActivity {
                         object.addProperty("feet", height[0]);
                         if(height.length == 1)
                             object.addProperty("inches", "0");
-                        else object.addProperty("inches", height[1]);
+                        else object.addProperty("inches", height[1].replace("\"",""));
                     }
 
-                    Log.e("ASd", object.toString());)
+                    Log.e("ASd", object.toString());
 
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
                             .addBodyParameter(object)
-                            .setPriority(Priority.MEDIUM)
+                            .setPriority(Priority.HIGH)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
@@ -376,7 +378,34 @@ public class EditProfile extends AppCompatActivity {
 
                                     Log.e("ASD", res.toString());
 
-                                    if (res.optInt("status_code") == 200) {
+                                    if (res.optInt("status_code") == 200) {AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")
+                                            .addBodyParameter("user_id", getSPData("user_id"))
+                                            .addBodyParameter("user_token", getSPData("user_token"))
+                                            .addBodyParameter("user_id_2", getSPData("user_id"))
+                                            .setPriority(Priority.HIGH)
+                                            .build()
+                                            .getAsJSONObject(new JSONObjectRequestListener() {
+                                                @Override
+                                                public void onResponse(JSONObject response) {
+                                                    // do anything with response
+
+                                                    if(response.optInt("status_code") == 200) {
+                                                        //Log.e("userdata", response.toString());
+                                                        storeSPData("userdata", response.optJSONObject("message").toString());
+                                                    }
+                                                    else {
+                                                        Toast.makeText(EditProfile.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                                @Override
+                                                public void onError(ANError error) {
+
+                                                    error.printStackTrace();
+
+                                                }
+                                            });
+
+
 
                                         finish();
                                         Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
@@ -445,7 +474,10 @@ public class EditProfile extends AppCompatActivity {
 
         ft = userData.optJSONObject("height").optString("feet");
         inch = userData.optJSONObject("height").optString("inches");
-        int index = data.indexOf(ft + "'" + inch + "\"");
+        int index = -1;
+        if(!inch.equals("0"))
+            index = data.indexOf(ft + "'" + inch + "\"");
+        else index = data.indexOf(ft + "'");
         scroll_choice.addItems(data, index);
 
     }
