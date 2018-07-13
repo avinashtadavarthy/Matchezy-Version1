@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -319,6 +320,41 @@ public class ProfilePage extends AppCompatActivity {
             }
         });
 
+        disLikeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AndroidNetworking.post(Utility.getInstance().BASE_URL + "disLikeUser")
+                        .addBodyParameter("user_id", getSPData("user_id"))
+                        .addBodyParameter("user_token", getSPData("user_token"))
+                        .addBodyParameter("user_id_2", userData.optString("user_id"))
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // do anything with response
+
+                                if(response.optInt("status_code") == 200) {
+                                    Log.e("userdata", response.toString());
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onError(ANError error) {
+
+                                error.printStackTrace();
+
+                            }
+                        });
+            }
+        });
+
         final Animation anim = new AlphaAnimation(1.0f, 0.0f);
         anim.setDuration(200);
         anim.setRepeatCount(1);
@@ -504,6 +540,15 @@ public class ProfilePage extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     //Shared Preferences
     private void storeSPData(String key, String data) {

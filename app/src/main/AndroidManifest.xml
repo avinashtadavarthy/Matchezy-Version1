@@ -28,7 +28,6 @@
         <activity android:screenOrientation="portrait"  android:name=".HomeScreen" />
         <activity android:screenOrientation="portrait"
             android:name=".profilescreen.ProfilePage"
-            android:parentActivityName=".HomeScreen"
             android:theme="@style/ProfilePageTheme" />
         <activity android:screenOrientation="portrait"
             android:name=".registration.Registration"
