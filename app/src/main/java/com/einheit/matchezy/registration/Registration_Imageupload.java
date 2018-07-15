@@ -46,7 +46,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -63,6 +65,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     ArrayList<String> interestsArray;
     String interestsArrayString;
     List<File> files;
+    Map<Integer, File> map;
     private ProgressDialog dialog;
 
     @Override
@@ -83,6 +86,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         dialog = new ProgressDialog(Registration_Imageupload.this);
 
         files = new ArrayList<>();
+        map = new HashMap<Integer, File>();
 
         Intent intent = getIntent();
         interestsArray = intent.getStringArrayListExtra("interestsArray");
@@ -142,10 +146,10 @@ public class Registration_Imageupload extends AppCompatActivity {
                     dialog.show();
 
                     AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
-                            .addMultipartFile("profile_pic", files.get(0))
-                            .addMultipartFile("pictures", files.get(1))
-                            .addMultipartFile("pictures_2", files.get(2))
-                            .addMultipartFile("pictures_3", files.get(3))
+                            .addMultipartFile("profile_pic", map.get(0))
+                            .addMultipartFile("pictures", map.get(1))
+                            .addMultipartFile("pictures_2", map.get(2))
+                            .addMultipartFile("pictures_3", map.get(3))
                             .addMultipartParameter("username", getSPData("username"))
                             .addMultipartParameter("dob", getSPData("dob"))
                             .addMultipartParameter("phone_number", getSPData("phone_number"))
@@ -323,14 +327,14 @@ public class Registration_Imageupload extends AppCompatActivity {
 
                     String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
                     final File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                            + "/MatchEzy/");
+                            + "/MatchEzy");
                     boolean success = true;
                     if (!storageDir.exists()) {
                         success = storageDir.mkdirs();
                     }
 
                     try {
-                        fileOutputStream = new FileOutputStream(storageDir + imageFileName);
+                        fileOutputStream = new FileOutputStream(storageDir + "/" + imageFileName);
 
                         bm.compress(Bitmap.CompressFormat.JPEG, 75, fileOutputStream);
 
@@ -347,10 +351,16 @@ public class Registration_Imageupload extends AppCompatActivity {
                         }
                     }
 
-                    files.add(i - 1, new File(storageDir + imageFileName));
-                    bm.recycle();
+                    map.put(i - 1,  new File(storageDir + "/" + imageFileName));
+                    if(files.size() < 4)
+                        files.add(new File(storageDir + "/" + imageFileName));
+                    else files.set(i - 1, new File(storageDir + "/" + imageFileName));
 
-                    Log.e("ASD", String.valueOf(files.get(i - 1).length()/1024));
+                    Log.e("asd", map.toString());
+                    Log.e("ASD", files.toString());
+                    Log.e("ASd", String.valueOf(files.size()));
+
+                    bm.recycle();
 
                     if (i == 1) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview1)).setImageURI(selectedImageUri);

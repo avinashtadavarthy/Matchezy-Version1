@@ -88,13 +88,13 @@ public class ChatImage extends AppCompatActivity {
 
         String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
         File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                + "/MatchEzy/");
+                + "/MatchEzy");
         boolean success = true;
         if (!storageDir.exists()) {
             success = storageDir.mkdirs();
         }
         if (success) {
-            File imageFile = new File(storageDir + imageFileName);
+            File imageFile = new File(storageDir + "/" + imageFileName);
             savedImagePath = imageFile.getAbsolutePath();
             try {
                 OutputStream fOut = new FileOutputStream(imageFile);

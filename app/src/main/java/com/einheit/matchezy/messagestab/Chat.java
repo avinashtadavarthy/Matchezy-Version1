@@ -600,7 +600,7 @@ public class Chat extends AppCompatActivity {
 
                 String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
                 final File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                        + "/MatchEzy/");
+                        + "/MatchEzy");
                 boolean success = true;
                 if (!storageDir.exists()) {
                     success = storageDir.mkdirs();
@@ -624,7 +624,7 @@ public class Chat extends AppCompatActivity {
                     }
                 }
 
-                final File compressedFile = new File(storageDir + imageFileName);
+                final File compressedFile = new File(storageDir + "/" + imageFileName);
                 final Uri compressedFileUri = Uri.fromFile(compressedFile);
                 bm.recycle();
 
