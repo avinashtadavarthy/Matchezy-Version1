@@ -236,6 +236,13 @@ public class Filter extends AppCompatActivity {
                                 rangebar_age.setRangePinsByValue(21,50);
                                 rangebar_height.setRangePinsByValue(120,213);
 
+                                rangebar_height.setFormatter(new IRangeBarFormatter() {
+                                    @Override
+                                    public String format(String value) {
+                                        return centimeterToFeet(value);
+                                    }
+                                });
+
                                 height_start.setText("4'0\"");
                                 height_end.setText("7'0\"");
 

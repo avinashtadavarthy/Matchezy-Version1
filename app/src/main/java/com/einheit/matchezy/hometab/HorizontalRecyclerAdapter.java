@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,11 +20,15 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
 
     List<Fragment_Home.Data> horizontalList = Collections.emptyList();
     Context context;
+    private final OnItemClickListener clickListener;
 
 
-    public HorizontalRecyclerAdapter(List<Fragment_Home.Data> horizontalList, Context context) {
+    public HorizontalRecyclerAdapter(List<Fragment_Home.Data> horizontalList, Context context,
+                                     OnItemClickListener clickListener) {
         this.horizontalList = horizontalList;
         this.context = context;
+        this.clickListener = clickListener;
+
     }
 
 
@@ -57,8 +62,7 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
             @Override
 
             public void onClick(View v) {
-                String list = horizontalList.get(position).txt.toString();
-                Toast.makeText(context, list, Toast.LENGTH_SHORT).show();
+                clickListener.onItemClick(horizontalList.get(position).txt);
             }
 
         });
@@ -70,6 +74,10 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
     public int getItemCount()
     {
         return horizontalList.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(String name);
     }
 
 }

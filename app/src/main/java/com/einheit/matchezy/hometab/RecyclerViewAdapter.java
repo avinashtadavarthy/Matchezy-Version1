@@ -97,12 +97,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
             JSONArray otherInterests = userData.getJSONArray("otherInterests");
 
+            Log.e("ASD", "MI - " + matchingInterests.length() + " - " + matchingInterests.toString());
+            Log.e("ASD", "OI - " + otherInterests.length() + " - " + otherInterests.toString());
+
             if (userData.optString("noOfMatchingInterests").equals("0")) {
                 holder.matchinglayout.setVisibility(View.GONE);
             } else {
                 holder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
             }
 
+            holder.chipgroup_interests.removeAllViews();
 
             if(matchingInterests.length() != 0) {
                 for(int i = 0; i<matchingInterests.length(); i++) {

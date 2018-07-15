@@ -49,7 +49,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_Home extends android.support.v4.app.Fragment {
+public class Fragment_Home extends android.support.v4.app.Fragment implements HorizontalRecyclerAdapter.OnItemClickListener{
 
     View myView;
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
@@ -62,6 +62,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     RecyclerView myrv;
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
+    TextView recommendedTextView;
 
     public Fragment_Home() {
         // Required empty public constructor
@@ -82,8 +83,10 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         progressOverlay.setVisibility(View.VISIBLE);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
+        recommendedTextView = myView.findViewById(R.id.recommendedTextView);
+
         data = filldata();
-        horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext());
+        horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext(), this);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         horizontal_recycler_view.setAdapter(horizontalAdapter);
@@ -122,6 +125,50 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
             filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
         }
 
+        filterProfiles(filterObject);
+
+        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
+        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        myrv.setAdapter(myAdapter);
+
+
+        return myView;
+    }
+
+
+    public List<Data> filldata() {
+
+        List<Data> data = new ArrayList<>();
+
+        data.add(new Data( R.drawable.photography, "Photography"));
+        data.add(new Data( R.drawable.pets, "Pets"));
+        data.add(new Data( R.drawable.books, "Books"));
+        data.add(new Data( R.drawable.travel, "Travel"));
+        data.add(new Data( R.drawable.philosophy, "Philosophy"));
+        data.add(new Data( R.drawable.history, "History"));
+
+
+        return data;
+    }
+
+    @Override
+    public void onItemClick(String name) {
+        filterObject = new JsonObject();
+
+        storeSPData("filterObject",filterObject.toString());
+
+        filterObject.addProperty("interests", "[" + name + "]");
+
+        recommendedTextView.setText(name);
+
+        lstMatchedProfiles.clear();
+        myAdapter.notifyDataSetChanged();
+
+        filterProfiles(filterObject);
+    }
+
+    private void filterProfiles(JsonObject filterObject) {
+
         filterObject.addProperty("user_id", getSPData("user_id"));
         filterObject.addProperty("user_token", getSPData("user_token"));
 
@@ -152,7 +199,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                                             object.optString("dob"),
                                             object.optJSONArray("interests"),
                                             object.toString()));
-                                    Log.d(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests" )));
+                                    Log.e(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests" )));
                                     myAdapter.notifyDataSetChanged();
 
 
@@ -172,61 +219,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                         error.printStackTrace();
                     }
                 });
-
-
-       /* //test
-        ChipGroup testchipgrp = myView.findViewById(R.id.testchipgrp);
-        String[] matchingInterests = {"These", "are", "some", "sample", "words", "that"};
-        String[] unmatchedinterests = {"will", "blow", "your", "mind", "motha", "fucka"};
-        for (String matchingInterest : matchingInterests) {
-            Chip chip = new Chip(getContext());
-            chip.setChipText(matchingInterest);
-            chip.setChipStrokeColorResource(R.color.orange);
-            chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-            chip.setChipBackgroundColorResource(android.R.color.transparent);
-            chip.setChipStrokeWidth(2);
-            chip.setTextStartPadding(1);
-            chip.setTextEndPadding(0);
-            chip.setChipMinHeight(0);
-            chip.setChipCornerRadius(20);
-            testchipgrp.addView(chip);
-        }
-
-        for (String unmatchedinterest : unmatchedinterests) {
-            Chip chip = new Chip(getContext());
-            chip.setChipText(unmatchedinterest);
-            chip.setChipStrokeColorResource(R.color.lightgrey);
-            chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
-            chip.setChipBackgroundColorResource(android.R.color.transparent);
-            chip.setChipStrokeWidth(2);
-            chip.setTextStartPadding(1);
-            chip.setTextEndPadding(0);
-            chip.setChipMinHeight(0);
-            chip.setChipCornerRadius(20);
-            testchipgrp.addView(chip);
-        }
-        //test*/
-
-
-
-
-        return myView;
-    }
-
-
-    public List<Data> filldata() {
-
-        List<Data> data = new ArrayList<>();
-
-        data.add(new Data( R.drawable.photography, "Photography"));
-        data.add(new Data( R.drawable.pets, "Pets"));
-        data.add(new Data( R.drawable.books, "Books"));
-        data.add(new Data( R.drawable.travel, "Travel"));
-        data.add(new Data( R.drawable.philosophy, "Philosophy"));
-        data.add(new Data( R.drawable.history, "History"));
-
-
-        return data;
     }
 
 
@@ -248,6 +240,15 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         String data = mUserData.getString(key, "");
 
         return data;
+    }
+
+    private void storeSPData(String key, String data) {
+
+        SharedPreferences mUserData = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
     }
 
 }
