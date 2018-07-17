@@ -1,7 +1,10 @@
 package com.einheit.matchezy.login;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MySingleton;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.messagestab.ForceUpdateChecker;
 import com.einheit.matchezy.registration.OTP;
 import com.einheit.matchezy.registration.Registration;
 import com.facebook.AccessToken;
@@ -39,12 +43,13 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.List;
 
-public class Login extends AppCompatActivity {
+public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpdateNeededListener{
 
     TextView signup, forgotpassword;
     EditText emailEditText, passwordEditText;
 
     View progressOverlay;
+    AlertDialog newUpdateDialog;
 
     //fb login integration
     CallbackManager callbackManager;
@@ -65,6 +70,8 @@ public class Login extends AppCompatActivity {
         progressOverlay = findViewById(R.id.progress_overlay);
 
         FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
         if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
             Intent i = new Intent(getApplicationContext(),HomeScreen.class);
@@ -402,5 +409,39 @@ public class Login extends AppCompatActivity {
         return data;
 
     }
+
+    @Override
+    public void onUpdateNeeded(final String updateUrl) {
+         newUpdateDialog = new AlertDialog.Builder(this)
+                .setTitle("New version available")
+                .setCancelable(false)
+                .setMessage("Please, update app to new version to continue.")
+                .setPositiveButton("Update",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                redirectStore(updateUrl);
+                            }
+                        }).setNegativeButton("Later",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.addCategory(Intent.CATEGORY_HOME);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).create();
+        newUpdateDialog.show();
+    }
+
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
 
 }
