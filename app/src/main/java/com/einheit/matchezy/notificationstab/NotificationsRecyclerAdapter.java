@@ -9,10 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,12 +32,11 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView profilename, lastmessage, timestamp;
+        public TextView profilename, timestamp;
         public CircleImageView profileimg;
         public ViewHolder(View v) {
             super(v);
             profilename = v.findViewById(R.id.profilename);
-            lastmessage = v.findViewById(R.id.lastmessage);
             timestamp = v.findViewById(R.id.timestamp);
             profileimg = v.findViewById(R.id.profileimg);
         }
@@ -46,7 +51,7 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
     // Create new views (invoked by the layout manager)
     @Override
     public NotificationsRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_list_view, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_list_item, parent, false);
 
         return new ViewHolder(itemView);
     }
@@ -59,15 +64,34 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
 
         try {
 
-            if (mDataset.getJSONObject(position).optString("read").equals("false")) {
+            /*if (mDataset.getJSONObject(position).optString("read").equals("false")) {
                 holder.profilename.setTypeface(null, Typeface.BOLD);
                 holder.lastmessage.setTypeface(null, Typeface.BOLD);
+            }*/
+
+            holder.profilename.setText(mDataset.getJSONObject(position).optString("title"));
+
+            String time = "";
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            try {
+                Date date = format.parse(mDataset.getJSONObject(position).optString("timeStamp"));
+                date = new Date(date.getTime() - (date.getTimezoneOffset() * 60000));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+                time = dateFormat.format(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
-            holder.profilename.setText(mDataset.getJSONObject(position).optString("name"));
-            holder.lastmessage.setText(mDataset.getJSONObject(position).optString("lastMessage"));
-            holder.timestamp.setText(mDataset.getJSONObject(position).optString("timeStamp"));
-            Glide.with(mContext).load(mDataset.getJSONObject(position).optString("profileImageURL")).into(holder.profileimg);
+            holder.timestamp.setText(time);
+
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.placeholder(R.drawable.logo);
+            requestOptions.error(R.drawable.logo_white);
+
+            Glide.with(mContext)
+                    .load(mDataset.getJSONObject(position).optString("profileImageURL"))
+                    .apply(requestOptions)
+                    .into(holder.profileimg);
 
         } catch (JSONException e) {
             e.printStackTrace();
