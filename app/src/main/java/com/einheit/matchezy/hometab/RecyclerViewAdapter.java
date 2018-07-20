@@ -8,12 +8,15 @@ import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,13 +45,15 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity c;
     private Context mContext ;
     private List<MatchedProfiles> mData;
     JSONObject userData;
 
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
     public RecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
         this.mContext = mContext;
@@ -57,184 +62,192 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view ;
-        LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_matched_profiles,parent,false);
-        return new MyViewHolder(view);
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view;
+            LayoutInflater mInflater = LayoutInflater.from(mContext);
+            view = mInflater.inflate(R.layout.cardview_matched_profiles, parent, false);
+            return new MyViewHolder(view);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading_recycler_view, parent, false);
+            return new LoadingViewHolder(view);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
-        String name;
-        if(mData.get(position).getName().contains(" ")) {
-            name = mData.get(position).getName().split(" ")[0];
-        } else {
-            name = mData.get(position).getName().split("@")[0];
-        }
+        if (holder instanceof MyViewHolder) {
 
-        holder.name.setText(name + ", ");
-        Glide.with(mContext)
-                .load(mData.get(position).getThumbnail())
-                .into(holder.img_book_thumbnail);
+            final MyViewHolder dataViewHolder = (MyViewHolder) holder;
 
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        try {
-            Date date = format.parse(String.valueOf(mData.get(position).getAge()));
-            holder.name.append(Utility.getInstance().getAge(date.getYear() + 1900,
-                    date.getMonth(), date.getDay()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        holder.chipgroup_interests.setSingleLine(true);
-
-        try {
-            userData = new JSONObject(mData.get(position).getUserData());
-            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
-            JSONArray otherInterests = userData.getJSONArray("otherInterests");
-
-            Log.e("ASD", "MI - " + matchingInterests.length() + " - " + matchingInterests.toString());
-            Log.e("ASD", "OI - " + otherInterests.length() + " - " + otherInterests.toString());
-
-            if (userData.optString("noOfMatchingInterests").equals("0")) {
-                holder.matchinglayout.setVisibility(View.GONE);
+            String name;
+            if (mData.get(position).getName().contains(" ")) {
+                name = mData.get(position).getName().split(" ")[0];
             } else {
-                holder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
+                name = mData.get(position).getName().split("@")[0];
             }
 
-            holder.chipgroup_interests.removeAllViews();
+            dataViewHolder.name.setText(name + ", ");
+            Glide.with(mContext)
+                    .load(mData.get(position).getThumbnail())
+                    .into(dataViewHolder.img_book_thumbnail);
 
-            if(matchingInterests.length() != 0) {
-                for(int i = 0; i<matchingInterests.length(); i++) {
 
-                    Chip chip = new Chip(c);
-                    chip.setChipText(matchingInterests.getString(i).toUpperCase());
-                    chip.setChipStrokeColorResource(R.color.orange);
-                    chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                    chip.setChipBackgroundColorResource(android.R.color.transparent);
-                    chip.setChipStrokeWidth(2);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
-
-                    holder.chipgroup_interests.addView(chip);
-                }
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            try {
+                Date date = format.parse(String.valueOf(mData.get(position).getAge()));
+                dataViewHolder.name.append(Utility.getInstance().getAge(date.getYear() + 1900,
+                        date.getMonth(), date.getDay()));
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
 
-            if (otherInterests.length() != 0) {
-                for(int i = 0; i<otherInterests.length(); i++) {
+            dataViewHolder.chipgroup_interests.setSingleLine(true);
 
-                    Chip chip = new Chip(c);
-                    chip.setChipText(otherInterests.getString(i).toUpperCase());
-                    chip.setChipStrokeColorResource(R.color.lightgrey);
-                    chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
-                    chip.setChipBackgroundColorResource(android.R.color.transparent);
-                    chip.setChipStrokeWidth(2);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
+            try {
+                userData = new JSONObject(mData.get(position).getUserData());
+                JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
+                JSONArray otherInterests = userData.getJSONArray("otherInterests");
 
-                    holder.chipgroup_interests.addView(chip);
-                }
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        holder.bookmarkbtn.setTag("empty");
-
-        holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                try {
-                    userData = new JSONObject(mData.get(position).getUserData());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                if (holder.bookmarkbtn.getTag().equals("empty")) {
-                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
-                            .addBodyParameter("user_id", getSPData("user_id"))
-                            .addBodyParameter("user_token", getSPData("user_token"))
-                            .addBodyParameter("user_id_2", userData.optString("user_id"))
-                            .setPriority(Priority.HIGH)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject res) {
-
-                                    if(res.optInt("status_code") == 200) {
-                                        holder.bookmarkbtn.setTag("full");
-                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
-                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    else
-                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                @Override
-                                public void onError(ANError error) {
-                                    error.printStackTrace();
-                                }
-                            });
+                if (userData.optString("noOfMatchingInterests").equals("0")) {
+                    dataViewHolder.matchinglayout.setVisibility(View.GONE);
                 } else {
-                    AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
-                            .addBodyParameter("user_id", getSPData("user_id"))
-                            .addBodyParameter("user_token", getSPData("user_token"))
-                            .addBodyParameter("user_id_2", userData.optString("user_id"))
-                            .setPriority(Priority.HIGH)
-                            .build()
-                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                @Override
-                                public void onResponse(JSONObject res) {
-
-                                    if(res.optInt("status_code") == 200) {
-                                        holder.bookmarkbtn.setTag("empty");
-                                        holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
-                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    else
-                                        Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
-
-                                }
-
-                                @Override
-                                public void onError(ANError error) {
-                                    error.printStackTrace();
-                                }
-                            });
+                    dataViewHolder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
                 }
 
+                dataViewHolder.chipgroup_interests.removeAllViews();
+
+                if (matchingInterests.length() != 0) {
+                    for (int i = 0; i < matchingInterests.length(); i++) {
+
+                        Chip chip = new Chip(c);
+                        chip.setChipText(matchingInterests.getString(i).toUpperCase());
+                        chip.setChipStrokeColorResource(R.color.orange);
+                        chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
+                        chip.setChipBackgroundColorResource(android.R.color.transparent);
+                        chip.setChipStrokeWidth(2);
+                        chip.setTextStartPadding(1);
+                        chip.setTextEndPadding(0);
+                        chip.setChipMinHeight(0);
+                        chip.setChipCornerRadius(20);
+
+                        dataViewHolder.chipgroup_interests.addView(chip);
+                    }
+                }
+
+                if (otherInterests.length() != 0) {
+                    for (int i = 0; i < otherInterests.length(); i++) {
+
+                        Chip chip = new Chip(c);
+                        chip.setChipText(otherInterests.getString(i).toUpperCase());
+                        chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
+                        chip.setTextStartPadding(1);
+                        chip.setTextEndPadding(0);
+                        chip.setChipMinHeight(0);
+                        chip.setChipCornerRadius(20);
+
+                        dataViewHolder.chipgroup_interests.addView(chip);
+                    }
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
+
+            dataViewHolder.bookmarkbtn.setTag("empty");
+
+            dataViewHolder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    try {
+                        userData = new JSONObject(mData.get(position).getUserData());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (dataViewHolder.bookmarkbtn.getTag().equals("empty")) {
+                        AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
+                                .addBodyParameter("user_id", getSPData("user_id"))
+                                .addBodyParameter("user_token", getSPData("user_token"))
+                                .addBodyParameter("user_id_2", userData.optString("user_id"))
+                                .setPriority(Priority.HIGH)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject res) {
+
+                                        if (res.optInt("status_code") == 200) {
+                                            dataViewHolder.bookmarkbtn.setTag("full");
+                                            dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+                                            Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                        } else
+                                            Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onError(ANError error) {
+                                        error.printStackTrace();
+                                    }
+                                });
+                    } else {
+                        AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
+                                .addBodyParameter("user_id", getSPData("user_id"))
+                                .addBodyParameter("user_token", getSPData("user_token"))
+                                .addBodyParameter("user_id_2", userData.optString("user_id"))
+                                .setPriority(Priority.HIGH)
+                                .build()
+                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                    @Override
+                                    public void onResponse(JSONObject res) {
+
+                                        if (res.optInt("status_code") == 200) {
+                                            dataViewHolder.bookmarkbtn.setTag("empty");
+                                            dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+                                            Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                        } else
+                                            Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                    @Override
+                                    public void onError(ANError error) {
+                                        error.printStackTrace();
+                                    }
+                                });
+                    }
+
+                }
+            });
 
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            dataViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                Intent i = new Intent(mContext, ProfilePage.class)
-                        .putExtra("fromStatusCode", Utility.FROM_HOMESCREEN)
-                        .putExtra("user_id", mData.get(position).getUser_id())
-                        .putExtra("userData", mData.get(position).getUserData())
-                        .putExtra("tag", holder.bookmarkbtn.getTag().toString());
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(i);
+                    Intent i = new Intent(mContext, ProfilePage.class)
+                            .putExtra("fromStatusCode", Utility.FROM_HOMESCREEN)
+                            .putExtra("user_id", mData.get(position).getUser_id())
+                            .putExtra("userData", mData.get(position).getUserData())
+                            .putExtra("tag", dataViewHolder.bookmarkbtn.getTag().toString());
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
 
-            }
-        });
+                }
+            });
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) loadingViewHolder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
+        }
 
 
 
@@ -242,7 +255,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mData.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -266,6 +284,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
             matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
 
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public LoadingViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         }
     }
 

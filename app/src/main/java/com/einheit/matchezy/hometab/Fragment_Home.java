@@ -12,6 +12,7 @@ import android.support.design.chip.Chip;
 import android.support.design.chip.ChipDrawable;
 import android.support.design.chip.ChipGroup;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +54,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Fragment_Home extends android.support.v4.app.Fragment implements HorizontalRecyclerAdapter.OnItemClickListener{
 
     View myView;
-    List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles ;
+    List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles;
     RecyclerView horizontal_recycler_view;
     HorizontalRecyclerAdapter horizontalAdapter;
     List<Data> data;
@@ -63,6 +65,10 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
     TextView recommendedTextView;
+
+    RecyclerViewScrollListener scrollListener;
+
+    private int lastItemCount = 0;
 
     public Fragment_Home() {
         // Required empty public constructor
@@ -79,15 +85,16 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment__home, container, false);
 
-        progressOverlay = myView.findViewById(R.id.progress_overlay);
-        progressOverlay.setVisibility(View.VISIBLE);
+        /*progressOverlay = myView.findViewById(R.id.progress_overlay);
+        progressOverlay.setVisibility(View.VISIBLE);*/
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
-        recommendedTextView = myView.findViewById(R.id.recommendedTextView);
+            recommendedTextView = myView.findViewById(R.id.recommendedTextView);
 
         data = filldata();
         horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext(), this);
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
         horizontal_recycler_view.setAdapter(horizontalAdapter);
 
@@ -116,7 +123,14 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
         lstMatchedProfiles = new ArrayList<>();
 
+        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        myrv.setLayoutManager(layoutManager);
+        myrv.setAdapter(myAdapter);
+
         filterObject = null;
+
+        lastItemCount = 0;
 
         filterObject = new JsonObject();
 
@@ -125,11 +139,16 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
             filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
         }
 
-        filterProfiles(filterObject);
+        filterProfiles(filterObject, lastItemCount);
 
-        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
-        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        myrv.setAdapter(myAdapter);
+        scrollListener = new RecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadMoreData(myAdapter.getItemCount()-1);
+            }
+        };
+
+        myrv.addOnScrollListener(scrollListener);
 
 
         return myView;
@@ -155,26 +174,31 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     public void onItemClick(String name) {
         filterObject = new JsonObject();
 
-        storeSPData("filterObject",filterObject.toString());
-
         filterObject.addProperty("interests", "[" + name + "]");
 
         recommendedTextView.setText(name);
 
         lstMatchedProfiles.clear();
+        lastItemCount = 0;
+
         myAdapter.notifyDataSetChanged();
 
-        filterProfiles(filterObject);
+        filterProfiles(filterObject, lastItemCount);
     }
 
-    private void filterProfiles(JsonObject filterObject) {
+    void loadMoreData(int index) {
+        Log.e("ASDE", String.valueOf(index));
+        filterProfiles(filterObject, index + 1);
+    }
+
+    private void filterProfiles(JsonObject filterObject, int index) {
 
         filterObject.addProperty("user_id", getSPData("user_id"));
         filterObject.addProperty("user_token", getSPData("user_token"));
+        filterObject.addProperty("offset", index);
 
-        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
-        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        myrv.setAdapter(myAdapter);
+        lstMatchedProfiles.add(null);
+        myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "filterProfiles")
                 .addBodyParameter(filterObject).setPriority(Priority.HIGH)
@@ -183,13 +207,19 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                     @Override
                     public void onResponse(JSONObject res) {
 
-                        if(res.optInt("status_code") == 200) {
-                            //Log.e("ASD", res.toString());
+                        lstMatchedProfiles.remove(lstMatchedProfiles.size() - 1);
+                        myAdapter.notifyItemRemoved(lstMatchedProfiles.size());
 
-                            progressOverlay.setVisibility(View.GONE);
+                        if(res.optInt("status_code") == 200) {
+                            /*Log.e("ASD", res.toString());
+
+                            progressOverlay.setVisibility(View.GONE);*/
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
+                                if(profilesArray.length() == 0) {
+                                    scrollListener.setReachedEnd();
+                                }
                                 for (int i = 0; i < profilesArray.length(); i++) {
                                     JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(
@@ -200,10 +230,12 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                                             object.optJSONArray("interests"),
                                             object.toString()));
                                     Log.e(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests" )));
-                                    myAdapter.notifyDataSetChanged();
-
 
                                 }
+
+                                scrollListener.setLoaded(lstMatchedProfiles.size());
+                                myAdapter.notifyDataSetChanged();
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -248,6 +280,139 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         SharedPreferences.Editor mUserEditor = mUserData.edit();
         mUserEditor.putString(key, data);
         mUserEditor.commit();
+
+    }
+
+    public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
+
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotalItemCount = 0;
+        private boolean loading = true;
+        private int startingPageIndex = 0;
+
+        private boolean reachedEnd = false;
+
+        private RecyclerView.LayoutManager layoutManager;
+
+        public void setLayoutManager(RecyclerView.LayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        public RecyclerView.LayoutManager getLayoutManager()
+        {
+            return layoutManager;
+        }
+
+        public RecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        public RecyclerViewScrollListener(GridLayoutManager layoutManager, int visibleThreshold)
+        {
+            this.layoutManager = layoutManager;
+            this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+        }
+
+        public RecyclerViewScrollListener(
+                StaggeredGridLayoutManager layoutManager,
+                int visibleThreshold)
+        {
+            this.layoutManager = layoutManager;
+            this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+        }
+
+        public int getLastVisibleItem(int[] lastVisibleItemPositions)
+        {
+            int maxSize = 0;
+            for (int i = 0; i < lastVisibleItemPositions.length; i++)
+            {
+                if (i == 0)
+                {
+                    maxSize = lastVisibleItemPositions[i];
+                }
+                else if (lastVisibleItemPositions[i] > maxSize)
+                {
+                    maxSize = lastVisibleItemPositions[i];
+                }
+            }
+            return maxSize;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView view, int dx, int dy)
+        {
+            if (dy < 1)
+            {
+                return;
+            }
+            int lastVisibleItemPosition = 0;
+            int totalItemCount = layoutManager.getItemCount();
+
+            if (layoutManager instanceof StaggeredGridLayoutManager)
+            {
+                int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(null);
+                lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
+            }
+            else if (layoutManager instanceof GridLayoutManager)
+            {
+                lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+            else if (layoutManager instanceof LinearLayoutManager)
+            {
+                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+
+            if (totalItemCount < previousTotalItemCount)
+            {
+                this.currentPage = this.startingPageIndex;
+                this.previousTotalItemCount = totalItemCount;
+                if (totalItemCount == 0)
+                {
+                    this.loading = true;
+                }
+            }
+            if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount && !reachedEnd)
+            {
+                currentPage++;
+                onLoadMore(currentPage, totalItemCount, view);
+                loading = true;
+            }
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE)
+            {
+                boolean canScrollDownMore = recyclerView.canScrollVertically(1);
+                if (!canScrollDownMore)
+                {
+                    onScrolled(recyclerView, 0, 1);
+                }
+            }
+        }
+
+        public void resetState()
+        {
+            this.currentPage = this.startingPageIndex;
+            this.previousTotalItemCount = 0;
+            this.loading = true;
+        }
+
+        public void setLoaded(int totalItemCount) {
+            loading = false;
+            previousTotalItemCount = totalItemCount;
+        }
+
+        public void setReachedEnd() {
+            reachedEnd = true;
+        }
+
+        public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);
 
     }
 

@@ -79,7 +79,6 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
         o.addProperty("user_id", getSPData("user_id"));
         o.addProperty("user_token", getSPData("user_token"));
         o.addProperty("lookingFor", "Both");
-        /* o.addProperty("interests", "[Tv]"); */
 
         AndroidNetworking.post(com.einheit.matchezy.Utility.getInstance().BASE_URL + "getMatchedProfiles")
                 .addBodyParameter(o)
