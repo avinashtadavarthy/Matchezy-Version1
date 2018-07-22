@@ -206,7 +206,7 @@ public class Registration3 extends AppCompatActivity {
         final CharSequence[] items = {"Atheist", "Agnostic", "Spiritual", "Buddhist", "Christian", "Hindu", "Muslim", "Jewish", "Parsi",
                 "Sikh", "Jain", "Inter-Religion", "Other"};
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
         switch (editText_religion.getText().toString()) {
@@ -246,7 +246,7 @@ public class Registration3 extends AppCompatActivity {
     {
         final CharSequence[] items = { "Yes","No","Planning to get"};
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Tattoos?");
         int position;
         switch (editText_tattoos.getText().toString()) {
@@ -284,7 +284,7 @@ public class Registration3 extends AppCompatActivity {
     {
         final CharSequence[] items = { "Yes","No","Planning to get"};
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration3.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Piercing?");
         int position;
         switch (editText_piercing.getText().toString()) {

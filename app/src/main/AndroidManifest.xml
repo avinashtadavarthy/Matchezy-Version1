@@ -23,6 +23,7 @@
         <activity android:screenOrientation="portrait"  android:name=".onboarding.IntroActivity" />
         <activity android:screenOrientation="portrait"
             android:name=".registration.Registration_Interests"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/RegistrationTheme" />
         <activity android:screenOrientation="portrait"  android:name=".HomeScreen" />
         <activity android:screenOrientation="portrait"
@@ -61,8 +62,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:screenOrientation="portrait"  android:name=".hometab.Filter" />
+
         <activity android:screenOrientation="portrait"  android:name=".login.ForgotPassword" />
+
         <activity android:screenOrientation="portrait"
             android:name=".registration.LanguagesPopUp"
             android:theme="@style/AppTheme.CustomTheme" />
@@ -106,8 +110,9 @@
         <activity android:screenOrientation="portrait"
             android:name=".messagestab.Chat"
             android:parentActivityName=".messagestab.Chat"
-            android:theme="@style/RegistrationTheme"></activity>
-        <activity android:screenOrientation="portrait"  android:name=".profilescreen.EditProfile"></activity>
+            android:theme="@style/RegistrationTheme"/>
+
+        <activity android:screenOrientation="portrait"  android:name=".profilescreen.EditProfile"/>
         <activity android:name=".messagestab.ChatImage"
             android:theme="@style/ProfilePageTheme"/>
 

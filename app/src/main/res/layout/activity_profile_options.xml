@@ -1,358 +1,364 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="bottom"
-    sothree:umanoOverlay="true"
-    sothree:umanoPanelHeight="280dp">
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/blankspace"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="16dp" />
-
-        <include layout="@layout/include_progress_overlay"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/optionslistlayout"
-        android:clickable="true"
-        android:background="@drawable/options"
+    <com.sothree.slidinguppanel.SlidingUpPanelLayout
+        android:id="@+id/sliding_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:focusable="true">
+        android:gravity="bottom"
+        sothree:umanoOverlay="true"
+        sothree:umanoPanelHeight="280dp">
 
         <RelativeLayout
-            android:id="@+id/toplayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profileimg"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/guy"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
-
-        <TextView
-            android:id="@+id/profilename"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Avinash Tadavarthy"
-            android:textColor="@color/appgrey"
-            android:textSize="15dp"
-            android:layout_toRightOf="@+id/profileimg" />
-
-        <TextView
-            android:id="@+id/profileemail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="avinash.tadavarthy@gmail.com"
-            android:textColor="@color/appred"
-            android:textSize="12dp"
-            android:layout_toRightOf="@+id/profileimg"
-            android:layout_below="@+id/profilename"/>
+            <TextView
+                android:id="@+id/blankspace"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="16dp" />
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/sep"
+        <RelativeLayout
+            android:id="@+id/optionslistlayout"
+            android:clickable="true"
+            android:background="@drawable/options"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#40505154"
-            android:layout_below="@+id/toplayout"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="10dp"/>
+            android:layout_height="match_parent"
+            android:paddingTop="20dp"
+            android:focusable="true">
 
-        <LinearLayout
-            android:layout_below="@+id/sep"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/toplayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileimg"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/guy"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/profilename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avinash Tadavarthy"
+                    android:textColor="@color/appgrey"
+                    android:textSize="15dp"
+                    android:layout_toRightOf="@+id/profileimg" />
+
+                <TextView
+                    android:id="@+id/profileemail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="avinash.tadavarthy@gmail.com"
+                    android:textColor="@color/appred"
+                    android:textSize="12dp"
+                    android:layout_toRightOf="@+id/profileimg"
+                    android:layout_below="@+id/profilename"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/sep"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#40505154"
+                android:layout_below="@+id/toplayout"
+                android:layout_marginTop="22dp"
+                android:layout_marginBottom="10dp"/>
 
             <LinearLayout
-                android:id="@+id/viewprofile"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:layout_below="@+id/sep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/person"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="View Profile"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
+                <LinearLayout
+                    android:id="@+id/viewprofile"
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/person"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="View Profile"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/dislikedprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/disliked"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Disliked Profiles"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/blockedprofile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/blockedprofile"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Blocked Profiles"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/privacysettings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/settings"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Privacy Settings"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/termsandconditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/termsandcon"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Terms and Conditions"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/privacypolicy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/privacypol"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Privacy Policy"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/aboutus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/logo"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="About us"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/libraries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/libraries"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Open Source Libraries"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/helpandfeedback"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/help"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Help and feedback"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:id="@+id/logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackground">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/logout"
+                        android:layout_gravity="center_vertical"/>
+
+                    <TextView
+                        android:text="Logout"
+                        android:layout_marginLeft="16dp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/appgrey"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/dislikedprofile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/disliked"
-                    android:layout_gravity="center_vertical"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:text="Disliked Profiles"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-            </LinearLayout>
+    <include layout="@layout/include_progress_overlay"/>
 
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/blockedprofile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/blockedprofile"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Blocked Profiles"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/privacysettings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/settings"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Privacy Settings"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/termsandconditions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/termsandcon"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Terms and Conditions"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/privacypolicy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/privacypol"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Privacy Policy"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/aboutus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/logo"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="About us"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/libraries"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/libraries"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Open Source Libraries"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/helpandfeedback"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/help"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Help and feedback"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                 android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:id="@+id/logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="?attr/selectableItemBackground">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/logout"
-                    android:layout_gravity="center_vertical"/>
-
-                <TextView
-                    android:text="Logout"
-                    android:layout_marginLeft="16dp"
-                    android:layout_width="wrap_content"
-                    android:textColor="@color/appgrey"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</RelativeLayout>

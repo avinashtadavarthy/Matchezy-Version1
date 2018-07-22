@@ -4,17 +4,24 @@
     android:id="@+id/progress_overlay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.4"
+    android:alpha="0.5"
     android:animateLayoutChanges="true"
     android:background="#000000"
     android:clickable="true"
     android:visibility="gone">
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/AVLoadingIndicatorView.Large"
-        android:visibility="visible"
-        app:indicatorName="BallPulseIndicator" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AVLoadingIndicatorView.Large"
+            android:visibility="visible"
+            app:indicatorName="BallPulseIndicator" />
+
+    </RelativeLayout>
 
 </FrameLayout>

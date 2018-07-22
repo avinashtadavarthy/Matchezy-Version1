@@ -212,18 +212,22 @@ public class Registration2 extends AppCompatActivity {
     {
         final CharSequence[] items = { "Male", "Female", "Both" };
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Interested in");
         int position;
-        if (editText_interested.getText().toString().equals("Male")){
-            position = 0;
-        } else if (editText_interested.getText().toString().equals("Female")){
-            position = 1;
-        } else if (editText_interested.getText().toString().equals("Both")){
-            position = 2;
-        }
-        else {
-            position = -1;
+        switch (editText_interested.getText().toString()) {
+            case "Male":
+                position = 0;
+                break;
+            case "Female":
+                position = 1;
+                break;
+            case "Both":
+                position = 2;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -247,7 +251,7 @@ public class Registration2 extends AppCompatActivity {
 
         final CharSequence[] items = { "Male", "Female", "Other" };
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
         if (editText_gender.getText().toString().equals("Male")){
@@ -284,7 +288,7 @@ public class Registration2 extends AppCompatActivity {
     {
         final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
         switch (editText_relationship.getText().toString()) {

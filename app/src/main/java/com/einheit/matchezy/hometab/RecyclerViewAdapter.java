@@ -99,8 +99,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     Chip chip = new Chip(c);
                     chip.setChipText(matchingInterests.getString(i).toUpperCase());
-                    chip.setChipBackgroundColorResource(R.color.appdarkred);
+                    chip.setChipStrokeColorResource(R.color.orange);
                     chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
+                    chip.setChipBackgroundColorResource(android.R.color.transparent);
+                    chip.setChipStrokeWidth(2);
                     chip.setTextStartPadding(1);
                     chip.setTextEndPadding(0);
                     chip.setChipMinHeight(0);
@@ -115,7 +117,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     Chip chip = new Chip(c);
                     chip.setChipText(otherInterests.getString(i).toUpperCase());
+                    chip.setChipStrokeColorResource(R.color.lightgrey);
                     chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
+                    chip.setChipBackgroundColorResource(android.R.color.transparent);
+                    chip.setChipStrokeWidth(2);
                     chip.setTextStartPadding(1);
                     chip.setTextEndPadding(0);
                     chip.setChipMinHeight(0);

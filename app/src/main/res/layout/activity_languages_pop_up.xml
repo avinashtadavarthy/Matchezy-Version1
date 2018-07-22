@@ -9,8 +9,9 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Select Languages"
-        android:textSize="18dp"
+        android:textSize="20dp"
         android:padding="10dp"/>
 
     <ScrollView
@@ -30,6 +31,7 @@
                 android:text="Assamese"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -38,6 +40,7 @@
                 android:text="Bengali"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -46,6 +49,7 @@
                 android:text="Bhojpuri"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -54,6 +58,7 @@
                 android:text="Bodo"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -62,6 +67,7 @@
                 android:text="Chhattisgarhi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -70,6 +76,7 @@
                 android:text="English"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -78,6 +85,7 @@
                 android:text="Gujarati"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -86,6 +94,7 @@
                 android:text="Haryanvi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -94,6 +103,7 @@
                 android:text="Hindi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -102,6 +112,7 @@
                 android:text="Kannada"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -110,6 +121,7 @@
                 android:text="Konkani"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -118,6 +130,7 @@
                 android:text="Maithali"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -126,6 +139,7 @@
                 android:text="Malayalam"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -134,6 +148,7 @@
                 android:text="Marathi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -142,6 +157,7 @@
                 android:text="Odia"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -150,6 +166,7 @@
                 android:text="Punjabi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -158,6 +175,7 @@
                 android:text="Rajasthani"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -166,6 +184,7 @@
                 android:text="Sindhi"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -174,6 +193,7 @@
                 android:text="Tamil"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -182,6 +202,7 @@
                 android:text="Telugu"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -190,6 +211,7 @@
                 android:text="Tulu"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -198,6 +220,7 @@
                 android:text="Urdu"
                 android:padding="10dp"
                 android:textSize="16dp"
+                android:buttonTint="@color/appred"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

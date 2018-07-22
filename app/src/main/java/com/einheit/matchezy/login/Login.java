@@ -44,6 +44,8 @@ public class Login extends AppCompatActivity {
     TextView signup, forgotpassword;
     EditText emailEditText, passwordEditText;
 
+    View progressOverlay;
+
     //fb login integration
     CallbackManager callbackManager;
     String access;
@@ -59,6 +61,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
+
+        progressOverlay = findViewById(R.id.progress_overlay);
 
         FirebaseMessaging.getInstance().subscribeToTopic("Hy");
 
@@ -97,6 +101,9 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    progressOverlay.setVisibility(View.VISIBLE);
+
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "login")
                             .addBodyParameter("email", email)
                             .addBodyParameter("password", password)
@@ -107,6 +114,8 @@ public class Login extends AppCompatActivity {
                                 public void onResponse(JSONObject res) {
                                     switch (res.optString("status_code")) {
                                         case "200": {
+
+                                            progressOverlay.setVisibility(View.GONE);
 
                                             Log.e("ASD", res.toString());
 
@@ -150,10 +159,14 @@ public class Login extends AppCompatActivity {
                                         }
                                         case "404": {
 
+                                            progressOverlay.setVisibility(View.GONE);
+
                                             Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                             break;
                                         }
                                         case "400":
+
+                                            progressOverlay.setVisibility(View.GONE);
 
                                             Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                             break;
@@ -189,6 +202,8 @@ public class Login extends AppCompatActivity {
                                         String fb_id = response.optString("id");
                                         storeSPData("fb_id", fb_id);
 
+                                        progressOverlay.setVisibility(View.VISIBLE);
+
                                         AndroidNetworking.post(Utility.getInstance().BASE_URL + "fbLogin")
                                                 .addBodyParameter("fb_id",fb_id)
                                                 .setPriority(Priority.HIGH)
@@ -217,6 +232,8 @@ public class Login extends AppCompatActivity {
                                                                             public void onResponse(JSONObject response) {
                                                                                 // do anything with response
 
+                                                                                progressOverlay.setVisibility(View.GONE);
+
                                                                                 if(response.optInt("status_code") == 200) {
                                                                                     Log.e("userdata", response.toString());
                                                                                     storeSPData("userdata", response.optJSONObject("message").toString());
@@ -225,6 +242,7 @@ public class Login extends AppCompatActivity {
                                                                                     finish();
                                                                                 }
                                                                                 else {
+                                                                                    progressOverlay.setVisibility(View.GONE);
                                                                                     Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                                                                 }
                                                                             }
@@ -238,6 +256,7 @@ public class Login extends AppCompatActivity {
                                                                 break;
                                                             }
                                                             case "404": {
+                                                                progressOverlay.setVisibility(View.GONE);
 
                                                                 Log.e("fbLogin", "user doesnt exist");
                                                                 storeSPData("facebookdata", response.toString());
@@ -247,6 +266,9 @@ public class Login extends AppCompatActivity {
                                                                 break;
                                                             }
                                                             case "400":
+
+                                                                progressOverlay.setVisibility(View.GONE);
+
                                                                 Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                                                 break;
                                                         }

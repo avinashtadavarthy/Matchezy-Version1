@@ -9,6 +9,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -65,7 +66,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         inputEmail = (EditText) findViewById(R.id.editText_email);
         inputPassword = (EditText) findViewById(R.id.edit_password);
         input_number = (EditText) findViewById(R.id.editNumber);
-        input_Dateofbirth = (EditText) findViewById(R.id.editTextDateofBirth);/* AndroidNetworking.post(Utility.getInstance().BASE_URL + "fbLogin")
+        input_Dateofbirth = (EditText) findViewById(R.id.editTextDateofBirth);
+
+        /* AndroidNetworking.post(Utility.getInstance().BASE_URL + "fbLogin")
                 .addBodyParameter("fb_id", )
                 .setPriority(Priority.HIGH)
                 .build()
@@ -83,6 +86,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                     }
                 });
 */
+
         input_countrycode = (EditText) findViewById(R.id.edit_countrycode);
 
         input_countrycode.setShowSoftInputOnFocus(false);
@@ -129,9 +133,9 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         actionButton.setRippleEffectEnabled(true);
         actionButton.playShowAnimation();
         actionButton.setImageResource(R.drawable.ic_action_arrow);
-        dateTextView = input_Dateofbirth;
-        dateTextView.setInputType(InputType.TYPE_NULL);
 
+
+        dateTextView = input_Dateofbirth;
         dateTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
@@ -245,7 +249,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                 "Vanuatu, +678", "Vatican, +379", "Venezuela, +58", "Vietnam, +84", "Wallis and Futuna, +681", "Western Sahara, +212",
                 "Yemen, +967", "Zambia, +260", "Zimbabwe, +263" };
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration.this, R.style.SSAlertDialogStyle);
         alertDialogBuilder.setTitle("Choose Country Code");
         alertDialogBuilder.setSingleChoiceItems(items, 96, new DialogInterface.OnClickListener() {
                     @Override
@@ -308,7 +312,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         switch(response.optString("status_code")) {
 
                             case "200": {
-                                Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
 
                                 String[] dd = input_Dateofbirth.getText().toString().split("/", 3);
                                 String dobstr = dd[2] + "/" + dd[1] + "/" + dd[0];
@@ -327,7 +331,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                             } break;
 
                             case "400":
-                                Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
                                 break;
                         }
                     }
@@ -375,7 +379,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
     private boolean validateDateOfBirth() {
 
-        if (input_Dateofbirth.getText().toString().trim().isEmpty()) {
+        if (input_Dateofbirth.getText().toString().trim().equals("")) {
 
             inputLayoutDateofbirth.setError(getString(R.string.err_msg_dateofbirth));
             requestFocus(input_Dateofbirth);
@@ -397,6 +401,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
 
         return true;
     }
+
 
     private boolean validateEmail() {
         String email = inputEmail.getText().toString().trim();

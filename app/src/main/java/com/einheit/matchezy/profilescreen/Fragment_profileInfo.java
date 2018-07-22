@@ -50,7 +50,7 @@ public class Fragment_profileInfo extends Fragment {
 
     ListView listView;
 
-    String ft, inch, langs="", quali="";
+    String langs="", quali="";
 
 
     @Override
@@ -59,9 +59,6 @@ public class Fragment_profileInfo extends Fragment {
 
         try {
             userdata = new JSONObject(getArguments().getString("userdata"));
-
-            ft = userdata.optJSONObject("height").optString("feet");
-            inch = userdata.optJSONObject("height").optString("feet");
 
             int i;
 
@@ -83,7 +80,7 @@ public class Fragment_profileInfo extends Fragment {
 
         ArrayList<ProfileInfoModel> data = new ArrayList<>();
         data.add(new ProfileInfoModel("Gender", userdata.optString("gender")));
-        data.add(new ProfileInfoModel("Height", ft + "\'" + inch + "\""));
+        data.add(new ProfileInfoModel("Height", userdata.optJSONObject("height").optString("feet") + "\'" + userdata.optJSONObject("height").optString("inches") + "\""));
         data.add(new ProfileInfoModel("Languages Known", langs));
         data.add(new ProfileInfoModel("Qualifications", quali));
         data.add(new ProfileInfoModel("Marital Status", userdata.optString("maritalStatus")));

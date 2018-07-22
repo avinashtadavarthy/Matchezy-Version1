@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.gson.JsonObject;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +43,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class Fragment_messages extends android.support.v4.app.Fragment {
 
     View myView;
@@ -52,10 +54,18 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
     List<ChatListItem> chatList;
 
+    AVLoadingIndicatorView matchedloader, conversationsloader;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_messages, container, false);
+
+        matchedloader = myView.findViewById(R.id.matchedloader);
+        conversationsloader = myView.findViewById(R.id.conversationsloader);
+
+        matchedloader.setVisibility(View.VISIBLE);
+        conversationsloader.setVisibility(View.VISIBLE);
+
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
         conversations_recycler = myView.findViewById(R.id.conversations_recycler);
@@ -68,8 +78,8 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
 
         o.addProperty("user_id", getSPData("user_id"));
         o.addProperty("user_token", getSPData("user_token"));
-        o.addProperty("lookingFor", "Both");/*
-            o.addProperty("interests", "[Tv]");*/
+        o.addProperty("lookingFor", "Both");
+        /* o.addProperty("interests", "[Tv]"); */
 
         AndroidNetworking.post(com.einheit.matchezy.Utility.getInstance().BASE_URL + "getMatchedProfiles")
                 .addBodyParameter(o)
@@ -80,6 +90,10 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                     public void onResponse(JSONObject res) {
 
                         if (res.optInt("status_code") == 200) {
+
+                            matchedloader.setVisibility(View.GONE);
+                            conversationsloader.setVisibility(View.GONE);
+
 
                             Log.e("ASD", res.toString());
 

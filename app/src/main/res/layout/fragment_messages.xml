@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:layout_height="match_parent"
     tools:context=".messagestab.Fragment_messages">
@@ -21,12 +22,29 @@
         android:fontFamily="@font/circularstd"
         android:layout_height="wrap_content" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/horizontal_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="8dp"/>
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/horizontal_recycler_view"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="10dp"
+               android:layout_marginTop="8dp"/>
+
+           <com.wang.avi.AVLoadingIndicatorView
+               android:id="@+id/matchedloader"
+               app:indicatorColor="#b3000000"
+               android:layout_centerInParent="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="@style/AVLoadingIndicatorView.Large"
+               android:visibility="visible"
+               app:indicatorName="BallPulseIndicator" />
+
+
+       </RelativeLayout>
 
        <ImageView
            android:layout_width="match_parent"
@@ -46,11 +64,28 @@
            android:fontFamily="@font/circularstd"
            android:layout_height="wrap_content" />
 
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+
        <android.support.v7.widget.RecyclerView
            android:id="@+id/conversations_recycler"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:layout_marginTop="8dp"/>
+
+           <com.wang.avi.AVLoadingIndicatorView
+               android:id="@+id/conversationsloader"
+               app:indicatorColor="#b3000000"
+               android:layout_centerInParent="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="@style/AVLoadingIndicatorView.Large"
+               android:visibility="visible"
+               app:indicatorName="BallPulseIndicator" />
+
+       </RelativeLayout>
+
 
    </LinearLayout>
 

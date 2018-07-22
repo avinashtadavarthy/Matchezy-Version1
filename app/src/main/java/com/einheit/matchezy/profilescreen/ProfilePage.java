@@ -67,6 +67,7 @@ public class ProfilePage extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.arrowshadow);
 
         AndroidNetworking.initialize(this);
 
@@ -349,8 +350,8 @@ public class ProfilePage extends AppCompatActivity {
                             }
                         });
                         pagertextindicator.startAnimation(anim);
-
                         break;
+
                     default:
                         one.setBackgroundColor(Color.parseColor("#4A90E2"));
                         two.setBackgroundColor(Color.parseColor("#60505154"));

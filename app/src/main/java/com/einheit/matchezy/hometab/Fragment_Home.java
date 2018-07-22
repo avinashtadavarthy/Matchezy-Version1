@@ -8,7 +8,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.chip.Chip;
 import android.support.design.chip.ChipDrawable;
+import android.support.design.chip.ChipGroup;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,6 +57,8 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     HorizontalRecyclerAdapter horizontalAdapter;
     List<Data> data;
 
+    View progressOverlay;
+
     RecyclerView myrv;
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
@@ -73,6 +77,9 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment__home, container, false);
+
+        progressOverlay = myView.findViewById(R.id.progress_overlay);
+        progressOverlay.setVisibility(View.VISIBLE);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
         data = filldata();
@@ -118,6 +125,10 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
         filterObject.addProperty("user_id", getSPData("user_id"));
         filterObject.addProperty("user_token", getSPData("user_token"));
 
+        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
+        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        myrv.setAdapter(myAdapter);
+
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "filterProfiles")
                 .addBodyParameter(filterObject).setPriority(Priority.HIGH)
                 .build()
@@ -127,6 +138,8 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
 
                         if(res.optInt("status_code") == 200) {
                             Log.e("ASD", res.toString());
+
+                            progressOverlay.setVisibility(View.GONE);
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
@@ -147,6 +160,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                         }
                         else
                             Toast.makeText(Fragment_Home.this.getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
@@ -160,9 +174,40 @@ public class Fragment_Home extends android.support.v4.app.Fragment {
                 });
 
 
-        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
-        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        myrv.setAdapter(myAdapter);
+       /* //test
+        ChipGroup testchipgrp = myView.findViewById(R.id.testchipgrp);
+        String[] matchingInterests = {"These", "are", "some", "sample", "words", "that"};
+        String[] unmatchedinterests = {"will", "blow", "your", "mind", "motha", "fucka"};
+        for (String matchingInterest : matchingInterests) {
+            Chip chip = new Chip(getContext());
+            chip.setChipText(matchingInterest);
+            chip.setChipStrokeColorResource(R.color.orange);
+            chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
+            chip.setChipBackgroundColorResource(android.R.color.transparent);
+            chip.setChipStrokeWidth(2);
+            chip.setTextStartPadding(1);
+            chip.setTextEndPadding(0);
+            chip.setChipMinHeight(0);
+            chip.setChipCornerRadius(20);
+            testchipgrp.addView(chip);
+        }
+
+        for (String unmatchedinterest : unmatchedinterests) {
+            Chip chip = new Chip(getContext());
+            chip.setChipText(unmatchedinterest);
+            chip.setChipStrokeColorResource(R.color.lightgrey);
+            chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
+            chip.setChipBackgroundColorResource(android.R.color.transparent);
+            chip.setChipStrokeWidth(2);
+            chip.setTextStartPadding(1);
+            chip.setTextEndPadding(0);
+            chip.setChipMinHeight(0);
+            chip.setChipCornerRadius(20);
+            testchipgrp.addView(chip);
+        }
+        //test*/
+
+
 
 
         return myView;
