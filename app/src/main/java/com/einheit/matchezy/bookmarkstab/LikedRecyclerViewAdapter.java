@@ -7,11 +7,13 @@ import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,12 +33,14 @@ import java.util.Date;
 import java.util.List;
 
 
-public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecyclerViewAdapter.MyViewHolder> {
+public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity c;
     private Context mContext ;
     private List<MatchedProfiles> mData ;
 
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
 
     public LikedRecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
         this.mContext = mContext;
@@ -45,121 +49,69 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
     }
 
     @Override
-    public LikedRecyclerViewAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view ;
-        LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_likes,parent,false);
-        return new LikedRecyclerViewAdapter.MyViewHolder(view);
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view;
+            LayoutInflater mInflater = LayoutInflater.from(mContext);
+            view = mInflater.inflate(R.layout.cardview_likes, parent, false);
+            return new LikedRecyclerViewAdapter.MyViewHolder(view);
+        } else if (viewType == VIEW_TYPE_LOADING) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading_recycler_view, parent, false);
+            return new LoadingViewHolder(view);
+        }
+        return null;
     }
 
     @Override
-    public void onBindViewHolder(final LikedRecyclerViewAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
-        String name;
-        if(mData.get(position).getName().contains(" ")) {
-            name = mData.get(position).getName().split(" ")[0];
-        } else {
-            name = mData.get(position).getName().split("@")[0];
-        }
+        if (holder instanceof MyViewHolder) {
 
-        holder.name.setText(name + ", ");
-        Glide.with(mContext)
-                .load(mData.get(position).getThumbnail())
-                .into(holder.img_book_thumbnail);
+            final MyViewHolder dataViewHolder = (MyViewHolder) holder;
 
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        try {
-            Date date = format.parse(String.valueOf(mData.get(position).getAge()));
-            holder.name.append(Utility.getInstance().getAge(date.getYear() + 1900,
-                    date.getMonth(), date.getDay()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        /*holder.chipgroup_interests.setSingleLine(true);
-
-        try {
-            JSONObject userData = new JSONObject(mData.get(position).getUserData());
-            JSONArray matchingInterests = userData.getJSONArray("matchingInterests");
-            JSONArray otherInterests = userData.getJSONArray("otherInterests");
-
-            if (userData.optString("noOfMatchingInterests").equals("0")) {
-                holder.matchinglayout.setVisibility(View.GONE);
+            String name;
+            if (mData.get(position).getName().contains(" ")) {
+                name = mData.get(position).getName().split(" ")[0];
             } else {
-                holder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
+                name = mData.get(position).getName().split("@")[0];
             }
 
+            dataViewHolder.name.setText(name + ", ");
+            Glide.with(mContext)
+                    .load(mData.get(position).getThumbnail())
+                    .into(dataViewHolder.img_book_thumbnail);
 
-            if(matchingInterests.length() != 0) {
-                for(int i = 0; i<matchingInterests.length(); i++) {
 
-                    Chip chip = new Chip(c);
-                    chip.setChipText(matchingInterests.getString(i).toUpperCase());
-                    chip.setChipBackgroundColorResource(R.color.appdarkred);
-                    chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            try {
+                Date date = format.parse(String.valueOf(mData.get(position).getAge()));
+                dataViewHolder.name.append(Utility.getInstance().getAge(date.getYear() + 1900,
+                        date.getMonth(), date.getDay()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-                    holder.chipgroup_interests.addView(chip);
+            dataViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent i = new Intent(mContext, ProfilePage.class)
+                            .putExtra("fromStatusCode", Utility.FROM_LIKED)
+                            .putExtra("user_id", mData.get(position).getUser_id())
+                            .putExtra("userData", mData.get(position).getUserData());
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(i);
+
                 }
-            }
+            });
 
-            if (otherInterests.length() != 0) {
-                for(int i = 0; i<otherInterests.length(); i++) {
-
-                    Chip chip = new Chip(c);
-                    chip.setChipText(otherInterests.getString(i).toUpperCase());
-                    chip.setTextAppearanceResource(R.style.HomepageUnmatchedInterestsStyle);
-                    chip.setTextStartPadding(1);
-                    chip.setTextEndPadding(0);
-                    chip.setChipMinHeight(0);
-                    chip.setChipCornerRadius(20);
-
-                    holder.chipgroup_interests.addView(chip);
-                }
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-
-        /*holder.bookmarkbtn.setTag("empty");
-
-        holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (holder.bookmarkbtn.getTag().equals("empty")) {
-                    holder.bookmarkbtn.setTag("full");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
-                } else {
-                    holder.bookmarkbtn.setTag("empty");
-                    holder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
-                }
-
-            }
-        });*/
-
-
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent i = new Intent(mContext, ProfilePage.class)
-                        .putExtra("fromStatusCode", Utility.FROM_LIKED)
-                        .putExtra("user_id", mData.get(position).getUser_id())
-                        .putExtra("userData", mData.get(position).getUserData());
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(i);
-
-            }
-        });
+        } else if (holder instanceof LoadingViewHolder) {
+            LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
+            loadingViewHolder.progressBar.setIndeterminate(true);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) loadingViewHolder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
+        }
 
 
 
@@ -167,30 +119,36 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<LikedRecycler
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return mData == null ? 0 : mData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return mData.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name;
         ImageView img_book_thumbnail;
-        //ImageView bookmarkbtn;
         CardView cardView ;
-        //ChipGroup chipgroup_interests;
-        //LinearLayout matchinglayout;
-        //TextView matchingnumber;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name) ;
             img_book_thumbnail = (ImageView) itemView.findViewById(R.id.book_img_id);
-            //bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
-            /*chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
-            matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
-            matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);*/
 
+        }
+    }
+
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public LoadingViewHolder(View view) {
+            super(view);
+            progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         }
     }
 

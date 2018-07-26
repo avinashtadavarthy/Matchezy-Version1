@@ -3,6 +3,7 @@ package com.einheit.matchezy.bookmarkstab;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -40,6 +41,8 @@ public class FragmentLikes extends Fragment {
     RecyclerView myrv;
     LikedRecyclerViewAdapter myAdapter;
 
+    RecyclerViewScrollListener scrollListener;
+    private int lastItemCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,11 +53,37 @@ public class FragmentLikes extends Fragment {
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
+        lastItemCount = 0;
 
+        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        myrv.setLayoutManager(layoutManager);
+        myrv.setAdapter(myAdapter);
+
+        getLikedProfiles(lastItemCount);
+
+        scrollListener = new RecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadMoreData(myAdapter.getItemCount()-1);
+            }
+        };
+
+        myrv.addOnScrollListener(scrollListener);
+
+        return myView;
+    }
+
+    void loadMoreData(int index) {
+        getLikedProfiles(index + 1);
+    }
+
+    void getLikedProfiles(int lastItemCount) {
         JsonObject o = new JsonObject();
 
         o.addProperty("user_id", getSPData("user_id"));
         o.addProperty("user_token", getSPData("user_token"));
+        o.addProperty("offset", lastItemCount);
 
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "getLikedUsProfiles")
                 .addBodyParameter(o)
@@ -96,13 +125,139 @@ public class FragmentLikes extends Fragment {
                         error.printStackTrace();
                     }
                 });
+    }
 
+    public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
 
-        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
-        myrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        myrv.setAdapter(myAdapter);
+        private int visibleThreshold = 2;
+        private int currentPage = 0;
+        private int previousTotalItemCount = 0;
+        private boolean loading = true;
+        private int startingPageIndex = 0;
 
-        return myView;
+        private boolean reachedEnd = false;
+
+        private RecyclerView.LayoutManager layoutManager;
+
+        public void setLayoutManager(RecyclerView.LayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        public RecyclerView.LayoutManager getLayoutManager()
+        {
+            return layoutManager;
+        }
+
+        public RecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager)
+        {
+            this.layoutManager = layoutManager;
+        }
+
+        public RecyclerViewScrollListener(GridLayoutManager layoutManager, int visibleThreshold)
+        {
+            this.layoutManager = layoutManager;
+            this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+        }
+
+        public RecyclerViewScrollListener(
+                StaggeredGridLayoutManager layoutManager,
+                int visibleThreshold)
+        {
+            this.layoutManager = layoutManager;
+            this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
+        }
+
+        public int getLastVisibleItem(int[] lastVisibleItemPositions)
+        {
+            int maxSize = 0;
+            for (int i = 0; i < lastVisibleItemPositions.length; i++)
+            {
+                if (i == 0)
+                {
+                    maxSize = lastVisibleItemPositions[i];
+                }
+                else if (lastVisibleItemPositions[i] > maxSize)
+                {
+                    maxSize = lastVisibleItemPositions[i];
+                }
+            }
+            return maxSize;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView view, int dx, int dy)
+        {
+            if (dy < 1)
+            {
+                return;
+            }
+            int lastVisibleItemPosition = 0;
+            int totalItemCount = layoutManager.getItemCount();
+
+            if (layoutManager instanceof StaggeredGridLayoutManager)
+            {
+                int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(null);
+                lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
+            }
+            else if (layoutManager instanceof GridLayoutManager)
+            {
+                lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+            else if (layoutManager instanceof LinearLayoutManager)
+            {
+                lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+            }
+
+            if (totalItemCount < previousTotalItemCount)
+            {
+                this.currentPage = this.startingPageIndex;
+                this.previousTotalItemCount = totalItemCount;
+                if (totalItemCount == 0)
+                {
+                    this.loading = true;
+                }
+            }
+            if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount && !reachedEnd)
+            {
+                currentPage++;
+                onLoadMore(currentPage, totalItemCount, view);
+                loading = true;
+            }
+        }
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+        {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE)
+            {
+                boolean canScrollDownMore = recyclerView.canScrollVertically(1);
+                if (!canScrollDownMore)
+                {
+                    onScrolled(recyclerView, 0, 1);
+                }
+            }
+        }
+
+        public void resetState()
+        {
+            this.currentPage = this.startingPageIndex;
+            this.previousTotalItemCount = 0;
+            this.loading = true;
+        }
+
+        public void setLoaded(int totalItemCount) {
+            loading = false;
+            previousTotalItemCount = totalItemCount;
+        }
+
+        public void setReachedEnd() {
+            reachedEnd = true;
+        }
+
+        public abstract void onLoadMore(int page, int totalItemsCount, RecyclerView view);
+
     }
 
     private String getSPData(String key) {
