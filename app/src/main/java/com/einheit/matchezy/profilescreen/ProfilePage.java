@@ -2,6 +2,7 @@ package com.einheit.matchezy.profilescreen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Build;
@@ -67,6 +68,8 @@ public class ProfilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.arrowshadow);
 
@@ -117,7 +120,7 @@ public class ProfilePage extends AppCompatActivity {
         }
 
         if(getIntent().hasExtra("tag")) {
-            if (getIntent().getStringExtra("tag").equals("full")) {
+            if (getIntent().getBooleanExtra("tag", false)) {
                 ct = true;
                 bookmarkbtn.setImageResource(R.drawable.bookmark_full);
             } else {

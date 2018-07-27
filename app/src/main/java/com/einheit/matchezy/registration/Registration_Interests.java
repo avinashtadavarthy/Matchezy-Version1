@@ -1,6 +1,7 @@
 package com.einheit.matchezy.registration;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -42,6 +43,8 @@ public class Registration_Interests extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_interests);
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         enter_interests = findViewById(R.id.enter_interests);
         selectedinterests = findViewById(R.id.selectedinterests);
         suggestedinterests = findViewById(R.id.suggestedinterests);
@@ -56,7 +59,11 @@ public class Registration_Interests extends AppCompatActivity {
                     if (enter_interests.getText().toString().trim().equals("")) {
                         Toast.makeText(Registration_Interests.this, "Enter a valid interest!", Toast.LENGTH_SHORT).show();
                     } else {
-                        populateSelectedChips(enter_interests.getText().toString().trim());
+                        if(newinterests.contains(enter_interests.getText().toString().trim())) {
+                            Toast.makeText(Registration_Interests.this, "Interest already selected", Toast.LENGTH_SHORT).show();
+                        } else {
+                            populateSelectedChips(enter_interests.getText().toString().trim());
+                        }
                         enter_interests.setText(null);
                     }
 
@@ -109,13 +116,18 @@ public class Registration_Interests extends AppCompatActivity {
             chip.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    suggestedinterests.removeView(view);
-
                     if(view instanceof Chip) {
                         Chip temp = (Chip) view;
                         String s = temp.getChipText().toString();
-                        populateSelectedChips(s);
+                        if(newinterests.contains(s)) {
+                            Toast.makeText(Registration_Interests.this, "Interest already selected", Toast.LENGTH_SHORT).show();
+                        } else {
+                            populateSelectedChips(s);
+                            suggestedinterests.removeView(view);
+                        }
                     }
+
+
                 }
             });
 
