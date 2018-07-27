@@ -104,6 +104,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     .apply(new RequestOptions().placeholder(circularProgressDrawable))
                     .into(dataViewHolder.img_book_thumbnail);
 
+            if(mData.get(position).getChecked()) {
+                dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
+            } else
+                dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
+
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
@@ -167,8 +172,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 e.printStackTrace();
             }
 
-            dataViewHolder.bookmarkbtn.setTag("empty");
-
             dataViewHolder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -179,7 +182,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         e.printStackTrace();
                     }
 
-                    if (dataViewHolder.bookmarkbtn.getTag().equals("empty")) {
+                    if (!mData.get(position).getChecked()) {
                         AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
                                 .addBodyParameter("user_id", getSPData("user_id"))
                                 .addBodyParameter("user_token", getSPData("user_token"))
@@ -191,7 +194,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                     public void onResponse(JSONObject res) {
 
                                         if (res.optInt("status_code") == 200) {
-                                            dataViewHolder.bookmarkbtn.setTag("full");
+                                            mData.get(position).setChecked(true);
                                             dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
                                             Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
 
@@ -217,7 +220,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                     public void onResponse(JSONObject res) {
 
                                         if (res.optInt("status_code") == 200) {
-                                            dataViewHolder.bookmarkbtn.setTag("empty");
+                                            mData.get(position).setChecked(false);
                                             dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
                                             Toast.makeText(mContext, res.optString("message"), Toast.LENGTH_SHORT).show();
 
@@ -245,7 +248,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             .putExtra("fromStatusCode", Utility.FROM_HOMESCREEN)
                             .putExtra("user_id", mData.get(position).getUser_id())
                             .putExtra("userData", mData.get(position).getUserData())
-                            .putExtra("tag", dataViewHolder.bookmarkbtn.getTag().toString());
+                            .putExtra("tag", mData.get(position).getChecked());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(i);
 

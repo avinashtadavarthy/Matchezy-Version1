@@ -14,6 +14,7 @@ public class MatchedProfiles {
     private JSONArray interests;
     private String user_id;
     private String userData;
+    private boolean isChecked;
 
     public MatchedProfiles() {
     }
@@ -26,6 +27,7 @@ public class MatchedProfiles {
         this.interests = interests;
         this.user_id = user_id;
         this.userData = userData;
+        isChecked = false;
     }
 
 
@@ -91,5 +93,13 @@ public class MatchedProfiles {
 
     public void setUserData(String userData) {
         this.userData = userData;
+    }
+
+    public boolean getChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
