@@ -32,6 +32,8 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.profileoptions.BlockedListScreen;
+import com.einheit.matchezy.profileoptions.DislikedScreen;
 import com.scalified.fab.ActionButton;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -169,6 +171,10 @@ public class ProfilePage extends AppCompatActivity {
             fromLikedProfiles();
         } else if (fromStatusCode == Utility.FROM_MATCHED) {
             fromMatchedProfiles();
+        } else if (fromStatusCode == Utility.FROM_DISLIKED) {
+            fromDislikedProfiles();
+        } else if (fromStatusCode == Utility.FROM_BLOCKED) {
+            fromBlockedProfiles();
         }
 
         bookmarkbtn.setOnClickListener(new View.OnClickListener() {
@@ -305,8 +311,7 @@ public class ProfilePage extends AppCompatActivity {
                                 if(response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
-                                    startActivity(intent);
+                                    checkOnBackPressed();
                                     finish();
                                 }
                                 else {
@@ -340,8 +345,7 @@ public class ProfilePage extends AppCompatActivity {
                                 if(response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
-                                    startActivity(intent);
+                                    checkOnBackPressed();
                                     finish();
                                 }
                                 else {
@@ -538,17 +542,112 @@ public class ProfilePage extends AppCompatActivity {
         if(fromStatusCode != Utility.FROM_PROFILE_PAGE) {
             MenuInflater mi = getMenuInflater();
             mi.inflate(R.menu.profile_options, menu);
+            if(fromStatusCode == Utility.FROM_BLOCKED) {
+                menu.findItem(R.id.unblock).setVisible(true);
+                menu.findItem(R.id.block).setVisible(false);
+            }
         }
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
+    public void onBackPressed() {
+
+        checkOnBackPressed();
+
+        super.onBackPressed();
+    }
+
+    void checkOnBackPressed() {
+        if(fromStatusCode == Utility.FROM_HOMESCREEN){
+            Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
+            startActivity(intent);
+        } else if (fromStatusCode == Utility.FROM_BOOKMARKED) {
+            Intent intent = new Intent(ProfilePage.this, HomeScreen.class)
+                    .putExtra("notify","bookmark");
+            startActivity(intent);
+        } else if (fromStatusCode == Utility.FROM_LIKED) {
+            Intent intent = new Intent(ProfilePage.this, HomeScreen.class)
+                    .putExtra("notify","like");
+            startActivity(intent);
+        } else if (fromStatusCode == Utility.FROM_DISLIKED) {
+            Intent intent = new Intent(ProfilePage.this, DislikedScreen.class);
+            startActivity(intent);
+        } else if (fromStatusCode == Utility.FROM_BLOCKED) {
+            Intent intent = new Intent(ProfilePage.this, BlockedListScreen.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                onBackPressed();
                 break;
+            case R.id.block:
+                AndroidNetworking.post(Utility.getInstance().BASE_URL + "blockUser")
+                        .addBodyParameter("user_id", getSPData("user_id"))
+                        .addBodyParameter("user_token", getSPData("user_token"))
+                        .addBodyParameter("user_id_2", userData.optString("user_id"))
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // do anything with response
+
+                                if(response.optInt("status_code") == 200) {
+                                    Log.e("userdata", response.toString());
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                    checkOnBackPressed();
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onError(ANError error) {
+
+                                error.printStackTrace();
+
+                            }
+                        });
+                    break;
+            case R.id.unblock:
+                AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBlockUser")
+                        .addBodyParameter("user_id", getSPData("user_id"))
+                        .addBodyParameter("user_token", getSPData("user_token"))
+                        .addBodyParameter("user_id_2", userData.optString("user_id"))
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // do anything with response
+
+                                if(response.optInt("status_code") == 200) {
+                                    Log.e("userdata", response.toString());
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                    checkOnBackPressed();
+                                    finish();
+                                }
+                                else {
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            @Override
+                            public void onError(ANError error) {
+
+                                error.printStackTrace();
+
+                            }
+                        });
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -605,6 +704,20 @@ public class ProfilePage extends AppCompatActivity {
         bookmarkbtn.setVisibility(View.VISIBLE);
         likeFab.setVisibility(View.VISIBLE);
         disLikeFab.setVisibility(View.VISIBLE);
+    }
+
+    void fromDislikedProfiles() {
+        editbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.GONE);
+        likeFab.setVisibility(View.VISIBLE);
+        disLikeFab.setVisibility(View.GONE);
+    }
+
+    void fromBlockedProfiles() {
+        editbtn.setVisibility(View.GONE);
+        bookmarkbtn.setVisibility(View.GONE);
+        likeFab.setVisibility(View.GONE);
+        disLikeFab.setVisibility(View.GONE);
     }
 
 }

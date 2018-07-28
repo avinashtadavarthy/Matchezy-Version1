@@ -89,11 +89,12 @@ public class BlockedListRecyclerViewAdapter extends RecyclerView.Adapter<Recycle
                 public void onClick(View v) {
 
                     Intent i = new Intent(mContext, ProfilePage.class)
-                            .putExtra("fromStatusCode", Utility.FROM_LIKED)
+                            .putExtra("fromStatusCode", Utility.FROM_BLOCKED)
                             .putExtra("user_id", mData.get(position).getUser_id())
                             .putExtra("userData", mData.get(position).getUserData());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(i);
+                    c.finish();
 
                 }
             });

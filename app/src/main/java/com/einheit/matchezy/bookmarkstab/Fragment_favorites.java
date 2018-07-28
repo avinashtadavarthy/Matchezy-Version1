@@ -55,6 +55,12 @@ public class Fragment_favorites extends android.support.v4.app.Fragment {
         viewPager = (ViewPager) myView.findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
+        if(getArguments().getString("notify").equals("like")) {
+            viewPager.setCurrentItem(1);
+        } else if(getArguments().getString("notify").equals("bookmark")) {
+            viewPager.setCurrentItem(0);
+        }
+
         tabLayout = (TabLayout) myView.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 

@@ -31,6 +31,8 @@ public class Utility {
     public static final int FROM_BOOKMARKED = 3;
     public static final int FROM_LIKED = 4;
     public static final int FROM_MATCHED = 5;
+    public static final int FROM_DISLIKED = 6;
+    public static final int FROM_BLOCKED = 7;
 
     //variables or functions
     public static String

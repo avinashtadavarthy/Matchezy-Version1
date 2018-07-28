@@ -135,7 +135,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".messagestab.ChatImage"
-            android:theme="@style/ProfilePageTheme" />
+            android:theme="@style/ProfilePageTheme"
+            android:screenOrientation="portrait"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -150,7 +151,12 @@
         <activity android:name=".StaticTextPage" />
         <activity android:name=".registration.PostRegistration"
             android:theme="@style/RegistrationTheme"/>
-        <activity android:name=".profileoptions.BlockedListScreen"></activity>
+        <activity
+            android:name=".profileoptions.BlockedListScreen"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".profileoptions.DislikedScreen"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

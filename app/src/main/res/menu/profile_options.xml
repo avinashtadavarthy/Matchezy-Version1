@@ -7,6 +7,10 @@
     <item android:id="@+id/block"
         android:title="Block User" />
 
+    <item android:id="@+id/unblock"
+        android:title="Unblock User"
+        android:visible="false"/>
+
     <item android:id="@+id/report"
         android:title="Report User" />
 

@@ -20,6 +20,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.login.Login;
 import com.einheit.matchezy.profileoptions.BlockedListScreen;
+import com.einheit.matchezy.profileoptions.DislikedScreen;
 import com.einheit.matchezy.profilescreen.ProfilePage;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -37,7 +38,7 @@ public class ProfileOptions extends AppCompatActivity {
     View progressOverlay;
 
     LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions,
-            privacypolicy, aboutus, blockedProfiles;
+            privacypolicy, aboutus, blockedProfiles, dislikedProfiles;
 
     RelativeLayout optionslistlayout;
 
@@ -55,6 +56,7 @@ public class ProfileOptions extends AppCompatActivity {
         optionslistlayout.setClipToOutline(true);
 
         blockedProfiles = findViewById(R.id.blockedprofile);
+        dislikedProfiles = findViewById(R.id.dislikedprofile);
 
         AndroidNetworking.initialize(this);
 
@@ -211,6 +213,14 @@ public class ProfileOptions extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), BlockedListScreen.class);
+                startActivity(i);
+            }
+        });
+
+        dislikedProfiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), DislikedScreen.class);
                 startActivity(i);
             }
         });

@@ -1,10 +1,8 @@
-package com.einheit.matchezy.bookmarkstab;
+package com.einheit.matchezy.profileoptions;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.chip.Chip;
-import android.support.design.chip.ChipGroup;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -20,20 +17,14 @@ import com.bumptech.glide.Glide;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
-import com.einheit.matchezy.hometab.RecyclerViewAdapter;
 import com.einheit.matchezy.profilescreen.ProfilePage;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
-public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class DislikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity c;
     private Context mContext ;
@@ -42,7 +33,7 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
 
-    public LikedRecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
+    public DislikedRecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
         this.mContext = mContext;
         this.mData = mData;
         this.c = activity;
@@ -54,8 +45,8 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == VIEW_TYPE_ITEM) {
             View view;
             LayoutInflater mInflater = LayoutInflater.from(mContext);
-            view = mInflater.inflate(R.layout.cardview_likes, parent, false);
-            return new LikedRecyclerViewAdapter.MyViewHolder(view);
+            view = mInflater.inflate(R.layout.cardview_disliked, parent, false);
+            return new MyViewHolder(view);
         } else if (viewType == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading_recycler_view, parent, false);
             return new LoadingViewHolder(view);
@@ -97,7 +88,7 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
                 public void onClick(View v) {
 
                     Intent i = new Intent(mContext, ProfilePage.class)
-                            .putExtra("fromStatusCode", Utility.FROM_LIKED)
+                            .putExtra("fromStatusCode", Utility.FROM_DISLIKED)
                             .putExtra("user_id", mData.get(position).getUser_id())
                             .putExtra("userData", mData.get(position).getUserData());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

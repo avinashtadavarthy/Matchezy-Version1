@@ -186,6 +186,7 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                             .putExtra("tag", mData.get(position).getChecked());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(i);
+                    c.finish();
 
                 }
             });

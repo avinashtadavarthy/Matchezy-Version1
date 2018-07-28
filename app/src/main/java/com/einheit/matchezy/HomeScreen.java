@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -21,6 +20,7 @@ import org.json.JSONObject;
 
 public class HomeScreen extends AppCompatActivity {
 
+    Bundle notifyBundle;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,7 +36,9 @@ public class HomeScreen extends AppCompatActivity {
                     fragmentManager.beginTransaction().replace(R.id.home_container, Fragment_Home.newInstance()).commit();
                     break;
                 case R.id.navigation_bookmarks:
-                    fragmentManager.beginTransaction().replace(R.id.home_container, Fragment_favorites.newInstance()).commit();
+                    Fragment_favorites fragmentFavorites = Fragment_favorites.newInstance();
+                    fragmentFavorites.setArguments(notifyBundle);
+                    fragmentManager.beginTransaction().replace(R.id.home_container, fragmentFavorites).commit();
                     break;
                 case R.id.navigation_messages:
                     fragmentManager.beginTransaction().replace(R.id.home_container, new Fragment_messages()).commit();
@@ -65,11 +67,17 @@ public class HomeScreen extends AppCompatActivity {
         //BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setSelectedItemId(R.id.navigation_home);
 
+        notifyBundle = new Bundle();
+        notifyBundle.putString("notify", "bookmark");
+
         if(getIntent().hasExtra("notify")) {
             String selectedId = getIntent().getStringExtra("notify");
             if (selectedId.equals("chat"))
                 navigation.setSelectedItemId(R.id.navigation_messages);
             else if (selectedId.equals("like")) {
+                notifyBundle.putString("notify", "bookmark");
+                navigation.setSelectedItemId(R.id.navigation_bookmarks);
+            } else if (selectedId.equals("bookmark")) {
                 navigation.setSelectedItemId(R.id.navigation_bookmarks);
             }
         }

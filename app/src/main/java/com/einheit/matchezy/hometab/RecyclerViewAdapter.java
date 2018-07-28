@@ -251,6 +251,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                             .putExtra("tag", mData.get(position).getChecked());
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(i);
+                    c.finish();
 
                 }
             });
