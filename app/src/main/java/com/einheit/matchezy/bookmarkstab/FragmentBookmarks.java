@@ -125,7 +125,8 @@ public class FragmentBookmarks extends Fragment {
                                             object.optString("profileImageURL"),
                                             object.optString("dob"),
                                             object.optJSONArray("interests"),
-                                            object.toString()));
+                                            object.toString(),
+                                            true));
                                 }
 
                                 scrollListener.setLoaded(lstMatchedProfiles.size());

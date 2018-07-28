@@ -596,7 +596,7 @@ public class ProfilePage extends AppCompatActivity {
     void fromLikedProfiles() {
         editbtn.setVisibility(View.GONE);
         bookmarkbtn.setVisibility(View.GONE);
-        likeFab.setVisibility(View.GONE);
+        likeFab.setVisibility(View.VISIBLE);
         disLikeFab.setVisibility(View.VISIBLE);
     }
 

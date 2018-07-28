@@ -30,8 +30,6 @@ public class HomeScreen extends AppCompatActivity {
 
             android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
-            String filterObjectString = null;
-
             switch (item.getItemId()) {
 
                 case R.id.navigation_home:

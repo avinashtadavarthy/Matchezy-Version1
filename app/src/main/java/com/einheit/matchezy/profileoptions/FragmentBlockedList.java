@@ -1,4 +1,4 @@
-package com.einheit.matchezy.bookmarkstab;
+package com.einheit.matchezy.profileoptions;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +20,8 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
-import com.einheit.matchezy.hometab.RecyclerViewAdapter;
+import com.einheit.matchezy.bookmarkstab.FragmentLikes;
+import com.einheit.matchezy.bookmarkstab.LikedRecyclerViewAdapter;
 import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
@@ -32,21 +33,20 @@ import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
-
-public class FragmentLikes extends Fragment {
+public class FragmentBlockedList extends Fragment{
 
     View myView;
     List<MatchedProfiles> lstMatchedProfiles ;
 
     RecyclerView myrv;
-    LikedRecyclerViewAdapter myAdapter;
+    BlockedListRecyclerViewAdapter myAdapter;
 
     RecyclerViewScrollListener scrollListener;
     private int lastItemCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView =  inflater.inflate(R.layout.fragment_likes, container, false);
+        myView =  inflater.inflate(R.layout.fragment_blocked_list, container, false);
 
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
@@ -55,14 +55,14 @@ public class FragmentLikes extends Fragment {
         lstMatchedProfiles = new ArrayList<>();
         lastItemCount = 0;
 
-        myAdapter = new LikedRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
+        myAdapter = new BlockedListRecyclerViewAdapter(getActivity().getApplicationContext(),lstMatchedProfiles, getActivity());
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         myrv.setLayoutManager(layoutManager);
         myrv.setAdapter(myAdapter);
 
         getLikedProfiles(lastItemCount);
 
-        scrollListener = new RecyclerViewScrollListener(layoutManager) {
+        scrollListener = new FragmentBlockedList.RecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 loadMoreData(myAdapter.getItemCount()-1);
@@ -88,7 +88,7 @@ public class FragmentLikes extends Fragment {
         lstMatchedProfiles.add(null);
         myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
-        AndroidNetworking.post(Utility.getInstance().BASE_URL + "getLikedUsProfiles")
+        AndroidNetworking.post(Utility.getInstance().BASE_URL + "getBlockedProfiles")
                 .addBodyParameter(o)
                 .setPriority(Priority.HIGH)
                 .build()

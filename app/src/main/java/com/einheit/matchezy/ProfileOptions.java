@@ -19,6 +19,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.login.Login;
+import com.einheit.matchezy.profileoptions.BlockedListScreen;
 import com.einheit.matchezy.profilescreen.ProfilePage;
 import com.google.firebase.iid.FirebaseInstanceId;
 
@@ -35,7 +36,8 @@ public class ProfileOptions extends AppCompatActivity {
 
     View progressOverlay;
 
-    LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions, privacypolicy, aboutus;
+    LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions,
+            privacypolicy, aboutus, blockedProfiles;
 
     RelativeLayout optionslistlayout;
 
@@ -51,6 +53,8 @@ public class ProfileOptions extends AppCompatActivity {
 
         optionslistlayout = findViewById(R.id.optionslistlayout);
         optionslistlayout.setClipToOutline(true);
+
+        blockedProfiles = findViewById(R.id.blockedprofile);
 
         AndroidNetworking.initialize(this);
 
@@ -171,8 +175,6 @@ public class ProfileOptions extends AppCompatActivity {
                                         Toast.makeText(ProfileOptions.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                         clearSPData();
 
-                                        //FirebaseMessaging.getInstance().unsubscribeFromTopic(getSPData("user_id"));
-
                                         new Thread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -202,6 +204,14 @@ public class ProfileOptions extends AppCompatActivity {
                             }
                         });
 
+            }
+        });
+
+        blockedProfiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), BlockedListScreen.class);
+                startActivity(i);
             }
         });
 

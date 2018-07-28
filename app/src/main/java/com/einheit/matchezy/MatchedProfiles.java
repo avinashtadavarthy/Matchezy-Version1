@@ -30,6 +30,17 @@ public class MatchedProfiles {
         isChecked = false;
     }
 
+    public MatchedProfiles(String user_id, String name, String thumbnail,
+                           String age, JSONArray interests, String userData, boolean isChecked) {
+        Name = name;
+        Thumbnail = thumbnail;
+        this.age = age;
+        this.interests = interests;
+        this.user_id = user_id;
+        this.userData = userData;
+        this.isChecked = isChecked;
+    }
+
 
     public String getName() {
         return Name;

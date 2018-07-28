@@ -44,7 +44,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity c;
-    private Context mContext ;
+    private Context mContext;
     private List<MatchedProfiles> mData;
     JSONObject userData;
 
@@ -96,8 +96,6 @@ public class BookmarksRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full);
             } else
                 dataViewHolder.bookmarkbtn.setImageResource(R.drawable.bookmark_full_grey);
-
-
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
