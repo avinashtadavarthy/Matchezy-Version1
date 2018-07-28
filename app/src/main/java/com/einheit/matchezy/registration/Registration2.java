@@ -287,7 +287,7 @@ public class Registration2 extends AppCompatActivity {
         final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration2.this, R.style.SSAlertDialogStyle);
-        alertDialogBuilder.setTitle("Choose Gender");
+        alertDialogBuilder.setTitle("Choose relationship status");
         int position;
         switch (editText_relationship.getText().toString()) {
             case "Single": position = 0; break;
