@@ -150,6 +150,7 @@
         <activity android:name=".StaticTextPage" />
         <activity android:name=".registration.PostRegistration"
             android:theme="@style/RegistrationTheme"/>
+        <activity android:name=".profileoptions.BlockedListScreen"></activity>
     </application>
 
 </manifest>
