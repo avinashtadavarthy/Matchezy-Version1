@@ -50,7 +50,7 @@ public class Fragment_profileInfo extends Fragment {
 
     ListView listView;
 
-    String langs="", quali="";
+    String langs="", quali="", colleges = "", orgWorked = "";
 
 
     @Override
@@ -72,6 +72,16 @@ public class Fragment_profileInfo extends Fragment {
 
             quali = quali.substring(0, quali.length()-2);
 
+            for(i = 0; i<userdata.optJSONArray("collegeName").length(); i++)
+                colleges = colleges + userdata.optJSONArray("collegeName").getString(i) + ", ";
+
+            colleges = colleges.substring(0, colleges.length()-2);
+
+            for(i = 0; i<userdata.optJSONArray("organisationWorked").length(); i++)
+                orgWorked = orgWorked + userdata.optJSONArray("organisationWorked").getString(i) + ", ";
+
+            orgWorked = orgWorked.substring(0, orgWorked.length()-2);
+
             //qualifications is also a json array
 
         } catch (JSONException e) {
@@ -82,14 +92,19 @@ public class Fragment_profileInfo extends Fragment {
         data.add(new ProfileInfoModel("Gender", userdata.optString("gender")));
         data.add(new ProfileInfoModel("Height", userdata.optJSONObject("height").optString("feet") + "\'" + userdata.optJSONObject("height").optString("inches") + "\""));
         data.add(new ProfileInfoModel("Languages Known", langs));
-        data.add(new ProfileInfoModel("Qualifications", quali));
+        if(userdata.optBoolean("qualificationVisibility", true))
+            data.add(new ProfileInfoModel("Qualifications", quali));
         data.add(new ProfileInfoModel("Marital Status", userdata.optString("maritalStatus")));
         data.add(new ProfileInfoModel("Looking For", userdata.optString("lookingFor")));
         data.add(new ProfileInfoModel("Religion", userdata.optString("religion")));
-        data.add(new ProfileInfoModel("College Name", userdata.optString("collegeName")));
-        data.add(new ProfileInfoModel("Organisation Working In", userdata.optString("organisationWorked")));
-        data.add(new ProfileInfoModel("Current Designation", userdata.optString("currentDesignation")));
-        data.add(new ProfileInfoModel("Annual Income", userdata.optString("annualIncome")));
+        if(userdata.optBoolean("collegeNameVisibility", true))
+            data.add(new ProfileInfoModel("College Name", colleges));
+        if(userdata.optBoolean("organisationWorkedVisibility", true))
+            data.add(new ProfileInfoModel("Organisation Working In", orgWorked));
+        if(userdata.optBoolean("currentDesignationVisibility", true))
+            data.add(new ProfileInfoModel("Current Designation", userdata.optString("currentDesignation")));
+        if(userdata.optBoolean("annualIncomeVisibility", true))
+            data.add(new ProfileInfoModel("Annual Income", userdata.optString("annualIncome")));
         data.add(new ProfileInfoModel("Tattoo", userdata.optString("tattoo")));
         data.add(new ProfileInfoModel("Piercings", userdata.optString("piercings")));
 

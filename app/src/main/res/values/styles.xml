@@ -133,4 +133,10 @@
         <item name="windowActionBarOverlay">false</item>
     </style>
 
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/appred</item>
+        <item name="colorSwitchThumbNormal">@color/appgrey</item>
+        <item name="android:colorForeground">@color/colorCloseChip</item>
+    </style>
+
 </resources>

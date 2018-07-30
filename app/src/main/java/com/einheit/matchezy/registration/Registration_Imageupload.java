@@ -37,6 +37,7 @@ import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.messagestab.Chat;
 import com.einheit.matchezy.messagestab.ChatImage;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.JsonObject;
 import com.scalified.fab.ActionButton;
 
 import org.json.JSONObject;
@@ -67,6 +68,8 @@ public class Registration_Imageupload extends AppCompatActivity {
     List<File> files;
     Map<Integer, File> map;
     private ProgressDialog dialog;
+
+    JsonObject requestObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,33 +146,41 @@ public class Registration_Imageupload extends AppCompatActivity {
                     dialog.setCancelable(false);
                     dialog.show();
 
+                    requestObject = new JsonObject();
+                    requestObject.addProperty("username", getSPData("username"));
+                    requestObject.addProperty("dob", getSPData("dob"));
+                    requestObject.addProperty("phone_number", getSPData("phone_number"));
+                    requestObject.addProperty("email", getSPData("email"));
+                    requestObject.addProperty("password", getSPData("password"));
+                    requestObject.addProperty("gender", getSPData("gender"));
+                    requestObject.addProperty("looking_for", getSPData("lookingfor"));
+                    requestObject.addProperty("marital_status", getSPData("maritalstatus"));
+                    requestObject.addProperty("city", getSPData("city"));
+                    requestObject.addProperty("langs", getSPData("lang"));
+                    requestObject.addProperty("feet", getSPData("feet"));
+                    requestObject.addProperty("inches", getSPData("inches"));
+                    requestObject.addProperty("religion", getSPData("religion"));
+                    requestObject.addProperty("tattoos", getSPData("tattoos"));
+                    requestObject.addProperty("piercings", getSPData("piercings"));
+                    requestObject.addProperty("education", getSPData("education"));
+                    requestObject.addProperty("college", getSPData("college"));
+                    requestObject.addProperty("work", getSPData("work"));
+                    requestObject.addProperty("desig", getSPData("desig"));
+                    requestObject.addProperty("annual_income", getSPData("annual_income").replace(",",""));
+                    requestObject.addProperty("fb_id", fb_id);
+                    requestObject.addProperty("interests", interestsArrayString);
+                    requestObject.addProperty("educationVisibility", getSPBoolean("educationVisibility"));
+                    requestObject.addProperty("collegeVisibility", getSPBoolean("collegeVisibility"));
+                    requestObject.addProperty("workVisibility", getSPBoolean("workVisibility"));
+                    requestObject.addProperty("desigVisibility", getSPBoolean("desigVisibility"));
+                    requestObject.addProperty("annualVisibility", getSPBoolean("annualVisibility"));
+
                     AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
                             .addMultipartFile("profile_pic", map.get(0))
                             .addMultipartFile("pictures", map.get(1))
                             .addMultipartFile("pictures_2", map.get(2))
                             .addMultipartFile("pictures_3", map.get(3))
-                            .addMultipartParameter("username", getSPData("username"))
-                            .addMultipartParameter("dob", getSPData("dob"))
-                            .addMultipartParameter("phone_number", getSPData("phone_number"))
-                            .addMultipartParameter("email", getSPData("email"))
-                            .addMultipartParameter("password", getSPData("password"))
-                            .addMultipartParameter("gender", getSPData("gender"))
-                            .addMultipartParameter("looking_for", getSPData("lookingfor"))
-                            .addMultipartParameter("marital_status", getSPData("maritalstatus"))
-                            .addMultipartParameter("city", getSPData("city"))
-                            .addMultipartParameter("langs", getSPData("lang"))
-                            .addMultipartParameter("feet", getSPData("feet"))
-                            .addMultipartParameter("inches", getSPData("inches"))
-                            .addMultipartParameter("religion", getSPData("religion"))
-                            .addMultipartParameter("tattoos", getSPData("tattoos"))
-                            .addMultipartParameter("piercings", getSPData("piercings"))
-                            .addMultipartParameter("education", getSPData("education"))
-                            .addMultipartParameter("college", getSPData("college"))
-                            .addMultipartParameter("work", getSPData("work"))
-                            .addMultipartParameter("desig", getSPData("desig"))
-                            .addMultipartParameter("annual_income", getSPData("annual_income").replace(",",""))
-                            .addMultipartParameter("fb_id", fb_id)
-                            .addMultipartParameter("interests", interestsArrayString)
+                            .addMultipartParameter(requestObject)
                             .setPriority(Priority.HIGH)
                             .setOkHttpClient(okHttpClient)
                             .build()
@@ -395,6 +406,15 @@ public class Registration_Imageupload extends AppCompatActivity {
 
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         String data = mUserData.getString(key, "");
+
+        return data;
+
+    }
+
+    private Boolean getSPBoolean(String key) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        Boolean data = mUserData.getBoolean(key, true);
 
         return data;
 

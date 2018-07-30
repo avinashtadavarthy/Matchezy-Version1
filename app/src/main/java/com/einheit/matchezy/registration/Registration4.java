@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import com.abdeveloper.library.MultiSelectDialog;
 import com.abdeveloper.library.MultiSelectModel;
@@ -31,8 +32,9 @@ import java.util.ArrayList;
 public class Registration4 extends AppCompatActivity {
 
 
-    EditText editText_work,editText_annual,editText_college,editText_edu,editText_desig;
-    private TextInputLayout inputLayoutWorking, inputLayoutCollege, inputLayoutAnnual,inputLayoutEdu, inputLayoutDesig;
+    EditText editText_work, editText_annual, editText_college, editText_edu, editText_desig;
+    Switch switchEdu, switchCollege, switchWork, switchAnnual, switchDesig;
+    private TextInputLayout inputLayoutWorking, inputLayoutCollege, inputLayoutAnnual, inputLayoutEdu, inputLayoutDesig;
 
 
     ArrayList<Integer> existingdataedu = new ArrayList<>(),
@@ -47,18 +49,24 @@ public class Registration4 extends AppCompatActivity {
 
         AndroidNetworking.initialize(this);
 
-        
-        inputLayoutAnnual=(TextInputLayout)findViewById(R.id.inputLayoutAnnualIncome);
-        inputLayoutCollege=(TextInputLayout)findViewById(R.id.inputLayoutCollege);
-        inputLayoutEdu=(TextInputLayout)findViewById(R.id.inputLayoutEdu);
-        inputLayoutWorking=(TextInputLayout)findViewById(R.id.inputLayoutWorking);
-        inputLayoutDesig=(TextInputLayout)findViewById(R.id.inputLayoutDesignation);
 
-        editText_annual=(EditText)findViewById(R.id.editText_annual);
-        editText_college=(EditText)findViewById(R.id.editTextCollege);
-        editText_edu=(EditText)findViewById(R.id.editTextEdu);
-        editText_work=(EditText)findViewById(R.id.editTextWorking);
-        editText_desig=(EditText)findViewById(R.id.editTextDesignation);
+        inputLayoutAnnual = (TextInputLayout) findViewById(R.id.inputLayoutAnnualIncome);
+        inputLayoutCollege = (TextInputLayout) findViewById(R.id.inputLayoutCollege);
+        inputLayoutEdu = (TextInputLayout) findViewById(R.id.inputLayoutEdu);
+        inputLayoutWorking = (TextInputLayout) findViewById(R.id.inputLayoutWorking);
+        inputLayoutDesig = (TextInputLayout) findViewById(R.id.inputLayoutDesignation);
+
+        editText_annual = (EditText) findViewById(R.id.editText_annual);
+        editText_college = (EditText) findViewById(R.id.editTextCollege);
+        editText_edu = (EditText) findViewById(R.id.editTextEdu);
+        editText_work = (EditText) findViewById(R.id.editTextWorking);
+        editText_desig = (EditText) findViewById(R.id.editTextDesignation);
+
+        switchEdu = findViewById(R.id.switchButtonEdu);
+        switchCollege = findViewById(R.id.switchButtonCollege);
+        switchAnnual = findViewById(R.id.switchButtonAnnual);
+        switchWork = findViewById(R.id.switchButtonWorking);
+        switchDesig = findViewById(R.id.switchButtonDesignation);
 
         editText_edu.setShowSoftInputOnFocus(false);
         editText_desig.setShowSoftInputOnFocus(false);
@@ -152,8 +160,6 @@ public class Registration4 extends AppCompatActivity {
         });
 
 
-
-
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next3);
         actionButton.setType(ActionButton.Type.DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -184,15 +190,15 @@ public class Registration4 extends AppCompatActivity {
             return;
         }
 
-        if(!validatework()) {
+        if (!validatework()) {
             return;
         }
 
-        if(!validatedesig()) {
+        if (!validatedesig()) {
             return;
         }
 
-        if(!validateannual()) {
+        if (!validateannual()) {
             return;
         }
 
@@ -202,9 +208,14 @@ public class Registration4 extends AppCompatActivity {
         storeSPData("desig", editText_desig.getText().toString().trim());
         storeSPData("annual_income", editText_annual.getText().toString().trim());
 
+        storeSPData("educationVisibility", switchEdu.isChecked());
+        storeSPData("collegeVisibility", switchCollege.isChecked());
+        storeSPData("workVisibility", switchWork.isChecked());
+        storeSPData("desigVisibility", switchDesig.isChecked());
+        storeSPData("annualVisibility", switchAnnual.isChecked());
 
 
-        Intent intent = new Intent(getApplicationContext(),Registration_Interests.class);
+        Intent intent = new Intent(getApplicationContext(), Registration_Interests.class);
         startActivity(intent);
 
     }
@@ -244,7 +255,7 @@ public class Registration4 extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -289,7 +300,7 @@ public class Registration4 extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -333,7 +344,7 @@ public class Registration4 extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -343,13 +354,13 @@ public class Registration4 extends AppCompatActivity {
 
     private void designation() {
 
-       final CharSequence[] items = {
-               "Chairman", "Vice Chairman", "Chairman cum Managing Director", "Managing Director", "Sr. Vice president ", "Vice President", "General Manager",
-               "Joint General Manager", "Deputy General Manager", "Asst. General Manager", "Chief Manager", "Sr. Manager", "Manager", "Joint Manager", "Deputy Manager",
-               "Asst. Manager", "Sr. Officer", "Officer", "Jr. Officer", "Sr. Associate", "Associate", "Jr. Associate", "Assistant ", "Trainee Engineer", "Software Engineer",
-               "Programmer Analyst", "Senior Software Engineer", "System Analyst", "Project Lead", "Project Manager", "Program Manager ", "Team Lead", "Senior Team Lead",
-               "Account Manager", "Architect", "Technical Specialist", "Deliver Manager", "Delivery Head", "Business Analyst", "Delivery Partner"
-       };
+        final CharSequence[] items = {
+                "Chairman", "Vice Chairman", "Chairman cum Managing Director", "Managing Director", "Sr. Vice president ", "Vice President", "General Manager",
+                "Joint General Manager", "Deputy General Manager", "Asst. General Manager", "Chief Manager", "Sr. Manager", "Manager", "Joint Manager", "Deputy Manager",
+                "Asst. Manager", "Sr. Officer", "Officer", "Jr. Officer", "Sr. Associate", "Associate", "Jr. Associate", "Assistant ", "Trainee Engineer", "Software Engineer",
+                "Programmer Analyst", "Senior Software Engineer", "System Analyst", "Project Lead", "Project Manager", "Program Manager ", "Team Lead", "Senior Team Lead",
+                "Account Manager", "Architect", "Technical Specialist", "Deliver Manager", "Delivery Head", "Business Analyst", "Delivery Partner"
+        };
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration4.this);
         alertDialogBuilder.setTitle("Choose Designation");
@@ -508,20 +519,18 @@ public class Registration4 extends AppCompatActivity {
     }
 
     private boolean validatework() {
-        if(editText_work.getText().toString().trim().isEmpty()) {
+        if (editText_work.getText().toString().trim().isEmpty()) {
             inputLayoutWorking.setError("Enter work");
             requestFocus(editText_work);
             return false;
-        }
-
-        else {
+        } else {
             inputLayoutWorking.setErrorEnabled(false);
         }
         return true;
     }
 
     private boolean validatedesig() {
-        if(editText_desig.getText().toString().trim().isEmpty()) {
+        if (editText_desig.getText().toString().trim().isEmpty()) {
             inputLayoutDesig.setError("Enter designation");
             requestFocus(editText_desig);
             return false;
@@ -555,8 +564,6 @@ public class Registration4 extends AppCompatActivity {
 
         return true;
     }
-
-
 
 
     private void requestFocus(View view) {
@@ -608,13 +615,21 @@ public class Registration4 extends AppCompatActivity {
     }
 
 
-
     //Shared Preferences
     private void storeSPData(String key, String data) {
 
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor mUserEditor = mUserData.edit();
         mUserEditor.putString(key, data);
+        mUserEditor.commit();
+
+    }
+
+    private void storeSPData(String key, boolean data) {
+
+        SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
+        SharedPreferences.Editor mUserEditor = mUserData.edit();
+        mUserEditor.putBoolean(key, data);
         mUserEditor.commit();
 
     }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,7 @@ public class EditProfile extends AppCompatActivity {
     ImageView edit_interests;
     ChipGroup chipgroup_interests;
     EditText edit_gender, edit_interested, edit_relationship, edit_city, edit_lang, editText_religion, editText_tattoos, editText_piercing, editTextEdu, editTextCollege, editTextWorking, editTextDesignation, editText_annual;
+    Switch switchEdu, switchCollege, switchWork, switchAnnual, switchDesig;
     ScrollChoice scroll_choice;
     ActionButton actionButton;
 
@@ -71,7 +73,7 @@ public class EditProfile extends AppCompatActivity {
 
     ArrayList<String> interestsarr = new ArrayList<>();
     List<String> data = new ArrayList<>();
-    String ft, inch, langs="", quali="", college="";
+    String ft, inch, langs="", quali="", colleges="", orgWorked = "";
 
     int i;
 
@@ -106,6 +108,12 @@ public class EditProfile extends AppCompatActivity {
         editText_annual = findViewById(R.id.editText_annual);
         scroll_choice = findViewById(R.id.scroll_choice);
         actionButton = findViewById(R.id.action_edit_done);
+
+        switchEdu = findViewById(R.id.switchButtonEdu);
+        switchCollege = findViewById(R.id.switchButtonCollege);
+        switchAnnual = findViewById(R.id.switchButtonAnnual);
+        switchWork = findViewById(R.id.switchButtonWorking);
+        switchDesig = findViewById(R.id.switchButtonDesignation);
 
 
         data.add("4'");
@@ -370,6 +378,12 @@ public class EditProfile extends AppCompatActivity {
                         else object.addProperty("inches", height[1].replace("\"",""));
                     }
 
+                    object.addProperty("educationVisibility", switchEdu.isChecked());
+                    object.addProperty("collegeVisibility", switchCollege.isChecked());
+                    object.addProperty("workVisibility", switchWork.isChecked());
+                    object.addProperty("desigVisibility", switchDesig.isChecked());
+                    object.addProperty("annualVisibility", switchAnnual.isChecked());
+
                     Log.e("ASd", object.toString());
 
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
@@ -471,10 +485,24 @@ public class EditProfile extends AppCompatActivity {
         quali = quali.substring(0, quali.length()-2);
         editTextEdu.setText(quali);
 
-        editTextCollege.setText(userData.optString("collegeName"));
-        editTextWorking.setText(userData.optString("organisationWorked"));
+        for(i = 0; i<userData.optJSONArray("collegeName").length(); i++)
+            colleges = colleges + userData.optJSONArray("collegeName").getString(i) + ", ";
+        colleges = colleges.substring(0, colleges.length()-2);
+        editTextCollege.setText(colleges);
+
+        for(i = 0; i<userData.optJSONArray("organisationWorked").length(); i++)
+            orgWorked = orgWorked + userData.optJSONArray("organisationWorked").getString(i) + ", ";
+        orgWorked = orgWorked.substring(0, orgWorked.length()-2);
+        editTextWorking.setText(orgWorked);
+
         editTextDesignation.setText(userData.optString("currentDesignation"));
         editText_annual.setText(userData.optString("annualIncome"));
+
+        switchEdu.setChecked(userData.optBoolean("qualificationVisibility"));
+        switchCollege.setChecked(userData.optBoolean("collegeNameVisibility"));
+        switchWork.setChecked(userData.optBoolean("organisationWorkedVisibility"));
+        switchDesig.setChecked(userData.optBoolean("currentDesignationVisibility"));
+        switchAnnual.setChecked(userData.optBoolean("annualIncomeVisibility"));
 
         ft = userData.optJSONObject("height").optString("feet");
         inch = userData.optJSONObject("height").optString("inches");
