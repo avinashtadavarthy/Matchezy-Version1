@@ -92,9 +92,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         interestsArray = intent.getStringArrayListExtra("interestsArray");
 
         final ActionButton actionButton = (ActionButton) findViewById(com.einheit.matchezy.R.id.action_button_next2);
-        // actionButton.hide();
-        actionButton.setType(ActionButton.Type.BIG);
-        //actionButton.setSize(65.0f);
+        actionButton.setType(ActionButton.Type.DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
         }

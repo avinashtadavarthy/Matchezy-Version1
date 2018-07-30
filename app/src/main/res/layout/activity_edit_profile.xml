@@ -191,6 +191,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="20dp"
@@ -214,6 +215,7 @@
                     android:layout_marginTop="15dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/edit_interested"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -237,6 +239,7 @@
                     android:layout_marginTop="15dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/edit_relationship"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -260,7 +263,7 @@
                     android:layout_marginTop="15dp">
 
                     <EditText
-
+                        android:longClickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="20dp"
@@ -285,6 +288,7 @@
                     android:layout_marginBottom="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="20dp"
@@ -394,6 +398,7 @@
 
 
                     <EditText
+                        android:longClickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="20dp"
@@ -404,7 +409,6 @@
                         android:background="@drawable/signup_box"
                         android:hint="Religion"
                         android:paddingLeft="16dp"
-                         
                         android:inputType="none"
                         android:focusable="false"/>
 
@@ -418,6 +422,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editText_tattoos"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -425,10 +430,8 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-
                         android:hint="Tattoos"
                         android:paddingLeft="16dp"
- 
                         android:inputType="none"
                         android:focusable="false"/>
                 </android.support.design.widget.TextInputLayout>
@@ -441,6 +444,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editText_piercing"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -470,6 +474,7 @@
 
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editTextEdu"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -494,6 +499,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editTextCollege"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -518,6 +524,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editTextWorking"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -541,6 +548,7 @@
                     android:layout_marginTop="10dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editTextDesignation"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
@@ -566,6 +574,7 @@
                     android:layout_marginBottom="12dp">
 
                     <EditText
+                        android:longClickable="false"
                         android:id="@+id/editText_annual"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"

@@ -128,9 +128,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next1);
-        // actionButton.hide();
         actionButton.setType(ActionButton.Type.DEFAULT);
-        //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
         }
@@ -396,8 +394,8 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             String[] dobarr = input_Dateofbirth.getText().toString().split("/",3);
             String age = Utility.getInstance().getAge(Integer.parseInt(dobarr[2]), Integer.parseInt(dobarr[1]), Integer.parseInt(dobarr[0]));
 
-            if (Integer.parseInt(age) < 21) {
-                inputLayoutDateofbirth.setError("Get back after you're 21, please?");
+            if (Integer.parseInt(age) < 18) {
+                inputLayoutDateofbirth.setError("Get back after you're 18, please?");
                 return false;
             } else {
                 inputLayoutDateofbirth.setErrorEnabled(false);

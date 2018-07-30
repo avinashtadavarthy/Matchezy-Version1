@@ -68,9 +68,7 @@ public class Registration_Interests extends AppCompatActivity {
 
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next3);
-        // actionButton.hide();
-        actionButton.setType(ActionButton.Type.BIG);
-        //actionButton.setSize(65.0f);
+        actionButton.setType(ActionButton.Type.DEFAULT);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
         }

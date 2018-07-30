@@ -34,6 +34,12 @@ public class Registration4 extends AppCompatActivity {
     EditText editText_work,editText_annual,editText_college,editText_edu,editText_desig;
     private TextInputLayout inputLayoutWorking, inputLayoutCollege, inputLayoutAnnual,inputLayoutEdu, inputLayoutDesig;
 
+
+    ArrayList<Integer> existingdataedu = new ArrayList<>(),
+            existingdatawork = new ArrayList<>(),
+            existingdatacollege = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +61,7 @@ public class Registration4 extends AppCompatActivity {
         editText_desig=(EditText)findViewById(R.id.editTextDesignation);
 
         editText_edu.setShowSoftInputOnFocus(false);
+        editText_desig.setShowSoftInputOnFocus(false);
 
         editText_edu.addTextChangedListener(new Registration4.MyTextWatcher(editText_edu));
         editText_college.addTextChangedListener(new Registration4.MyTextWatcher(editText_college));
@@ -148,9 +155,7 @@ public class Registration4 extends AppCompatActivity {
 
 
         final ActionButton actionButton = (ActionButton) findViewById(R.id.action_button_next3);
-        // actionButton.hide();
         actionButton.setType(ActionButton.Type.DEFAULT);
-        //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
         }
@@ -215,6 +220,7 @@ public class Registration4 extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdataedu)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -226,7 +232,14 @@ public class Registration4 extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editText_edu.setText(dataString);
+                        String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + ", ";
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editText_edu.setText(datadisplayed);
+                        existingdataedu = selectedIds;
                     }
 
                     @Override
@@ -252,6 +265,7 @@ public class Registration4 extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdatawork)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -263,7 +277,14 @@ public class Registration4 extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editText_work.setText(dataString);
+                        String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editText_work.setText(datadisplayed);
+                        existingdatawork = selectedIds;
                     }
 
                     @Override
@@ -288,6 +309,7 @@ public class Registration4 extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdatacollege)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -299,7 +321,14 @@ public class Registration4 extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editText_college.setText(dataString);
+                        String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editText_college.setText(datadisplayed);
+                        existingdatacollege = selectedIds;
                     }
 
                     @Override

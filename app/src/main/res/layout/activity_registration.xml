@@ -47,6 +47,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="45dp"
+                    android:longClickable="false"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Name"
@@ -72,6 +73,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
+                    android:longClickable="false"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Date of birth"
@@ -105,6 +107,7 @@
                         android:hint="Code"
                         android:gravity="center"
                         android:inputType="none"
+                        android:longClickable="false"
                         android:maxLength="10"
                         android:focusable="false"/>
 
@@ -128,6 +131,7 @@
                         android:hint="Mobile number "
                         android:inputType="number"
                         android:maxLength="10"
+                        android:longClickable="false"
                         android:paddingLeft="35dp" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -151,6 +155,7 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Email"
+                    android:longClickable="false"
                     android:inputType="textEmailAddress"
                     android:paddingLeft="35dp" />
 
@@ -175,6 +180,7 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstd"
                     android:hint="Password"
+                    android:longClickable="false"
                     android:inputType="textPassword"
                     android:paddingLeft="35dp"
                     android:paddingRight="24dp"

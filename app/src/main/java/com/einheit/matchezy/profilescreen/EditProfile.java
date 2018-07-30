@@ -65,6 +65,10 @@ public class EditProfile extends AppCompatActivity {
     ScrollChoice scroll_choice;
     ActionButton actionButton;
 
+    ArrayList<Integer> existingdataedu = new ArrayList<>(),
+            existingdatawork = new ArrayList<>(),
+            existingdatacollege = new ArrayList<>();
+
     ArrayList<String> interestsarr = new ArrayList<>();
     List<String> data = new ArrayList<>();
     String ft, inch, langs="", quali="", college="";
@@ -740,6 +744,7 @@ public class EditProfile extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdataedu)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -751,7 +756,14 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editTextEdu.setText(dataString);
+                         String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + ", ";
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editTextEdu.setText(datadisplayed);
+                        existingdataedu = selectedIds;
                     }
 
                     @Override
@@ -777,6 +789,7 @@ public class EditProfile extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdatawork)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -788,7 +801,14 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editTextWorking.setText(dataString);
+                       String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editTextWorking.setText(datadisplayed);
+                        existingdatawork = selectedIds;
                     }
 
                     @Override
@@ -813,6 +833,7 @@ public class EditProfile extends AppCompatActivity {
                 .positiveText("Done")
                 .negativeText("Cancel")
                 .setMinSelectionLimit(1) //you can set minimum checkbox selection limit (Optional)
+                .preSelectIDsList(existingdatacollege)
                 .multiSelectList(edu) // the multi select model list with ids and name
                 .onSubmit(new MultiSelectDialog.SubmitCallbackListener() {
                     @Override
@@ -824,7 +845,14 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                        editTextCollege.setText(dataString);
+                       String datadisplayed = "";
+                        for(int i = 0; i<=selectedNames.size()-1; i++) {
+                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                            else datadisplayed = datadisplayed + selectedNames.get(i);
+                        }
+
+                        editTextCollege.setText(datadisplayed);
+                        existingdatacollege = selectedIds;
                     }
 
                     @Override

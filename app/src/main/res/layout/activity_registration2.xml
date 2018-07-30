@@ -44,11 +44,14 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:id="@+id/edit_gender"
                     android:layout_marginTop="20dp"
+                    android:longClickable="false"
                     android:inputType="none"
                     android:fontFamily="@font/circularstd"
                     android:background="@drawable/signup_box"
@@ -68,13 +71,16 @@
                 <EditText
                     android:id="@+id/edit_interested"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
                     android:fontFamily="@font/circularstd"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:hint="Interested in"
+                    android:longClickable="false"
                     android:paddingLeft="35dp"
                     android:inputType="none"
                     android:focusable="false"/>
@@ -91,13 +97,16 @@
                 <EditText
                     android:id="@+id/edit_relationship"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
                     android:fontFamily="@font/circularstd"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:hint="Relationship Status "
+                    android:longClickable="false"
                     android:paddingLeft="35dp"
                     android:inputType="none"
                     android:focusable="false"/>
@@ -112,9 +121,10 @@
                 android:layout_marginTop="15dp">
 
                 <EditText
-
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/circularstd"
@@ -123,6 +133,7 @@
                     android:background="@drawable/signup_box"
                     android:hint="Choose your city"
                     android:paddingLeft="35dp"
+                    android:longClickable="false"
                     android:inputType="none"
                     android:focusable="false"/>
 
@@ -137,7 +148,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:fontFamily="@font/circularstd"
@@ -146,6 +159,7 @@
                     android:background="@drawable/signup_box"
                     android:hint="Languages known"
                     android:paddingLeft="35dp"
+                    android:longClickable="false"
                     android:inputType="none"
                     android:focusable="false"/>
 
