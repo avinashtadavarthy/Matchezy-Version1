@@ -29,11 +29,11 @@ import java.util.Random;
 public class FcmService extends FirebaseMessagingService {
 
     NotificationManager notificationManager;
+    boolean isChatMessage = false;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        if(!Chat.isIsChatOpen()) {
             notificationManager =
                     (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -50,12 +50,15 @@ public class FcmService extends FirebaseMessagingService {
             if (remoteMessage.getData().containsKey("intent")) {
                 if (remoteMessage.getData().get("intent").equals("chatPage")) {
                     intent.putExtra("notify", "chat");
+                    isChatMessage = true;
                 } else if (remoteMessage.getData().get("intent").equals("chat")) {
                     intent.putExtra("notify", "like");
                 }
             }
 
-            final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
+            int requestID = (int) System.currentTimeMillis();
+
+            final PendingIntent pendingIntent = PendingIntent.getActivity(this, requestID, intent,
                     PendingIntent.FLAG_ONE_SHOT);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -71,9 +74,8 @@ public class FcmService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setContentIntent(pendingIntent);
 
-            notificationManager.notify(notificationId, notificationBuilder.build());
-
-        }
+            if(!(isChatMessage && Chat.isIsChatOpen()))
+                notificationManager.notify(notificationId, notificationBuilder.build());
 
     }
 

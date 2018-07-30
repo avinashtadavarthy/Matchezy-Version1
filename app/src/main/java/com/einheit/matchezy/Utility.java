@@ -33,6 +33,9 @@ public class Utility {
     public static final int FROM_MATCHED = 5;
     public static final int FROM_DISLIKED = 6;
     public static final int FROM_BLOCKED = 7;
+    public static final int FROM_SHARED_PROFILE = 8;
+
+    public static final String PASS = "QAZwsxEDCrfvTGByhnUJMik";
 
     //variables or functions
     public static String

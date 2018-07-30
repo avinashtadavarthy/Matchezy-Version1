@@ -2,6 +2,7 @@ package com.einheit.matchezy;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -14,6 +15,7 @@ import com.einheit.matchezy.bookmarkstab.Fragment_favorites;
 import com.einheit.matchezy.hometab.Fragment_Home;
 import com.einheit.matchezy.messagestab.Fragment_messages;
 import com.einheit.matchezy.notificationstab.Fragment_notifications;
+import com.einheit.matchezy.profilescreen.ProfilePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +71,15 @@ public class HomeScreen extends AppCompatActivity {
 
         notifyBundle = new Bundle();
         notifyBundle.putString("notify", "bookmark");
+
+        if(getIntent().hasExtra("queryUserId")) {
+            Intent intent = new Intent(HomeScreen.this, ProfilePage.class);
+            intent.putExtra("queryUserId",getIntent().getStringExtra("queryUserId"));
+            intent.putExtra("fromStatusCode", Utility.FROM_SHARED_PROFILE);
+            startActivity(intent);
+            finish();
+        }
+
 
         if(getIntent().hasExtra("notify")) {
             String selectedId = getIntent().getStringExtra("notify");

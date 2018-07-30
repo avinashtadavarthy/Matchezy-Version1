@@ -9,9 +9,11 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.einheit.matchezy.EncUtil;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
@@ -41,6 +45,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,6 +57,7 @@ public class ProfilePage extends AppCompatActivity {
 
 
     SlidingUpPanelLayout profile_sliding_layout;
+    EncUtil.SecretKeys secretKeys;
     RelativeLayout maininfo;
     ImageView bookmarkbtn, editbtn, one, two, three;
     TextView pagertextindicator;
@@ -58,12 +65,21 @@ public class ProfilePage extends AppCompatActivity {
     String myprofile;
     ActionButton disLikeFab;
     ActionButton likeFab;
+    LinearLayout fabLayout;
 
     TextView profilename, age, city;
 
     JSONObject userData;
 
     int fromStatusCode = 0;
+
+    ViewPager imagePager;
+    CircleIndicator indicator;
+    ViewPager pager;
+
+    View progressOverlay;
+
+    android.support.v7.widget.ShareActionProvider mShareActionProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,16 +93,29 @@ public class ProfilePage extends AppCompatActivity {
 
         AndroidNetworking.initialize(this);
 
-        final ViewPager imagePager = (ViewPager) findViewById(R.id.imagePager);
-        final CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+        imagePager = (ViewPager) findViewById(R.id.imagePager);
+        indicator = (CircleIndicator) findViewById(R.id.indicator);
 
-        final ViewPager pager = (ViewPager) findViewById(R.id.viewPager);
+        pager = (ViewPager) findViewById(R.id.viewPager);
 
         likeFab = (ActionButton) findViewById(R.id.action_button_like);
         disLikeFab = (ActionButton) findViewById(R.id.action_button_dislike);
 
         bookmarkbtn = findViewById(R.id.bookmarkbtn);
         editbtn = findViewById(R.id.editbtn);
+
+        one = findViewById(R.id.one);
+        two = findViewById(R.id.two);
+        three = findViewById(R.id.three);
+        pagertextindicator = findViewById(R.id.pagertextindicator);
+
+        progressOverlay = findViewById(R.id.progress_overlay);
+
+        try {
+            secretKeys = EncUtil.generateKeyFromPassword(Utility.PASS, EncUtil.SALT);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
 
         editbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +128,7 @@ public class ProfilePage extends AppCompatActivity {
         profile_sliding_layout = (SlidingUpPanelLayout) findViewById(R.id.profile_sliding_layout);
         profile_sliding_layout.setScrollableView(pager);
 
+        fabLayout = findViewById(R.id.fab_buttons_layout);
 
         profilename = findViewById(R.id.profilename);
         city = findViewById(R.id.city);
@@ -113,15 +143,66 @@ public class ProfilePage extends AppCompatActivity {
         myprofile = getIntent().getStringExtra("myprofile");
         fromStatusCode = getIntent().getIntExtra("fromStatusCode", 1);
 
-        try {
-            if(fromStatusCode == Utility.FROM_PROFILE_PAGE)
-                userData = new JSONObject(getSPData("userdata"));
-            else userData = new JSONObject(getIntent().getStringExtra("userData"));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (fromStatusCode != Utility.FROM_SHARED_PROFILE) {
+            try {
+                if (fromStatusCode == Utility.FROM_PROFILE_PAGE)
+                    userData = new JSONObject(getSPData("userdata"));
+                else userData = new JSONObject(getIntent().getStringExtra("userData"));
+
+                populateFields();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            progressOverlay.setVisibility(View.VISIBLE);
+            fabLayout.setVisibility(View.GONE);
+            profile_sliding_layout.setVisibility(View.GONE);
+
+            EncUtil.CipherTextIvMac cipherTextIvMac1 = new EncUtil.CipherTextIvMac(
+                    getIntent().getStringExtra("queryUserId"));
+            String plainText = null;
+            try {
+                plainText = EncUtil.decryptString(cipherTextIvMac1, secretKeys);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            }
+
+                AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")
+                        .addBodyParameter("user_id", getSPData("user_id"))
+                        .addBodyParameter("user_token", getSPData("user_token"))
+                        .addBodyParameter("user_id_2", plainText)
+                        .setPriority(Priority.HIGH)
+                        .build()
+                        .getAsJSONObject(new JSONObjectRequestListener() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                // do anything with response
+
+                                progressOverlay.setVisibility(View.GONE);
+                                fabLayout.setVisibility(View.VISIBLE);
+                                profile_sliding_layout.setVisibility(View.VISIBLE);
+
+                                if (response.optInt("status_code") == 200) {
+                                    userData = response.optJSONObject("message");
+
+                                    populateFields();
+                                } else {
+                                    Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(ANError error) {
+
+                                error.printStackTrace();
+
+                            }
+                        });
         }
 
-        if(getIntent().hasExtra("tag")) {
+        if (getIntent().hasExtra("tag")) {
             if (getIntent().getBooleanExtra("tag", false)) {
                 ct = true;
                 bookmarkbtn.setImageResource(R.drawable.bookmark_full);
@@ -131,39 +212,10 @@ public class ProfilePage extends AppCompatActivity {
             }
         }
 
-        profilename.setText(userData.optString("name") + ", ");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-        try {
-            Date date = format.parse(String.valueOf(userData.optString("dob")));
-            profilename.append(Utility.getInstance().getAge(date.getYear() + 1900,
-                    date.getMonth(), date.getDay()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        city.setText(userData.optString("currentCity"));
 
-        JSONArray picsArray = userData.optJSONArray("pictures");
-
-        String[] picurls = {"", "", "", ""};
-
-        for(int i = 0;i < picsArray.length(); i++) {
-            try {
-                picurls[i] = picsArray.getString(i);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
-        imagePager.setAdapter(mCustomPagerAdapter);
-        indicator.setViewPager(imagePager);
-        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), userData, userData.optJSONArray("interests"));
-        pager.setAdapter(pagerAdapter);
-        pager.setCurrentItem(0);
-
-        if(fromStatusCode == Utility.FROM_PROFILE_PAGE) {
+        if (fromStatusCode == Utility.FROM_PROFILE_PAGE) {
             myProfile();
-        } else if(fromStatusCode == Utility.FROM_HOMESCREEN){
+        } else if (fromStatusCode == Utility.FROM_HOMESCREEN || fromStatusCode == Utility.FROM_SHARED_PROFILE) {
             fromHomeScreen();
         } else if (fromStatusCode == Utility.FROM_BOOKMARKED) {
             fromBookmarkedProfiles();
@@ -181,7 +233,7 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(!ct) {
+                if (!ct) {
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
                             .addBodyParameter("user_id", getSPData("user_id"))
                             .addBodyParameter("user_token", getSPData("user_token"))
@@ -192,13 +244,12 @@ public class ProfilePage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(JSONObject res) {
 
-                                    if(res.optInt("status_code") == 200) {
+                                    if (res.optInt("status_code") == 200) {
                                         bookmarkbtn.setImageResource(R.drawable.bookmark_full);
                                         ct = true;
                                         Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
 
-                                    }
-                                    else
+                                    } else
                                         Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
 
                                 }
@@ -220,13 +271,12 @@ public class ProfilePage extends AppCompatActivity {
                                 @Override
                                 public void onResponse(JSONObject res) {
 
-                                    if(res.optInt("status_code") == 200) {
+                                    if (res.optInt("status_code") == 200) {
                                         bookmarkbtn.setImageResource(R.drawable.bookmark_empty);
                                         ct = false;
                                         Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
 
-                                    }
-                                    else
+                                    } else
                                         Toast.makeText(ProfilePage.this, res.optString("message"), Toast.LENGTH_SHORT).show();
 
                                 }
@@ -243,7 +293,7 @@ public class ProfilePage extends AppCompatActivity {
         });
 
 
-        profile_sliding_layout.setPanelHeight((int)Math.round(height*0.45));
+        profile_sliding_layout.setPanelHeight((int) Math.round(height * 0.45));
         profile_sliding_layout.setParallaxOffset(150);
 
         maininfo = (RelativeLayout) findViewById(R.id.maininfo);
@@ -263,7 +313,7 @@ public class ProfilePage extends AppCompatActivity {
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
 
-                if(newState.equals(SlidingUpPanelLayout.PanelState.EXPANDED) || newState.equals(SlidingUpPanelLayout.PanelState.DRAGGING)) {
+                if (newState.equals(SlidingUpPanelLayout.PanelState.EXPANDED) || newState.equals(SlidingUpPanelLayout.PanelState.DRAGGING)) {
                     getSupportActionBar().hide();
                 } else {
                     getSupportActionBar().show();
@@ -308,16 +358,16 @@ public class ProfilePage extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
 
-                                if(response.optInt("status_code") == 200) {
+                                if (response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onError(ANError error) {
 
@@ -342,16 +392,16 @@ public class ProfilePage extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
 
-                                if(response.optInt("status_code") == 200) {
+                                if (response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onError(ANError error) {
 
@@ -366,12 +416,6 @@ public class ProfilePage extends AppCompatActivity {
         anim.setDuration(200);
         anim.setRepeatCount(1);
         anim.setRepeatMode(Animation.REVERSE);
-
-
-        one = findViewById(R.id.one);
-        two = findViewById(R.id.two);
-        three = findViewById(R.id.three);
-        pagertextindicator = findViewById(R.id.pagertextindicator);
 
         final ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
             @Override
@@ -487,7 +531,7 @@ public class ProfilePage extends AppCompatActivity {
             }
         };
         pager.addOnPageChangeListener(changeListener);
-        pager.post(new Runnable(){
+        pager.post(new Runnable() {
             @Override
             public void run() {
                 changeListener.onPageSelected(pager.getCurrentItem());
@@ -496,6 +540,38 @@ public class ProfilePage extends AppCompatActivity {
         changeListener.onPageSelected(pager.getCurrentItem());*/
 
 
+    }
+
+    void populateFields() {
+        profilename.setText(userData.optString("name") + ", ");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        try {
+            Date date = format.parse(String.valueOf(userData.optString("dob")));
+            profilename.append(Utility.getInstance().getAge(date.getYear() + 1900,
+                    date.getMonth(), date.getDay()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        city.setText(userData.optString("currentCity"));
+
+        JSONArray picsArray = userData.optJSONArray("pictures");
+
+        String[] picurls = {"", "", "", ""};
+
+        for (int i = 0; i < picsArray.length(); i++) {
+            try {
+                picurls[i] = picsArray.getString(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
+        imagePager.setAdapter(mCustomPagerAdapter);
+        indicator.setViewPager(imagePager);
+        MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), userData, userData.optJSONArray("interests"));
+        pager.setAdapter(pagerAdapter);
+        pager.setCurrentItem(0);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -511,12 +587,16 @@ public class ProfilePage extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int pos) {
-            switch(pos) {
+            switch (pos) {
 
-                case 0: return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests, userdata.toString());
-                case 1: return Fragment_profileInfo.newInstance("SecondFragment, Instance 1",userdata);
-                case 2: return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
-                default: return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests, userdata.toString());
+                case 0:
+                    return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests, userdata.toString());
+                case 1:
+                    return Fragment_profileInfo.newInstance("SecondFragment, Instance 1", userdata);
+                case 2:
+                    return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
+                default:
+                    return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests, userdata.toString());
             }
         }
 
@@ -539,10 +619,12 @@ public class ProfilePage extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        if(fromStatusCode != Utility.FROM_PROFILE_PAGE) {
+        if (fromStatusCode != Utility.FROM_PROFILE_PAGE) {
             MenuInflater mi = getMenuInflater();
             mi.inflate(R.menu.profile_options, menu);
-            if(fromStatusCode == Utility.FROM_BLOCKED) {
+            mShareActionProvider = (android.support.v7.widget.ShareActionProvider)
+                    MenuItemCompat.getActionProvider(menu.findItem(R.id.share_profile));
+            if (fromStatusCode == Utility.FROM_BLOCKED) {
                 menu.findItem(R.id.unblock).setVisible(true);
                 menu.findItem(R.id.block).setVisible(false);
             }
@@ -560,16 +642,16 @@ public class ProfilePage extends AppCompatActivity {
     }
 
     void checkOnBackPressed() {
-        if(fromStatusCode == Utility.FROM_HOMESCREEN){
+        if (fromStatusCode == Utility.FROM_HOMESCREEN) {
             Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
             startActivity(intent);
         } else if (fromStatusCode == Utility.FROM_BOOKMARKED) {
             Intent intent = new Intent(ProfilePage.this, HomeScreen.class)
-                    .putExtra("notify","bookmark");
+                    .putExtra("notify", "bookmark");
             startActivity(intent);
         } else if (fromStatusCode == Utility.FROM_LIKED) {
             Intent intent = new Intent(ProfilePage.this, HomeScreen.class)
-                    .putExtra("notify","like");
+                    .putExtra("notify", "like");
             startActivity(intent);
         } else if (fromStatusCode == Utility.FROM_DISLIKED) {
             Intent intent = new Intent(ProfilePage.this, DislikedScreen.class);
@@ -598,17 +680,17 @@ public class ProfilePage extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
 
-                                if(response.optInt("status_code") == 200) {
+                                if (response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
 
                                     checkOnBackPressed();
                                     finish();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onError(ANError error) {
 
@@ -616,7 +698,7 @@ public class ProfilePage extends AppCompatActivity {
 
                             }
                         });
-                    break;
+                break;
             case R.id.unblock:
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBlockUser")
                         .addBodyParameter("user_id", getSPData("user_id"))
@@ -629,16 +711,16 @@ public class ProfilePage extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
 
-                                if(response.optInt("status_code") == 200) {
+                                if (response.optInt("status_code") == 200) {
                                     Log.e("userdata", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             @Override
                             public void onError(ANError error) {
 
@@ -647,6 +729,26 @@ public class ProfilePage extends AppCompatActivity {
                             }
                         });
                 break;
+            case R.id.share_profile:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Matchezy");
+
+                EncUtil.CipherTextIvMac cipherTextIvMac = null;
+                try {
+                    cipherTextIvMac = EncUtil.encrypt(userData.optString("user_id"), secretKeys);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (GeneralSecurityException e) {
+                    e.printStackTrace();
+                }
+                String cipherTextString = cipherTextIvMac.toString();
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, I saw this profile on Matchezy, " +
+                        "what do you think about " + userData.optString("name") + " ?\n\n" +
+                        "http://matchezy.com/profile?q=" + cipherTextString);
+                sendIntent.setType("text/plain");
+                startActivity(Intent.createChooser(sendIntent, "Share using"));
 
         }
         return super.onOptionsItemSelected(item);

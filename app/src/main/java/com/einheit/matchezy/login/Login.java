@@ -63,6 +63,8 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
             "email", "user_friends", "user_birthday", "user_gender", "user_location",
             "user_friends", "user_photos", "user_likes");
 
+    String queryUserId = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,8 +77,17 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+            Uri uri = getIntent().getData();
+            queryUserId = uri.getQueryParameter("q");
+        }
+
         if (!getSPData("user_id").equals("") && !getSPData("user_token").equals("")) {
             Intent i = new Intent(getApplicationContext(),HomeScreen.class);
+
+            if(!queryUserId.isEmpty()) {
+                i.putExtra("queryUserId",queryUserId);
+            }
 
             if(getIntent().hasExtra("notify"))
                 i.putExtra("notify", getIntent().getStringExtra("notify"));
@@ -149,6 +160,9 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                 //Log.e("userdata", response.toString());
                                                                 storeSPData("userdata", response.optJSONObject("message").toString());
                                                                 Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                if(!queryUserId.isEmpty()) {
+                                                                    intent.putExtra("queryUserId",queryUserId);
+                                                                }
                                                                 startActivity(intent);
                                                                 finish();
                                                             }
@@ -247,6 +261,9 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                                     //Log.e("userdata", response.toString());
                                                                                     storeSPData("userdata", response.optJSONObject("message").toString());
                                                                                     Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                                    if(!queryUserId.isEmpty()) {
+                                                                                        intent.putExtra("queryUserId",queryUserId);
+                                                                                    }
                                                                                     startActivity(intent);
                                                                                     finish();
                                                                                 }

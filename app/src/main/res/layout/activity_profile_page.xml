@@ -194,6 +194,7 @@
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
     <LinearLayout
+        android:id="@+id/fab_buttons_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -219,6 +220,8 @@
         fab:shadowResponsiveEffect_enabled="true"
         fab:show_animation="@anim/fab_roll_from_right" />
     </LinearLayout>
+
+    <include layout="@layout/include_progress_overlay"/>
 
 </RelativeLayout>
 
