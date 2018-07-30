@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -33,6 +34,9 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -148,6 +152,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                             now.get(Calendar.MONTH),
                             now.get(Calendar.DAY_OF_MONTH)
                     );
+                    dpd.setVersion(DatePickerDialog.Version.VERSION_1);
                     dpd.show(getFragmentManager(), "Datepickerdialog");
 
                 }
@@ -167,6 +172,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH)
                 );
+                dpd.setVersion(DatePickerDialog.Version.VERSION_1);
                 dpd.show(getFragmentManager(), "Datepickerdialog");
 
             }
@@ -484,7 +490,6 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
             }
         }
     }
-
 
     private String converttocode(String s) {
 

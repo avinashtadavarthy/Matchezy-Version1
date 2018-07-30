@@ -59,8 +59,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     HorizontalRecyclerAdapter horizontalAdapter;
     List<Data> data;
 
-    View progressOverlay;
-
     RecyclerView myrv;
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
@@ -84,9 +82,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment__home, container, false);
-
-        /*progressOverlay = myView.findViewById(R.id.progress_overlay);
-        progressOverlay.setVisibility(View.VISIBLE);*/
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
             recommendedTextView = myView.findViewById(R.id.recommendedTextView);
@@ -211,9 +206,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                         myAdapter.notifyItemRemoved(lstMatchedProfiles.size());
 
                         if(res.optInt("status_code") == 200) {
-                            /*Log.e("ASD", res.toString());
-
-                            progressOverlay.setVisibility(View.GONE);*/
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
