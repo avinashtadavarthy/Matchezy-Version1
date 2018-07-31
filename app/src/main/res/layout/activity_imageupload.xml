@@ -15,7 +15,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/curve1"
-        android:fontFamily="@font/circularstd"
+        android:fontFamily="@font/circularstdbook"
         android:paddingEnd="66dp"
         android:paddingStart="19dp"
         android:paddingTop="38dp"

@@ -19,7 +19,7 @@
         android:textColor="#4a4a4a"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="13dp"
-        android:fontFamily="@font/circularstd"
+        android:fontFamily="@font/circularstdbook"
         android:layout_height="wrap_content" />
 
        <RelativeLayout
@@ -61,7 +61,7 @@
            android:textSize="15dp"
            android:textColor="#4a4a4a"
            android:layout_marginLeft="13dp"
-           android:fontFamily="@font/circularstd"
+           android:fontFamily="@font/circularstdbook"
            android:layout_height="wrap_content" />
 
        <RelativeLayout

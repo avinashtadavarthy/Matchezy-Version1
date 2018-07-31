@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Avinash"
-            android:fontFamily="@font/sourcesansproregular"
+            android:fontFamily="@font/circularstdbook"
             android:textColor="@color/appgrey"/>
 
         <TextView
@@ -34,7 +34,7 @@
             android:text="Hey! What's up?"
             android:maxLines="1"
             android:ellipsize="end"
-            android:fontFamily="@font/sourcesansproregular"
+            android:fontFamily="@font/circularstdbook"
             android:textColor="@color/appgrey"/>
 
     </LinearLayout>
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3:00pm"
-        android:fontFamily="@font/sourcesansproregular"
+        android:fontFamily="@font/circularstdbook"
         android:textStyle="bold"
         android:layout_alignParentEnd="true"
         android:textColor="#9b9b9b"

@@ -21,7 +21,6 @@ import com.bumptech.glide.Glide;
 import com.einheit.matchezy.login.Login;
 import com.einheit.matchezy.profilescreen.ProfilePage;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +35,7 @@ public class ProfileOptions extends AppCompatActivity {
 
     View progressOverlay;
 
-    LinearLayout viewprofile, privacysettings, helpandfeedback, logout;
+    LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions, privacypolicy, aboutus;
 
     RelativeLayout optionslistlayout;
 
@@ -84,6 +83,9 @@ public class ProfileOptions extends AppCompatActivity {
         privacysettings = (LinearLayout) findViewById(R.id.privacysettings);
         helpandfeedback = (LinearLayout) findViewById(R.id.helpandfeedback);
         logout = (LinearLayout) findViewById(R.id.logout);
+        termsandconditions = (LinearLayout) findViewById(R.id.termsandconditions);
+        privacypolicy = (LinearLayout) findViewById(R.id.privacypolicy);
+        aboutus = (LinearLayout) findViewById(R.id.aboutus);
 
         blankspace = (TextView) findViewById(R.id.blankspace);
 
@@ -99,10 +101,56 @@ public class ProfileOptions extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ProfilePage.class).putExtra("myprofile", "true");
                 startActivity(i);
+                finish();
             }
         });
 
         Log.e("ASd",getSPData("user_id"));
+
+        termsandconditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","terms");
+                startActivity(i);
+                finish();
+            }
+        });
+
+        privacypolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","privacy");
+                startActivity(i);
+                finish();
+            }
+        });
+
+        aboutus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","about");
+                startActivity(i);
+                finish();
+            }
+        });
+
+        helpandfeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","help");
+                startActivity(i);
+                finish();
+            }
+        });
+
+        privacysettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","privsettings");
+                startActivity(i);
+                finish();
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +187,7 @@ public class ProfileOptions extends AppCompatActivity {
                                         Intent i = new Intent(getApplicationContext(),Login.class);
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(i);
+                                        finish();
                                         break;
 
                                     case "400": progressOverlay.setVisibility(View.GONE);

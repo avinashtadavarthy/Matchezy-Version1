@@ -11,7 +11,7 @@
         android:id="@+id/displaytext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/circularstd"
+        android:fontFamily="@font/circularstdbook"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textSize="20dp"

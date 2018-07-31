@@ -77,7 +77,7 @@
                         android:id="@+id/profilename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstd"
+                        android:fontFamily="@font/circularstdbold"
                         android:text="Priya"
                         android:textSize="18dp"
                         android:textColor="#FF4A4A4A"/>
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:fontFamily="@font/circularstd"
+                    android:fontFamily="@font/circularstdbold"
                     android:text="Chennai"
                     android:textSize="18dp"
                     android:textColor="#FF4A4A4A" />
@@ -169,7 +169,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/circularstd"
+            android:fontFamily="@font/circularstdbold"
             android:textColor="#FF4A90E2"
             android:textSize="13dp" />
 

@@ -119,4 +119,178 @@
         “Be more concerned with your character than with your reputation. Your character is what you really are while your reputation is merely what others think you are.” \n – Dale Carnegie  \n\n
     </string>
 
+    <string name="sample_about_us">
+
+        Founded in 2008, Airbnb is a global travel community that offers magical end-to-end trips, including where you stay, what you do and the people you meet.
+        Airbnb uniquely leverages technology to economically empower millions of people around the world to unlock and monetize their spaces, passions and talents to become hospitality entrepreneurs.
+        Airbnb’s accommodation marketplace offers access to millions of places to stay in more than 191 countries, from apartments and villas to castles, treehouses and B and Bs.
+        With Experiences, people can see a different side to a destination through unique, handcrafted activities run by locals, while a partnership with Resy provides access to the best local restaurants in selected countries.
+        All of this is brought together in one easy-to-use and beautifully designed website and app.
+
+    </string>
+
+    <string name="sample_terms_conditions"><![CDATA[
+
+<h3>Introduction</h3>
+
+<p>These Website Standard Terms and Conditions written on this webpage shall manage your use of our website, Webiste Name accessible at Website.com.</p>
+
+<p>These Terms will be applied fully and affect to your use of this Website. By using this Website, you agreed to accept all terms and conditions written in here. You must not use this Website if you disagree with any of these Website Standard Terms and Conditions.</p>
+
+<p>Minors or people below 18 years old are not allowed to use this Website.</p>
+
+<h3>Intellectual Property Rights</h3>
+
+<p>Other than the content you own, under these Terms, Company Name and/or its licensors own all the intellectual property rights and materials contained in this Website.</p>
+
+<p>You are granted limited license only for purposes of viewing the material contained on this Website.</p>
+
+<h3>Restrictions</h3>
+
+<p>You are specifically restricted from all of the following:</p>
+
+<ul type="disc">
+   <li>Publishing any Website material in any other media;</li>
+   <li>Selling, sublicensing and/or otherwise commercializing any Website material;</li>
+   <li>Publicly performing and/or showing any Website material;</li>
+   <li>Using this Website in any way that is or may be damaging to this Website;</li>
+   <li>Using this Website in any way that impacts user access to this Website;</li>
+   <li>Using this Website contrary to applicable laws and regulations, or in any way may cause harm to the Website, or to any person or business entity;</li>
+   <li>Engaging in any data mining, data harvesting, data extracting or any other similar activity in relation to this Website;</li>
+   <li>Using this Website to engage in any advertising or marketing.</li>
+</ul>
+
+<p>Certain areas of this Website are restricted from being access by you and Company Name may further restrict access by you to any areas of this Website, at any time, in absolute discretion. Any user ID and password you may have for this Website are confidential and you must maintain confidentiality as well.</p>
+
+<h3>Your Content</h3>
+
+<p>In these Website Standard Terms and Conditions, “Your Content” shall mean any audio, video text, images or other material you choose to display on this Website. By displaying Your Content, you grant Company Name a non-exclusive, worldwide irrevocable, sub licensable license to use, reproduce, adapt, publish, translate and distribute it in any and all media.</p>
+
+<p>Your Content must be your own and must not be invading any third-party's rights. Company Name reserves the right to remove any of Your Content from this Website at any time without notice.</p>
+
+<h3>No warranties</h3>
+
+<p>This Website is provided “as is,” with all faults, and Company Name express no representations or warranties, of any kind related to this Website or the materials contained on this Website. Also, nothing contained on this Website shall be interpreted as advising you.</p>
+
+<h3>Limitation of liability</h3>
+
+<p>In no event shall Company Name, nor any of its officers, directors and employees, shall be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract.  Company Name, including its officers, directors and employees shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>
+
+<h3>Indemnification</h3>
+
+<p>You hereby indemnify to the fullest extent Company Name from and against any and/or all liabilities, costs, demands, causes of action, damages and expenses arising in any way related to your breach of any of the provisions of these Terms.</p>
+
+<h3>Severability</h3>
+
+<p>If any provision of these Terms is found to be invalid under any applicable law, such provisions shall be deleted without affecting the remaining provisions herein.</p>
+
+<h3>Variation of Terms</h3>
+
+<p>Company Name is permitted to revise these Terms at any time as it sees fit, and by using this Website you are expected to review these Terms on a regular basis.</p>
+
+<h3>Assignment</h3>
+
+<p>The Company Name is allowed to assign, transfer, and subcontract its rights and/or obligations under these Terms without any notification. However, you are not allowed to assign, transfer, or subcontract any of your rights and/or obligations under these Terms.</p>
+
+<h3>Entire Agreement</h3>
+
+<p>These Terms constitute the entire agreement between Company Name and you in relation to your use of this Website, and supersede all prior agreements and understandings.</p>
+
+<h3>Governing Law & Jurisdiction</h3>
+
+<p>These Terms will be governed by and interpreted in accordance with the laws of the State of Country, and you submit to the non-exclusive jurisdiction of the state and federal courts located in Country for the resolution of any disputes.</p>
+
+	]]></string>
+
+
+
+    <string name="sample_privacy_policy"><![CDATA[
+
+<p>This privacy policy discloses the privacy practices for (website address). This privacy policy applies solely to information collected by this website. It will notify you of the following:</p>
+<ul type="disc">
+    <li>What personally identifiable information is collected from you through the website, how it is used and with whom it may be shared.</li>
+    <li>What choices are available to you regarding the use of your data.</li>
+    <li>The security procedures in place to protect the misuse of your information.</li>
+    <li>How you can correct any inaccuracies in the information.</li>
+</ul>
+<h3>Information Collection, Use, and Sharing </h3>
+<p>We are the sole owners of the information collected on this site. We only have access to/collect information that you voluntarily give us via email or other direct contact from you. We will not sell or rent this information to anyone.
+We will use your information to respond to you, regarding the reason you contacted us. We will not share your information with any third party outside of our organization, other than as necessary to fulfill your request, e.g. to ship an order.
+Unless you ask us not to, we may contact you via email in the future to tell you about specials, new products or services, or changes to this privacy policy.</p>
+<h3>Your Access to and Control Over Information </h3>
+<p>You may opt out of any future contacts from us at any time. You can do the following at any time by contacting us via the email address or phone number given on our website:
+See what data we have about you, if any.
+Change/correct any data we have about you.
+Have us delete any data we have about you.
+Express any concern you have about our use of your data.</p>
+
+<h3>Security </h3>
+<p>We take precautions to protect your information. When you submit sensitive information via the website, your information is protected both online and offline.
+Wherever we collect sensitive information (such as credit card data), that information is encrypted and transmitted to us in a secure way. You can verify this by looking for a lock icon in the address bar and looking for "https" at the beginning of the address of the Web page.
+While we use encryption to protect sensitive information transmitted online, we also protect your information offline. Only employees who need the information to perform a specific job (for example, billing or customer service) are granted access to personally identifiable information. The computers/servers in which we store personally identifiable information are kept in a secure environment.</p>
+
+<h3>Registration </h3>
+<p>In order to use this website, a user must first complete the registration form. During registration a user is required to give certain information (such as name and email address). This information is used to contact you about the products/services on our site in which you have expressed interest. At your option, you may also provide demographic information (such as gender or age) about yourself, but it is not required.</p>
+
+<h3>Orders </h3>
+<p>We request information from you on our order form. To buy from us, you must provide contact information (like name and shipping address) and financial information (like credit card number, expiration date). This information is used for billing purposes and to fill your orders. If we have trouble processing an order, we'll use this information to contact you.</p>
+
+<h3>Cookies </h3>
+<p>We use "cookies" on this site. A cookie is a piece of data stored on a site visitor's hard drive to help us improve your access to our site and identify repeat visitors to our site. For instance, when we use a cookie to identify you, you would not have to log in a password more than once, thereby saving time while on our site. Cookies can also enable us to track and target the interests of our users to enhance the experience on our site. Usage of a cookie is in no way linked to any personally identifiable information on our site.
+If other organizations use cookies or other devices that track site visitors to your site, insert a paragraph like this in your privacy notice:
+Some of our business partners may use cookies on our site (for example, advertisers). However, we have no access to or control over these cookies.</p>
+
+<h3>Sharing </h3>
+<p>We share aggregated demographic information with our partners and advertisers. This is not linked to any personal information that can identify any individual person.
+And/or:
+We use an outside shipping company to ship orders, and a credit card processing company to bill users for goods and services. These companies do not retain, share, store or use personally identifiable information for any secondary purposes beyond filling your order.
+And/or:
+We partner with another party to provide specific services. When the user signs up for these services, we will share names, or other contact information that is necessary for the third party to provide these services. These parties are not allowed to use personally identifiable information except for the purpose of providing these services.</p>
+
+<h3>Links </h3>
+<p>This website contains links to other sites. Please be aware that we are not responsible for the content or privacy practices of such other sites. We encourage our users to be aware when they leave our site and to read the privacy statements of any other site that collects personally identifiable information.</p>
+
+<h3>Surveys & Contests </h3>
+<p>From time-to-time our site requests information via surveys or contests. Participation in these surveys or contests is completely voluntary and you may choose whether or not to participate and therefore disclose this information. Information requested may include contact information (such as name and shipping address), and demographic information (such as zip code, age level). Contact information will be used to notify the winners and award prizes. Survey information will be used for purposes of monitoring or improving the use and satisfaction of this site.</p>
+
+<p>If you feel that we are not abiding by this privacy policy, you should contact us immediately via telephone at XXX YYY-ZZZZ or via email.</p>
+
+
+	]]></string>
+
+
+    <string name="sample_help_support">
+
+        One of our next big projects is to improve the Harvest Help and Support section.  The current FAQ format has served us well, but the section became unruly as Harvest expanded and help content accumulated.  My next project is to take the additional information we’ve gained and redesign “Harvest Help.”  To prepare, I’ve been researching other websites’ help sections.  Regardless of website scope, there were some notable similarities in what was effective.  A good help section should follow these rules: \n\n
+
+1. Be easy to scan– Easy-to-scan information encourages people to read instead of immediately contacting customer service or leaving the site altogether. Some things that increase scannability include:\n\n
+
+    \t Icons \n
+    \t Brief headings \n
+    \t Bolded words \n
+    \t Avoiding long menus or questions \n
+    \t Collapsing information \n
+
+Shopify incorporates all five of these points.\n\n
+
+2. Have stellar organization– An easy-to-skim document must have a logical organization.  Organizing information by product/module and using headings and sub-headings makes a help section user-friendly.   Even if the amount of clicks increases, this structure reduces the actual time spent looking for an answer because of scannability. \n
+
+Apple has an incredible amount of information in their Support.  However, everything is impeccably organized. \n\n
+
+3. Be consistent– Effective help sections are consistent in how they organize information across pages and terms.  This sounds like a no-brainer, but blatant inconsistencies exist.  One website I saw had help categories listed in one order across the top of the page and a different order down the page.  Another highly-trafficked website used the term “suggestion” to mean two very different things.  To avoid confusion, sites should keep the following consisent: \n
+
+    \t Terminology \n
+    \t Layout of links, menus, and buttons \n
+    \t Which links, menus, and buttons are included across pages \n\n
+
+4. Be easily searchable– This point is twofold: first, the search box should be prominently displayed and generate fast and useful results. Second, help sections should be searchable from the internet since some people prefer to use search engines (such as Google or Yahoo!) to look for help information. \n
+
+A good example: Posterous’ Help places the search box in the center of the page and the content is indexed by search engines such as Google. \n\n
+
+5. Have all help resources and customer service contact information accessible– Help sections should have all resources in one place.  If there is a forum, or there is a corresponding FAQ, I want access to those additional pages at any given point.  This can be achieved by having standard menus or toolbars that appear across sections.  Additionally, customer service contact information should be easy to find.   If the customer cannot find what they’re looking for, or if they don’t want to look to begin with, it should be easy for them to contact customer service. \n\n
+
+Our goal is to make Harvest as simple and intuitive as possible, but questions and suggestions inevitably arise, and our customers deserve a solid help section for those times.   This will be my main project in the coming month, and the new “Harvest Help” should be up-and-running later this fall.  In the meantime, feel free to leave your comments and suggestions on how I can make our help page more effective for you.\n\n
+
+    </string>
+
 </resources>

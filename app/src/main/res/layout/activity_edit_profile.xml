@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="Surya Teja"
-                    android:fontFamily="@font/circularstd"
+                    android:fontFamily="@font/circularstdbook"
                     android:textColor="#FF4A4A4A"
                     android:layout_marginTop="10dp"
                     android:textSize="24sp"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text=", 22"
-                    android:fontFamily="@font/circularstd"
+                    android:fontFamily="@font/circularstdbook"
                     android:textColor="#FF4A4A4A"
                     android:layout_marginTop="10dp"
                     android:textSize="24sp"
@@ -121,7 +121,7 @@
                     android:textSize="13dp"
                     android:textColor="#4a4a4a"
                     android:layout_marginLeft="16dp"
-                    android:fontFamily="@font/circularstd"
+                    android:fontFamily="@font/circularstdbook"
                     android:layout_height="wrap_content" />
 
                 <ImageView
@@ -167,7 +167,7 @@
                 android:textSize="13dp"
                 android:textColor="#4a4a4a"
                 android:layout_marginLeft="16dp"
-                android:fontFamily="@font/circularstd"
+                android:fontFamily="@font/circularstdbook"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -321,7 +321,7 @@
                 android:textSize="13dp"
                 android:textColor="#4a4a4a"
                 android:layout_marginLeft="16dp"
-                android:fontFamily="@font/circularstd"
+                android:fontFamily="@font/circularstdbook"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -350,7 +350,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/circularstd"
+                        android:fontFamily="@font/circularstdbook"
                         android:text="Your height is... "
                         android:textSize="20dp"
                         app:layout_constraintBottom_toBottomOf="parent"

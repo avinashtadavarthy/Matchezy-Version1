@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/curve1"
-        android:fontFamily="@font/circularstd"
+        android:fontFamily="@font/circularstdbook"
         android:paddingEnd="66dp"
         android:paddingStart="19dp"
         android:paddingTop="38dp"
@@ -44,7 +44,7 @@
             android:imeOptions="actionDone"
             android:background="@drawable/signup_box"
             android:hint="Search for interests"
-            android:fontFamily="@font/sourcesansproregular"
+            android:fontFamily="@font/circularstdbook"
             android:paddingLeft="25dp" />
 
         <android.support.design.chip.ChipGroup
@@ -68,7 +68,7 @@
             android:gravity="start"
             android:layout_marginStart="30dp"
             android:layout_marginTop="8dp"
-            android:fontFamily="@font/circularstd"
+            android:fontFamily="@font/circularstdbook"
             android:text="Suggested"
             android:textSize="12dp"
             android:textColor="#FF9B9B9B" />

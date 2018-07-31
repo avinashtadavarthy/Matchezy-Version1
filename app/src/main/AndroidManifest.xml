@@ -20,54 +20,71 @@
         android:roundIcon="@drawable/logo_white"
         android:supportsRtl="true"
         android:theme="@style/MainAppTheme">
-        <activity android:screenOrientation="portrait"  android:name=".onboarding.IntroActivity" />
-        <activity android:screenOrientation="portrait"
+        <activity
+            android:name=".onboarding.IntroActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".registration.Registration_Interests"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/RegistrationTheme" />
-        <activity android:screenOrientation="portrait"  android:name=".HomeScreen" />
-        <activity android:screenOrientation="portrait"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegistrationTheme"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".HomeScreen"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".profilescreen.ProfilePage"
+            android:screenOrientation="portrait"
             android:theme="@style/ProfilePageTheme" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.Registration"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.Registration2"
             android:label="@string/title_activity_scrolling"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.Registration3"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.Registration4"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.Registration_Imageupload"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_places_api_key" />
 
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.OTP"
-            android:theme="@style/RegistrationTheme"/>
-        <activity android:screenOrientation="portrait"  android:name=".login.Login">
+            android:screenOrientation="portrait"
+            android:theme="@style/RegistrationTheme" />
+        <activity
+            android:name=".login.Login"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:screenOrientation="portrait"  android:name=".hometab.Filter" />
-
-        <activity android:screenOrientation="portrait"  android:name=".login.ForgotPassword" />
-
-        <activity android:screenOrientation="portrait"
+        <activity
+            android:name=".hometab.Filter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.ForgotPassword"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegistrationTheme" />
+        <activity
             android:name=".registration.LanguagesPopUp"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme" />
 
         <meta-data
@@ -90,8 +107,9 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".registration.ChooseCity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme" />
 
         <service
@@ -103,17 +121,21 @@
             </intent-filter>
         </service>
 
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".ProfileOptions"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
-        <activity android:screenOrientation="portrait"
+        <activity
             android:name=".messagestab.Chat"
             android:parentActivityName=".messagestab.Chat"
-            android:theme="@style/RegistrationTheme"/>
-
-        <activity android:screenOrientation="portrait"  android:name=".profilescreen.EditProfile"/>
-        <activity android:name=".messagestab.ChatImage"
-            android:theme="@style/ProfilePageTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/RegistrationTheme" />
+        <activity
+            android:name=".profilescreen.EditProfile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".messagestab.ChatImage"
+            android:theme="@style/ProfilePageTheme" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -122,8 +144,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
+
+        <activity android:name=".StaticTextPage"></activity>
     </application>
 
 </manifest>

@@ -84,7 +84,7 @@
             android:id="@+id/messageEditText"
             android:hint="Type a message"
             android:background="@color/white"
-            android:fontFamily="@font/sourcesansproregular"
+            android:fontFamily="@font/circularstdbook"
             android:textSize="16dp"
             android:paddingLeft="8dp"
             android:maxLines="8"

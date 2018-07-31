@@ -52,7 +52,7 @@
             android:layout_marginStart="8dp"
 
 
-            android:fontFamily="@font/circularstd"
+            android:fontFamily="@font/circularstdbook"
             android:lineSpacingMultiplier="1.19"
 
             android:paddingLeft="30dp"
