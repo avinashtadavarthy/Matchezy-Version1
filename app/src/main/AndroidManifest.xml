@@ -147,7 +147,9 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".StaticTextPage"></activity>
+        <activity android:name=".StaticTextPage" />
+        <activity android:name=".registration.PostRegistration"
+            android:theme="@style/RegistrationTheme"/>
     </application>
 
 </manifest>

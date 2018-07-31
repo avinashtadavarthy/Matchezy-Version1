@@ -54,7 +54,7 @@ public class OTP extends AppCompatActivity {
 
         actionButton = (ActionButton) findViewById(R.id.action_button_next2);
         // actionButton.hide();
-        actionButton.setType(ActionButton.Type.BIG);
+        actionButton.setType(ActionButton.Type.DEFAULT);
         //actionButton.setSize(65.0f);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             actionButton.setButtonColor(Color.parseColor("#EA5251"));
@@ -215,8 +215,8 @@ public class OTP extends AppCompatActivity {
                         storeSPData("isOngoingVerification", false);
 
                         Toast.makeText(OTP.this, "Registration Success", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(OTP.this, Login.class);
-                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //go to approval page and then login
+                        Intent i = new Intent(OTP.this, PostRegistration.class);
                         startActivity(i);
                     }
 
