@@ -61,7 +61,7 @@ public class ProfileOptions extends AppCompatActivity {
         AndroidNetworking.initialize(this);
 
          try {
-            userData = new JSONObject(getSPData("userdata"));
+            userData = new JSONObject(getSPData("userData"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ package com.einheit.matchezy.hometab;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -16,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
@@ -32,6 +34,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.google.gson.JsonObject;
@@ -62,7 +65,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     RecyclerView myrv;
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
-    TextView recommendedTextView;
+    JSONObject userData;
 
     RecyclerViewScrollListener scrollListener;
 
@@ -84,7 +87,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         myView =  inflater.inflate(R.layout.fragment__home, container, false);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
-            recommendedTextView = myView.findViewById(R.id.recommendedTextView);
 
         data = filldata();
         horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext(), this);
@@ -129,6 +131,24 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
         filterObject = new JsonObject();
 
+        try {
+            userData = new JSONObject(getSPData("userData"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if(userData.has("bio")){
+            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0)
+                lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
+                        null,null,null,null));
+        } else {
+            lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
+                    null,null,null,null));
+        }
+
+        lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
+                "Recommended for you",null,null,null));
+
         if(getSPData("filterObject").length() > 0 && !getSPData("filterObject").isEmpty()) {
             JsonParser parser = new JsonParser();
             filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
@@ -144,7 +164,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         };
 
         myrv.addOnScrollListener(scrollListener);
-
 
         return myView;
     }
@@ -171,12 +190,25 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
         filterObject.addProperty("interests", "[" + name + "]");
 
-        recommendedTextView.setText(name);
-
         lstMatchedProfiles.clear();
-        lastItemCount = 0;
-
         myAdapter.notifyDataSetChanged();
+
+        if(userData.has("bio")){
+            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0)
+                lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
+                        null,null,null,null));
+            myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+        } else {
+            lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
+                    null,null,null,null));
+            myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+        }
+
+        lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
+                name,null,null,null));
+        myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+
+        lastItemCount = 0;
 
         filterProfiles(filterObject, lastItemCount);
     }

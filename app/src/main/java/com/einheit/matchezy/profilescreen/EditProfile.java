@@ -62,7 +62,10 @@ public class EditProfile extends AppCompatActivity {
     RoundedImageView profileimage;
     ImageView edit_interests;
     ChipGroup chipgroup_interests;
-    EditText edit_gender, edit_interested, edit_relationship, edit_city, edit_lang, editText_religion, editText_tattoos, editText_piercing, editTextEdu, editTextCollege, editTextWorking, editTextDesignation, editText_annual;
+    EditText edit_gender, edit_interested, edit_relationship, edit_city, edit_lang,
+            editText_religion, editText_tattoos, editText_piercing, editTextEdu,
+            editTextCollege, editTextWorking, editTextDesignation, editText_annual,
+            editTextBio;
     Switch switchEdu, switchCollege, switchWork, switchAnnual, switchDesig;
     ScrollChoice scroll_choice;
     ActionButton actionButton;
@@ -108,6 +111,7 @@ public class EditProfile extends AppCompatActivity {
         editText_annual = findViewById(R.id.editText_annual);
         scroll_choice = findViewById(R.id.scroll_choice);
         actionButton = findViewById(R.id.action_edit_done);
+        editTextBio = findViewById(R.id.edit_bio);
 
         switchEdu = findViewById(R.id.switchButtonEdu);
         switchCollege = findViewById(R.id.switchButtonCollege);
@@ -324,7 +328,8 @@ public class EditProfile extends AppCompatActivity {
                         editTextWorking.getText().toString().trim().isEmpty() || editTextWorking.getText().toString().length() == 0 ||
                         editTextDesignation.getText().toString().trim().isEmpty() || editTextDesignation.getText().toString().length() == 0 ||
                         editText_annual.getText().toString().trim().isEmpty() || editText_annual.getText().toString().length() == 0 ||
-                        interestsarr.size() == 0) {
+                        interestsarr.size() == 0 || editTextBio.getText().toString().trim().isEmpty() ||
+                        editTextBio.getText().toString().length() == 0) {
                     Toast.makeText(EditProfile.this, "Please fill all the fields properly", Toast.LENGTH_SHORT).show();
                 } else {
 
@@ -370,6 +375,9 @@ public class EditProfile extends AppCompatActivity {
                     if (interestsarr.size() > 0)
                         object.addProperty("interests", interestsarr.toString());
 
+                    if (!editTextBio.getText().toString().trim().isEmpty() && editTextBio.getText().toString().length() > 0)
+                        object.addProperty("bio", editTextBio.getText().toString().trim());
+
                     if(!scroll_choice.getCurrentSelection().isEmpty()) {
                         String[] height = scroll_choice.getCurrentSelection().trim().split("'");
                         object.addProperty("feet", height[0]);
@@ -396,7 +404,8 @@ public class EditProfile extends AppCompatActivity {
 
                                     Log.e("ASD", res.toString());
 
-                                    if (res.optInt("status_code") == 200) {AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")
+                                    if (res.optInt("status_code") == 200) {
+                                        AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")
                                             .addBodyParameter("user_id", getSPData("user_id"))
                                             .addBodyParameter("user_token", getSPData("user_token"))
                                             .addBodyParameter("user_id_2", getSPData("user_id"))
@@ -408,8 +417,8 @@ public class EditProfile extends AppCompatActivity {
                                                     // do anything with response
 
                                                     if(response.optInt("status_code") == 200) {
-                                                        //Log.e("userdata", response.toString());
-                                                        storeSPData("userdata", response.optJSONObject("message").toString());
+                                                        //Log.e("userData", response.toString());
+                                                        storeSPData("userData", response.optJSONObject("message").toString());
                                                     }
                                                     else {
                                                         Toast.makeText(EditProfile.this, response.optString("message"), Toast.LENGTH_SHORT).show();
@@ -447,7 +456,7 @@ public class EditProfile extends AppCompatActivity {
 
     private void setExistingdata() throws JSONException {
 
-        JSONObject userData = new JSONObject(getSPData("userdata"));
+        JSONObject userData = new JSONObject(getSPData("userData"));
 
         String[] firstname = userData.optString("name").split(" ");
         name.setText(firstname[0]);
@@ -503,6 +512,8 @@ public class EditProfile extends AppCompatActivity {
         switchWork.setChecked(userData.optBoolean("organisationWorkedVisibility"));
         switchDesig.setChecked(userData.optBoolean("currentDesignationVisibility"));
         switchAnnual.setChecked(userData.optBoolean("annualIncomeVisibility"));
+
+        editTextBio.setText(userData.optString("bio"));
 
         ft = userData.optJSONObject("height").optString("feet");
         inch = userData.optJSONObject("height").optString("inches");

@@ -65,7 +65,7 @@ public class MatchedProfileHorizontalAdapter extends RecyclerView.Adapter<Matche
                 /*String list = horizontalList.get(position).txt.toString();
                 Toast.makeText(context, list, Toast.LENGTH_SHORT).show();*/
                 Intent intent = new Intent(context, Chat.class);
-                intent.putExtra("userdata", horizontalList.get(position).getUserData());
+                intent.putExtra("userData", horizontalList.get(position).getUserData());
                 context.startActivity(intent);
             }
 

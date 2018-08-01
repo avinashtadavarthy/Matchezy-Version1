@@ -76,7 +76,7 @@ public class MessagesListRecyclerAdapter extends RecyclerView.Adapter<MessagesLi
 
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, Chat.class);
-                intent.putExtra("userdata", chatList.get(position).getUserData());
+                intent.putExtra("userData", chatList.get(position).getUserData());
                 mContext.startActivity(intent);
             }
 

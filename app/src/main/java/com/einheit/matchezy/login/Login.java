@@ -157,8 +157,8 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                             // do anything with response
 
                                                             if(response.optInt("status_code") == 200) {
-                                                                //Log.e("userdata", response.toString());
-                                                                storeSPData("userdata", response.optJSONObject("message").toString());
+                                                                //Log.e("userData", response.toString());
+                                                                storeSPData("userData", response.optJSONObject("message").toString());
                                                                 Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                 if(!queryUserId.isEmpty()) {
                                                                     intent.putExtra("queryUserId",queryUserId);
@@ -258,8 +258,8 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                                 progressOverlay.setVisibility(View.GONE);
 
                                                                                 if(response.optInt("status_code") == 200) {
-                                                                                    //Log.e("userdata", response.toString());
-                                                                                    storeSPData("userdata", response.optJSONObject("message").toString());
+                                                                                    //Log.e("userData", response.toString());
+                                                                                    storeSPData("userData", response.optJSONObject("message").toString());
                                                                                     Intent intent = new Intent(Login.this, HomeScreen.class);
                                                                                     if(!queryUserId.isEmpty()) {
                                                                                         intent.putExtra("queryUserId",queryUserId);

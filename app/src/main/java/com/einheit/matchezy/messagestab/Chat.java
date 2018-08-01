@@ -186,8 +186,8 @@ public class Chat extends AppCompatActivity {
         fromGallery = sheetView.findViewById(R.id.bottom_sheet_gallery);
 
         try {
-            userData = new JSONObject(getIntent().getStringExtra("userdata"));
-            currentUserData = new JSONObject(getSPData("userdata"));
+            userData = new JSONObject(getIntent().getStringExtra("userData"));
+            currentUserData = new JSONObject(getSPData("userData"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

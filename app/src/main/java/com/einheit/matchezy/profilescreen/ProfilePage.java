@@ -146,7 +146,7 @@ public class ProfilePage extends AppCompatActivity {
         if (fromStatusCode != Utility.FROM_SHARED_PROFILE) {
             try {
                 if (fromStatusCode == Utility.FROM_PROFILE_PAGE)
-                    userData = new JSONObject(getSPData("userdata"));
+                    userData = new JSONObject(getSPData("userData"));
                 else userData = new JSONObject(getIntent().getStringExtra("userData"));
 
                 populateFields();
@@ -359,7 +359,7 @@ public class ProfilePage extends AppCompatActivity {
                                 // do anything with response
 
                                 if (response.optInt("status_code") == 200) {
-                                    Log.e("userdata", response.toString());
+                                    Log.e("userData", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();
@@ -393,7 +393,7 @@ public class ProfilePage extends AppCompatActivity {
                                 // do anything with response
 
                                 if (response.optInt("status_code") == 200) {
-                                    Log.e("userdata", response.toString());
+                                    Log.e("userData", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();
@@ -577,11 +577,11 @@ public class ProfilePage extends AppCompatActivity {
     private class MyPagerAdapter extends FragmentPagerAdapter {
 
         JSONArray interests;
-        JSONObject userdata;
+        JSONObject userData;
 
-        public MyPagerAdapter(FragmentManager fm, JSONObject userdata, JSONArray interests) {
+        public MyPagerAdapter(FragmentManager fm, JSONObject userData, JSONArray interests) {
             super(fm);
-            this.userdata = userdata;
+            this.userData = userData;
             this.interests = interests;
         }
 
@@ -590,13 +590,13 @@ public class ProfilePage extends AppCompatActivity {
             switch (pos) {
 
                 case 0:
-                    return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests, userdata.toString());
+                    return Fragment_profileInterests.newInstance("FirstFragment, Instance 1", interests, userData.toString());
                 case 1:
-                    return Fragment_profileInfo.newInstance("SecondFragment, Instance 1", userdata);
+                    return Fragment_profileInfo.newInstance("SecondFragment, Instance 1", userData);
                 case 2:
-                    return Fragment_profileBio.newInstance("ThirdFragment, Instance 1");
+                    return Fragment_profileBio.newInstance(userData);
                 default:
-                    return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests, userdata.toString());
+                    return Fragment_profileInterests.newInstance("ThirdFragment, Default", interests, userData.toString());
             }
         }
 
@@ -681,7 +681,7 @@ public class ProfilePage extends AppCompatActivity {
                                 // do anything with response
 
                                 if (response.optInt("status_code") == 200) {
-                                    Log.e("userdata", response.toString());
+                                    Log.e("userData", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
 
                                     checkOnBackPressed();
@@ -712,7 +712,7 @@ public class ProfilePage extends AppCompatActivity {
                                 // do anything with response
 
                                 if (response.optInt("status_code") == 200) {
-                                    Log.e("userdata", response.toString());
+                                    Log.e("userData", response.toString());
                                     Toast.makeText(ProfilePage.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                     checkOnBackPressed();
                                     finish();

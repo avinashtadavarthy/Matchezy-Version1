@@ -36,7 +36,7 @@ public class Fragment_profileInterests extends Fragment {
 
         JSONObject userData = null;
         try {
-            userData = new JSONObject(getArguments().getString("userdata"));
+            userData = new JSONObject(getArguments().getString("userData"));
 
             JSONArray matchingInterests = null;
             JSONArray otherInterests = null;
@@ -137,7 +137,7 @@ public class Fragment_profileInterests extends Fragment {
         Bundle b = new Bundle();
         b.putString("msg", text);
         b.putString("interests", interests.toString());
-        b.putString("userdata", userData);
+        b.putString("userData", userData);
 
         fragment_profileInterests.setArguments(b);
 

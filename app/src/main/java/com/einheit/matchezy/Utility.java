@@ -35,6 +35,9 @@ public class Utility {
     public static final int FROM_BLOCKED = 7;
     public static final int FROM_SHARED_PROFILE = 8;
 
+    public static final String VIEW_TYPE_BIO = "QAZwsxEDCrfvTGByhnUJMikqwerty";
+    public static final String VIEW_TYPE_TITLE = "QAZwsxEDCrfvTGByhnUJMikqwertyAnonymous";
+
     public static final String PASS = "QAZwsxEDCrfvTGByhnUJMik";
 
     //variables or functions

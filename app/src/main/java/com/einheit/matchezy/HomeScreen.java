@@ -93,10 +93,10 @@ public class HomeScreen extends AppCompatActivity {
             }
         }
 
-        //Log.e("userdata", getSPData("userdata"));
+        //Log.e("userData", getSPData("userData"));
 
         try {
-            userData = new JSONObject(getSPData("userdata"));
+            userData = new JSONObject(getSPData("userData"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

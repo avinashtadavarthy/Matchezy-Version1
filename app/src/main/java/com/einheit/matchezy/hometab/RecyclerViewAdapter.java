@@ -10,11 +10,9 @@ import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -31,8 +29,8 @@ import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.profilescreen.EditProfile;
 import com.einheit.matchezy.profilescreen.ProfilePage;
-import com.einheit.matchezy.registration.Registration_Interests;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +38,6 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +51,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<MatchedProfiles> mData;
     JSONObject userData;
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
+    public static final int VIEW_TYPE_ITEM = 0;
+    public static final int VIEW_TYPE_LOADING = 1;
+    public static final int VIEW_TYPE_BIO_WARNING = 2;
+    public static final int VIEW_TYPE_TITLE = 3;
+
 
     public RecyclerViewAdapter(Context mContext, List<MatchedProfiles> mData, Activity activity) {
         this.mContext = mContext;
@@ -74,6 +74,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         } else if (viewType == VIEW_TYPE_LOADING) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_loading_recycler_view, parent, false);
             return new LoadingViewHolder(view);
+        } else if (viewType == VIEW_TYPE_BIO_WARNING) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_update_bio_warning, parent, false);
+            return new UpdateBioViewHolder(view);
+        } else if (viewType == VIEW_TYPE_TITLE) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.item_title_recycler_view, parent, false);
+            return new TitleViewHolder(view);
         }
         return null;
     }
@@ -260,6 +266,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             loadingViewHolder.progressBar.setIndeterminate(true);
             StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) loadingViewHolder.itemView.getLayoutParams();
             layoutParams.setFullSpan(true);
+        } else if (holder instanceof UpdateBioViewHolder) {
+            UpdateBioViewHolder viewHolder = (UpdateBioViewHolder) holder;
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) viewHolder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
+            viewHolder.closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mData.remove(position);
+                    notifyItemRemoved(position);
+                }
+            });
+
+            viewHolder.updateBioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(mContext, EditProfile.class);
+                    mContext.startActivity(i);
+                }
+            });
+
+        } else if (holder instanceof TitleViewHolder) {
+            TitleViewHolder viewHolder = (TitleViewHolder) holder;
+            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) viewHolder.itemView.getLayoutParams();
+            layoutParams.setFullSpan(true);
+            viewHolder.titleTextView.setText(mData.get(position).getThumbnail());
         }
 
 
@@ -273,7 +304,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return mData.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+        if(mData.size() > 0) {
+            if (mData.get(position) == null)
+                return VIEW_TYPE_LOADING;
+            else if (mData.get(position).getName().equals(Utility.VIEW_TYPE_BIO))
+                return VIEW_TYPE_BIO_WARNING;
+            else if (mData.get(position).getName().equals(Utility.VIEW_TYPE_TITLE))
+                return VIEW_TYPE_TITLE;
+            else
+                return VIEW_TYPE_ITEM;
+        }
+        return 0;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -305,6 +346,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public LoadingViewHolder(View view) {
             super(view);
             progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        }
+    }
+
+    private class UpdateBioViewHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout closeButton;
+        CardView updateBioButton;
+
+        public UpdateBioViewHolder(View view) {
+            super(view);
+
+            closeButton = view.findViewById(R.id.closeBioWarning);
+            updateBioButton = view.findViewById(R.id.updateBioButton);
+
+        }
+    }
+
+    private class TitleViewHolder extends RecyclerView.ViewHolder {
+        public TextView titleTextView;
+
+        public TitleViewHolder(View view) {
+            super(view);
+
+            titleTextView = view.findViewById(R.id.titleTextView);
+
         }
     }
 

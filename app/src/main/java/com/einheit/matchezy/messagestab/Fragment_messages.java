@@ -125,7 +125,7 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                                 Boolean readStatus = false;
                                                 /*JSONObject currentUserData = null;
                                                 try {
-                                                    currentUserData = new JSONObject(getSPData("userdata"));
+                                                    currentUserData = new JSONObject(getSPData("userData"));
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }

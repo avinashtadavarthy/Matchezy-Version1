@@ -46,7 +46,7 @@ public class Fragment_profileInfo extends Fragment {
         // Required empty public constructor
     }
 
-    JSONObject userdata;
+    JSONObject userData;
 
     ListView listView;
 
@@ -58,27 +58,27 @@ public class Fragment_profileInfo extends Fragment {
         View v = inflater.inflate(R.layout.fragment_profile_info, container, false);
 
         try {
-            userdata = new JSONObject(getArguments().getString("userdata"));
+            userData = new JSONObject(getArguments().getString("userData"));
 
             int i;
 
-            for(i = 0; i<userdata.optJSONArray("languagesKnown").length(); i++)
-                langs = langs + userdata.optJSONArray("languagesKnown").getString(i) + ", ";
+            for(i = 0; i<userData.optJSONArray("languagesKnown").length(); i++)
+                langs = langs + userData.optJSONArray("languagesKnown").getString(i) + ", ";
 
             langs = langs.substring(0,langs.length()-2);
 
-            for(i = 0; i<userdata.optJSONArray("qualification").length(); i++)
-                quali = quali + userdata.optJSONArray("qualification").getString(i) + ", ";
+            for(i = 0; i<userData.optJSONArray("qualification").length(); i++)
+                quali = quali + userData.optJSONArray("qualification").getString(i) + ", ";
 
             quali = quali.substring(0, quali.length()-2);
 
-            for(i = 0; i<userdata.optJSONArray("collegeName").length(); i++)
-                colleges = colleges + userdata.optJSONArray("collegeName").getString(i) + ", ";
+            for(i = 0; i<userData.optJSONArray("collegeName").length(); i++)
+                colleges = colleges + userData.optJSONArray("collegeName").getString(i) + ", ";
 
             colleges = colleges.substring(0, colleges.length()-2);
 
-            for(i = 0; i<userdata.optJSONArray("organisationWorked").length(); i++)
-                orgWorked = orgWorked + userdata.optJSONArray("organisationWorked").getString(i) + ", ";
+            for(i = 0; i<userData.optJSONArray("organisationWorked").length(); i++)
+                orgWorked = orgWorked + userData.optJSONArray("organisationWorked").getString(i) + ", ";
 
             orgWorked = orgWorked.substring(0, orgWorked.length()-2);
 
@@ -89,24 +89,24 @@ public class Fragment_profileInfo extends Fragment {
         }
 
         ArrayList<ProfileInfoModel> data = new ArrayList<>();
-        data.add(new ProfileInfoModel("Gender", userdata.optString("gender")));
-        data.add(new ProfileInfoModel("Height", userdata.optJSONObject("height").optString("feet") + "\'" + userdata.optJSONObject("height").optString("inches") + "\""));
+        data.add(new ProfileInfoModel("Gender", userData.optString("gender")));
+        data.add(new ProfileInfoModel("Height", userData.optJSONObject("height").optString("feet") + "\'" + userData.optJSONObject("height").optString("inches") + "\""));
         data.add(new ProfileInfoModel("Languages Known", langs));
-        if(userdata.optBoolean("qualificationVisibility", true))
+        if(userData.optBoolean("qualificationVisibility", true))
             data.add(new ProfileInfoModel("Qualifications", quali));
-        data.add(new ProfileInfoModel("Marital Status", userdata.optString("maritalStatus")));
-        data.add(new ProfileInfoModel("Looking For", userdata.optString("lookingFor")));
-        data.add(new ProfileInfoModel("Religion", userdata.optString("religion")));
-        if(userdata.optBoolean("collegeNameVisibility", true))
+        data.add(new ProfileInfoModel("Marital Status", userData.optString("maritalStatus")));
+        data.add(new ProfileInfoModel("Looking For", userData.optString("lookingFor")));
+        data.add(new ProfileInfoModel("Religion", userData.optString("religion")));
+        if(userData.optBoolean("collegeNameVisibility", true))
             data.add(new ProfileInfoModel("College Name", colleges));
-        if(userdata.optBoolean("organisationWorkedVisibility", true))
+        if(userData.optBoolean("organisationWorkedVisibility", true))
             data.add(new ProfileInfoModel("Organisation Working In", orgWorked));
-        if(userdata.optBoolean("currentDesignationVisibility", true))
-            data.add(new ProfileInfoModel("Current Designation", userdata.optString("currentDesignation")));
-        if(userdata.optBoolean("annualIncomeVisibility", true))
-            data.add(new ProfileInfoModel("Annual Income", userdata.optString("annualIncome")));
-        data.add(new ProfileInfoModel("Tattoo", userdata.optString("tattoo")));
-        data.add(new ProfileInfoModel("Piercings", userdata.optString("piercings")));
+        if(userData.optBoolean("currentDesignationVisibility", true))
+            data.add(new ProfileInfoModel("Current Designation", userData.optString("currentDesignation")));
+        if(userData.optBoolean("annualIncomeVisibility", true))
+            data.add(new ProfileInfoModel("Annual Income", userData.optString("annualIncome")));
+        data.add(new ProfileInfoModel("Tattoo", userData.optString("tattoo")));
+        data.add(new ProfileInfoModel("Piercings", userData.optString("piercings")));
 
 
         listView = v.findViewById(R.id.listView);
@@ -122,13 +122,13 @@ public class Fragment_profileInfo extends Fragment {
         return v;
     }
 
-    public static Fragment_profileInfo newInstance(String text, JSONObject userdata) {
+    public static Fragment_profileInfo newInstance(String text, JSONObject userData) {
 
         Fragment_profileInfo fragment_profileInfo = new Fragment_profileInfo();
 
          Bundle b = new Bundle();
         b.putString("msg", text);
-        b.putString("userdata", userdata.toString());
+        b.putString("userData", userData.toString());
 
         fragment_profileInfo.setArguments(b);
 
