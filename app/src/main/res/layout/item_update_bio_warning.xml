@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/sourcesansproregular"
+                android:fontFamily="@font/circularstdbook"
                 android:padding="10dp"
                 android:text="Tip: Profiles with a bio has a higher chance of getting noticed!"
                 android:textColor="@color/white" />
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="@font/circularstd"
+                    android:fontFamily="@font/circularstdbook"
                     android:paddingBottom="5dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

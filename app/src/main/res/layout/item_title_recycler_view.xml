@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="5dp"
-    android:fontFamily="@font/circularstd"
+    android:fontFamily="@font/circularstdbook"
     android:text="Recommended for you"
     android:textSize="17dp" />

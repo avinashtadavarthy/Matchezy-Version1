@@ -23,7 +23,7 @@
             android:id="@+id/profilename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Avinash"
+            android:text="Avinash askjdfakshfd lajsdfkjhsadk"
             android:fontFamily="@font/circularstdbook"
             android:textColor="@color/appgrey"/>
 
@@ -35,8 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3:00pm"
-        android:fontFamily="@font/circularstdbook"
-        android:textStyle="bold"
+        android:fontFamily="@font/circularstdbold"
         android:layout_alignParentEnd="true"
         android:textColor="#9b9b9b"
         android:layout_marginRight="20dp"

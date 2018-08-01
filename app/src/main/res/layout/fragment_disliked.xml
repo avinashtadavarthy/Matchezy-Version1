@@ -15,7 +15,7 @@
             android:text="Disliked Profiles"
             android:textSize="17dp"
             android:layout_marginLeft="13dp"
-            android:fontFamily="@font/circularstd"
+            android:fontFamily="@font/circularstdbook"
             android:layout_height="wrap_content"/>
 
         <TextView

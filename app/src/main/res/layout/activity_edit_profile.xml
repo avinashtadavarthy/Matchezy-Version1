@@ -322,8 +322,8 @@
                         android:background="@drawable/signup_box"
                         android:hint="Languages known"
                         android:paddingLeft="16dp"
-                         
-                        android:inputType="none"
+                         android:maxLines="1"
+                        android:inputType="text"
                         android:focusable="false"/>
 
 
@@ -611,7 +611,8 @@
                         android:hint="Working at"
                         android:paddingLeft="16dp"
                         android:focusable="false"
-                        android:inputType="none"/>
+                        android:maxLines="1"
+                        android:inputType="text"/>
 
 
                 </android.support.design.widget.TextInputLayout>

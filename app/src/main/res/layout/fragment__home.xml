@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/circularstd"
+            android:fontFamily="@font/circularstdbook"
             android:text="Browse by interests"
             android:textSize="17dp" />
 

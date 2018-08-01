@@ -95,7 +95,6 @@
             android:theme="@style/RegistrationTheme" />
         <activity
             android:name=".registration.LanguagesPopUp"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme" />
 
         <meta-data
@@ -120,7 +119,6 @@
         </activity>
         <activity
             android:name=".registration.ChooseCity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.CustomTheme" />
 
         <service
@@ -134,7 +132,6 @@
 
         <activity
             android:name=".ProfileOptions"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity
             android:name=".messagestab.Chat"
@@ -159,9 +156,11 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
-        <activity android:name=".StaticTextPage" />
+        <activity android:name=".StaticTextPage"
+            android:screenOrientation="portrait"/>
         <activity android:name=".registration.PostRegistration"
-            android:theme="@style/RegistrationTheme"/>
+            android:theme="@style/RegistrationTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".profileoptions.BlockedListScreen"
             android:screenOrientation="portrait"/>
