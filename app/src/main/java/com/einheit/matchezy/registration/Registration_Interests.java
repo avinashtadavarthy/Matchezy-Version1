@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.RawData;
 import com.pchmn.materialchips.ChipView;
 import com.scalified.fab.ActionButton;
 
@@ -49,7 +50,7 @@ public class Registration_Interests extends AppCompatActivity {
         selectedinterests = findViewById(R.id.selectedinterests);
         suggestedinterests = findViewById(R.id.suggestedinterests);
 
-        populateSuggestedChips(suggested);
+        populateSuggestedChips(RawData.getInstance().interests);
 
         enter_interests.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

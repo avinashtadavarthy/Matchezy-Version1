@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fab="http://schemas.android.com/apk/res-auto">
 
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent"
-    tools:context=".registration.Registration_Interests">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <TextView
@@ -83,6 +90,10 @@
     </LinearLayout>
 
 
+</RelativeLayout>
+
+</ScrollView>
+
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next3"
         fab:button_colorPressed="@color/fab_material_white"
@@ -104,6 +115,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.987" />
-
 
 </RelativeLayout>
