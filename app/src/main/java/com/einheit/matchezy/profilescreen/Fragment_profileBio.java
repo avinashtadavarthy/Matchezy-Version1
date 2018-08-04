@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,16 @@ public class Fragment_profileBio extends Fragment {
 
         try {
             userData = new JSONObject(getArguments().getString("userData"));
-            bioTextView.setText(userData.optString("bio"));
+            if(userData.has("bio")) {
+                if(!userData.optString("bio").isEmpty()
+                        && userData.optString("bio").trim().length() > 0)
+                    bioTextView.setText(userData.optString("bio"));
+                else {
+                    bioTextView.setText(Utility.PLACEHOLDER_TEXT_BIO);
+                }
+            } else {
+                bioTextView.setText(Utility.PLACEHOLDER_TEXT_BIO);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();

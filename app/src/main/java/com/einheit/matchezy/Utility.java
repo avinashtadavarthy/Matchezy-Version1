@@ -36,6 +36,8 @@ public class Utility {
     public static final String VIEW_TYPE_TITLE = "QAZwsxEDCrfvTGByhnUJMikqwertyAnonymous";
 
     public static final String PASS = "QAZwsxEDCrfvTGByhnUJMik";
+    public static final String PLACEHOLDER_TEXT_EMPTY_FIELDS = "Don't wish to specify";
+    public static final String PLACEHOLDER_TEXT_BIO = "Hi,\nI haven't gotten around to writing my bio yet. Don't mind";
 
     //variables or functions
     public static String

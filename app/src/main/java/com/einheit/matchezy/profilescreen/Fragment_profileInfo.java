@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.json.JSONException;
@@ -76,11 +77,13 @@ public class Fragment_profileInfo extends Fragment {
                 colleges = colleges + userData.optJSONArray("collegeName").getString(i) + ", ";
 
             colleges = colleges.substring(0, colleges.length()-2);
+            colleges = colleges.replace("\n", "");
 
             for(i = 0; i<userData.optJSONArray("organisationWorked").length(); i++)
                 orgWorked = orgWorked + userData.optJSONArray("organisationWorked").getString(i) + ", ";
 
             orgWorked = orgWorked.substring(0, orgWorked.length()-2);
+            orgWorked = orgWorked.replace("\n", "");
 
             //qualifications is also a json array
 
@@ -94,19 +97,36 @@ public class Fragment_profileInfo extends Fragment {
         data.add(new ProfileInfoModel("Languages Known", langs));
         if(userData.optBoolean("qualificationVisibility", true))
             data.add(new ProfileInfoModel("Qualifications", quali));
+        else data.add(new ProfileInfoModel("Qualifications", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
         data.add(new ProfileInfoModel("Marital Status", userData.optString("maritalStatus")));
         data.add(new ProfileInfoModel("Looking For", userData.optString("lookingFor")));
-        data.add(new ProfileInfoModel("Religion", userData.optString("religion")));
+        if(userData.has("religion"))
+            data.add(new ProfileInfoModel("Religion", userData.optString("religion")));
+        else data.add(new ProfileInfoModel("Religion", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
         if(userData.optBoolean("collegeNameVisibility", true))
             data.add(new ProfileInfoModel("College Name", colleges));
+        else data.add(new ProfileInfoModel("College Name", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
         if(userData.optBoolean("organisationWorkedVisibility", true))
-            data.add(new ProfileInfoModel("Organisation Working In", orgWorked));
-        if(userData.optBoolean("currentDesignationVisibility", true))
-            data.add(new ProfileInfoModel("Current Designation", userData.optString("currentDesignation")));
-        if(userData.optBoolean("annualIncomeVisibility", true))
-            data.add(new ProfileInfoModel("Annual Income", userData.optString("annualIncome")));
-        data.add(new ProfileInfoModel("Tattoo", userData.optString("tattoo")));
-        data.add(new ProfileInfoModel("Piercings", userData.optString("piercings")));
+            data.add(new ProfileInfoModel("Work History", orgWorked));
+        else data.add(new ProfileInfoModel("Work History", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        if(userData.optBoolean("currentDesignationVisibility", true)) {
+            if(userData.has("currentDesignation"))
+                data.add(new ProfileInfoModel("Current Designation", userData.optString("currentDesignation")));
+            else data.add(new ProfileInfoModel("Current Designation", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        }
+        else data.add(new ProfileInfoModel("Current Designation", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        if(userData.optBoolean("annualIncomeVisibility", true)) {
+            if(userData.has("annualIncome"))
+                data.add(new ProfileInfoModel("Annual Income", userData.optString("annualIncome")));
+            else data.add(new ProfileInfoModel("Annual Income", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        }
+        else data.add(new ProfileInfoModel("Annual Income", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        if(userData.has("tattoo"))
+            data.add(new ProfileInfoModel("Tattoo", userData.optString("tattoo")));
+        else data.add(new ProfileInfoModel("Tattoo", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
+        if(userData.has("piercings"))
+            data.add(new ProfileInfoModel("Piercings", userData.optString("piercings")));
+        else data.add(new ProfileInfoModel("Piercings", Utility.PLACEHOLDER_TEXT_EMPTY_FIELDS));
 
 
         listView = v.findViewById(R.id.listView);
