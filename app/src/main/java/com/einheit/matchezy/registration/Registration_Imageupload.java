@@ -61,7 +61,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     public int i = 0;
 
     ImageView imageView1, imageView2, imageView3, imageView4;
-    String[] paths = {"","","",""};
+    String[] paths = {"", "", "", ""};
     String fb_id = "";
     ArrayList<String> interestsArray;
     String interestsArrayString;
@@ -80,7 +80,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(1200, TimeUnit.SECONDS)
                 .readTimeout(1200, TimeUnit.SECONDS)
-                . writeTimeout(1200, TimeUnit.SECONDS)
+                .writeTimeout(1200, TimeUnit.SECONDS)
                 .build();
 
         AndroidNetworking.initialize(this, okHttpClient);
@@ -111,35 +111,32 @@ public class Registration_Imageupload extends AppCompatActivity {
         Log.e("qwe", interestsArray.toString());
         interestsArrayString = interestsArray.toString();
 
-        if(isLoggedThroughFb)
+        if (isLoggedThroughFb)
             fb_id = getSPData("fb_id");
 
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                        /*Log.e("asdf", getSPData("username") + " - " + getSPData("dob") + " - " +
-                        getSPData("phone_number") + " - " + getSPData("email") + " - " + getSPData("password")
-                        + " - " + getSPData("gender") + " - " + getSPData("lookingfor") + " - " +
-                        getSPData("maritalstatus") + " - " + getSPData("city") + " - " + getSPData("lang") +
-                        " - " + getSPData("feet") + " - " + getSPData("inches") + " - " + getSPData("religion") +
-                        " - " + getSPData("tattoos") + " - " + getSPData("piercings") + " - " + getSPData("education") +
-                        " - " + getSPData("college") + " - " + getSPData("work") + " - " + getSPData("desig") + " - "
-                                        + getSPData("annual_income") + " - " + interestsArrayString + " - " +
-                        new File(paths[0]).getAbsoluteFile() + " - " + new File(paths[1]).exists() + " - " + new File(paths[2]).exists() + " - " +
-                        new File(paths[3]).exists()) ;*/
-
-                if(files.size() != 4) {
-
-                    Toast.makeText(getApplicationContext(), "Select four images for your profile",
+                if (map.get(0) == null) {
+                    Toast.makeText(getApplicationContext(), "Please select your profile picture",
                             Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else if (files.size() < 2) {
+                    Toast.makeText(getApplicationContext(), "Select atleast two pictures",
+                            Toast.LENGTH_SHORT).show();
+                } else {
 
-                    /*files.add(new File(paths[0]));
-                    files.add(new File(paths[1]));
-                    files.add(new File(paths[2]));
-                    files.add(new File(paths[3]));*/
+                    Map<String, File> filesMap = new HashMap<>();
+                    List<String> fileNames = new ArrayList<>();
+                    fileNames.add("profile_pic");
+                    fileNames.add("picture_1");
+                    fileNames.add("picture_2");
+                    fileNames.add("picture_3");
+
+                    for (int i = 0; i < 4; i++) {
+                        if(map.get(i) != null)
+                            filesMap.put(fileNames.get(i), map.get(i));
+                    }
 
 
                     dialog.setMessage("Loading, please wait.");
@@ -147,26 +144,46 @@ public class Registration_Imageupload extends AppCompatActivity {
                     dialog.show();
 
                     requestObject = new JsonObject();
-                    requestObject.addProperty("username", getSPData("username"));
-                    requestObject.addProperty("dob", getSPData("dob"));
-                    requestObject.addProperty("phone_number", getSPData("phone_number"));
-                    requestObject.addProperty("email", getSPData("email"));
-                    requestObject.addProperty("password", getSPData("password"));
-                    requestObject.addProperty("gender", getSPData("gender"));
-                    requestObject.addProperty("looking_for", getSPData("lookingfor"));
-                    requestObject.addProperty("marital_status", getSPData("maritalstatus"));
-                    requestObject.addProperty("city", getSPData("city"));
-                    requestObject.addProperty("langs", getSPData("lang"));
-                    requestObject.addProperty("feet", getSPData("feet"));
-                    requestObject.addProperty("inches", getSPData("inches"));
-                    requestObject.addProperty("religion", getSPData("religion"));
-                    requestObject.addProperty("tattoos", getSPData("tattoos"));
-                    requestObject.addProperty("piercings", getSPData("piercings"));
-                    requestObject.addProperty("education", getSPData("education"));
-                    requestObject.addProperty("college", getSPData("college"));
-                    requestObject.addProperty("work", getSPData("work"));
-                    requestObject.addProperty("desig", getSPData("desig"));
-                    requestObject.addProperty("annual_income", getSPData("annual_income").replace(",",""));
+                    if (!getSPData("username").equals(""))
+                        requestObject.addProperty("username", getSPData("username"));
+                    if (!getSPData("dob").equals(""))
+                        requestObject.addProperty("dob", getSPData("dob"));
+                    if (!getSPData("phone_number").equals(""))
+                        requestObject.addProperty("phone_number", getSPData("phone_number"));
+                    if (!getSPData("email").equals(""))
+                        requestObject.addProperty("email", getSPData("email"));
+                    if (!getSPData("password").equals(""))
+                        requestObject.addProperty("password", getSPData("password"));
+                    if (!getSPData("gender").equals(""))
+                        requestObject.addProperty("gender", getSPData("gender"));
+                    if (!getSPData("lookingfor").equals(""))
+                        requestObject.addProperty("looking_for", getSPData("lookingfor"));
+                    if (!getSPData("maritalstatus").equals(""))
+                        requestObject.addProperty("marital_status", getSPData("maritalstatus"));
+                    if (!getSPData("city").equals(""))
+                        requestObject.addProperty("city", getSPData("city"));
+                    if (!getSPData("lang").equals(""))
+                        requestObject.addProperty("langs", getSPData("lang"));
+                    if (!getSPData("feet").equals(""))
+                        requestObject.addProperty("feet", getSPData("feet"));
+                    if (!getSPData("inches").equals(""))
+                        requestObject.addProperty("inches", getSPData("inches"));
+                    if (!getSPData("religion").equals(""))
+                        requestObject.addProperty("religion", getSPData("religion"));
+                    if (!getSPData("tattoos").equals(""))
+                        requestObject.addProperty("tattoos", getSPData("tattoos"));
+                    if (!getSPData("piercings").equals(""))
+                        requestObject.addProperty("piercings", getSPData("piercings"));
+                    if (!getSPData("education").equals(""))
+                        requestObject.addProperty("education", getSPData("education"));
+                    if (!getSPData("college").equals(""))
+                        requestObject.addProperty("college", getSPData("college"));
+                    if (!getSPData("work").equals(""))
+                        requestObject.addProperty("work", getSPData("work"));
+                    if (!getSPData("desig").equals(""))
+                        requestObject.addProperty("desig", getSPData("desig"));
+                    if (!getSPData("annual_income").equals(""))
+                        requestObject.addProperty("annual_income", getSPData("annual_income").replace(",", ""));
                     requestObject.addProperty("fb_id", fb_id);
                     requestObject.addProperty("interests", interestsArrayString);
                     requestObject.addProperty("educationVisibility", getSPBoolean("educationVisibility"));
@@ -176,10 +193,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                     requestObject.addProperty("annualVisibility", getSPBoolean("annualVisibility"));
 
                     AndroidNetworking.upload(Utility.getInstance().BASE_URL + "register")
-                            .addMultipartFile("profile_pic", map.get(0))
-                            .addMultipartFile("pictures", map.get(1))
-                            .addMultipartFile("pictures_2", map.get(2))
-                            .addMultipartFile("pictures_3", map.get(3))
+                            .addMultipartFile(filesMap)
                             .addMultipartParameter(requestObject)
                             .setPriority(Priority.HIGH)
                             .setOkHttpClient(okHttpClient)
@@ -263,7 +277,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         imageView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkPermissions()) {
+                if (checkPermissions()) {
                     i = 1;
                     openImageChooser();
                 }
@@ -273,7 +287,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         imageView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkPermissions()) {
+                if (checkPermissions()) {
                     i = 2;
                     openImageChooser();
                 }
@@ -293,7 +307,7 @@ public class Registration_Imageupload extends AppCompatActivity {
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(checkPermissions()) {
+                if (checkPermissions()) {
                     i = 4;
                     openImageChooser();
                 }
@@ -318,7 +332,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
 
-                        Log.i(TAG, "Image Path : " + getPath(Registration_Imageupload.this, selectedImageUri));
+                    Log.i(TAG, "Image Path : " + getPath(Registration_Imageupload.this, selectedImageUri));
 
                     // Set the image in ImageView
 
@@ -360,8 +374,8 @@ public class Registration_Imageupload extends AppCompatActivity {
                         }
                     }
 
-                    map.put(i - 1,  new File(storageDir + "/" + imageFileName));
-                    if(files.size() < 4)
+                    map.put(i - 1, new File(storageDir + "/" + imageFileName));
+                    if (files.size() < 4)
                         files.add(new File(storageDir + "/" + imageFileName));
                     else files.set(i - 1, new File(storageDir + "/" + imageFileName));
 
@@ -373,17 +387,11 @@ public class Registration_Imageupload extends AppCompatActivity {
 
                     if (i == 1) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview1)).setImageURI(selectedImageUri);
-                    }
-
-                    else if (i == 2) {
+                    } else if (i == 2) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview2)).setImageURI(selectedImageUri);
-                    }
-
-                    else if (i == 3) {
+                    } else if (i == 3) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview3)).setImageURI(selectedImageUri);
-                    }
-
-                    else if (i == 4) {
+                    } else if (i == 4) {
                         ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview4)).setImageURI(selectedImageUri);
                     }
                 }
@@ -463,7 +471,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -491,9 +499,9 @@ public class Registration_Imageupload extends AppCompatActivity {
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
@@ -573,7 +581,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     public void requestPermissionForReadExtertalStorage() throws Exception {
         try {
             ActivityCompat.requestPermissions(Registration_Imageupload.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     1001);
         } catch (Exception e) {
             e.printStackTrace();
@@ -598,7 +606,7 @@ public class Registration_Imageupload extends AppCompatActivity {
     }
 
     boolean checkPermissions() {
-        if(!checkPermissionForReadExtertalStorage() && !checkPermissionForWriteExtertalStorage()) {
+        if (!checkPermissionForReadExtertalStorage() && !checkPermissionForWriteExtertalStorage()) {
             try {
                 requestPermissionForReadExtertalStorage();
             } catch (Exception e) {

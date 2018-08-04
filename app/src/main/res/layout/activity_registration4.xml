@@ -256,7 +256,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstdbook"
-                    android:hint="Annual income"
+                    android:hint="Annual income (optional)"
                     android:inputType="number"
                     android:longClickable="false"
                     android:maxLength="13"

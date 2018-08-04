@@ -24,6 +24,7 @@
         android:textSize="24dp" />
 
     <LinearLayout
+        android:id="@+id/imagesLayout"
         android:gravity="center"
         android:layout_below="@id/textView"
         android:layout_width="match_parent"
@@ -101,8 +102,12 @@
 
     </LinearLayout>
 
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagesLayout"
+        android:text="Select atleast two images"
+        android:padding="8dp"/>
 
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next2"

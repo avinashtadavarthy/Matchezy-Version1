@@ -317,7 +317,7 @@ public class Registration3 extends AppCompatActivity {
     
 
     private void submitForm() {
-        if(!validatereligion()) {
+        /*if(!validatereligion()) {
             return;
         }
 
@@ -328,13 +328,19 @@ public class Registration3 extends AppCompatActivity {
 
         if(!validatepiercing()) {
             return;
-        }
+        }*/
 
         storeSPData("feet", feet + "");
         storeSPData("inches", inches + "");
-        storeSPData("religion", editText_religion.getText().toString().trim());
-        storeSPData("tattoos", editText_tattoos.getText().toString().trim());
-        storeSPData("piercings", editText_piercing.getText().toString().trim());
+        if (!editText_religion.getText().toString().trim().isEmpty()
+                && editText_religion.getText().toString().trim().length() > 0)
+            storeSPData("religion", editText_religion.getText().toString().trim());
+        if (!editText_tattoos.getText().toString().trim().isEmpty()
+                && editText_tattoos.getText().toString().trim().length() > 0)
+            storeSPData("tattoos", editText_tattoos.getText().toString().trim());
+        if (!editText_piercing.getText().toString().trim().isEmpty()
+                && editText_piercing.getText().toString().trim().length() > 0)
+            storeSPData("piercings", editText_piercing.getText().toString().trim());
 
 
         Intent intent = new Intent(getApplicationContext(),Registration4.class);
@@ -401,7 +407,7 @@ public class Registration3 extends AppCompatActivity {
 
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
-                case R.id.editText_tattoos:
+                /*case R.id.editText_tattoos:
                     validatetattoos();
                     break;
 
@@ -412,7 +418,7 @@ public class Registration3 extends AppCompatActivity {
 
                 case R.id.editText_religion:
                     validatereligion();
-                    break;
+                    break;*/
             }
         }
     }

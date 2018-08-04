@@ -18,9 +18,6 @@ import com.abdeveloper.library.MultiSelectModel;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/**
- * Created by avinash on 27/12/17.
- */
 
 public class Utility {
 

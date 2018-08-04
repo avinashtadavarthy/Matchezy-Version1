@@ -198,15 +198,17 @@ public class Registration4 extends AppCompatActivity {
             return;
         }
 
-        if (!validateannual()) {
+        /*if (!validateannual()) {
             return;
-        }
+        }*/
 
         storeSPData("education", editText_edu.getText().toString().trim());
         storeSPData("college", editText_college.getText().toString().trim());
         storeSPData("work", editText_work.getText().toString().trim());
         storeSPData("desig", editText_desig.getText().toString().trim());
-        storeSPData("annual_income", editText_annual.getText().toString().trim());
+        if(!editText_annual.getText().toString().trim().isEmpty()
+                && editText_annual.getText().toString().trim().length() > 0)
+            storeSPData("annual_income", editText_annual.getText().toString().trim());
 
         storeSPData("educationVisibility", switchEdu.isChecked());
         storeSPData("collegeVisibility", switchCollege.isChecked());
@@ -606,9 +608,9 @@ public class Registration4 extends AppCompatActivity {
                     break;
 
 
-                case R.id.editText_annual:
+                /*case R.id.editText_annual:
                     validateannual();
-                    break;
+                    break;*/
 
             }
         }

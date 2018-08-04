@@ -316,8 +316,6 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                         switch(response.optString("status_code")) {
 
                             case "200": {
-                                //Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
-
                                 String[] dd = input_Dateofbirth.getText().toString().split("/", 3);
                                 String dobstr = dd[2] + "/" + dd[1] + "/" + dd[0];
 
@@ -335,7 +333,7 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                             } break;
 
                             case "400":
-                                //Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
+                                Toast.makeText(Registration.this, response.optString("message"), Toast.LENGTH_LONG).show();
                                 break;
                         }
                     }
