@@ -73,6 +73,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
                     android:padding="10dp"
+                    android:elevation="10dp"
                     android:src="@drawable/bookmark_full_grey"/>
 
             </RelativeLayout>

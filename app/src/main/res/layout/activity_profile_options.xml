@@ -54,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="Avinash Tadavarthy"
                     android:textColor="@color/appgrey"
+                    android:fontFamily="@font/circularstdbold"
                     android:textSize="15dp"
                     android:layout_toRightOf="@+id/profileimg" />
 
@@ -61,6 +62,7 @@
                     android:id="@+id/profileemail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/circularstdbook"
                     android:text="avinash.tadavarthy@gmail.com"
                     android:textColor="@color/appred"
                     android:textSize="12dp"

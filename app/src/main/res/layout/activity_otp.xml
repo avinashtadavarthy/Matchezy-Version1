@@ -20,6 +20,7 @@
         android:paddingStart="19dp"
         android:paddingTop="38dp"
         android:text="Verification"
+        android:textStyle="bold"
         android:textColor="#FFF"
         android:textSize="24dp" />
 

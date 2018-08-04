@@ -19,6 +19,7 @@
         android:textColor="#FFF"
         android:paddingStart="19dp"
         android:fontFamily="@font/circularstdbook"
+        android:textStyle="bold"
         android:background="@drawable/curve1"
         android:text="Hi there! Please fill the following to get started."
         android:textSize="24dp" />

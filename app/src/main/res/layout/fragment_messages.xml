@@ -15,8 +15,8 @@
     <TextView
         android:layout_width="match_parent"
         android:text="PEOPLE WHO LIKED YOU BACK"
-        android:textSize="15dp"
-        android:textColor="#4a4a4a"
+        android:textSize="13dp"
+        android:textColor="@color/appgrey"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="13dp"
         android:fontFamily="@font/circularstdbook"
@@ -58,8 +58,8 @@
        <TextView
            android:layout_width="match_parent"
            android:text="CONVERSATIONS"
-           android:textSize="15dp"
-           android:textColor="#4a4a4a"
+           android:textSize="13dp"
+           android:textColor="@color/appgrey"
            android:layout_marginLeft="13dp"
            android:fontFamily="@font/circularstdbook"
            android:layout_height="wrap_content" />

@@ -23,6 +23,7 @@
         android:fontFamily="@font/circularstdbook"
         android:background="@drawable/curve1"
         android:text="About you."
+        android:textStyle="bold"
         android:textSize="24dp" />
 
     <ScrollView

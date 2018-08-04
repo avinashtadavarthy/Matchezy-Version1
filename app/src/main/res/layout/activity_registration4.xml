@@ -33,6 +33,7 @@
                 android:paddingEnd="66dp"
                 android:paddingStart="19dp"
                 android:paddingTop="38dp"
+                android:textStyle="bold"
                 android:text="A few more."
                 android:textColor="#FFF"
                 android:textSize="24dp" />

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
@@ -48,7 +50,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
     TextView signup, forgotpassword;
     EditText emailEditText, passwordEditText;
 
-    View progressOverlay;
+    RelativeLayout progressOverlay;
     AlertDialog newUpdateDialog;
 
     //fb login integration
@@ -85,7 +87,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
         Log.e("ASD", getSPBoolean("isOtpVerificationCompleted").toString());
 
         if(!getSPBoolean("isOtpVerificationCompleted")) {
-            Intent i = new Intent(Login.this ,OTP.class);
+            Intent i = new Intent(Login.this, OTP.class);
             startActivity(i);
             finish();
         }
