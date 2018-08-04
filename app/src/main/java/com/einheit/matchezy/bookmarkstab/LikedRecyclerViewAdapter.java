@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
@@ -78,8 +80,15 @@ public class LikedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             }
 
             dataViewHolder.name.setText(name + ", ");
+
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(25f);
+            circularProgressDrawable.setBackgroundColor(R.color.appred);
+            circularProgressDrawable.start();
             Glide.with(mContext)
                     .load(mData.get(position).getThumbnail())
+                    .apply(new RequestOptions().placeholder(circularProgressDrawable))
                     .into(dataViewHolder.img_book_thumbnail);
 
 

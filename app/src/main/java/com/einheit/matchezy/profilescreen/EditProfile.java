@@ -917,144 +917,14 @@ public class EditProfile extends AppCompatActivity {
 
     private void designation() {
 
-        final CharSequence[] items = {
-                "Chairman", "Vice Chairman", "Chairman cum Managing Director", "Managing Director", "Sr. Vice president ", "Vice President", "General Manager",
-                "Joint General Manager", "Deputy General Manager", "Asst. General Manager", "Chief Manager", "Sr. Manager", "Manager", "Joint Manager", "Deputy Manager",
-                "Asst. Manager", "Sr. Officer", "Officer", "Jr. Officer", "Sr. Associate", "Associate", "Jr. Associate", "Assistant ", "Trainee Engineer", "Software Engineer",
-                "Programmer Analyst", "Senior Software Engineer", "System Analyst", "Project Lead", "Project Manager", "Program Manager ", "Team Lead", "Senior Team Lead",
-                "Account Manager", "Architect", "Technical Specialist", "Deliver Manager", "Delivery Head", "Business Analyst", "Delivery Partner"
-        };
+
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Choose Designation");
-        int position;
-        switch (editTextDesignation.getText().toString()) {
-            case "Chairman":
-                position = 0;
-                break;
-            case "Vice Chairman":
-                position = 1;
-                break;
-            case "Chairman cum Managing Director":
-                position = 2;
-                break;
-            case "Managing Director":
-                position = 3;
-                break;
-            case "Sr. Vice president ":
-                position = 4;
-                break;
-            case "Vice President":
-                position = 5;
-                break;
-            case "General Manager":
-                position = 6;
-                break;
-            case "Joint General Manager":
-                position = 7;
-                break;
-            case "Deputy General Manager":
-                position = 8;
-                break;
-            case "Asst. General Manager":
-                position = 9;
-                break;
-            case "Chief Manager":
-                position = 10;
-                break;
-            case "Sr. Manager":
-                position = 11;
-                break;
-            case "Manager":
-                position = 12;
-                break;
-            case "Joint Manager":
-                position = 13;
-                break;
-            case "Deputy Manager":
-                position = 14;
-                break;
-            case "Asst. Manager":
-                position = 15;
-                break;
-            case "Sr. Officer":
-                position = 16;
-                break;
-            case "Officer":
-                position = 17;
-                break;
-            case "Jr. Officer":
-                position = 18;
-                break;
-            case "Sr. Associate":
-                position = 19;
-                break;
-            case "Associate":
-                position = 20;
-                break;
-            case "Jr. Associate":
-                position = 21;
-                break;
-            case "Assistant ":
-                position = 22;
-                break;
-            case "Trainee Engineer":
-                position = 23;
-                break;
-            case "Software Engineer":
-                position = 24;
-                break;
-            case "Programmer Analyst":
-                position = 25;
-                break;
-            case "Senior Software Engineer":
-                position = 26;
-                break;
-            case "System Analyst":
-                position = 27;
-                break;
-            case "Project Lead":
-                position = 28;
-                break;
-            case "Project Manager":
-                position = 29;
-                break;
-            case "Program Manager ":
-                position = 30;
-                break;
-            case "Team Lead":
-                position = 31;
-                break;
-            case "Senior Team Lead":
-                position = 32;
-                break;
-            case "Account Manager":
-                position = 33;
-                break;
-            case "Architect":
-                position = 34;
-                break;
-            case "Technical Specialist":
-                position = 35;
-                break;
-            case "Deliver Manager":
-                position = 36;
-                break;
-            case "Delivery Head":
-                position = 37;
-                break;
-            case "Business Analyst":
-                position = 38;
-                break;
-            case "Delivery Partner":
-                position = 39;
-                break;
-            default:
-                position = -1;
-                break;
-        }
+
         alertDialogBuilder
-                .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(RawData.getInstance().designationItems,
+                        RawData.getPositionDesignation(editTextDesignation.getText().toString()), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         ListView lw = ((AlertDialog) dialog).getListView();

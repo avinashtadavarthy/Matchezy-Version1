@@ -508,7 +508,7 @@
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
                         android:maxLines="1"
-                        android:hint="Education"
+                        android:hint="Qualification"
                         android:paddingLeft="16dp"
                         android:inputType="text"
                         android:focusable="false"/>
@@ -608,7 +608,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Working at"
+                        android:hint="Work history"
                         android:paddingLeft="16dp"
                         android:focusable="false"
                         android:maxLines="1"

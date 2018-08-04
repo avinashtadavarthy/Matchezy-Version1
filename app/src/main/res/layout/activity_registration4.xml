@@ -58,7 +58,7 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstdbook"
-                    android:hint="Education"
+                    android:hint="Qualification"
                     android:singleLine="true"
                     android:paddingLeft="35dp"
                     android:focusable="false"/>
@@ -160,7 +160,7 @@
                     android:background="@drawable/signup_box"
                     android:longClickable="false"
                     android:fontFamily="@font/circularstdbook"
-                    android:hint="Working at"
+                    android:hint="Work history"
                     android:inputType="text"
                     android:paddingLeft="35dp" />
 
@@ -209,7 +209,7 @@
                     android:background="@drawable/signup_box"
                     android:fontFamily="@font/circularstdbook"
                     android:longClickable="false"
-                    android:hint="Designation"
+                    android:hint="Designation (optional)"
                     android:inputType="text"
                     android:paddingLeft="35dp" />
 

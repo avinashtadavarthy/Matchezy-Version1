@@ -24,9 +24,9 @@
         android:fontFamily="@font/circularstdbook"
         android:paddingEnd="66dp"
         android:paddingStart="19dp"
-        android:paddingTop="38dp"
+        android:paddingTop="19dp"
         android:textStyle="bold"
-        android:text="Your Interests?"
+        android:text="Choose what despcribes you and your interests"
         android:textColor="#FFF"
         android:textSize="24dp" />
 

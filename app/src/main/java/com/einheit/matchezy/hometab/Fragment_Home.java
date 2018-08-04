@@ -70,6 +70,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     JSONObject userData;
 
     RecyclerViewScrollListener scrollListener;
+    boolean isBioWarningCard = false;
 
     private int lastItemCount = 0;
 
@@ -140,12 +141,15 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         }
 
         if(userData.has("bio")){
-            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0)
-                lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
-                        null,null,null,null));
+            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
+                lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
+                        null, null, null, null));
+                isBioWarningCard = true;
+            } else isBioWarningCard = false;
         } else {
             lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
                     null,null,null,null));
+            isBioWarningCard = true;
         }
 
         lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
@@ -200,14 +204,17 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         myAdapter.notifyDataSetChanged();
 
         if(userData.has("bio")){
-            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0)
-                lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
-                        null,null,null,null));
-            myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
+                lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
+                        null, null, null, null));
+                myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+                isBioWarningCard = true;
+            } else isBioWarningCard = false;
         } else {
             lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
                     null,null,null,null));
             myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
+            isBioWarningCard = true;
         }
 
         lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
@@ -221,6 +228,9 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
     void loadMoreData(int index) {
         Log.e("ASDE", String.valueOf(index));
+        if(isBioWarningCard)
+            index -= 2;
+        else index -= 1;
         filterProfiles(filterObject, index + 1);
     }
 

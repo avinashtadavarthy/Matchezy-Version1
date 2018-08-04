@@ -67,7 +67,7 @@ public class RawData {
             "CA", "CFA (Chartered Financial Analyst)", "CS", "ICWA", "Other Degree in Finance", "IAS", "IES", "IFS", "IRS", "IPS", "Other Degree in Service",
             "Ph.D.", "Diploma", "Polytechnic", "Trade School", "Others in Diploma"};
     public String[] company_items = {
-            "N/A", "A. T. Kearney", "A.P. Moller Maersk", "A.T. Kearney", "A2Z Group", "ABB", "Abbott India", "Abbott Nutrition International", "ABC Consultants", "ABECL", "Abercrombie & Fitch", "ABG Cement Ltd", "Abhijeet Group", "Abhishek Industries (Trident Group)", "ABN AMRO Bank", "ABP Pvt Ltd", "AbsolutData", "AC Nielsen", "ACC Limited", "Accel Frontline Limited", "Accenture",
+            "Doesn't apply", "A. T. Kearney", "A.P. Moller Maersk", "A.T. Kearney", "A2Z Group", "ABB", "Abbott India", "Abbott Nutrition International", "ABC Consultants", "ABECL", "Abercrombie & Fitch", "ABG Cement Ltd", "Abhijeet Group", "Abhishek Industries (Trident Group)", "ABN AMRO Bank", "ABP Pvt Ltd", "AbsolutData", "AC Nielsen", "ACC Limited", "Accel Frontline Limited", "Accenture",
             "Accountant", "Accretive Health", "Acer", "ACG Worldwide", "ACH Management Consultant Pvt. Ltd.", "Acme Telepower Ltd", "Acropetal Technologies Limited", "ACS - A Xerox Company", "Actis", "Actuate Business Consulting", "Adani Group", "Adani Wilmar Limited", "Adecco", "Adfactors PR", "ADFC Pvt Ltd", "Adhunik Group", "Adidas", "Aditi Technologies", "Aditya Birla Group", "Adobe", "ADP",
             "Adroit Financial Services", "Advance Group", "Advertising", "Aegis Limited", "Aegon Religare", "Aetna", "AF-Mercados EMI", "Affine Analytics", "Affinity Express", "AGC Networks - Essar Group", "Agilent Technologies", "Agro Tech Foods", "AGS Transact Technologies", "AIPL", "Air India Limited", "Air Liquide", "Aircel", "Aircom International", "Airtel", "Ajanta Pharma", "Akamai Technologies",
             "AkzoNobel India Ltd", "Al Futtaim", "Alankit Assignments Ltd", "Alcatel Lucent", "Alchemist Group", "Alcor", "Alembic Pharmaceuticals", "Alere", "Alexandria Equities Management", "Alghanim Industries", "Alibaba.com", "Alkem Laboratories Limited", "Allahabad Bank", "Allcargo Logistics", "AllCheckDeals India Private Limited", "Allegis Group", "Allegro Advisors", "Allergan India Private Limited", "Alliance University", "Allied Blenders & Distillers Pvt. Ltd", "Allied Digital Services Ltd.",
@@ -449,6 +449,148 @@ public class RawData {
     public String[] interests = {
             "Animal Lover", "Bibliophile", "Sports", "Photography", "Running", "Music", "Travelling", "Movie Buff", "Adrenaline Junky", "Potter Head", "Entrepreneur", "Pets", "Dog Lover", "Cat Lovers", "Biker", "Car enthusiast", "Cooking", "Trekking", "Painting", "Dancing", "Beach Bum", "Smoker", "Social Drinker", "Coffee Addict", "Vegan", "Party Animal", "Environmentalist", "Wine Lover", "Yoga", "Blues", "Feminist", "Beer Guzzler", "Leo", "Stand Up", "Sarcastic", "GOT", "TV Shows", "Swimming", "Binge Watching", "F.R.I.E.N.D.S", "Spiritual", "Blogger", "Aeris", "Classical Music", "Rock", "Fashionista", "Romantic", "Bowling", "HIMYM", "HipHop", "Capricorn", "Globe Trotter", "Humorous", "Nocturnal", "Extrovert", "Table Tennis", "Football", "Novels", "Acting", "Causes", "Singing", "Adventurous Sports", "Water Sports", "Sky Diving", "Scuba Diving", "Theater", "Horoscope Lover", "Books", "Cricket", "Basketball", "Jogging", "Games", "Video Games", "Long Rides", "Beers", "Social Service", "Activist", "Introvert", "Golfing", "Writing", "Gardening", "Nerd", "IPL", "Real Madrid", "Reggae", "Foodie", "Back Packer", "History Buff", "Surfing", "Free Spirited", "Tennis", "Formula1", "Board Games", "Rock Climbing", "Gym Junkie", "Country Music", "Optimist", "Briyani", "Pizza", "Italian Cusine", "Ice Creams", "Reading", "Startup"
     };
+
+    public CharSequence[] designationItems = {
+            "Chairman", "Vice Chairman", "CXO", "Managing Director", "Sr. Vice president ", "Vice President", "General Manager",
+            "Joint General Manager", "Deputy General Manager", "Asst. General Manager", "Chief Manager", "Sr. Manager", "Manager", "Joint Manager", "Deputy Manager",
+            "Asst. Manager", "Sr. Officer", "Officer", "Jr. Officer", "Sr. Associate", "Associate", "Jr. Associate", "Assistant ", "Trainee Engineer", "Software Engineer",
+            "Programmer Analyst", "Senior Software Engineer", "System Analyst", "Project Lead", "Project Manager", "Program Manager ", "Team Lead", "Senior Team Lead",
+            "Account Manager", "Architect", "Technical Specialist", "Deliver Manager", "Delivery Head", "Business Analyst", "Delivery Partner", "Others"
+    };
+
+    public static int getPositionDesignation(String desig) {
+        int position;
+        switch (desig) {
+            case "Chairman":
+                position = 0;
+                break;
+            case "Vice Chairman":
+                position = 1;
+                break;
+            case "CXO":
+                position = 2;
+                break;
+            case "Managing Director":
+                position = 3;
+                break;
+            case "Sr. Vice president ":
+                position = 4;
+                break;
+            case "Vice President":
+                position = 5;
+                break;
+            case "General Manager":
+                position = 6;
+                break;
+            case "Joint General Manager":
+                position = 7;
+                break;
+            case "Deputy General Manager":
+                position = 8;
+                break;
+            case "Asst. General Manager":
+                position = 9;
+                break;
+            case "Chief Manager":
+                position = 10;
+                break;
+            case "Sr. Manager":
+                position = 11;
+                break;
+            case "Manager":
+                position = 12;
+                break;
+            case "Joint Manager":
+                position = 13;
+                break;
+            case "Deputy Manager":
+                position = 14;
+                break;
+            case "Asst. Manager":
+                position = 15;
+                break;
+            case "Sr. Officer":
+                position = 16;
+                break;
+            case "Officer":
+                position = 17;
+                break;
+            case "Jr. Officer":
+                position = 18;
+                break;
+            case "Sr. Associate":
+                position = 19;
+                break;
+            case "Associate":
+                position = 20;
+                break;
+            case "Jr. Associate":
+                position = 21;
+                break;
+            case "Assistant ":
+                position = 22;
+                break;
+            case "Trainee Engineer":
+                position = 23;
+                break;
+            case "Software Engineer":
+                position = 24;
+                break;
+            case "Programmer Analyst":
+                position = 25;
+                break;
+            case "Senior Software Engineer":
+                position = 26;
+                break;
+            case "System Analyst":
+                position = 27;
+                break;
+            case "Project Lead":
+                position = 28;
+                break;
+            case "Project Manager":
+                position = 29;
+                break;
+            case "Program Manager ":
+                position = 30;
+                break;
+            case "Team Lead":
+                position = 31;
+                break;
+            case "Senior Team Lead":
+                position = 32;
+                break;
+            case "Account Manager":
+                position = 33;
+                break;
+            case "Architect":
+                position = 34;
+                break;
+            case "Technical Specialist":
+                position = 35;
+                break;
+            case "Deliver Manager":
+                position = 36;
+                break;
+            case "Delivery Head":
+                position = 37;
+                break;
+            case "Business Analyst":
+                position = 38;
+                break;
+            case "Delivery Partner":
+                position = 39;
+                break;
+            case "Others":
+                position = 40;
+                break;
+            default:
+                position = -1;
+                break;
+        }
+
+        return position;
+    }
 
     protected RawData() {
     }
