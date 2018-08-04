@@ -2,6 +2,7 @@ package com.einheit.matchezy.profilescreen;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,16 @@ class CustomPagerAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.image_pager_item, container, false);
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
+
+
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+        circularProgressDrawable.setStrokeWidth(5f);
+        circularProgressDrawable.setCenterRadius(25f);
+        circularProgressDrawable.setBackgroundColor(R.color.appred);
+        circularProgressDrawable.start();
         Glide.with(mContext)
                 .load(urls[position])
+                .apply(new RequestOptions().placeholder(circularProgressDrawable))
                 .into(imageView);
 
         container.addView(itemView);

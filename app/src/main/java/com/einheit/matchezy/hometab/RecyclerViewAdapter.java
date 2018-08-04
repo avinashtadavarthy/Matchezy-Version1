@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipGroup;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -25,6 +26,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
@@ -91,8 +93,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
 
             dataViewHolder.name.setText(name + ", ");
+
+            CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
+            circularProgressDrawable.setStrokeWidth(5f);
+            circularProgressDrawable.setCenterRadius(25f);
+            circularProgressDrawable.setBackgroundColor(R.color.appred);
+            circularProgressDrawable.start();
             Glide.with(mContext)
                     .load(mData.get(position).getThumbnail())
+                    .apply(new RequestOptions().placeholder(circularProgressDrawable))
                     .into(dataViewHolder.img_book_thumbnail);
 
 
