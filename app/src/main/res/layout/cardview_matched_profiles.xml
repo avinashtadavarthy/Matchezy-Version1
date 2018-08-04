@@ -33,6 +33,39 @@
                 android:layout_height="170dp"
                 android:scaleType="centerCrop" />
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/cyan_box"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="8dp">
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_height="13dp"
+                        android:src="@drawable/heart"
+                        android:paddingLeft="2dp"/>
+
+                    <TextView
+                        android:id="@+id/matchingnumber"
+                        android:layout_width="wrap_content"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:layout_height="19dp"
+                        android:text="2"
+                        android:textSize="13dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/circularstdbold"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+
+                </LinearLayout>
+
                 <ImageView
                     android:id="@+id/bookmarkbtn"
                     android:layout_width="wrap_content"
@@ -62,45 +95,6 @@
                     android:text="Name"
                     android:textColor="#2d2d2d"
                     android:textSize="14dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="3dp"
-                android:id="@+id/matchinglayout"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:gravity="center_vertical"
-                android:background="@drawable/cyan_box"
-                android:layout_marginLeft="10dp">
-
-                <TextView
-                    android:id="@+id/matchingnumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2"
-                    android:textSize="12dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:fontFamily="@font/circularstdbook"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" Common Interests"
-                    android:textSize="11dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:fontFamily="@font/circularstdbook"
-                    android:textStyle="bold"
-                    android:textColor="@color/white"/>
 
             </LinearLayout>
 

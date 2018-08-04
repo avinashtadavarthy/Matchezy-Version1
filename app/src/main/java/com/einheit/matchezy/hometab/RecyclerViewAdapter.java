@@ -125,14 +125,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                         Chip chip = new Chip(c);
                         chip.setChipText(matchingInterests.getString(i).toUpperCase());
-                        chip.setChipStrokeColorResource(R.color.orange);
                         chip.setTextAppearanceResource(R.style.HomepageInterestsStyle);
-                        chip.setChipBackgroundColorResource(android.R.color.transparent);
-                        chip.setChipStrokeWidth(2);
+                        chip.setChipBackgroundColorResource(R.color.appred);
                         chip.setTextStartPadding(1);
                         chip.setTextEndPadding(0);
                         chip.setChipMinHeight(0);
                         chip.setChipCornerRadius(20);
+                        /*chip.setChipStrokeColorResource(R.color.orange);
+                        chip.setChipStrokeWidth(2);*/
 
                         dataViewHolder.chipgroup_interests.addView(chip);
                     }
@@ -281,7 +281,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             bookmarkbtn = (ImageView) itemView.findViewById(R.id.bookmarkbtn);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
             chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
-            matchinglayout = (LinearLayout) itemView.findViewById(R.id.matchinglayout);
             matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
 
         }
