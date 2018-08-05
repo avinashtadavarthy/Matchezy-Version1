@@ -12,23 +12,28 @@ import android.widget.LinearLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.einheit.matchezy.R;
+import com.google.gson.JsonArray;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 class CustomPagerAdapter extends PagerAdapter {
 
     Context mContext;
     LayoutInflater mLayoutInflater;
 
-    String[] urls;
+    JSONArray picUrls;
 
-    public CustomPagerAdapter(Context context, String[] mUrls) {
+    public CustomPagerAdapter(Context context, JSONArray picUrls) {
         mContext = context;
-        urls = mUrls;
+        this.picUrls = picUrls;
         mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return urls.length;
+        return picUrls.length();
     }
 
     @Override
@@ -42,16 +47,19 @@ class CustomPagerAdapter extends PagerAdapter {
 
         ImageView imageView = (ImageView) itemView.findViewById(R.id.imageView);
 
-
         CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(mContext);
         circularProgressDrawable.setStrokeWidth(5f);
         circularProgressDrawable.setCenterRadius(25f);
         circularProgressDrawable.setBackgroundColor(R.color.appred);
         circularProgressDrawable.start();
-        Glide.with(mContext)
-                .load(urls[position])
-                .apply(new RequestOptions().placeholder(circularProgressDrawable))
-                .into(imageView);
+        try {
+            Glide.with(mContext)
+                    .load(picUrls.getString(position))
+                    .apply(new RequestOptions().placeholder(circularProgressDrawable))
+                    .into(imageView);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         container.addView(itemView);
 

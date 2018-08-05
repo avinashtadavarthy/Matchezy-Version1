@@ -554,18 +554,17 @@ public class ProfilePage extends AppCompatActivity {
         city.setText(userData.optString("currentCity"));
 
         JSONArray picsArray = userData.optJSONArray("pictures");
-
-        String[] picurls = {"", "", "", ""};
-
-        for (int i = 0; i < picsArray.length(); i++) {
+        for(int i = 0; i < picsArray.length(); i++) {
             try {
-                picurls[i] = picsArray.getString(i);
+                if (picsArray.getString(i).isEmpty()) {
+                    picsArray.remove(i);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picurls);
+        CustomPagerAdapter mCustomPagerAdapter = new CustomPagerAdapter(this, picsArray);
         imagePager.setAdapter(mCustomPagerAdapter);
         indicator.setViewPager(imagePager);
         MyPagerAdapter pagerAdapter = new MyPagerAdapter(getSupportFragmentManager(), userData, userData.optJSONArray("interests"));

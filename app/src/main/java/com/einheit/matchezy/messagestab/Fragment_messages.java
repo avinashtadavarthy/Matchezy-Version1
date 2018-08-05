@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -37,6 +38,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.crypto.interfaces.PBEKey;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -54,18 +57,17 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
     private DatabaseReference mFirebaseDatabaseReference;
     List<ChatListItem> chatList;
 
-    AVLoadingIndicatorView matchedloader, conversationsloader;
+    ProgressBar matchedProfilesProgressBar, chatsProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_messages, container, false);
 
-        matchedloader = myView.findViewById(R.id.matchedloader);
-        conversationsloader = myView.findViewById(R.id.conversationsloader);
+        matchedProfilesProgressBar = myView.findViewById(R.id.matchedProfilesProgressBar);
+        chatsProgressBar = myView.findViewById(R.id.conversationsProgressBar);
 
-        matchedloader.setVisibility(View.VISIBLE);
-        conversationsloader.setVisibility(View.VISIBLE);
-
+        matchedProfilesProgressBar.setVisibility(View.VISIBLE);
+        chatsProgressBar.setVisibility(View.VISIBLE);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
         conversations_recycler = myView.findViewById(R.id.conversations_recycler);
@@ -90,14 +92,12 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
 
                         if (res.optInt("status_code") == 200) {
 
-                            matchedloader.setVisibility(View.GONE);
-                            conversationsloader.setVisibility(View.GONE);
-
-
-                            Log.e("ASD", res.toString());
+                            matchedProfilesProgressBar.setVisibility(View.GONE);
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
+                                if(profilesArray.length() == 0)
+                                    chatsProgressBar.setVisibility(View.GONE);
                                 for (int i = profilesArray.length() - 1; i >= 0; i--) {
                                     final JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(
@@ -107,6 +107,10 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
                                             object.optString("dob"),
                                             object.optJSONArray("interests"),
                                             object.toString()));
+
+                                    if(i == 0) {
+                                        chatsProgressBar.setVisibility(View.GONE);
+                                    }
 
                                     Query query = mFirebaseDatabaseReference.child(object.optString("matched_id")).limitToLast(1);
 

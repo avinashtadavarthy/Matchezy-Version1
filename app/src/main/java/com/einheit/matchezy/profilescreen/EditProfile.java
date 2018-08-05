@@ -78,7 +78,7 @@ public class EditProfile extends AppCompatActivity {
 
     ArrayList<String> interestsarr = new ArrayList<>();
     List<String> data = new ArrayList<>();
-    String ft, inch, langs="", quali="", colleges="", orgWorked = "";
+    String ft, inch, langs = "", quali = "", colleges = "", orgWorked = "";
 
     int i;
 
@@ -178,7 +178,6 @@ public class EditProfile extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 
         edit_gender.setOnClickListener(new View.OnClickListener() {
@@ -301,7 +300,7 @@ public class EditProfile extends AppCompatActivity {
                 object.addProperty("user_id", getSPData("user_id"));
                 object.addProperty("user_token", getSPData("user_token"));
 
-                if(edit_gender.getText().toString().trim().isEmpty() || edit_gender.getText().toString().length() == 0 ||
+                if (edit_gender.getText().toString().trim().isEmpty() || edit_gender.getText().toString().length() == 0 ||
                         edit_relationship.getText().toString().trim().isEmpty() || edit_relationship.getText().toString().length() == 0 ||
                         edit_interested.getText().toString().trim().isEmpty() || edit_interested.getText().toString().length() == 0 ||
                         edit_city.getText().toString().trim().isEmpty() || edit_city.getText().toString().length() == 0 ||
@@ -334,14 +333,11 @@ public class EditProfile extends AppCompatActivity {
                     if (!edit_lang.getText().toString().trim().isEmpty() && edit_lang.getText().toString().length() > 0)
                         object.addProperty("langs", edit_lang.getText().toString().trim());
 
-                    if (!editText_religion.getText().toString().trim().isEmpty() && editText_religion.getText().toString().length() > 0)
-                        object.addProperty("religion", editText_religion.getText().toString().trim());
+                    object.addProperty("religion", editText_religion.getText().toString().trim());
 
-                    if (!editText_tattoos.getText().toString().trim().isEmpty() && editText_tattoos.getText().toString().length() > 0)
-                        object.addProperty("tattoos", editText_tattoos.getText().toString().trim());
+                    object.addProperty("tattoos", editText_tattoos.getText().toString().trim());
 
-                    if (!editText_piercing.getText().toString().trim().isEmpty() && editText_piercing.getText().toString().length() > 0)
-                        object.addProperty("piercings", editText_piercing.getText().toString().trim());
+                    object.addProperty("piercings", editText_piercing.getText().toString().trim());
 
                     if (!editTextEdu.getText().toString().trim().isEmpty() && editTextEdu.getText().toString().length() > 0)
                         object.addProperty("education", editTextEdu.getText().toString().trim());
@@ -352,24 +348,21 @@ public class EditProfile extends AppCompatActivity {
                     if (!editTextWorking.getText().toString().trim().isEmpty() && editTextWorking.getText().toString().length() > 0)
                         object.addProperty("work", editTextWorking.getText().toString().trim());
 
-                    if (!editTextDesignation.getText().toString().trim().isEmpty() && editTextDesignation.getText().toString().length() > 0)
-                        object.addProperty("desig", editTextDesignation.getText().toString().trim());
+                    object.addProperty("desig", editTextDesignation.getText().toString().trim());
 
-                    if (!editText_annual.getText().toString().trim().isEmpty() && editText_annual.getText().toString().length() > 0)
-                        object.addProperty("annualIncome", editText_annual.getText().toString().trim());
+                    object.addProperty("annualIncome", editText_annual.getText().toString().trim());
 
                     if (interestsarr.size() > 0)
                         object.addProperty("interests", interestsarr.toString());
 
-                    if (!editTextBio.getText().toString().trim().isEmpty() && editTextBio.getText().toString().length() > 0)
-                        object.addProperty("bio", editTextBio.getText().toString().trim());
+                    object.addProperty("bio", editTextBio.getText().toString().trim());
 
-                    if(!scroll_choice.getCurrentSelection().isEmpty()) {
+                    if (!scroll_choice.getCurrentSelection().isEmpty()) {
                         String[] height = scroll_choice.getCurrentSelection().trim().split("'");
                         object.addProperty("feet", height[0]);
-                        if(height.length == 1)
+                        if (height.length == 1)
                             object.addProperty("inches", "0");
-                        else object.addProperty("inches", height[1].replace("\"",""));
+                        else object.addProperty("inches", height[1].replace("\"", ""));
                     }
 
                     object.addProperty("educationVisibility", switchEdu.isChecked());
@@ -395,40 +388,39 @@ public class EditProfile extends AppCompatActivity {
 
                                     if (res.optInt("status_code") == 200) {
                                         AndroidNetworking.post(Utility.getInstance().BASE_URL + "getUserData")
-                                            .addBodyParameter("user_id", getSPData("user_id"))
-                                            .addBodyParameter("user_token", getSPData("user_token"))
-                                            .addBodyParameter("user_id_2", getSPData("user_id"))
-                                            .setPriority(Priority.HIGH)
-                                            .build()
-                                            .getAsJSONObject(new JSONObjectRequestListener() {
-                                                @Override
-                                                public void onResponse(JSONObject response) {
-                                                    // do anything with response
+                                                .addBodyParameter("user_id", getSPData("user_id"))
+                                                .addBodyParameter("user_token", getSPData("user_token"))
+                                                .addBodyParameter("user_id_2", getSPData("user_id"))
+                                                .setPriority(Priority.HIGH)
+                                                .build()
+                                                .getAsJSONObject(new JSONObjectRequestListener() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        // do anything with response
 
-                                                    progressOverlay.setVisibility(View.GONE);
+                                                        progressOverlay.setVisibility(View.GONE);
 
-                                                    if(response.optInt("status_code") == 200) {
-                                                        //Log.e("userData", response.toString());
-                                                        storeSPData("userData", response.optJSONObject("message").toString());
-                                                        Intent intent = new Intent(EditProfile.this, ProfilePage.class)
-                                                            .putExtra("fromStatusCode", Utility.FROM_PROFILE_PAGE);
-                                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                                        startActivity(intent);
-                                                        finish();
-                                                        Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                                        if (response.optInt("status_code") == 200) {
+                                                            storeSPData("userData", response.optJSONObject("message").toString());
+                                                            Intent intent = new Intent(EditProfile.this, ProfilePage.class)
+                                                                    .putExtra("fromStatusCode", Utility.FROM_PROFILE_PAGE);
+                                                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                            startActivity(intent);
+                                                            finish();
+                                                            Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Toast.makeText(EditProfile.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
-                                                    else {
-                                                        Toast.makeText(EditProfile.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+
+                                                    @Override
+                                                    public void onError(ANError error) {
+
+                                                        progressOverlay.setVisibility(View.GONE);
+                                                        error.printStackTrace();
+
                                                     }
-                                                }
-                                                @Override
-                                                public void onError(ANError error) {
-
-                                                    progressOverlay.setVisibility(View.GONE);
-                                                    error.printStackTrace();
-
-                                                }
-                                            });
+                                                });
 
                                     } else
                                         Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
@@ -497,7 +489,7 @@ public class EditProfile extends AppCompatActivity {
         }
         Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(profileimage);
 
-        for(i = 0; i<userData.optJSONArray("interests").length(); i++)
+        for (i = 0; i < userData.optJSONArray("interests").length(); i++)
             interestsarr.add(userData.optJSONArray("interests").getString(i));
         populateSuggestedChips(interestsarr);
 
@@ -506,28 +498,28 @@ public class EditProfile extends AppCompatActivity {
         edit_relationship.setText(userData.optString("maritalStatus"));
         edit_city.setText(userData.optString("currentCity"));
 
-        for(i = 0; i<userData.optJSONArray("languagesKnown").length(); i++)
+        for (i = 0; i < userData.optJSONArray("languagesKnown").length(); i++)
             langs = langs + userData.optJSONArray("languagesKnown").getString(i) + ", ";
-        langs = langs.substring(0,langs.length()-2);
+        langs = langs.substring(0, langs.length() - 2);
         edit_lang.setText(langs);
 
         editText_religion.setText(userData.optString("religion"));
         editText_tattoos.setText(userData.optString("tattoo"));
         editText_piercing.setText(userData.optString("piercings"));
 
-        for(i = 0; i<userData.optJSONArray("qualification").length(); i++)
+        for (i = 0; i < userData.optJSONArray("qualification").length(); i++)
             quali = quali + userData.optJSONArray("qualification").getString(i) + ", ";
-        quali = quali.substring(0, quali.length()-2);
+        quali = quali.substring(0, quali.length() - 2);
         editTextEdu.setText(quali);
 
-        for(i = 0; i<userData.optJSONArray("collegeName").length(); i++)
+        for (i = 0; i < userData.optJSONArray("collegeName").length(); i++)
             colleges = colleges + userData.optJSONArray("collegeName").getString(i) + ", ";
-        colleges = colleges.substring(0, colleges.length()-2);
+        colleges = colleges.substring(0, colleges.length() - 2);
         editTextCollege.setText(colleges);
 
-        for(i = 0; i<userData.optJSONArray("organisationWorked").length(); i++)
+        for (i = 0; i < userData.optJSONArray("organisationWorked").length(); i++)
             orgWorked = orgWorked + userData.optJSONArray("organisationWorked").getString(i) + ", ";
-        orgWorked = orgWorked.substring(0, orgWorked.length()-2);
+        orgWorked = orgWorked.substring(0, orgWorked.length() - 2);
         editTextWorking.setText(orgWorked);
 
         editTextDesignation.setText(userData.optString("currentDesignation"));
@@ -544,7 +536,7 @@ public class EditProfile extends AppCompatActivity {
         ft = userData.optJSONObject("height").optString("feet");
         inch = userData.optJSONObject("height").optString("inches");
         int index = -1;
-        if(!inch.equals("0"))
+        if (!inch.equals("0"))
             index = data.indexOf(ft + "'" + inch + "\"");
         else index = data.indexOf(ft + "'");
         scroll_choice.addItems(data, index);
@@ -552,10 +544,9 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-
     private void populateSuggestedChips(ArrayList<String> arr) {
 
-        for (int i=0;i<arr.size();i++) {
+        for (int i = 0; i < arr.size(); i++) {
             Chip chip = new Chip(EditProfile.this);
             chip.setChipText(arr.get(i));
             chip.setTextAppearanceResource(R.style.ChipTextStyle);
@@ -566,22 +557,20 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-    private void gender()
-    {
+    private void gender() {
 
-        final CharSequence[] items = { "Male", "Female", "Other" };
+        final CharSequence[] items = {"Male", "Female", "Other"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
-        if (edit_gender.getText().toString().equals("Male")){
+        if (edit_gender.getText().toString().equals("Male")) {
             position = 0;
-        } else if (edit_gender.getText().toString().equals("Female")){
+        } else if (edit_gender.getText().toString().equals("Female")) {
             position = 1;
-        } else if (edit_gender.getText().toString().equals("Other")){
+        } else if (edit_gender.getText().toString().equals("Other")) {
             position = 2;
-        }
-        else {
+        } else {
             position = -1;
         }
         alertDialogBuilder
@@ -601,23 +590,21 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-
     private void Interested()
 
     {
-        final CharSequence[] items = { "Male", "Female", "Both" };
+        final CharSequence[] items = {"Male", "Female", "Both"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Interested in");
         int position;
-        if (edit_interested.getText().toString().equals("Male")){
+        if (edit_interested.getText().toString().equals("Male")) {
             position = 0;
-        } else if (edit_interested.getText().toString().equals("Female")){
+        } else if (edit_interested.getText().toString().equals("Female")) {
             position = 1;
-        } else if (edit_interested.getText().toString().equals("Both")){
+        } else if (edit_interested.getText().toString().equals("Both")) {
             position = 2;
-        }
-        else {
+        } else {
             position = -1;
         }
         alertDialogBuilder
@@ -637,23 +624,36 @@ public class EditProfile extends AppCompatActivity {
     }
 
 
-
     private void relationship()
 
     {
-        final CharSequence[] items = { "Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children" };
+        final CharSequence[] items = {"Single", "Single with Children", "Divorced", "Divorced with Children", "Widowed", "Widowed with Children"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Choose Gender");
         int position;
         switch (edit_relationship.getText().toString()) {
-            case "Single": position = 0; break;
-            case "Single with Children": position = 1; break;
-            case "Divorced": position = 2; break;
-            case "Divorced with Children": position = 3; break;
-            case "Widowed": position = 4; break;
-            case "Widowed with Children": position = 5; break;
-            default: position = -1; break;
+            case "Single":
+                position = 0;
+                break;
+            case "Single with Children":
+                position = 1;
+                break;
+            case "Divorced":
+                position = 2;
+                break;
+            case "Divorced with Children":
+                position = 3;
+                break;
+            case "Widowed":
+                position = 4;
+                break;
+            case "Widowed with Children":
+                position = 5;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder.setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
             @Override
@@ -669,14 +669,12 @@ public class EditProfile extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void city()
-    {
+    private void city() {
         Intent intnt = new Intent(getApplicationContext(), ChooseCity.class);
         startActivityForResult(intnt, 12345);
     }
 
-    private void lang()
-    {
+    private void lang() {
         Intent i = new Intent(getApplicationContext(), LanguagesPopUp.class).putExtra("languagesspoken", Utility.getInstance().languagesspokendirty);
         startActivityForResult(i, 1010);
     }
@@ -692,20 +690,48 @@ public class EditProfile extends AppCompatActivity {
         alertDialogBuilder.setTitle("Choose Religion");
         int position;
         switch (editText_religion.getText().toString()) {
-            case "Atheist": position=0; break;
-            case "Agnostic": position=1; break;
-            case "Spiritual": position=2; break;
-            case "Buddhist": position=3; break;
-            case "Christian": position=4; break;
-            case "Hindu": position=5; break;
-            case "Muslim": position=6; break;
-            case "Jewish": position=7; break;
-            case "Parsi": position=8; break;
-            case "Sikh": position=9; break;
-            case "Jain": position=10; break;
-            case "Inter-Religion": position=11; break;
-            case "Other": position=12; break;
-            default: position = -1; break;
+            case "Atheist":
+                position = 0;
+                break;
+            case "Agnostic":
+                position = 1;
+                break;
+            case "Spiritual":
+                position = 2;
+                break;
+            case "Buddhist":
+                position = 3;
+                break;
+            case "Christian":
+                position = 4;
+                break;
+            case "Hindu":
+                position = 5;
+                break;
+            case "Muslim":
+                position = 6;
+                break;
+            case "Jewish":
+                position = 7;
+                break;
+            case "Parsi":
+                position = 8;
+                break;
+            case "Sikh":
+                position = 9;
+                break;
+            case "Jain":
+                position = 10;
+                break;
+            case "Inter-Religion":
+                position = 11;
+                break;
+            case "Other":
+                position = 12;
+                break;
+            default:
+                position = -1;
+                break;
         }
         alertDialogBuilder
                 .setSingleChoiceItems(items, position, new DialogInterface.OnClickListener() {
@@ -726,7 +752,7 @@ public class EditProfile extends AppCompatActivity {
     private void tattoos()
 
     {
-        final CharSequence[] items = { "Yes","No","Planning to get"};
+        final CharSequence[] items = {"Yes", "No", "Planning to get"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Tattoos?");
@@ -764,7 +790,7 @@ public class EditProfile extends AppCompatActivity {
     private void piercing()
 
     {
-        final CharSequence[] items = { "Yes","No","Planning to get"};
+        final CharSequence[] items = {"Yes", "No", "Planning to get"};
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Piercing?");
@@ -821,9 +847,10 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                         String datadisplayed = "";
-                        for(int i = 0; i<=selectedNames.size()-1; i++) {
-                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + ", ";
+                        String datadisplayed = "";
+                        for (int i = 0; i <= selectedNames.size() - 1; i++) {
+                            if (i != selectedNames.size() - 1)
+                                datadisplayed = datadisplayed + selectedNames.get(i) + ", ";
                             else datadisplayed = datadisplayed + selectedNames.get(i);
                         }
 
@@ -833,7 +860,7 @@ public class EditProfile extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -866,9 +893,10 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                       String datadisplayed = "";
-                        for(int i = 0; i<=selectedNames.size()-1; i++) {
-                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                        String datadisplayed = "";
+                        for (int i = 0; i <= selectedNames.size() - 1; i++) {
+                            if (i != selectedNames.size() - 1)
+                                datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
                             else datadisplayed = datadisplayed + selectedNames.get(i);
                         }
 
@@ -878,7 +906,7 @@ public class EditProfile extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -910,9 +938,10 @@ public class EditProfile extends AppCompatActivity {
                                     "DataString : " + dataString, Toast.LENGTH_SHORT).show();
                         }*/
 
-                       String datadisplayed = "";
-                        for(int i = 0; i<=selectedNames.size()-1; i++) {
-                            if(i!=selectedNames.size()-1) datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
+                        String datadisplayed = "";
+                        for (int i = 0; i <= selectedNames.size() - 1; i++) {
+                            if (i != selectedNames.size() - 1)
+                                datadisplayed = datadisplayed + selectedNames.get(i) + "," + '\n';
                             else datadisplayed = datadisplayed + selectedNames.get(i);
                         }
 
@@ -922,7 +951,7 @@ public class EditProfile extends AppCompatActivity {
 
                     @Override
                     public void onCancel() {
-                        Log.d("multidialog","Dialog cancelled");
+                        Log.d("multidialog", "Dialog cancelled");
                     }
 
                 });
@@ -933,22 +962,21 @@ public class EditProfile extends AppCompatActivity {
     private void designation() {
 
 
-
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(EditProfile.this);
         alertDialogBuilder.setTitle("Choose Designation");
 
         alertDialogBuilder
                 .setSingleChoiceItems(RawData.getInstance().designationItems,
                         RawData.getPositionDesignation(editTextDesignation.getText().toString()), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ListView lw = ((AlertDialog) dialog).getListView();
-                        Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
-                        String selectedgend = checkedItem.toString();
-                        editTextDesignation.setText(selectedgend);
-                        dialog.dismiss();
-                    }
-                });
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ListView lw = ((AlertDialog) dialog).getListView();
+                                Object checkedItem = lw.getAdapter().getItem(lw.getCheckedItemPosition());
+                                String selectedgend = checkedItem.toString();
+                                editTextDesignation.setText(selectedgend);
+                                dialog.dismiss();
+                            }
+                        });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
 
@@ -968,18 +996,16 @@ public class EditProfile extends AppCompatActivity {
             }
         }
 
-        if(requestCode == 1010) {
-            if(resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1010) {
+            if (resultCode == Activity.RESULT_OK) {
 
                 edit_lang.setText("Languages Spoken");
 
                 String languagesspoken = data.getStringExtra("languagesspoken");
-                if(languagesspoken.equals("")) {
+                if (languagesspoken.equals("")) {
                     edit_lang.setText("Select Languages Spoken");
                     edit_lang.setText("");
-                }
-
-                else edit_lang.setText(languagesspoken);
+                } else edit_lang.setText(languagesspoken);
 
             }
         }
