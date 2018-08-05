@@ -535,8 +535,8 @@ public class ProfilePage extends AppCompatActivity {
             public void run() {
                 changeListener.onPageSelected(pager.getCurrentItem());
             }
-        });/*
-        changeListener.onPageSelected(pager.getCurrentItem());*/
+        });
+        /*changeListener.onPageSelected(pager.getCurrentItem());*/
 
 
     }

@@ -71,6 +71,12 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        String fblogin = getIntent().getStringExtra("fblogin");
+
+        if(fblogin.equals("true")) {
+            fbLogin();
+        }
+
         progressOverlay = findViewById(R.id.progress_overlay);
 
         FirebaseMessaging.getInstance().subscribeToTopic("Hy");
@@ -363,8 +369,18 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
 
     //facebook login
-
     public void fbLogin(View view) {
+
+        if(AccessToken.getCurrentAccessToken()!=null) {
+            LoginManager.getInstance().logOut();
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
+        } else {
+            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
+        }
+
+    }
+
+    public void fbLogin() {
 
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();

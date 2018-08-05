@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="100"
+    android:background="#fa2948"
+    android:orientation="vertical"
+    tools:context=".OnboardingNew">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
+        android:text="@string/app_name"
+        android:textColor="@color/white"
+        android:fontFamily="@font/circularstdbold"
+        android:textSize="25dp"
+        android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/onboardingswipe"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="65"
+            android:weightSum="100">
+
+            <android.support.v4.view.ViewPager
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/onboardingpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="90"/>
+
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/indicator"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"/>
+
+        </LinearLayout>
+
+  <!--  <LinearLayout
+        android:visibility="gone"
+        android:padding="10dp"
+        android:id="@+id/editable_layout"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="65"
+        android:weightSum="100">
+
+       <TextView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="You need to sign in to find your match"
+           android:textColor="@color/white"
+           android:textSize="16dp"
+           android:fontFamily="@font/circularstdbold" />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/signinbtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/outlinebox"
+                android:text="sign in"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/signupbtn"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="sign up"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/signinbtnlayout"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/emailEditTextforsignup"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/textbox"
+                android:hint="Email"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="#4A4A4A"
+                android:inputType="textEmailAddress"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"/>
+
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Password"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="#4A4A4A"
+                android:inputType="textPassword"
+                android:background="@drawable/textbox"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="Forgot Password"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/circularstdbold"/>
+
+            <Button
+                android:elevation="5dp"
+                android:id="@+id/loginbtn"
+                android:layout_width="wrap_content"
+                android:text="Login"
+                android:textSize="18dp"
+                android:layout_marginLeft="16dp"
+                android:textColor="#fa2948"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/white"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:background="@drawable/loginbutton" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/signupbtnlayout"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/textbox"
+                android:hint="Email"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="#4A4A4A"
+                android:inputType="textEmailAddress"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"/>
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:elevation="5dp"
+                android:id="@+id/submitbtn"
+                android:layout_width="wrap_content"
+                android:text="Submit"
+                android:textSize="18dp"
+                android:layout_marginLeft="16dp"
+                android:textColor="#fa2948"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/white"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/circularstdbold"
+                android:background="@drawable/loginbutton" />
+
+        </LinearLayout>
+
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="25"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/fblogin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/loginfbbox"
+            android:layout_margin="10dp"
+            android:text="Log in with Facebook"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16dp"/>
+
+        <Button
+            android:id="@+id/emaillogin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/send_message_box"
+            android:layout_margin="10dp"
+            android:text="Log in with Email"
+            android:textAllCaps="false"
+            android:textColor="@color/appgrey"
+            android:textStyle="bold"
+            android:textSize="16dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

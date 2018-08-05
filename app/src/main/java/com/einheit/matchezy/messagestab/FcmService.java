@@ -63,7 +63,7 @@ public class FcmService extends FirebaseMessagingService {
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "matchezy_1001")
-                    .setSmallIcon(R.drawable.logo)
+                    .setSmallIcon(R.drawable.app_logo_nobg)
                     .setContentTitle(remoteMessage.getData().get("title"))
                     .setContentText(remoteMessage.getData().get("message"))
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
