@@ -85,8 +85,8 @@ public class NotificationsRecyclerAdapter extends RecyclerView.Adapter<Notificat
             holder.timestamp.setText(time);
 
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.drawable.logo);
-            requestOptions.error(R.drawable.logo_white);
+            requestOptions.placeholder(R.drawable.app_logo);
+            requestOptions.error(R.drawable.app_logo_nobg);
 
             Glide.with(mContext)
                     .load(mDataset.getJSONObject(position).optString("profileImageURL"))

@@ -92,7 +92,6 @@ public class OnboardingNew extends AppCompatActivity implements ForceUpdateCheck
         FirebaseMessaging.getInstance().subscribeToTopic("Hy");
         ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
-
         final ProgressBar progressBar = findViewById(R.id.progressBar);
 
 
