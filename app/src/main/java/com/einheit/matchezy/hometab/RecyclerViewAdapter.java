@@ -133,7 +133,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 JSONArray otherInterests = userData.getJSONArray("otherInterests");
 
                 if (userData.optString("noOfMatchingInterests").equals("0")) {
-                    dataViewHolder.matchinglayout.setVisibility(View.GONE);
+                    dataViewHolder.matchingIntNoLayout.setVisibility(View.GONE);
                 } else {
                     dataViewHolder.matchingnumber.setText(userData.optString("noOfMatchingInterests"));
                 }
@@ -324,8 +324,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView bookmarkbtn;
         CardView cardView ;
         ChipGroup chipgroup_interests;
-        LinearLayout matchinglayout;
         TextView matchingnumber;
+        LinearLayout matchingIntNoLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -336,6 +336,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
             chipgroup_interests = (ChipGroup) itemView.findViewById(R.id.chipgp_interests);
             matchingnumber = (TextView) itemView.findViewById(R.id.matchingnumber);
+            matchingIntNoLayout = itemView.findViewById(R.id.matchingIntNoLayout);
 
         }
     }

@@ -108,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imagesLayout"
         android:text="Select atleast two images"
-        android:padding="8dp"/>
+        android:padding="16dp"/>
 
     <com.scalified.fab.ActionButton
         android:id="@+id/action_button_next2"
