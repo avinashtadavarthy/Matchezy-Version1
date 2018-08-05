@@ -14,7 +14,8 @@
         android:text="CLEAR ALL"
         android:layout_margin="8dp"
         android:textColor="#4A90E2"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_below="@+id/clearallbtn"

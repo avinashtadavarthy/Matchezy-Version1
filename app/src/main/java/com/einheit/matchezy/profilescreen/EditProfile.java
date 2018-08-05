@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -81,7 +82,7 @@ public class EditProfile extends AppCompatActivity {
 
     int i;
 
-    RelativeLayout progresslayout;
+    View progressOverlay;
 
 
     @Override
@@ -90,8 +91,6 @@ public class EditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         AndroidNetworking.initialize(this);
-
-        progresslayout = findViewById(R.id.progresslayout);
 
         backbtn = findViewById(R.id.backbtn);
         name = findViewById(R.id.name);
@@ -123,6 +122,7 @@ public class EditProfile extends AppCompatActivity {
         switchAnnual = findViewById(R.id.switchButtonAnnual);
         switchWork = findViewById(R.id.switchButtonWorking);
         switchDesig = findViewById(R.id.switchButtonDesignation);
+        progressOverlay = findViewById(R.id.progress_overlay);
 
 
         data.add("4'");
@@ -287,28 +287,7 @@ public class EditProfile extends AppCompatActivity {
         backbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder1 = new AlertDialog.Builder(EditProfile.this);
-                builder1.setMessage("You will lose all your edits (if any). \n\nDo you want to continue?");
-                builder1.setCancelable(true);
-
-                builder1.setPositiveButton(
-                        "Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                               finish();
-                            }
-                        });
-
-                builder1.setNegativeButton(
-                        "No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-
-                AlertDialog alert11 = builder1.create();
-                alert11.show();
+                onBackPressed();
             }
         });
 
@@ -317,8 +296,7 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                progresslayout.setVisibility(View.VISIBLE);
-
+                Utility.hideKeyboard(EditProfile.this);
                 JsonObject object = new JsonObject();
                 object.addProperty("user_id", getSPData("user_id"));
                 object.addProperty("user_token", getSPData("user_token"));
@@ -328,18 +306,17 @@ public class EditProfile extends AppCompatActivity {
                         edit_interested.getText().toString().trim().isEmpty() || edit_interested.getText().toString().length() == 0 ||
                         edit_city.getText().toString().trim().isEmpty() || edit_city.getText().toString().length() == 0 ||
                         edit_lang.getText().toString().trim().isEmpty() || edit_lang.getText().toString().length() == 0 ||
-                        editText_religion.getText().toString().trim().isEmpty() || editText_religion.getText().toString().length() == 0 ||
+                        /*editText_religion.getText().toString().trim().isEmpty() || editText_religion.getText().toString().length() == 0 ||
                         editText_tattoos.getText().toString().trim().isEmpty() || editText_tattoos.getText().toString().length() == 0 ||
-                        editText_piercing.getText().toString().trim().isEmpty() || editText_piercing.getText().toString().length() == 0 ||
+                        editText_piercing.getText().toString().trim().isEmpty() || editText_piercing.getText().toString().length() == 0 ||*/
                         editTextEdu.getText().toString().trim().isEmpty() || editTextEdu.getText().toString().length() == 0 ||
                         editTextCollege.getText().toString().trim().isEmpty() || editTextCollege.getText().toString().length() == 0 ||
                         editTextWorking.getText().toString().trim().isEmpty() || editTextWorking.getText().toString().length() == 0 ||
-                        editTextDesignation.getText().toString().trim().isEmpty() || editTextDesignation.getText().toString().length() == 0 ||
-                        editText_annual.getText().toString().trim().isEmpty() || editText_annual.getText().toString().length() == 0 ||
-                        interestsarr.size() == 0 || editTextBio.getText().toString().trim().isEmpty() ||
-                        editTextBio.getText().toString().length() == 0) {
+                        /*editTextDesignation.getText().toString().trim().isEmpty() || editTextDesignation.getText().toString().length() == 0 ||
+                        editText_annual.getText().toString().trim().isEmpty() || editText_annual.getText().toString().length() == 0 ||*/
+                        interestsarr.size() == 0 /*||
+                        editTextBio.getText().toString().trim().isEmpty() || editTextBio.getText().toString().length() == 0*/) {
                     Toast.makeText(EditProfile.this, "Please fill all the fields properly", Toast.LENGTH_SHORT).show();
-                    progresslayout.setVisibility(View.GONE);
                 } else {
 
                     if (!edit_gender.getText().toString().trim().isEmpty() && edit_gender.getText().toString().length() > 0)
@@ -403,15 +380,16 @@ public class EditProfile extends AppCompatActivity {
 
                     Log.e("ASd", object.toString());
 
+                    progressOverlay.setVisibility(View.VISIBLE);
+
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
                             .addBodyParameter(object)
                             .setPriority(Priority.HIGH)
                             .build()
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
-                                public void onResponse(JSONObject res) {
+                                public void onResponse(final JSONObject res) {
 
-                                    progresslayout.setVisibility(View.GONE);
 
                                     Log.e("ASD", res.toString());
 
@@ -427,9 +405,17 @@ public class EditProfile extends AppCompatActivity {
                                                 public void onResponse(JSONObject response) {
                                                     // do anything with response
 
+                                                    progressOverlay.setVisibility(View.GONE);
+
                                                     if(response.optInt("status_code") == 200) {
                                                         //Log.e("userData", response.toString());
                                                         storeSPData("userData", response.optJSONObject("message").toString());
+                                                        Intent intent = new Intent(EditProfile.this, ProfilePage.class)
+                                                            .putExtra("fromStatusCode", Utility.FROM_PROFILE_PAGE);
+                                                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                                                        startActivity(intent);
+                                                        finish();
+                                                        Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                                     }
                                                     else {
                                                         Toast.makeText(EditProfile.this, response.optString("message"), Toast.LENGTH_SHORT).show();
@@ -438,15 +424,11 @@ public class EditProfile extends AppCompatActivity {
                                                 @Override
                                                 public void onError(ANError error) {
 
+                                                    progressOverlay.setVisibility(View.GONE);
                                                     error.printStackTrace();
 
                                                 }
                                             });
-
-
-
-                                        finish();
-                                        Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
 
                                     } else
                                         Toast.makeText(EditProfile.this, res.optString("message"), Toast.LENGTH_SHORT).show();
@@ -463,6 +445,39 @@ public class EditProfile extends AppCompatActivity {
             }
         });
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Utility.hideKeyboard(EditProfile.this);
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(EditProfile.this);
+        builder1.setMessage("You will lose all your edits (if any). \n\nDo you want to continue?");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(EditProfile.this, ProfilePage.class)
+                                .putExtra("fromStatusCode", Utility.FROM_PROFILE_PAGE);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 
     private void setExistingdata() throws JSONException {

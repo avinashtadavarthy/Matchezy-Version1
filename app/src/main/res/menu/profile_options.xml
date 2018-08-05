@@ -6,7 +6,7 @@
         android:title="Share Profile" />-->
 
     <item android:id="@+id/block"
-        android:title="Block User" />
+        android:title="Block profile" />
 
     <item android:id="@+id/unblock"
         android:title="Unblock User"

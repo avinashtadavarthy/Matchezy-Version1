@@ -62,7 +62,6 @@ public class ProfilePage extends AppCompatActivity {
     ImageView bookmarkbtn, editbtn, one, two, three;
     TextView pagertextindicator;
     boolean ct = false;
-    String myprofile;
     ActionButton disLikeFab;
     ActionButton likeFab;
     LinearLayout fabLayout;
@@ -122,6 +121,7 @@ public class ProfilePage extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(ProfilePage.this, EditProfile.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -140,7 +140,6 @@ public class ProfilePage extends AppCompatActivity {
         display.getSize(size);
         int width = size.x;
         int height = size.y;
-        myprofile = getIntent().getStringExtra("myprofile");
         fromStatusCode = getIntent().getIntExtra("fromStatusCode", 1);
 
         if (fromStatusCode != Utility.FROM_SHARED_PROFILE) {
@@ -628,6 +627,7 @@ public class ProfilePage extends AppCompatActivity {
                 menu.findItem(R.id.unblock).setVisible(true);
                 menu.findItem(R.id.block).setVisible(false);
             }
+            menu.findItem(R.id.share_profile).setVisible(false);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -658,6 +658,10 @@ public class ProfilePage extends AppCompatActivity {
             startActivity(intent);
         } else if (fromStatusCode == Utility.FROM_BLOCKED) {
             Intent intent = new Intent(ProfilePage.this, BlockedListScreen.class);
+            startActivity(intent);
+        } else if (fromStatusCode == Utility.FROM_PROFILE_PAGE) {
+            Intent intent = new Intent(ProfilePage.this, HomeScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
     }

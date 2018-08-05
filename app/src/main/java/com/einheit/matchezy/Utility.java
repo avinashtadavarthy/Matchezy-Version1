@@ -1,5 +1,6 @@
 package com.einheit.matchezy;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,6 +12,8 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.DrawableMarginSpan;
 import android.text.style.ImageSpan;
 import android.text.style.TextAppearanceSpan;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.abdeveloper.library.MultiSelectModel;
@@ -31,6 +34,7 @@ public class Utility {
     public static final int FROM_DISLIKED = 6;
     public static final int FROM_BLOCKED = 7;
     public static final int FROM_SHARED_PROFILE = 8;
+    public static final int FROM_PROFILE_OPTIONS = 9;
 
     public static final String VIEW_TYPE_BIO = "QAZwsxEDCrfvTGByhnUJMikqwerty";
     public static final String VIEW_TYPE_TITLE = "QAZwsxEDCrfvTGByhnUJMikqwertyAnonymous";
@@ -42,6 +46,17 @@ public class Utility {
     //variables or functions
     public static String
             languagesspoken = "", languagesspokendirty = "";/**/
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
 
     public String getAge(int year,int month,int day)

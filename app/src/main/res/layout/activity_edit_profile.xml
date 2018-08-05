@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".profilescreen.EditProfile">
+    tools:context=".profilescreen.EditProfile"
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -431,7 +432,7 @@
                         android:id="@+id/editText_religion"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Religion"
+                        android:hint="Religion (optional)"
                         android:paddingLeft="16dp"
                         android:inputType="none"
                         android:focusable="false"/>
@@ -454,7 +455,7 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Tattoos"
+                        android:hint="Tattoos (optional)"
                         android:paddingLeft="16dp"
                         android:inputType="none"
                         android:focusable="false"/>
@@ -476,7 +477,7 @@
                         android:layout_marginEnd="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Piercings"
+                        android:hint="Piercings (optional)"
                         android:paddingLeft="16dp"
                         android:inputType="none"
                         android:focusable="false"/>
@@ -656,12 +657,10 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Designation"
+                        android:hint="Designation (optional)"
                         android:inputType="none"
                         android:focusable="false"
-                        android:paddingLeft="16dp"
-                          />
-
+                        android:paddingLeft="16dp"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -703,7 +702,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/signup_box"
-                        android:hint="Annual income"
+                        android:hint="Annual income (optional)"
                         android:inputType="number"
                         android:maxLines="1"
                         android:paddingLeft="16dp"
@@ -756,22 +755,32 @@
         fab:shadowResponsiveEffect_enabled="true"
         fab:show_animation="@anim/fab_roll_from_right" />
 
-
-    <RelativeLayout
-        android:id="@+id/progresslayout"
-        android:layout_centerInParent="true"
-        android:background="@drawable/cyan_box"
-        android:layout_width="150dp"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/progress_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:animateLayoutChanges="true"
+        android:background="#000000"
+        android:clickable="true"
         android:visibility="gone"
-        android:layout_height="150dp">
+        android:elevation="10dp">
 
-        <com.wang.avi.AVLoadingIndicatorView
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/AVLoadingIndicatorView.Large"
-            app:indicatorName="BallPulseIndicator" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </RelativeLayout>
+            <com.wang.avi.AVLoadingIndicatorView
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/AVLoadingIndicatorView.Large"
+                android:visibility="visible"
+                app:indicatorName="BallPulseIndicator" />
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 </RelativeLayout>

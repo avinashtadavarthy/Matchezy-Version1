@@ -82,7 +82,6 @@ public class ProfileOptions extends AppCompatActivity {
         profilename.setText(userData.optString("name"));
         profileemail.setText(userData.optString("email"));
 
-
         progressOverlay = findViewById(R.id.progress_overlay);
 
         viewprofile = (LinearLayout) findViewById(R.id.viewprofile);
@@ -105,7 +104,8 @@ public class ProfileOptions extends AppCompatActivity {
         viewprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), ProfilePage.class).putExtra("myprofile", "true");
+                Intent i = new Intent(getApplicationContext(), ProfilePage.class)
+                        .putExtra("fromStatusCode", Utility.FROM_PROFILE_PAGE);
                 startActivity(i);
                 finish();
             }
