@@ -89,7 +89,7 @@ public class ProfilePage extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.arrowshadow);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_button_shadow);
 
         AndroidNetworking.initialize(this);
 

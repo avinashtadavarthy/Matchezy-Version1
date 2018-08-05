@@ -166,6 +166,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:paddingTop="10dp"
@@ -274,6 +275,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:paddingLeft="25dp"
                     android:paddingRight="25dp"
                     android:paddingTop="10dp"

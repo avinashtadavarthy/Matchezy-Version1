@@ -756,4 +756,22 @@
         fab:shadowResponsiveEffect_enabled="true"
         fab:show_animation="@anim/fab_roll_from_right" />
 
+
+    <RelativeLayout
+        android:id="@+id/progresslayout"
+        android:layout_centerInParent="true"
+        android:background="@drawable/cyan_box"
+        android:layout_width="150dp"
+        android:visibility="gone"
+        android:layout_height="150dp">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AVLoadingIndicatorView.Large"
+            app:indicatorName="BallPulseIndicator" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

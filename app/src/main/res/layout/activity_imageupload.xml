@@ -18,6 +18,7 @@
         android:fontFamily="@font/circularstdbook"
         android:paddingEnd="66dp"
         android:paddingStart="19dp"
+        android:textStyle="bold"
         android:paddingTop="38dp"
         android:text="Show us how you look."
         android:textColor="#ffffff"

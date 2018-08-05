@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.chip.Chip;
 import android.support.design.chip.ChipDrawable;
 import android.support.design.chip.ChipGroup;
@@ -24,6 +25,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
@@ -173,13 +175,17 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
         List<Data> data = new ArrayList<>();
 
-        data.add(new Data( R.drawable.photography, "Photography"));
-        data.add(new Data( R.drawable.pets, "Pets"));
-        data.add(new Data( R.drawable.books, "Books"));
-        data.add(new Data( R.drawable.travel, "Travel"));
-        data.add(new Data( R.drawable.philosophy, "Philosophy"));
-        data.add(new Data( R.drawable.history, "History"));
-
+        data.add(new Data(R.drawable.animallover, "Animal Lover"));
+        data.add(new Data(R.drawable.bibliophile, "Bibliophile"));
+        data.add(new Data(R.drawable.sports, "Sports"));
+        data.add(new Data(R.drawable.photography, "Photography"));
+        data.add(new Data(R.drawable.running, "Running"));
+        data.add(new Data(R.drawable.music, "Music"));
+        data.add(new Data(R.drawable.travel, "Travelling"));
+        data.add(new Data(R.drawable.cinema, "Movie Buff"));
+        data.add(new Data(R.drawable.adrenalinejunkie, "Adrenaline Junkie"));
+        data.add(new Data(R.drawable.potterhead, "Potter Head"));
+        data.add(new Data(R.drawable.entrepreneur, "Entrepreneur"));
 
         return data;
     }

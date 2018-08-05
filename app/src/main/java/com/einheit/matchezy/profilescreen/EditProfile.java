@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,8 @@ public class EditProfile extends AppCompatActivity {
 
     int i;
 
+    RelativeLayout progresslayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,8 @@ public class EditProfile extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
 
         AndroidNetworking.initialize(this);
+
+        progresslayout = findViewById(R.id.progresslayout);
 
         backbtn = findViewById(R.id.backbtn);
         name = findViewById(R.id.name);
@@ -311,6 +316,9 @@ public class EditProfile extends AppCompatActivity {
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                progresslayout.setVisibility(View.VISIBLE);
+
                 JsonObject object = new JsonObject();
                 object.addProperty("user_id", getSPData("user_id"));
                 object.addProperty("user_token", getSPData("user_token"));
@@ -331,6 +339,7 @@ public class EditProfile extends AppCompatActivity {
                         interestsarr.size() == 0 || editTextBio.getText().toString().trim().isEmpty() ||
                         editTextBio.getText().toString().length() == 0) {
                     Toast.makeText(EditProfile.this, "Please fill all the fields properly", Toast.LENGTH_SHORT).show();
+                    progresslayout.setVisibility(View.GONE);
                 } else {
 
                     if (!edit_gender.getText().toString().trim().isEmpty() && edit_gender.getText().toString().length() > 0)
@@ -401,6 +410,8 @@ public class EditProfile extends AppCompatActivity {
                             .getAsJSONObject(new JSONObjectRequestListener() {
                                 @Override
                                 public void onResponse(JSONObject res) {
+
+                                    progresslayout.setVisibility(View.GONE);
 
                                     Log.e("ASD", res.toString());
 

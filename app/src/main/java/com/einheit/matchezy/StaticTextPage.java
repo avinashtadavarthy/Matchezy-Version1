@@ -26,19 +26,19 @@ public class StaticTextPage extends AppCompatActivity {
         switch(type) {
             case "terms":
                 pageheader.setText("Terms and Conditions");
-                statictext.setText(Html.fromHtml(getString(R.string.sample_terms_conditions)));
+                statictext.setText(Html.fromHtml(getString(R.string.terms_and_conditions)));
                 break;
             case "privacy":
                 pageheader.setText("Privacy Policy");
-                statictext.setText(Html.fromHtml(getString(R.string.sample_privacy_policy)));
+                statictext.setText(Html.fromHtml(getString(R.string.privacy_policy)));
                 break;
             case "about":
                 pageheader.setText("About Us");
-                statictext.setText(getString(R.string.sample_about_us));
+                statictext.setText(getString(R.string.about_us));
                 break;
             case "help":
                 pageheader.setText("Help and Support");
-                statictext.setText(getString(R.string.sample_help_support));
+                statictext.setText(Html.fromHtml(getString(R.string.help_support)));
                 break;
             case "privsettings":
                 pageheader.setText("Privacy Settings");

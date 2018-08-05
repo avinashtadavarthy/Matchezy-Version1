@@ -47,6 +47,7 @@
         android:layout_marginTop="5dp">
 
         <TextView
+            android:autoLink="web|email|phone"
             android:id="@+id/statictext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

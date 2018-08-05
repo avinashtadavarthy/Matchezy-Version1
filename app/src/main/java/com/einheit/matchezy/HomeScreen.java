@@ -110,9 +110,10 @@ public class HomeScreen extends AppCompatActivity {
         profileimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent i = new Intent(HomeScreen.this, com.einheit.matchezy.ProfileOptions.class);
                 startActivity(i);
-//                overridePendingTransition(R.anim.slide_in_up,0);
+
             }
         });
 

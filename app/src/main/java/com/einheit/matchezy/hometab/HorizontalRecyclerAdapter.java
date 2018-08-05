@@ -1,6 +1,7 @@
 package com.einheit.matchezy.hometab;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
     List<Fragment_Home.Data> horizontalList = Collections.emptyList();
     Context context;
     private final OnItemClickListener clickListener;
+
+    private int selectedPos = RecyclerView.NO_POSITION;
 
 
     public HorizontalRecyclerAdapter(List<Fragment_Home.Data> horizontalList, Context context,
@@ -55,6 +58,8 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
+        holder.itemView.setSelected(selectedPos == position);
+
         holder.imageView.setImageResource(horizontalList.get(position).imageId);
         holder.txtview.setText(horizontalList.get(position).txt);
 
@@ -63,6 +68,9 @@ public class HorizontalRecyclerAdapter extends RecyclerView.Adapter<HorizontalRe
 
             public void onClick(View v) {
                 clickListener.onItemClick(horizontalList.get(position).txt);
+
+                selectedPos = holder.getLayoutPosition();
+                notifyItemChanged(selectedPos);
             }
 
         });
