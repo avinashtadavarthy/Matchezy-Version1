@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.androidnetworking.model.Progress;
 import com.bumptech.glide.Glide;
 import com.einheit.matchezy.login.OnboardingNew;
 import com.einheit.matchezy.profileoptions.BlockedListScreen;
@@ -35,8 +37,6 @@ public class ProfileOptions extends AppCompatActivity {
 
     TextView blankspace;
 
-    View progressOverlay;
-
     LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions,
             privacypolicy, aboutus, blockedProfiles, dislikedProfiles;
 
@@ -51,6 +51,8 @@ public class ProfileOptions extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_options);
+
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
 
         optionslistlayout = findViewById(R.id.optionslistlayout);
         optionslistlayout.setClipToOutline(true);
@@ -81,8 +83,6 @@ public class ProfileOptions extends AppCompatActivity {
         Glide.with(getApplicationContext()).load(userData.optString("profileImageURL")).into(profileimg);
         profilename.setText(userData.optString("name"));
         profileemail.setText(userData.optString("email"));
-
-        progressOverlay = findViewById(R.id.progress_overlay);
 
         viewprofile = (LinearLayout) findViewById(R.id.viewprofile);
         privacysettings = (LinearLayout) findViewById(R.id.privacysettings);
@@ -162,7 +162,7 @@ public class ProfileOptions extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressOverlay.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
 
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "logout")
                         .addBodyParameter("user_id", getSPData("user_id"))
@@ -173,7 +173,7 @@ public class ProfileOptions extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
 
                                 switch(response.optString("status_code")) {
-                                    case "200": progressOverlay.setVisibility(View.GONE);
+                                    case "200": progressBar.setVisibility(View.GONE);
                                         Toast.makeText(ProfileOptions.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                         clearSPData();
 
@@ -194,7 +194,7 @@ public class ProfileOptions extends AppCompatActivity {
                                         finish();
                                         break;
 
-                                    case "400": progressOverlay.setVisibility(View.GONE);
+                                    case "400": progressBar.setVisibility(View.GONE);
                                         Toast.makeText(ProfileOptions.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                         finish();
                                 }

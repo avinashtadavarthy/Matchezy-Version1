@@ -363,6 +363,14 @@
 
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-    <include layout="@layout/include_progress_overlay"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/colorAccent"/>
 
 </RelativeLayout>

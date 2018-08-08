@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -27,14 +28,12 @@ public class ForgotPassword extends AppCompatActivity {
     ActionButton action_button_next2;
     EditText edit_countrycode, input_phone_number;
 
-    View progressOverlay;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        progressOverlay = findViewById(R.id.progress_overlay);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
 
         action_button_next2 = (ActionButton) findViewById(R.id.action_button_next2);
         // actionButton.hide();
@@ -77,7 +76,7 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                progressOverlay.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
 
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "resetPassword")
                         .addBodyParameter("phoneNumber", edit_countrycode.getText().toString().trim() + input_phone_number.getText().toString().trim())
@@ -87,7 +86,7 @@ public class ForgotPassword extends AppCompatActivity {
                             @Override
                             public void onResponse(JSONObject response) {
 
-                                progressOverlay.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
 
                                     finish();
                                     Toast.makeText(ForgotPassword.this, response.optString("message"), Toast.LENGTH_LONG).show();

@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,8 +74,6 @@ public class EditProfile extends AppCompatActivity {
 
     int i;
 
-    View progressOverlay;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +112,8 @@ public class EditProfile extends AppCompatActivity {
         switchAnnual = findViewById(R.id.switchButtonAnnual);
         switchWork = findViewById(R.id.switchButtonWorking);
         switchDesig = findViewById(R.id.switchButtonDesignation);
-        progressOverlay = findViewById(R.id.progress_overlay);
+
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
 
 
         data.add("4'");
@@ -364,7 +364,7 @@ public class EditProfile extends AppCompatActivity {
 
                     Log.e("ASd", object.toString());
 
-                    progressOverlay.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
 
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")
                             .addBodyParameter(object)
@@ -389,7 +389,7 @@ public class EditProfile extends AppCompatActivity {
                                                     public void onResponse(JSONObject response) {
                                                         // do anything with response
 
-                                                        progressOverlay.setVisibility(View.GONE);
+                                                        progressBar.setVisibility(View.GONE);
 
                                                         if (response.optInt("status_code") == 200) {
                                                             storeSPData("userData", response.optJSONObject("message").toString());
@@ -407,7 +407,7 @@ public class EditProfile extends AppCompatActivity {
                                                     @Override
                                                     public void onError(ANError error) {
 
-                                                        progressOverlay.setVisibility(View.GONE);
+                                                        progressBar.setVisibility(View.GONE);
                                                         error.printStackTrace();
 
                                                     }

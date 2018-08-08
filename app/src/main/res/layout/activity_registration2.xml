@@ -154,6 +154,7 @@
                     android:paddingBottom="17dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
+                    android:maxLines="1"
                     android:fontFamily="@font/circularstdbook"
                     android:layout_marginTop="15dp"
                     android:id="@+id/edit_lang"

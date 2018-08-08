@@ -50,9 +50,6 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
-
-            <include layout="@layout/include_progress_overlay" />
-
         </RelativeLayout>
 
     </LinearLayout>

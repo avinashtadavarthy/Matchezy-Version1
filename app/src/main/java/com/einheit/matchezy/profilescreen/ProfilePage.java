@@ -24,6 +24,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,8 +77,6 @@ public class ProfilePage extends AppCompatActivity {
     CircleIndicator indicator;
     ViewPager pager;
 
-    View progressOverlay;
-
     android.support.v7.widget.ShareActionProvider mShareActionProvider;
 
     @Override
@@ -108,7 +107,7 @@ public class ProfilePage extends AppCompatActivity {
         three = findViewById(R.id.three);
         pagertextindicator = findViewById(R.id.pagertextindicator);
 
-        progressOverlay = findViewById(R.id.progress_overlay);
+        final ProgressBar progressBar = findViewById(R.id.progressBar);
 
         try {
             secretKeys = EncUtil.generateKeyFromPassword(Utility.PASS, EncUtil.SALT);
@@ -153,7 +152,7 @@ public class ProfilePage extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            progressOverlay.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
             fabLayout.setVisibility(View.GONE);
             profile_sliding_layout.setVisibility(View.GONE);
 
@@ -179,7 +178,7 @@ public class ProfilePage extends AppCompatActivity {
                             public void onResponse(JSONObject response) {
                                 // do anything with response
 
-                                progressOverlay.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
                                 fabLayout.setVisibility(View.VISIBLE);
                                 profile_sliding_layout.setVisibility(View.VISIBLE);
 
