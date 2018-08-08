@@ -72,7 +72,7 @@ public class ProfilePage extends AppCompatActivity {
     JSONObject userData;
 
     int fromStatusCode = 0;
-    
+
 
     ViewPager imagePager;
     CircleIndicator indicator;
