@@ -74,7 +74,7 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:background="@drawable/small_round"
-            android:src="@drawable/fab_add"
+            android:src="@drawable/add_small_ic_white"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"/>
 

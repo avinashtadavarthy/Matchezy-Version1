@@ -14,14 +14,11 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.RawData;
-import com.pchmn.materialchips.ChipView;
 import com.scalified.fab.ActionButton;
 
 import java.util.ArrayList;

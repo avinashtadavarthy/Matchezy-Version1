@@ -136,7 +136,7 @@
     <style name="SwitchTheme" parent="Theme.AppCompat.Light">
         <item name="colorControlActivated">@color/appred</item>
         <item name="colorSwitchThumbNormal">@color/appgrey</item>
-        <item name="android:colorForeground">@color/colorCloseChip</item>
+        <item name="android:colorForeground">@color/lightgrey</item>
     </style>
 
 </resources>

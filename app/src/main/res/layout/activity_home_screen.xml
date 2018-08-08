@@ -61,7 +61,7 @@
         android:layout_height="60dp"
         app:elevation="10dp"
         android:layout_alignParentBottom="true"
-        android:backgroundTint="@color/mdtp_white"
+        android:backgroundTint="@color/white"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/navigation"
         app:itemTextColor="@color/bottom_nav_color"
