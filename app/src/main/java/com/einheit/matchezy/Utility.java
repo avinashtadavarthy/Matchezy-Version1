@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.abdeveloper.library.MultiSelectModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -42,6 +43,8 @@ public class Utility {
     public static final String PASS = "QAZwsxEDCrfvTGByhnUJMik";
     public static final String PLACEHOLDER_TEXT_EMPTY_FIELDS = "Don't wish to specify";
     public static final String PLACEHOLDER_TEXT_BIO = "Hi,\nI haven't gotten around to writing my bio yet. Don't mind";
+
+    public static final long CACHE_MAX_SIZE = 52428800L;
 
     //variables or functions
     public static String
@@ -123,6 +126,37 @@ public class Utility {
             mInstance = new Utility();
         }
         return mInstance;
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
+
+    public static long getDirSize(File dir) {
+
+        long size = 0;
+        File[] files = dir.listFiles();
+
+        for (File file : files) {
+            if (file.isFile()) {
+                size += file.length();
+            }
+        }
+
+        return size;
     }
 
 

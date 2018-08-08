@@ -47,6 +47,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_Home extends android.support.v4.app.Fragment implements HorizontalRecyclerAdapter.OnItemClickListener{
+public class Fragment_Home extends android.support.v4.app.Fragment implements HorizontalRecyclerAdapter.OnItemClickListener {
 
     View myView;
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles;
@@ -87,12 +88,12 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        myView =  inflater.inflate(R.layout.fragment__home, container, false);
+        myView = inflater.inflate(R.layout.fragment__home, container, false);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
 
         data = filldata();
-        horizontalAdapter=new HorizontalRecyclerAdapter(data, getContext(), this);
+        horizontalAdapter = new HorizontalRecyclerAdapter(data, getContext(), this);
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.HORIZONTAL, false);
         horizontal_recycler_view.setLayoutManager(horizontalLayoutManager);
@@ -112,18 +113,38 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent i = new Intent(getContext(), Filter.class);
                 startActivity(i);
-
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                File storageDir = new File(getContext().getCacheDir()
+                        + "/MatchEzy");
+                try {
+                    Utility.deleteDir(storageDir);
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (Utility.getDirSize(getContext().getCacheDir()) > Utility.CACHE_MAX_SIZE) {
+                    Utility.deleteDir(getContext().getCacheDir());
+                }
+            }
+        }).start();
+
 
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
 
-        myAdapter = new RecyclerViewAdapter(getContext(),lstMatchedProfiles, getActivity());
+        myAdapter = new RecyclerViewAdapter(getContext(), lstMatchedProfiles, getActivity());
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         myrv.setLayoutManager(layoutManager);
         myrv.setAdapter(myAdapter);
@@ -140,22 +161,22 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
             e.printStackTrace();
         }
 
-        if(userData.has("bio")){
-            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
+        if (userData.has("bio")) {
+            if (userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
                 lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
                         null, null, null, null));
                 isBioWarningCard = true;
             } else isBioWarningCard = false;
         } else {
-            lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
-                    null,null,null,null));
+            lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
+                    null, null, null, null));
             isBioWarningCard = true;
         }
 
-        lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
-                "Recommended for you",null,null,null));
+        lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_TITLE,
+                "Recommended for you", null, null, null));
 
-        if(getSPData("filterObject").length() > 0 && !getSPData("filterObject").isEmpty()) {
+        if (getSPData("filterObject").length() > 0 && !getSPData("filterObject").isEmpty()) {
             JsonParser parser = new JsonParser();
             filterObject = parser.parse(getSPData("filterObject")).getAsJsonObject();
         }
@@ -165,7 +186,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         scrollListener = new RecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                loadMoreData(myAdapter.getItemCount()-1);
+                loadMoreData(myAdapter.getItemCount() - 1);
             }
         };
 
@@ -203,22 +224,22 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         lstMatchedProfiles.clear();
         myAdapter.notifyDataSetChanged();
 
-        if(userData.has("bio")){
-            if(userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
+        if (userData.has("bio")) {
+            if (userData.optString("bio").isEmpty() && userData.optString("bio").trim().length() == 0) {
                 lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
                         null, null, null, null));
                 myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
                 isBioWarningCard = true;
             } else isBioWarningCard = false;
         } else {
-            lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_BIO,
-                    null,null,null,null));
+            lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_BIO,
+                    null, null, null, null));
             myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
             isBioWarningCard = true;
         }
 
-        lstMatchedProfiles.add(new MatchedProfiles(null,Utility.VIEW_TYPE_TITLE,
-                name,null,null,null));
+        lstMatchedProfiles.add(new MatchedProfiles(null, Utility.VIEW_TYPE_TITLE,
+                name, null, null, null));
         myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
         lastItemCount = 0;
@@ -228,7 +249,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
     void loadMoreData(int index) {
         Log.e("ASDE", String.valueOf(index));
-        if(isBioWarningCard)
+        if (isBioWarningCard)
             index -= 2;
         else index -= 1;
         filterProfiles(filterObject, index + 1);
@@ -253,11 +274,11 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                         lstMatchedProfiles.remove(lstMatchedProfiles.size() - 1);
                         myAdapter.notifyItemRemoved(lstMatchedProfiles.size());
 
-                        if(res.optInt("status_code") == 200) {
+                        if (res.optInt("status_code") == 200) {
 
                             try {
                                 JSONArray profilesArray = res.getJSONArray("message");
-                                if(profilesArray.length() == 0) {
+                                if (profilesArray.length() == 0) {
                                     scrollListener.setReachedEnd();
                                 }
                                 for (int i = 0; i < profilesArray.length(); i++) {
@@ -269,7 +290,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                                             object.optString("dob"),
                                             object.optJSONArray("interests"),
                                             object.toString()));
-                                    Log.e(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests" )));
+                                    Log.e(String.valueOf(i), String.valueOf(object.optInt("noOfMatchingInterests")));
 
                                 }
 
@@ -280,8 +301,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                                 e.printStackTrace();
                             }
 
-                        }
-                        else
+                        } else
                             Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
 
                     }
@@ -301,7 +321,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         Data(int imageId, String text) {
 
             this.imageId = imageId;
-            this.txt=text;
+            this.txt = text;
         }
     }
 
@@ -335,46 +355,36 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
         private RecyclerView.LayoutManager layoutManager;
 
-        public void setLayoutManager(RecyclerView.LayoutManager layoutManager)
-        {
+        public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
             this.layoutManager = layoutManager;
         }
 
-        public RecyclerView.LayoutManager getLayoutManager()
-        {
+        public RecyclerView.LayoutManager getLayoutManager() {
             return layoutManager;
         }
 
-        public RecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager)
-        {
+        public RecyclerViewScrollListener(RecyclerView.LayoutManager layoutManager) {
             this.layoutManager = layoutManager;
         }
 
-        public RecyclerViewScrollListener(GridLayoutManager layoutManager, int visibleThreshold)
-        {
+        public RecyclerViewScrollListener(GridLayoutManager layoutManager, int visibleThreshold) {
             this.layoutManager = layoutManager;
             this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
         }
 
         public RecyclerViewScrollListener(
                 StaggeredGridLayoutManager layoutManager,
-                int visibleThreshold)
-        {
+                int visibleThreshold) {
             this.layoutManager = layoutManager;
             this.visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
         }
 
-        public int getLastVisibleItem(int[] lastVisibleItemPositions)
-        {
+        public int getLastVisibleItem(int[] lastVisibleItemPositions) {
             int maxSize = 0;
-            for (int i = 0; i < lastVisibleItemPositions.length; i++)
-            {
-                if (i == 0)
-                {
+            for (int i = 0; i < lastVisibleItemPositions.length; i++) {
+                if (i == 0) {
                     maxSize = lastVisibleItemPositions[i];
-                }
-                else if (lastVisibleItemPositions[i] > maxSize)
-                {
+                } else if (lastVisibleItemPositions[i] > maxSize) {
                     maxSize = lastVisibleItemPositions[i];
                 }
             }
@@ -382,40 +392,30 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         }
 
         @Override
-        public void onScrolled(RecyclerView view, int dx, int dy)
-        {
-            if (dy < 1)
-            {
+        public void onScrolled(RecyclerView view, int dx, int dy) {
+            if (dy < 1) {
                 return;
             }
             int lastVisibleItemPosition = 0;
             int totalItemCount = layoutManager.getItemCount();
 
-            if (layoutManager instanceof StaggeredGridLayoutManager)
-            {
+            if (layoutManager instanceof StaggeredGridLayoutManager) {
                 int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(null);
                 lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions);
-            }
-            else if (layoutManager instanceof GridLayoutManager)
-            {
+            } else if (layoutManager instanceof GridLayoutManager) {
                 lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
-            }
-            else if (layoutManager instanceof LinearLayoutManager)
-            {
+            } else if (layoutManager instanceof LinearLayoutManager) {
                 lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
             }
 
-            if (totalItemCount < previousTotalItemCount)
-            {
+            if (totalItemCount < previousTotalItemCount) {
                 this.currentPage = this.startingPageIndex;
                 this.previousTotalItemCount = totalItemCount;
-                if (totalItemCount == 0)
-                {
+                if (totalItemCount == 0) {
                     this.loading = true;
                 }
             }
-            if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount && !reachedEnd)
-            {
+            if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount && !reachedEnd) {
                 currentPage++;
                 onLoadMore(currentPage, totalItemCount, view);
                 loading = true;
@@ -423,21 +423,17 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         }
 
         @Override
-        public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-        {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE)
-            {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                 boolean canScrollDownMore = recyclerView.canScrollVertically(1);
-                if (!canScrollDownMore)
-                {
+                if (!canScrollDownMore) {
                     onScrolled(recyclerView, 0, 1);
                 }
             }
         }
 
-        public void resetState()
-        {
+        public void resetState() {
             this.currentPage = this.startingPageIndex;
             this.previousTotalItemCount = 0;
             this.loading = true;

@@ -87,7 +87,7 @@ public class ChatImage extends AppCompatActivity {
         String savedImagePath = null;
 
         String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
-        File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        File storageDir = new File(getCacheDir()
                 + "/MatchEzy");
         boolean success = true;
         if (!storageDir.exists()) {

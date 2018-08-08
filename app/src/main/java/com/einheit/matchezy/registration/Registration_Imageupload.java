@@ -64,7 +64,6 @@ public class Registration_Imageupload extends AppCompatActivity {
     public int i = 0;
 
     ImageView imageView1, imageView2, imageView3, imageView4;
-    String[] paths = {"", "", "", ""};
     String fb_id = "";
     ArrayList<String> interestsArray;
     String interestsArrayString;
@@ -335,13 +334,7 @@ public class Registration_Imageupload extends AppCompatActivity {
                 Uri selectedImageUri = data.getData();
                 if (null != selectedImageUri) {
 
-                    Log.i(TAG, "Image Path : " + getPath(Registration_Imageupload.this, selectedImageUri));
-
-                    // Set the image in ImageView
-
                     Bitmap bm = null;
-
-                    paths[i - 1] = getPath(Registration_Imageupload.this, selectedImageUri);
 
                     try {
 
@@ -355,8 +348,9 @@ public class Registration_Imageupload extends AppCompatActivity {
                     FileOutputStream fileOutputStream = null;
 
                     String imageFileName = "JPEG_" + System.currentTimeMillis() + ".jpg";
-                    final File storageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                    final File storageDir = new File(getCacheDir()
                             + "/MatchEzy");
+
                     boolean success = true;
                     if (!storageDir.exists()) {
                         success = storageDir.mkdirs();
