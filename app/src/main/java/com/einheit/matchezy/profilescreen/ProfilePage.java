@@ -89,6 +89,7 @@ public class ProfilePage extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back_button_shadow);
+        getSupportActionBar().setBackgroundDrawable(getDrawable(R.drawable.gradientreverse));
 
         AndroidNetworking.initialize(this);
 
