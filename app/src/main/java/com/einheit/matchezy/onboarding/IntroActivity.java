@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.einheit.matchezy.login.Login;
+import com.einheit.matchezy.login.OnboardingNew;
 import com.einheit.matchezy.R;
 import com.scalified.fab.ActionButton;
 
@@ -61,7 +61,7 @@ public class IntroActivity extends AppCompatActivity {
 
 
                             Log.e("check", "accessed");
-                            Intent intent = new Intent(IntroActivity.this, Login.class);
+                            Intent intent = new Intent(IntroActivity.this, OnboardingNew.class);
                             startActivity(intent);
                         }
                     });

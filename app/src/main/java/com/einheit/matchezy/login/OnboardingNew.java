@@ -4,6 +4,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +29,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.HomeScreen;
 import com.einheit.matchezy.MySingleton;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.SlidingImage_Adapter;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.messagestab.ForceUpdateChecker;
 import com.einheit.matchezy.registration.OTP;
@@ -34,54 +38,120 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpdateNeededListener{
+import me.relex.circleindicator.CircleIndicator;
 
+public class OnboardingNew extends AppCompatActivity implements ForceUpdateChecker.OnUpdateNeededListener {
+
+    private static ViewPager mPager;
+    private static int currentPage = 0;
+    private static int NUM_PAGES = 0;
+    private static final Integer[] IMAGES= {R.drawable.first,R.drawable.second,R.drawable.third};
+    private ArrayList<Integer> ImagesArray = new ArrayList<Integer>();
+    private ArrayList<String> TextArray = new ArrayList<String>();
+    CircleIndicator indicator;
+
+    LinearLayout onboardingswipe, editable_layout, signinbtnlayout, signupbtnlayout;
+    Button fblogin, emaillogin, signinbtn, signupbtn;
     TextView signup, forgotpassword;
-    EditText emailEditText, passwordEditText;
-
+    EditText emailEditText, passwordEditText, emailEditTextSignup;
     RelativeLayout progressOverlay;
     AlertDialog newUpdateDialog;
+    String queryUserId = "";
 
     //fb login integration
     CallbackManager callbackManager;
     String access;
-    String url = "https://graph.facebook.com/me?fields=id,verified,first_name,friends,last_name,address,location,name,gender,email,birthday,picture.height(720),age_range&access_token=";
+    //String url = "https://graph.facebook.com/me?fields=id,verified,first_name,friends,last_name,address,location,name,gender,email,birthday,picture.height(720),age_range&access_token=";
+    String url = "https://graph.facebook.com/me?fields=id,verified,first_name,last_name,name,gender,email,birthday,picture.height(720)&access_token=";
     Button facebook;
     Button loginButton;
-    private List<String> permissionNeeds = Arrays.asList("public_profile",
+    /*private List<String> permissionNeeds = Arrays.asList("public_profile",
             "email", "user_friends", "user_birthday", "user_gender", "user_location",
-            "user_friends", "user_photos", "user_likes");
+            "user_friends", "user_photos", "user_likes");*/
+    private List<String> permissionNeeds = Arrays.asList("public_profile", "email", "user_birthday", "user_gender");
 
-    String queryUserId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_onboarding_new);
 
-        String fblogin = getIntent().getStringExtra("fblogin");
+        FirebaseMessaging.getInstance().subscribeToTopic("Hy");
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
-        if(fblogin.equals("true")) {
-            fbLogin();
-        }
+
+        emaillogin = (Button) findViewById(R.id.emaillogin);
+        signinbtn = (Button) findViewById(R.id.signinbtn);
+        signupbtn = (Button) findViewById(R.id.signupbtn);
+        onboardingswipe = (LinearLayout) findViewById(R.id.onboardingswipe);
+        editable_layout = (LinearLayout) findViewById(R.id.editable_layout);
+        signinbtnlayout = (LinearLayout) findViewById(R.id.signinbtnlayout);
+        signupbtnlayout = (LinearLayout) findViewById(R.id.signupbtnlayout);
+        signup = (Button) findViewById(R.id.submitbtn);
+        forgotpassword = (TextView) findViewById(R.id.forgotpassword);
+        loginButton = (Button) findViewById(R.id.loginbtn);
+        emailEditText = (EditText) findViewById(R.id.emailEditTextforsignin);
+        emailEditTextSignup = (EditText) findViewById(R.id.emailEditTextforsignup);
+        passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        mPager = (ViewPager) findViewById(R.id.onboardingpager);
+        indicator = (CircleIndicator) findViewById(R.id.indicator);
+
+
+        emaillogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onboardingswipe.setVisibility(View.GONE);
+                editable_layout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        signinbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signinbtn.setBackgroundResource(R.drawable.outlinebox);
+                signupbtn.setBackgroundResource(android.R.color.transparent);
+                signinbtnlayout.setVisibility(View.VISIBLE);
+                signupbtnlayout.setVisibility(View.GONE);
+            }
+        });
+
+        signupbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signinbtn.setBackgroundResource(android.R.color.transparent);
+                signupbtn.setBackgroundResource(R.drawable.outlinebox);
+                signinbtnlayout.setVisibility(View.GONE);
+                signupbtnlayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        Collections.addAll(ImagesArray, IMAGES);
+
+
+        TextArray.add("Find your Soulmate");
+        TextArray.add("Find matches based on your interests");
+        TextArray.add("No Swiping. Find a curated list of people who are looking for their Soulmate");
+        mPager.setAdapter(new SlidingImage_Adapter(OnboardingNew.this,ImagesArray,TextArray));
+        indicator.setViewPager(mPager);
+        NUM_PAGES =IMAGES.length;
+
 
         progressOverlay = findViewById(R.id.progress_overlay);
 
-        FirebaseMessaging.getInstance().subscribeToTopic("Hy");
-
-        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
 
         if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
             Uri uri = getIntent().getData();
@@ -104,19 +174,11 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
         Log.e("ASD", getSPBoolean("isOtpVerificationCompleted").toString());
 
         if(!getSPBoolean("isOtpVerificationCompleted")) {
-            Intent i = new Intent(Login.this, OTP.class);
+            Intent i = new Intent(OnboardingNew.this, OTP.class);
             startActivity(i);
             finish();
         }
 
-        AndroidNetworking.initialize(this);
-
-        signup = (TextView) findViewById(R.id.signupButton);
-        forgotpassword = (TextView) findViewById(R.id.forgotpassword);
-        facebook = (Button) findViewById(R.id.facebook);
-        loginButton = (Button) findViewById(R.id.loginbtn);
-        emailEditText = findViewById(R.id.emailEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +186,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
                 if(email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(Login.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OnboardingNew.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
                 else {
 
@@ -165,7 +227,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                             if(response.optInt("status_code") == 200) {
                                                                 //Log.e("userData", response.toString());
                                                                 storeSPData("userData", response.optJSONObject("message").toString());
-                                                                Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                Intent intent = new Intent(OnboardingNew.this, HomeScreen.class);
                                                                 if(!queryUserId.isEmpty()) {
                                                                     intent.putExtra("queryUserId",queryUserId);
                                                                 }
@@ -173,7 +235,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                 finish();
                                                             }
                                                             else {
-                                                                Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(OnboardingNew.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                                             }
                                                         }
                                                         @Override
@@ -190,14 +252,14 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
                                             progressOverlay.setVisibility(View.GONE);
 
-                                            Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(OnboardingNew.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                             break;
                                         }
                                         case "400":
 
                                             progressOverlay.setVisibility(View.GONE);
 
-                                            Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(OnboardingNew.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                             break;
                                     }
 
@@ -211,6 +273,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                 }
             }
         });
+
 
 
         //facebook signin integration
@@ -266,7 +329,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                                 if(response.optInt("status_code") == 200) {
                                                                                     //Log.e("userData", response.toString());
                                                                                     storeSPData("userData", response.optJSONObject("message").toString());
-                                                                                    Intent intent = new Intent(Login.this, HomeScreen.class);
+                                                                                    Intent intent = new Intent(OnboardingNew.this, HomeScreen.class);
                                                                                     if(!queryUserId.isEmpty()) {
                                                                                         intent.putExtra("queryUserId",queryUserId);
                                                                                     }
@@ -275,7 +338,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                                 }
                                                                                 else {
                                                                                     progressOverlay.setVisibility(View.GONE);
-                                                                                    Toast.makeText(Login.this, response.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                                    Toast.makeText(OnboardingNew.this, response.optString("message"), Toast.LENGTH_SHORT).show();
                                                                                 }
                                                                             }
                                                                             @Override
@@ -293,7 +356,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                                                 Log.e("fbLogin", "user doesnt exist");
                                                                 storeSPData("facebookdata", response.toString());
                                                                 storeSPData("isLoggedInThroughFb", true);
-                                                                Intent intent = new Intent(Login.this, Registration.class);
+                                                                Intent intent = new Intent(OnboardingNew.this, Registration.class);
                                                                 startActivity(intent);
                                                                 break;
                                                             }
@@ -301,7 +364,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
                                                                 progressOverlay.setVisibility(View.GONE);
 
-                                                                Toast.makeText(Login.this, res.optString("message"), Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(OnboardingNew.this, res.optString("message"), Toast.LENGTH_SHORT).show();
                                                                 break;
                                                         }
 
@@ -321,7 +384,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
 
-                                        Toast.makeText(Login.this, "Login Error", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(OnboardingNew.this, "Login Error", Toast.LENGTH_SHORT).show();
                                         error.printStackTrace();
                                     }
                                 }
@@ -332,13 +395,13 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(Login.this, "Login attempt cancelled.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnboardingNew.this, "Login attempt cancelled.", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException exception) {
                         exception.printStackTrace();
-                        Toast.makeText(Login.this, "Login attempt failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OnboardingNew.this, "Login attempt failed", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -348,8 +411,8 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
             @Override
             public void onClick(View v) {
 
-               Intent intent = new Intent(Login.this, ForgotPassword.class);
-               startActivity(intent);
+                Intent intent = new Intent(OnboardingNew.this, ForgotPassword.class);
+                startActivity(intent);
 
             }
         });
@@ -358,29 +421,64 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
             @Override
             public void onClick(View view) {
 
-                storeSPData("isLoggedInThroughFb", false);
-
-                Intent intent = new Intent(Login.this, Registration.class);
-                startActivity(intent);
+                if (emailEditTextSignup.getText().toString().isEmpty()) {
+                    Toast.makeText(OnboardingNew.this, "Enter a valid email id", Toast.LENGTH_SHORT).show();
+                } else {
+                    storeSPData("isLoggedInThroughFb", false);
+                    storeSPData("emailFromSignup", emailEditTextSignup.getText().toString().trim());
+                    Intent intent = new Intent(OnboardingNew.this, Registration.class);
+                    startActivity(intent);
+                }
 
             }
         });
+
+
+
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            public void run() {
+                if (currentPage == NUM_PAGES) {
+                    currentPage = 0;
+                }
+                mPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        },3000,3000);
+
+        // Pager listener over indicator
+        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                currentPage = position;
+
+            }
+
+            @Override
+            public void onPageScrolled(int pos, float arg1, int arg2) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int pos) {
+
+            }
+        });
+
     }
+
 
 
     //facebook login
-    public void fbLogin(View view) {
-
-        if(AccessToken.getCurrentAccessToken()!=null) {
-            LoginManager.getInstance().logOut();
-            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
-        } else {
-            LoginManager.getInstance().logInWithReadPermissions(this, permissionNeeds);
-        }
-
-    }
-
-    public void fbLogin() {
+    public void fbLoginNew(View view) {
 
         if(AccessToken.getCurrentAccessToken()!=null) {
             LoginManager.getInstance().logOut();
@@ -399,7 +497,6 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
         //facebook
         callbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     //Shared Preferences
@@ -447,7 +544,7 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
 
     @Override
     public void onUpdateNeeded(final String updateUrl) {
-         newUpdateDialog = new AlertDialog.Builder(this)
+        newUpdateDialog = new AlertDialog.Builder(this)
                 .setTitle("New version available")
                 .setCancelable(false)
                 .setMessage("Please, update app to new version to continue.")
@@ -471,12 +568,12 @@ public class Login extends AppCompatActivity implements ForceUpdateChecker.OnUpd
         newUpdateDialog.show();
     }
 
+
     private void redirectStore(String updateUrl) {
         final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
-
 
 }

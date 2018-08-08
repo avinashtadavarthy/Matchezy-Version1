@@ -72,24 +72,11 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
         input_number = (EditText) findViewById(R.id.editNumber);
         input_Dateofbirth = (EditText) findViewById(R.id.editTextDateofBirth);
 
-        /* AndroidNetworking.post(Utility.getInstance().BASE_URL + "fbLogin")
-                .addBodyParameter("fb_id", )
-                .setPriority(Priority.HIGH)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+
+        if (!getSPData("emailFromSignup").isEmpty())
+            inputEmail.setText(getSPData("emailFromSignup"));
 
 
-
-                    }
-                    @Override
-                    public void onError(ANError error) {
-                        // handle error
-                        error.printStackTrace();
-                    }
-                });
-*/
 
         input_countrycode = (EditText) findViewById(R.id.edit_countrycode);
 

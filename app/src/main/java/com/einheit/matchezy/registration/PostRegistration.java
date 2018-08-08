@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.einheit.matchezy.login.OnboardingNew;
 import com.einheit.matchezy.R;
-import com.einheit.matchezy.login.Login;
 
 public class PostRegistration extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class PostRegistration extends AppCompatActivity {
         btnproceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(PostRegistration.this, Login.class);
+                Intent i = new Intent(PostRegistration.this, OnboardingNew.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }

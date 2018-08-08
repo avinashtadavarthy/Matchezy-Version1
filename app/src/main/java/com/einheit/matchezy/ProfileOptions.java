@@ -18,7 +18,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.bumptech.glide.Glide;
-import com.einheit.matchezy.login.Login;
+import com.einheit.matchezy.login.OnboardingNew;
 import com.einheit.matchezy.profileoptions.BlockedListScreen;
 import com.einheit.matchezy.profileoptions.DislikedScreen;
 import com.einheit.matchezy.profilescreen.ProfilePage;
@@ -188,7 +188,7 @@ public class ProfileOptions extends AppCompatActivity {
                                             }
                                         }).start();
 
-                                        Intent i = new Intent(getApplicationContext(),Login.class);
+                                        Intent i = new Intent(getApplicationContext(), OnboardingNew.class);
                                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(i);
                                         finish();

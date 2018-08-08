@@ -1,6 +1,5 @@
 package com.einheit.matchezy.messagestab;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +13,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
 
-import com.einheit.matchezy.login.Login;
+import com.einheit.matchezy.login.OnboardingNew;
 import com.einheit.matchezy.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -43,7 +42,7 @@ public class FcmService extends FirebaseMessagingService {
 
             int notificationId = new Random().nextInt(1001);
 
-            Intent intent = new Intent(this, Login.class);
+            Intent intent = new Intent(this, OnboardingNew.class);
 
             intent.setAction(Long.toString(System.currentTimeMillis()));
 

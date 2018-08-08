@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:src="@mipmap/ic_launcher"
         android:scaleType="fitCenter"
-        android:padding="30dp"/>
+        android:padding="50dp"/>
 
     <TextView
         android:id="@+id/text"

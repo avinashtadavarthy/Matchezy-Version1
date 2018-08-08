@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="100"
-    android:background="#fa2948"
-    android:orientation="vertical"
-    tools:context=".OnboardingNew">
+    android:background="@color/appred"
+    tools:context=".login.OnboardingNew">
 
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="10"
-        android:text="@string/app_name"
-        android:textColor="@color/white"
-        android:fontFamily="@font/circularstdbold"
-        android:textSize="25dp"
-        android:gravity="center"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="100">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="10"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:fontFamily="@font/circularstdbold"
+            android:textSize="25dp"
+            android:gravity="center"/>
 
         <LinearLayout
             android:id="@+id/onboardingswipe"
@@ -25,7 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="65"
+            android:layout_weight="70"
             android:weightSum="100">
 
             <android.support.v4.view.ViewPager
@@ -43,7 +48,9 @@
 
         </LinearLayout>
 
-  <!--  <LinearLayout
+    <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         android:padding="10dp"
         android:id="@+id/editable_layout"
@@ -51,7 +58,7 @@
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_weight="70"
         android:weightSum="100">
 
        <TextView
@@ -63,6 +70,8 @@
            android:fontFamily="@font/circularstdbold" />
 
         <LinearLayout
+            android:clickable="true"
+            android:focusable="true"
             android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -83,12 +92,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="sign up"
+                android:background="#00ffffff"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:clickable="true"
+            android:focusable="true"
             android:id="@+id/signinbtnlayout"
             android:orientation="vertical"
             android:layout_marginTop="40dp"
@@ -96,7 +108,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/emailEditTextforsignup"
+                android:id="@+id/emailEditTextforsignin"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/textbox"
@@ -124,6 +136,7 @@
                 android:layout_marginLeft="16dp"/>
 
             <TextView
+                android:id="@+id/forgotpassword"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="10dp"
@@ -152,15 +165,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/signupbtnlayout"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
             android:orientation="vertical"
             android:layout_marginTop="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/emailEditText"
+                android:id="@+id/emailEditTextforsignup"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/textbox"
@@ -189,25 +204,27 @@
 
         </LinearLayout>
 
-    </LinearLayout>-->
+    </LinearLayout>
 
     <LinearLayout
+        android:clickable="true"
+        android:focusable="true"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="25"
+        android:layout_weight="20"
         android:orientation="vertical"
         android:weightSum="2">
 
         <Button
-            android:id="@+id/fblogin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:background="@drawable/loginfbbox"
-            android:layout_margin="10dp"
+            android:layout_margin="12dp"
             android:text="Log in with Facebook"
             android:textAllCaps="false"
+            android:onClick="fbLoginNew"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="16dp"/>
@@ -227,4 +244,23 @@
 
     </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/progress_overlay"
+        android:layout_centerInParent="true"
+        android:background="@drawable/cyan_box"
+        android:visibility="gone"
+        android:layout_width="150dp"
+        android:layout_height="150dp">
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/AVLoadingIndicatorView.Large"
+            app:indicatorName="BallPulseIndicator" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
