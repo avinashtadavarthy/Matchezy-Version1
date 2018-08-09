@@ -555,13 +555,10 @@ public class ProfilePage extends AppCompatActivity {
         city.setText(userData.optString("currentCity"));
 
         JSONArray picsArray = userData.optJSONArray("pictures");
-        for(int i = 0; i < picsArray.length(); i++) {
-            try {
-                if (picsArray.getString(i).isEmpty()) {
-                    picsArray.remove(i);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+        for(int i = 3; i >= 0; i--) {
+
+            if (picsArray.optString(i, "").isEmpty()) {
+                picsArray.remove(i);
             }
         }
 
