@@ -35,6 +35,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.messagestab.Chat;
 import com.einheit.matchezy.messagestab.ChatImage;
@@ -76,8 +77,12 @@ public class Registration_Imageupload extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.einheit.matchezy.R.layout.activity_imageupload);
+        setContentView(R.layout.activity_imageupload);
 
+        imageView1 = findViewById(R.id.imageview1);
+        imageView2 = findViewById(R.id.imageview2);
+        imageView3 = findViewById(R.id.imageview3);
+        imageView4 = findViewById(R.id.imageview4);
 
         final OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
                 .connectTimeout(1200, TimeUnit.SECONDS)
@@ -383,17 +388,25 @@ public class Registration_Imageupload extends AppCompatActivity {
                     Log.e("ASD", files.toString());
                     Log.e("ASd", String.valueOf(files.size()));
 
-                    bm.recycle();
-
                     if (i == 1) {
-                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview1)).setImageURI(selectedImageUri);
+                        Glide.with(Registration_Imageupload.this)
+                                .load(map.get(i - 1))
+                                .into(imageView1);
                     } else if (i == 2) {
-                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview2)).setImageURI(selectedImageUri);
+                        Glide.with(Registration_Imageupload.this)
+                                .load(map.get(i - 1))
+                                .into(imageView2);
                     } else if (i == 3) {
-                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview3)).setImageURI(selectedImageUri);
+                        Glide.with(Registration_Imageupload.this)
+                                .load(map.get(i - 1))
+                                .into(imageView3);
                     } else if (i == 4) {
-                        ((ImageView) findViewById(com.einheit.matchezy.R.id.imageview4)).setImageURI(selectedImageUri);
+                        Glide.with(Registration_Imageupload.this)
+                                .load(map.get(i - 1))
+                                .into(imageView4);
                     }
+
+                    bm.recycle();
                 }
             }
         }
