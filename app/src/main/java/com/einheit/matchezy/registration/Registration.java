@@ -92,13 +92,13 @@ public class Registration extends AppCompatActivity implements DatePickerDialog.
                 JSONObject fbJsonObj = new JSONObject(facebookData);
                 inputName.setText(fbJsonObj.optString("name"));
                 inputEmail.setText(fbJsonObj.optString("email"));
+                inputPassword.setText(fbJsonObj.optString("id"));
                 SimpleDateFormat format1 = new SimpleDateFormat("MM/dd/yyyy");
                 String d = fbJsonObj.optString("birthday");
                 Date dt1 = format1.parse(d);
                 DateFormat format2 = new SimpleDateFormat("dd/MM/yyyy");
                 String finalDay = format2.format(dt1);
                 input_Dateofbirth.setText(finalDay);
-                inputPassword.setText(fbJsonObj.optString("id"));
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (ParseException e) {

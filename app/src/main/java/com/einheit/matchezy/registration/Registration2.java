@@ -60,7 +60,7 @@ public class Registration2 extends AppCompatActivity {
         SharedPreferences mUserData = this.getSharedPreferences("UserData", MODE_PRIVATE);
         isLoggedThroughFb = mUserData.getBoolean("isLoggedInThroughFb", false);
 
-        if(isLoggedThroughFb) {
+        /*if(isLoggedThroughFb) {
             String facebookData = getSPData("facebookdata");
             try {
                 JSONObject fbJsonObj = new JSONObject(facebookData);
@@ -70,7 +70,7 @@ public class Registration2 extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
 
         editText_gender.addTextChangedListener(new Registration2.MyTextWatcher(editText_gender));
         editText_city.addTextChangedListener(new Registration2.MyTextWatcher(editText_city));
