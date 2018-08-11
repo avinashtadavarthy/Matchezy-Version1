@@ -25,8 +25,6 @@ public class FirebaseApp extends android.app.Application {
 
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
-        // set in-app defaults
-
         final String appPackageName = getPackageName();
         Map<String, Object> remoteConfigDefaults = new HashMap();
         remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_REQUIRED, false);
@@ -35,7 +33,7 @@ public class FirebaseApp extends android.app.Application {
                 "https://play.google.com/store/apps/details?id=" + appPackageName);
 
         firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
-        firebaseRemoteConfig.fetch() // fetch every minutes
+        firebaseRemoteConfig.fetch()
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -47,8 +45,7 @@ public class FirebaseApp extends android.app.Application {
                 }).addOnFailureListener(new OnFailureListener() {
                 @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Log.e("ASD", exception.getCause().getMessage());
-                        // Do whatever should be done on failure
+                    Log.e("REMOTE_CONFIG", "Failed to fetch config");
                     }
                 });
 
