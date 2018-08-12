@@ -77,13 +77,13 @@ public class Fragment_profileInfo extends Fragment {
                 colleges = colleges + userData.optJSONArray("collegeName").getString(i) + ", ";
 
             colleges = colleges.substring(0, colleges.length()-2);
-            colleges = colleges.replace("\n", "");
+            colleges = colleges.replace("\n", " ");
 
             for(i = 0; i<userData.optJSONArray("organisationWorked").length(); i++)
                 orgWorked = orgWorked + userData.optJSONArray("organisationWorked").getString(i) + ", ";
 
             orgWorked = orgWorked.substring(0, orgWorked.length()-2);
-            orgWorked = orgWorked.replace("\n", "");
+            orgWorked = orgWorked.replace("\n", " ");
 
             //qualifications is also a json array
 
