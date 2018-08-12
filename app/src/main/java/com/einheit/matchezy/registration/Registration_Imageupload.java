@@ -222,31 +222,6 @@ public class Registration_Imageupload extends AppCompatActivity {
 
                                         storeSPData("user_id", response.optJSONObject("message").optString("user_id"));
 
-                                        new android.os.Handler().postDelayed(
-                                                new Runnable() {
-                                                    public void run() {
-                                                        AndroidNetworking.post(Utility.getInstance().BASE_URL + "approveUser")
-                                                                .addBodyParameter("user_id", response.optJSONObject("message").optString("user_id"))
-                                                                .setPriority(Priority.HIGH)
-                                                                .build()
-                                                                .getAsJSONObject(new JSONObjectRequestListener() {
-                                                                    @Override
-                                                                    public void onResponse(JSONObject response) {
-                                                                        // do anything with response
-                                                                        Log.e("check", response.toString());
-                                                                    }
-
-                                                                    @Override
-                                                                    public void onError(ANError error) {
-                                                                        // handle error
-                                                                        error.printStackTrace();
-                                                                    }
-                                                                });
-                                                    }
-                                                },
-                                                3000);
-
-
                                         Toast.makeText(getApplicationContext(),
                                                 response.optJSONObject("message").optString("message"), Toast.LENGTH_SHORT).show();
 
