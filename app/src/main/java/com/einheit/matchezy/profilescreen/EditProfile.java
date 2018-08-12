@@ -115,44 +115,11 @@ public class EditProfile extends AppCompatActivity {
 
         final ProgressBar progressBar = findViewById(R.id.progressBar);
 
-
-        data.add("4'");
-        data.add("4'1\"");
-        data.add("4'2\"");
-        data.add("4'3\"");
-        data.add("4'4\"");
-        data.add("4'5\"");
-        data.add("4'6\"");
-        data.add("4'7\"");
-        data.add("4'8\"");
-        data.add("4'9\"");
-        data.add("4'10\"");
-        data.add("4'11\"");
-        data.add("5'");
-        data.add("5'1\"");
-        data.add("5'2\"");
-        data.add("5'3\"");
-        data.add("5'4\"");
-        data.add("5'5\"");
-        data.add("5'6\"");
-        data.add("5'7\"");
-        data.add("5'8\"");
-        data.add("5'9\"");
-        data.add("5'10\"");
-        data.add("5'11\"");
-        data.add("6'");
-        data.add("6'1\"");
-        data.add("6'2\"");
-        data.add("6'3\"");
-        data.add("6'4\"");
-        data.add("6'5\"");
-        data.add("6'6\"");
-        data.add("6'7\"");
-        data.add("6'8\"");
-        data.add("6'9\"");
-        data.add("6'10\"");
-        data.add("6'11\"");
-        data.add("7'");
+        data.add("4'"); data.add("4'1\""); data.add("4'2\""); data.add("4'3\""); data.add("4'4\""); data.add("4'5\""); data.add("4'6\"");data.add("4'7\"");
+        data.add("4'8\""); data.add("4'9\"");data.add("4'10\""); data.add("4'11\""); data.add("5'"); data.add("5'1\""); data.add("5'2\""); data.add("5'3\"");
+        data.add("5'4\""); data.add("5'5\""); data.add("5'6\""); data.add("5'7\""); data.add("5'8\""); data.add("5'9\""); data.add("5'10\""); data.add("5'11\"");
+        data.add("6'"); data.add("6'1\""); data.add("6'2\""); data.add("6'3\""); data.add("6'4\""); data.add("6'5\""); data.add("6'6\""); data.add("6'7\"");
+        data.add("6'8\""); data.add("6'9\""); data.add("6'10\""); data.add("6'11\""); data.add("7'");
 
 
         actionButton.setType(ActionButton.Type.DEFAULT);
