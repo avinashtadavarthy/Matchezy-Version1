@@ -23,6 +23,7 @@ public class FirebaseApp extends android.app.Application {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
         final String appPackageName = getPackageName();

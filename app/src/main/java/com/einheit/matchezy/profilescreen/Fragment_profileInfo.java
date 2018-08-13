@@ -171,10 +171,6 @@ public class Fragment_profileInfo extends Fragment {
 
     public class ListAdapter extends ArrayAdapter<ProfileInfoModel> {
 
-        public ListAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
-        }
-
         public ListAdapter(Context context, int resource, List<ProfileInfoModel> items) {
             super(context, resource, items);
         }

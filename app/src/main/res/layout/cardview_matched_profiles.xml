@@ -61,8 +61,7 @@
                         android:textSize="13dp"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:fontFamily="@font/circularstdbold"
-                        android:textStyle="bold"
+                        android:fontFamily="@font/circularstdbook"
                         android:textColor="@color/white"/>
 
                 </LinearLayout>

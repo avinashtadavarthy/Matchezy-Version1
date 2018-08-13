@@ -6,6 +6,8 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
@@ -18,6 +20,11 @@ import android.widget.TextView;
 
 import com.abdeveloper.library.MultiSelectModel;
 
+import org.json.JSONArray;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,6 +66,16 @@ public class Utility {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
+    public boolean networkCheck(Context context) {
+        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+
+        return isConnected;
     }
 
 
@@ -114,14 +131,13 @@ public class Utility {
         return date.substring(0,10);
     }
 
-
     ///url///
     public String BASE_URL = "http://ec2-18-218-131-186.us-east-2.compute.amazonaws.com/api/";
     /////////
 
     protected Utility(){}
 
-    public static synchronized Utility getInstance(){
+    public static synchronized Utility getInstance() {
         if(null == mInstance){
             mInstance = new Utility();
         }

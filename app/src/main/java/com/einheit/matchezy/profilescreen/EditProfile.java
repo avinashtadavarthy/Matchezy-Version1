@@ -364,6 +364,10 @@ public class EditProfile extends AppCompatActivity {
 
                     Log.e("ASd", object.toString());
 
+              /*      if(Utility.getInstance().networkCheck(getApplicationContext())) {
+
+                    }*/
+
                     progressBar.setVisibility(View.VISIBLE);
 
                     AndroidNetworking.post(Utility.getInstance().BASE_URL + "editProfile")

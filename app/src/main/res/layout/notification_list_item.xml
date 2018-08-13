@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="3:00pm"
-        android:fontFamily="@font/circularstdbold"
+        android:fontFamily="@font/circularstdbook" android:textStyle="bold"
         android:layout_alignParentEnd="true"
         android:textColor="#9b9b9b"
         android:layout_marginRight="20dp"

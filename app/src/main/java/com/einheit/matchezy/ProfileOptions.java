@@ -38,7 +38,7 @@ public class ProfileOptions extends AppCompatActivity {
     TextView blankspace;
 
     LinearLayout viewprofile, privacysettings, helpandfeedback, logout, termsandconditions,
-            privacypolicy, aboutus, blockedProfiles, dislikedProfiles;
+            privacypolicy, aboutus, blockedProfiles, dislikedProfiles, libraries;
 
     RelativeLayout optionslistlayout;
 
@@ -90,6 +90,7 @@ public class ProfileOptions extends AppCompatActivity {
         logout = (LinearLayout) findViewById(R.id.logout);
         termsandconditions = (LinearLayout) findViewById(R.id.termsandconditions);
         privacypolicy = (LinearLayout) findViewById(R.id.privacypolicy);
+        libraries = (LinearLayout) findViewById(R.id.libraries);
         aboutus = (LinearLayout) findViewById(R.id.aboutus);
 
         blankspace = (TextView) findViewById(R.id.blankspace);
@@ -131,6 +132,15 @@ public class ProfileOptions extends AppCompatActivity {
             }
         });
 
+        libraries.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(ProfileOptions.this, StaticTextPage.class).putExtra("type","opensource");
+                startActivity(i);
+                finish();
+            }
+        });
+
         aboutus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,6 +167,8 @@ public class ProfileOptions extends AppCompatActivity {
                 finish();
             }
         });
+
+
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

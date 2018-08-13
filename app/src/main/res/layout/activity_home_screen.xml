@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_alignParentStart="true"
-            android:fontFamily="@font/circularstdbold" />
+            android:fontFamily="@font/circularstdbook" android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profileimg"

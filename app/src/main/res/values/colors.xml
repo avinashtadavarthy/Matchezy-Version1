@@ -23,4 +23,6 @@
 
     <color name="dateViewChatBg">#505154</color>
     <color name="dateViewChatTextColor">#ffffff</color>
+
+    <color name="colorCloseChip">#ababab</color>
 </resources>

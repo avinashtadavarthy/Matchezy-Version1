@@ -1,0 +1,64 @@
+{
+"licenses": [
+	{
+		"name": "Material Range Bar",
+		"copyright": "Copyright 2015  AppyVet, Inc.\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Scroll Choice",
+		"copyright": "MIT License\n\nCopyright (c) 2017 Ramankit Singh\n\n",
+		"type": "mit"
+	},
+	{
+		"name": "Fab",
+		"copyright": "Copyright 2016 Scalified <http://www.scalified.com>\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Material Date Time Picker",
+		"copyright": "Copyright (c) 2015 Wouter Dullaert\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Glide",
+		"copyright": "Copyright 2014 Google, Inc. All rights reserved.\n\n",
+		"type": "google"
+	},
+	{
+		"name": "Android Multi Select Dialog",
+		"copyright": "Copyright 2017 Abubakker Moallim\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Circle ImageView",
+		"copyright": "Copyright 2014 - 2018 Henning Dodenhof\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Android Sliding Up Panel",
+		"copyright": "Copyright 2014 SoThree, Inc.\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Circle Indicator",
+		"copyright": "Copyright (C) 2014 relex\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Rounded ImageView",
+		"copyright": "Copyright 2017 Vincent Mi\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Fast Android Networking",
+		"copyright": "Copyright (C) 2016 Amit Shekhar\nCopyright (C) 2011 Android Open Source Project\n\n",
+		"type": "apache"
+	},
+	{
+		"name": "Facebook",
+		"copyright": "Copyright (c) 2014-present, Facebook, Inc. All rights reserved.\n\n",
+		"type": "facebook"
+	}
+]
+}
