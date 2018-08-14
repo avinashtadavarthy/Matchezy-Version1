@@ -17,6 +17,9 @@
     <string name="err_msg_number">Enter the number</string>
     <string name="err_msg_dateofbirth">Enter the date of birth</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="post_registration_title">Greetings!</string>
+    <string name="post_registration_title_text">Thank you for signing up</string>
+    <string name="post_registration_text">You will get an email once your account is approved.</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
