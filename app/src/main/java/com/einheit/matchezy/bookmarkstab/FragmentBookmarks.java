@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -45,6 +46,8 @@ public class FragmentBookmarks extends Fragment {
     RecyclerViewScrollListener scrollListener;
     private int lastItemCount = 0;
 
+    LinearLayout placeholder;
+
     public FragmentBookmarks() {
         // Required empty public constructor
     }
@@ -61,6 +64,8 @@ public class FragmentBookmarks extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment__bookmarks, container, false);
 
+        placeholder = (LinearLayout) myView.findViewById(R.id.placeholder);
+
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
 
         lstMatchedProfiles = new ArrayList<>();
@@ -70,6 +75,7 @@ public class FragmentBookmarks extends Fragment {
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         myrv.setLayoutManager(layoutManager);
         myrv.setAdapter(myAdapter);
+
 
         getBookmarkedProfiles(lastItemCount);
 
@@ -99,6 +105,8 @@ public class FragmentBookmarks extends Fragment {
         lstMatchedProfiles.add(null);
         myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
+        Utility.getInstance().networkCheck(getContext());
+
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "getBookmarkedProfiles")
                 .addBodyParameter(o)
                 .setPriority(Priority.HIGH)
@@ -117,6 +125,13 @@ public class FragmentBookmarks extends Fragment {
                                 if(profilesArray.length() == 0) {
                                     scrollListener.setReachedEnd();
                                 }
+
+                                if (profilesArray.length() == 0) {
+                                    placeholder.setVisibility(View.VISIBLE);
+                                } else {
+                                    placeholder.setVisibility(View.GONE);
+                                }
+
                                 for (int i = 0; i < profilesArray.length(); i++) {
                                     JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(

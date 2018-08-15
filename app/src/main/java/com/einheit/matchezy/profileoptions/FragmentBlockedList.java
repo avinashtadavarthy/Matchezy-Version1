@@ -88,6 +88,7 @@ public class FragmentBlockedList extends Fragment{
         lstMatchedProfiles.add(null);
         myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
+        Utility.getInstance().networkCheck(getContext());
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "getBlockedProfiles")
                 .addBodyParameter(o)
                 .setPriority(Priority.HIGH)

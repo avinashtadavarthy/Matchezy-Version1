@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 import com.einheit.matchezy.hometab.Fragment_Home;
 
 import java.util.ArrayList;

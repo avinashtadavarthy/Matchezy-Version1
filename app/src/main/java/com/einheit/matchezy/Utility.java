@@ -3,6 +3,8 @@ package com.einheit.matchezy;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,11 +15,14 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
@@ -79,13 +84,38 @@ public class Utility {
     }
 
 
-    public boolean networkCheck(Context context) {
+    public void networkCheck(final Context context) {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-        return isConnected;
+        if(!isConnected) {
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
+            builder1.setMessage("Internet not available, Cross check your internet connectivity and try again");
+            builder1.setCancelable(false);
+
+            builder1.setPositiveButton(
+                    "Connect Now",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //dialog.cancel();
+                            ((Activity)context).startActivityForResult(new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS),0);
+                        }
+                    });
+
+            builder1.setNegativeButton(
+                    "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //System.exit(0);
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alert11 = builder1.create();
+            alert11.show();
+        }
     }
 
 

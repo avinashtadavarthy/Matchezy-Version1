@@ -182,12 +182,17 @@ public class OnboardingNew extends AppCompatActivity implements ForceUpdateCheck
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Utility.getInstance().networkCheck(getApplicationContext());
+
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
                 if(email.isEmpty() || password.isEmpty()) {
                     Toast.makeText(OnboardingNew.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    Utility.getInstance().networkCheck(getApplicationContext());
 
                     progressBar.setVisibility(View.VISIBLE);
 
@@ -292,6 +297,8 @@ public class OnboardingNew extends AppCompatActivity implements ForceUpdateCheck
 
                                         String fb_id = response.optString("id");
                                         storeSPData("fb_id", fb_id);
+
+                                        Utility.getInstance().networkCheck(getApplicationContext());
 
                                         progressBar.setVisibility(View.VISIBLE);
 

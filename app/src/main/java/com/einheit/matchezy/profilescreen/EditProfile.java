@@ -253,6 +253,8 @@ public class EditProfile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Utility.getInstance().networkCheck(getApplicationContext());
+
                 Utility.hideKeyboard(EditProfile.this);
                 JsonObject object = new JsonObject();
                 object.addProperty("user_id", getSPData("user_id"));

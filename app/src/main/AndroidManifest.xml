@@ -22,10 +22,10 @@
         android:theme="@style/MainAppTheme">
 
         <activity android:name=".login.OnboardingNew"
+            android:screenOrientation="portrait"
             android:theme="@style/RegistrationTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

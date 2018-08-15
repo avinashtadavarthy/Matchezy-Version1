@@ -1,5 +1,6 @@
 package com.einheit.matchezy.hometab;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -233,7 +234,7 @@ public class Filter extends AppCompatActivity {
                                 selectedinterests.removeAllViews();
                                 interestsArary.clear();
 
-                                rangebar_age.setRangePinsByValue(21,50);
+                                rangebar_age.setRangePinsByValue(18,50);
                                 rangebar_height.setRangePinsByValue(120,213);
 
                                 rangebar_height.setFormatter(new IRangeBarFormatter() {
@@ -308,8 +309,8 @@ public class Filter extends AppCompatActivity {
             @Override
             public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
 
-                age_start.setText(String.valueOf(leftPinIndex+21));
-                age_end.setText(String.valueOf(rightPinIndex+21));
+                age_start.setText(String.valueOf(leftPinIndex+18));
+                age_end.setText(String.valueOf(rightPinIndex+18));
             }
 
         });

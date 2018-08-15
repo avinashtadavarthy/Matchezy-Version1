@@ -76,6 +76,8 @@ public class ForgotPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Utility.getInstance().networkCheck(getApplicationContext());
+
                 progressBar.setVisibility(View.VISIBLE);
 
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "resetPassword")

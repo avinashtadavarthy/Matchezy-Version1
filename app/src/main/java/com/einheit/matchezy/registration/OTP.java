@@ -201,6 +201,8 @@ public class OTP extends AppCompatActivity {
 
     void onSuccess() {
 
+        Utility.getInstance().networkCheck(getApplicationContext());
+
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "verifyPhoneNumber")
                 .addBodyParameter("user_id", getSPData("user_id"))
                 .setPriority(Priority.HIGH)

@@ -85,6 +85,8 @@ public class ProfilePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
 
+
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -347,6 +349,8 @@ public class ProfilePage extends AppCompatActivity {
         likeFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.getInstance().networkCheck(getApplicationContext()
+                );
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "likeUser")
                         .addBodyParameter("user_id", getSPData("user_id"))
                         .addBodyParameter("user_token", getSPData("user_token"))
@@ -381,6 +385,7 @@ public class ProfilePage extends AppCompatActivity {
         disLikeFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utility.getInstance().networkCheck(getApplicationContext());
                 AndroidNetworking.post(Utility.getInstance().BASE_URL + "disLikeUser")
                         .addBodyParameter("user_id", getSPData("user_id"))
                         .addBodyParameter("user_token", getSPData("user_token"))

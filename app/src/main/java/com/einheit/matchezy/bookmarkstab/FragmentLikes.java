@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
@@ -44,13 +45,15 @@ public class FragmentLikes extends Fragment {
     RecyclerViewScrollListener scrollListener;
     private int lastItemCount = 0;
 
+    LinearLayout placeholder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView =  inflater.inflate(R.layout.fragment_likes, container, false);
 
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-
         myrv = (RecyclerView) myView.findViewById(R.id.recyclerview_id);
+
+        placeholder = (LinearLayout) myView.findViewById(R.id.placeholder);
 
         lstMatchedProfiles = new ArrayList<>();
         lastItemCount = 0;
@@ -88,6 +91,8 @@ public class FragmentLikes extends Fragment {
         lstMatchedProfiles.add(null);
         myAdapter.notifyItemInserted(lstMatchedProfiles.size() - 1);
 
+        Utility.getInstance().networkCheck(getContext());
+
         AndroidNetworking.post(Utility.getInstance().BASE_URL + "getLikedUsProfiles")
                 .addBodyParameter(o)
                 .setPriority(Priority.HIGH)
@@ -106,6 +111,13 @@ public class FragmentLikes extends Fragment {
                                 if(profilesArray.length() == 0) {
                                     scrollListener.setReachedEnd();
                                 }
+
+                                if (profilesArray.length() == 0) {
+                                    placeholder.setVisibility(View.VISIBLE);
+                                } else {
+                                    placeholder.setVisibility(View.GONE);
+                                }
+
                                 for (int i = 0; i < profilesArray.length(); i++) {
                                     JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(

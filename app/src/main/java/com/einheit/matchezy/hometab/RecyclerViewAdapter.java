@@ -189,6 +189,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
 
                     if (!mData.get(position).getChecked()) {
+
+                        Utility.getInstance().networkCheck(mContext);
+
                         AndroidNetworking.post(Utility.getInstance().BASE_URL + "bookmarkUser")
                                 .addBodyParameter("user_id", getSPData("user_id"))
                                 .addBodyParameter("user_token", getSPData("user_token"))
@@ -215,6 +218,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                     }
                                 });
                     } else {
+                        Utility.getInstance().networkCheck(mContext);
+
                         AndroidNetworking.post(Utility.getInstance().BASE_URL + "unBookmarkUser")
                                 .addBodyParameter("user_id", getSPData("user_id"))
                                 .addBodyParameter("user_token", getSPData("user_token"))

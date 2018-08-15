@@ -42,13 +42,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview_id"
+            <RelativeLayout
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="true"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_id"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <LinearLayout
+                    android:id="@+id/placeholder"
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/app_logo_nobg"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Try changing up the filters to get\n better results!" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
 
         </RelativeLayout>
 

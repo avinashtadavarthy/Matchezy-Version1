@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,6 +120,10 @@ public class HomeScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        ActivityCompat.finishAffinity(this);
+    }
 
     private String getSPData(String key) {
 

@@ -20,6 +20,7 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.R;
+import com.einheit.matchezy.Utility;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -80,6 +81,8 @@ public class Fragment_messages extends android.support.v4.app.Fragment {
         o.addProperty("user_id", getSPData("user_id"));
         o.addProperty("user_token", getSPData("user_token"));
         o.addProperty("lookingFor", "Both");
+
+        Utility.getInstance().networkCheck(getContext());
 
         AndroidNetworking.post(com.einheit.matchezy.Utility.getInstance().BASE_URL + "getMatchedProfiles")
                 .addBodyParameter(o)

@@ -29,6 +29,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.einheit.matchezy.MatchedProfiles;
 import com.einheit.matchezy.R;
 import com.einheit.matchezy.Utility;
+import com.einheit.matchezy.login.OnboardingNew;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.scalified.fab.ActionButton;
@@ -48,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +64,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Fragment_Home extends android.support.v4.app.Fragment implements HorizontalRecyclerAdapter.OnItemClickListener {
 
     View myView;
+
     List<com.einheit.matchezy.MatchedProfiles> lstMatchedProfiles;
     RecyclerView horizontal_recycler_view;
     HorizontalRecyclerAdapter horizontalAdapter;
@@ -69,6 +74,8 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     RecyclerViewAdapter myAdapter;
     JsonObject filterObject;
     JSONObject userData;
+
+    LinearLayout placeholder;
 
     RecyclerViewScrollListener scrollListener;
     boolean isBioWarningCard = false;
@@ -89,6 +96,8 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment__home, container, false);
+
+        placeholder = (LinearLayout) myView.findViewById(R.id.placeholder);
 
         horizontal_recycler_view = myView.findViewById(R.id.horizontal_recycler_view);
 
@@ -195,7 +204,6 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         return myView;
     }
 
-
     public List<Data> filldata() {
 
         List<Data> data = new ArrayList<>();
@@ -208,7 +216,7 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         data.add(new Data(R.drawable.music, "Music"));
         data.add(new Data(R.drawable.travel, "Travelling"));
         data.add(new Data(R.drawable.cinema, "Movie Buff"));
-        data.add(new Data(R.drawable.adrenalinejunkie, "Adrenaline Junkie"));
+        data.add(new Data(R.drawable.adrenalinejunkie, "Adrenaline Junky"));
         data.add(new Data(R.drawable.potterhead, "Potter Head"));
         data.add(new Data(R.drawable.entrepreneur, "Entrepreneur"));
 
@@ -257,6 +265,8 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
     private void filterProfiles(JsonObject filterObject, int index) {
 
+        Utility.getInstance().networkCheck(getContext());
+
         filterObject.addProperty("user_id", getSPData("user_id"));
         filterObject.addProperty("user_token", getSPData("user_token"));
         filterObject.addProperty("offset", index);
@@ -281,6 +291,13 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
                                 if (profilesArray.length() == 0) {
                                     scrollListener.setReachedEnd();
                                 }
+
+                                if (profilesArray.length() == 0) {
+                                    placeholder.setVisibility(View.VISIBLE);
+                                } else {
+                                    placeholder.setVisibility(View.GONE);
+                                }
+
                                 for (int i = 0; i < profilesArray.length(); i++) {
                                     JSONObject object = (JSONObject) profilesArray.get(i);
                                     lstMatchedProfiles.add(new com.einheit.matchezy.MatchedProfiles(
@@ -303,6 +320,27 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
 
                         } else
                             Toast.makeText(getContext(), res.optString("message"), Toast.LENGTH_SHORT).show();
+
+                        if (res.optString("message").equals("Access denied")) {
+                            clearSPData();
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        FirebaseInstanceId.getInstance().deleteInstanceId();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }).start();
+
+                            Intent i = new Intent(getContext(), OnboardingNew.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            getActivity().startActivity(i);
+                            getActivity().finish();
+                            //auto logout
+                        }
 
                     }
 
@@ -334,14 +372,13 @@ public class Fragment_Home extends android.support.v4.app.Fragment implements Ho
         return data;
     }
 
-    private void storeSPData(String key, String data) {
-
+    private void clearSPData() {
         SharedPreferences mUserData = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor mUserEditor = mUserData.edit();
-        mUserEditor.putString(key, data);
-        mUserEditor.commit();
-
+        mUserEditor.clear();
+        mUserEditor.apply();
     }
+
 
     public abstract class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
 

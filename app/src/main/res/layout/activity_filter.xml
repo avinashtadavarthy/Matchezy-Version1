@@ -191,7 +191,7 @@
                     app:mrb_temporaryPins="true"
                     app:mrb_tickEnd="50"
                     app:mrb_tickInterval="1"
-                    app:mrb_tickStart="21"/>
+                    app:mrb_tickStart="18"/>
 
             </RelativeLayout>
 
